@@ -1,161 +1,184 @@
-{%- comment -%}
-  sections/announcement-bar.liquid — Kwispelbox KB-v4
-  Desktop: alle berichten naast elkaar
-  Mobiel: CSS marquee
-{%- endcomment -%}
+{% comment %}
+  sections/announcement-bar.liquid — Kwispelbox KB-v3
+  Desktop: alle berichten tegelijk naast elkaar met scheidingslijn
+  Mobiel: CSS marquee scroll
+{% endcomment %}
 
-{%- assign msg_blocks = section.blocks | where: 'type', 'message' -%}
+{%- assign message_blocks = section.blocks | where: 'type', 'message' -%}
+{%- assign block_count = message_blocks | size -%}
 
-{%- if msg_blocks.size > 0 -%}
-<div class="ann-bar" role="region" aria-label="Aankondigingen">
+{%- if block_count > 0 -%}
+  <div class="announcement-bar" role="region" aria-label="Aankondigingen">
 
-  {%- comment %} Desktop: naast elkaar {%- endcomment -%}
-  <ul class="ann-bar__list" role="list">
-    {%- for block in msg_blocks -%}
-      <li class="ann-bar__item" {{ block.shopify_attributes }}>
-        {%- if block.settings.icon != blank -%}
-          <span class="ann-bar__icon ann-bar__icon--{{ block.settings.icon_color }}" aria-hidden="true">
-            {{- block.settings.icon | inline_asset_content -}}
-          </span>
-        {%- endif -%}
-        <span class="ann-bar__text">
+    <!-- Desktop: alle items naast elkaar -->
+    <div class="announcement-bar__desktop">
+      {%- for block in message_blocks -%}
+        <div class="announcement-bar__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <span class="announcement-bar__icon announcement-bar__icon--{{ block.settings.icon_color | default: 'orange' }}" aria-hidden="true">
+              {{- block.settings.icon | inline_asset_content -}}
+            </span>
+          {%- endif -%}
           {%- if block.settings.link != blank -%}
-            <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+            <a href="{{ block.settings.link }}" class="announcement-bar__text">{{ block.settings.text }}</a>
           {%- else -%}
-            {{ block.settings.text }}
+            <span class="announcement-bar__text">{{ block.settings.text }}</span>
           {%- endif -%}
           {%- if block.settings.stars != blank -%}
-            <span class="ann-bar__stars" aria-hidden="true">{{ block.settings.stars }}</span>
+            <span class="announcement-bar__stars" aria-hidden="true">{{ block.settings.stars }}</span>
           {%- endif -%}
-        </span>
-      </li>
-    {%- endfor -%}
-  </ul>
+        </div>
+      {%- endfor -%}
+    </div>
 
-  {%- comment %} Mobiel: marquee {%- endcomment -%}
-  <div class="ann-bar__marquee-wrap" aria-hidden="true">
-    <div class="ann-bar__marquee">
-      <div class="ann-bar__track">
-        {%- for i in (1..2) -%}
-          {%- for block in msg_blocks -%}
-            <span class="ann-bar__marquee-item">
-              {%- if block.settings.icon != blank -%}
-                <span class="ann-bar__icon ann-bar__icon--{{ block.settings.icon_color }}" aria-hidden="true">
-                  {{- block.settings.icon | inline_asset_content -}}
-                </span>
-              {%- endif -%}
-              {{ block.settings.text }}
-              <span aria-hidden="true"> · </span>
-            </span>
+    <!-- Mobiel: marquee -->
+    <div class="announcement-bar__mobile" aria-hidden="true">
+      <div class="announcement-bar__marquee">
+        <div class="announcement-bar__marquee-track">
+          {%- for i in (1..2) -%}
+            {%- for block in message_blocks -%}
+              <span class="announcement-bar__marquee-item">
+                {%- if block.settings.icon != blank -%}
+                  <span class="announcement-bar__icon">
+                    {{- block.settings.icon | inline_asset_content -}}
+                  </span>
+                {%- endif -%}
+                {{- block.settings.text -}}
+                <span class="announcement-bar__separator" aria-hidden="true">·</span>
+              </span>
+            {%- endfor -%}
           {%- endfor -%}
-        {%- endfor -%}
+        </div>
       </div>
     </div>
-  </div>
 
-</div>
+  </div>
 {%- endif -%}
 
 {% stylesheet %}
-
-.ann-bar {
-  background: var(--color-cream);
+.announcement-bar {
+  background-color: var(--color-cream);
   border-bottom: 1px solid var(--color-line);
   font-family: var(--font-body);
-  font-size: .78rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--color-ink);
 }
 
-/* ── Desktop ── */
-.ann-bar__list {
+/* Desktop: alle items naast elkaar */
+.announcement-bar__desktop {
   display: none;
-  list-style: none;
-  margin: 0;
-  padding: 0 var(--page-margin);
-  max-width: var(--page-width);
-  margin-inline: auto;
-}
-
-.ann-bar__item {
-  flex: 1;
-  display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border-right: 1px solid var(--color-line);
-  white-space: nowrap;
-}
-
-.ann-bar__item:last-child { border-right: none; }
-
-.ann-bar__icon {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.ann-bar__icon svg { width: 16px; height: 16px; }
-
-.ann-bar__icon--orange { color: var(--color-orange); }
-.ann-bar__icon--green  { color: var(--color-green); }
-.ann-bar__icon--pink   { color: var(--color-pink); }
-.ann-bar__icon--yellow { color: var(--color-yellow); }
-.ann-bar__icon--muted  { color: var(--color-muted); }
-
-.ann-bar__text { color: var(--color-ink); }
-.ann-bar__text a { color: var(--color-ink); text-decoration: none; }
-.ann-bar__text a:hover { text-decoration: underline; }
-
-.ann-bar__stars { color: var(--color-yellow); margin-left: 4px; }
-
-/* ── Mobiel ── */
-.ann-bar__marquee-wrap {
-  display: flex;
-  overflow: hidden;
-  padding: 8px 0;
-  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-}
-
-.ann-bar__marquee { display: flex; width: 100%; overflow: hidden; }
-
-.ann-bar__track {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  animation: ann-scroll 28s linear infinite;
-}
-
-.ann-bar__marquee-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 16px;
-}
-
-@keyframes ann-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ann-bar__track { animation: none; }
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 0 var(--page-margin);
 }
 
 @media (min-width: 750px) {
-  .ann-bar__list         { display: flex; }
-  .ann-bar__marquee-wrap { display: none; }
+  .announcement-bar__desktop { display: flex; }
+  .announcement-bar__mobile  { display: none; }
 }
 
+.announcement-bar__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-right: 1px solid var(--color-line);
+  flex: 1;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.announcement-bar__item:last-child {
+  border-right: none;
+}
+
+.announcement-bar__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  color: var(--color-orange);
+}
+
+.announcement-bar__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.announcement-bar__icon--green  { color: var(--color-green); }
+.announcement-bar__icon--pink   { color: var(--color-pink); }
+.announcement-bar__icon--orange { color: var(--color-orange); }
+.announcement-bar__icon--yellow { color: var(--color-yellow); }
+.announcement-bar__icon--muted  { color: var(--color-muted); }
+
+.announcement-bar__text {
+  color: var(--color-ink);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+a.announcement-bar__text:hover {
+  text-decoration: underline;
+}
+
+.announcement-bar__stars {
+  color: var(--color-yellow);
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
+/* Mobiel: marquee */
+.announcement-bar__mobile {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  padding: 8px 0;
+}
+
+.announcement-bar__marquee {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.announcement-bar__marquee-track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  animation: announcement-scroll 24s linear infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .announcement-bar__marquee-track { animation: none; }
+}
+
+.announcement-bar__marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 20px;
+}
+
+.announcement-bar__separator {
+  margin-left: 12px;
+  opacity: 0.4;
+}
+
+@keyframes announcement-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Aankondigingsbalk",
   "tag": "aside",
-  "enabled_on": { "groups": ["header"] },
   "blocks": [
     {
       "type": "message",
@@ -165,13 +188,13 @@
         {
           "type": "text",
           "id": "text",
-          "label": "Tekst",
+          "label": "Berichttekst",
           "default": "Gratis verzending vanaf €75"
         },
         {
           "type": "text",
           "id": "stars",
-          "label": "Sterren (optioneel, bv. ★★★★★)"
+          "label": "Sterren (bv. ★★★★★)"
         },
         {
           "type": "url",
@@ -184,14 +207,38 @@
           "label": "Icoon",
           "default": "icon-truck.svg",
           "options": [
-            { "value": "icon-truck.svg",       "label": "Vrachtwagen" },
-            { "value": "icon-heart.svg",        "label": "Hart" },
-            { "value": "icon-shield.svg",       "label": "Schild" },
-            { "value": "icon-gift.svg",         "label": "Cadeau" },
-            { "value": "icon-star.svg",         "label": "Ster" },
-            { "value": "icon-check-circle.svg", "label": "Vinkje" },
-            { "value": "icon-paw.svg",          "label": "Poot" },
-            { "value": "",                      "label": "Geen icoon" }
+            {
+              "value": "icon-truck.svg",
+              "label": "Vrachtwagen"
+            },
+            {
+              "value": "icon-heart.svg",
+              "label": "Hart"
+            },
+            {
+              "value": "icon-shield.svg",
+              "label": "Schild"
+            },
+            {
+              "value": "icon-gift.svg",
+              "label": "Cadeau"
+            },
+            {
+              "value": "icon-star.svg",
+              "label": "Ster"
+            },
+            {
+              "value": "icon-check-circle.svg",
+              "label": "Vinkje"
+            },
+            {
+              "value": "icon-paw.svg",
+              "label": "Poot"
+            },
+            {
+              "value": "",
+              "label": "Geen icoon"
+            }
           ]
         },
         {
@@ -200,11 +247,26 @@
           "label": "Icoon kleur",
           "default": "orange",
           "options": [
-            { "value": "orange", "label": "Oranje" },
-            { "value": "green",  "label": "Groen" },
-            { "value": "pink",   "label": "Roze" },
-            { "value": "yellow", "label": "Geel" },
-            { "value": "muted",  "label": "Grijs" }
+            {
+              "value": "orange",
+              "label": "Oranje"
+            },
+            {
+              "value": "green",
+              "label": "Groen"
+            },
+            {
+              "value": "pink",
+              "label": "Roze"
+            },
+            {
+              "value": "yellow",
+              "label": "Geel"
+            },
+            {
+              "value": "muted",
+              "label": "Grijs"
+            }
           ]
         }
       ]
@@ -215,10 +277,34 @@
     {
       "name": "Aankondigingsbalk",
       "blocks": [
-        { "type": "message", "settings": { "text": "Gratis verzending vanaf \u20ac75", "icon": "icon-truck.svg", "icon_color": "orange" } },
-        { "type": "message", "settings": { "text": "Meer dan 1.200 blije honden", "icon": "icon-paw.svg", "icon_color": "orange" } },
-        { "type": "message", "settings": { "text": "Elke box voelt als een cadeautje", "icon": "icon-gift.svg", "icon_color": "pink" } },
-        { "type": "message", "settings": { "text": "Uitstekend beoordeeld 4,9/5", "icon": "icon-star.svg", "icon_color": "yellow", "stars": "\u2605\u2605\u2605\u2605\u2605" } }
+        {
+          "type": "message",
+          "settings": {
+            "text": "Gratis verzending vanaf €75",
+            "icon": "icon-truck.svg"
+          }
+        },
+        {
+          "type": "message",
+          "settings": {
+            "text": "Meer dan 1.200 blije honden",
+            "icon": "icon-paw.svg"
+          }
+        },
+        {
+          "type": "message",
+          "settings": {
+            "text": "Elke box voelt als een cadeautje",
+            "icon": "icon-gift.svg"
+          }
+        },
+        {
+          "type": "message",
+          "settings": {
+            "text": "Uitstekend beoordeeld 4,9/5",
+            "icon": "icon-star.svg"
+          }
+        }
       ]
     }
   ]
