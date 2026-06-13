@@ -18,6 +18,8 @@
           "type": "message",
           "settings": {
             "text": "Vandaag besteld, morgen in huis",
+            "stars": "",
+            "link": "",
             "icon": "icon-truck.svg",
             "icon_color": "orange"
           }
@@ -26,6 +28,8 @@
           "type": "message",
           "settings": {
             "text": "Gratis verzending vanaf €75",
+            "stars": "",
+            "link": "",
             "icon": "icon-gift.svg",
             "icon_color": "orange"
           }
@@ -34,6 +38,8 @@
           "type": "message",
           "settings": {
             "text": "100% blije honden garantie",
+            "stars": "",
+            "link": "",
             "icon": "icon-heart.svg",
             "icon_color": "pink"
           }
@@ -42,9 +48,10 @@
           "type": "message",
           "settings": {
             "text": "Klanten beoordelen ons met 4,9/5",
+            "stars": "★★★★★",
+            "link": "",
             "icon": "icon-star.svg",
-            "icon_color": "yellow",
-            "stars": "★★★★★"
+            "icon_color": "yellow"
           }
         }
       },
@@ -68,43 +75,60 @@
             "col1_desc": "Onze originele boxen zonder thema. Elke maand een feestje!",
             "link_list": "menu-verrassingsboxen",
             "view_all_label": "Vergelijk alle boxen",
+            "view_all_url": "",
+            "banner_badge": "",
             "banner_title": "Elke box een nieuwe verrassing!",
             "banner_text": "Met liefde samengesteld voor jouw hond.",
             "banner_cta_label": "Ontdek de boxen",
-            "banner_cta_url": "/collections/verrassingsboxen"
+            "banner_cta_url": "/collections/verrassingsboxen",
+            "club_intro_title": "Welkom bij de Kwispelclub",
+            "club_intro_text": "",
+            "club_check_1": "Gratis lidmaatschap",
+            "club_check_2": "Exclusieve kortingen",
+            "club_check_3": "Sparen voor beloningen",
+            "club_check_4": "Verrassingen & acties",
+            "club_check_5": "Hond van de maand",
+            "club_rewards_title": "Spaar Kwispels!",
+            "club_motm_title": "Hond van de maand",
+            "club_motm_name": "",
+            "about_tagline": "Samen maken we honden blij!",
+            "about_tagline_sub": "",
+            "about_team_title": "Het Kwispelbox team",
+            "about_team_tagline": "Liefs, team Kwispelbox"
           }
         },
         "prod_1": {
           "type": "dropdown_product",
           "settings": {
             "menu_item_index": 1,
+            "product": "mini-kwispelbox",
             "badge": "",
-            "description": "Perfect om kennis te maken",
-            "product": "mini-kwispelbox"
+            "description": "Perfect om kennis te maken"
           }
         },
         "prod_2": {
           "type": "dropdown_product",
           "settings": {
             "menu_item_index": 1,
+            "product": "happy-kwispelbox",
             "badge": "Meest gekozen",
-            "description": "Onze populairste box",
-            "product": "happy-kwispelbox"
+            "description": "Onze populairste box"
           }
         },
         "prod_3": {
           "type": "dropdown_product",
           "settings": {
             "menu_item_index": 1,
+            "product": "mega-kwispelbox",
             "badge": "",
-            "description": "Voor honden die van veel afwisseling houden",
-            "product": "mega-kwispelbox"
+            "description": "Voor honden die van veel afwisseling houden"
           }
         },
         "col_special": {
           "type": "dropdown_col",
           "settings": {
             "menu_item_index": 1,
+            "col_order": 1,
             "heading": "Special Editions",
             "description": "Thema boxen voor de leukste momenten samen.",
             "color": "pink",
@@ -112,13 +136,17 @@
             "show_link_icons": false,
             "link_list": "menu-special-editions",
             "cta_label": "Bekijk alle special editions",
-            "cta_url": "/collections/special-editions"
+            "cta_url": "/collections/special-editions",
+            "mini_banner_label": "",
+            "mini_banner_sub": "",
+            "mini_banner_url": ""
           }
         },
         "col_shop": {
           "type": "dropdown_col",
           "settings": {
             "menu_item_index": 1,
+            "col_order": 10,
             "heading": "Shop",
             "description": "Losse producten voor jouw hond z’n geluksmomentjes.",
             "color": "orange",
@@ -126,16 +154,17 @@
             "show_link_icons": true,
             "link_list": "menu-speeltjes",
             "cta_label": "",
+            "cta_url": "",
             "mini_banner_label": "Nieuw binnen!",
             "mini_banner_sub": "Ontdek de nieuwste favorieten",
-            "mini_banner_url": "/collections/nieuw",
-            "col_order": 10
+            "mini_banner_url": "/collections/nieuw"
           }
         },
         "col_club": {
           "type": "dropdown_col",
           "settings": {
             "menu_item_index": 1,
+            "col_order": 11,
             "heading": "Kwispelclub",
             "description": "Gratis lidmaatschap vol voordelen en verrassingen!",
             "color": "pink",
@@ -143,7 +172,10 @@
             "show_link_icons": true,
             "link_list": "menu-kwispelclub",
             "cta_label": "",
-            "col_order": 11
+            "cta_url": "",
+            "mini_banner_label": "",
+            "mini_banner_sub": "",
+            "mini_banner_url": ""
           }
         },
         "trust_1": {
@@ -151,6 +183,7 @@
           "settings": {
             "title": "Gratis verzending",
             "subtitle": "vanaf €75",
+            "url": "",
             "icon": "icon-truck.svg"
           }
         },
@@ -159,6 +192,7 @@
           "settings": {
             "title": "Niet goed?",
             "subtitle": "Geld terug",
+            "url": "",
             "icon": "icon-refresh.svg"
           }
         },
@@ -167,6 +201,7 @@
           "settings": {
             "title": "100% veilig betalen",
             "subtitle": "iDEAL & Klarna",
+            "url": "",
             "icon": "icon-shield.svg"
           }
         },
@@ -175,15 +210,8 @@
           "settings": {
             "title": "Voor 23:59 besteld",
             "subtitle": "morgen in huis",
+            "url": "",
             "icon": "icon-truck.svg"
-          }
-        },
-        "trust_5": {
-          "type": "trust_item",
-          "settings": {
-            "title": "Uitstekend beoordeeld",
-            "subtitle": "4,9/5",
-            "icon": "icon-star.svg"
           }
         },
         "li_shop_1": {
@@ -289,7 +317,6 @@
         "trust_2",
         "trust_3",
         "trust_4",
-        "trust_5",
         "li_shop_1",
         "li_shop_2",
         "li_shop_3",
@@ -304,6 +331,7 @@
       "settings": {
         "logo_width": 160,
         "menu": "main-menu",
+        "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
         "search_placeholder": "Zoek naar speeltjes, boxen...",
         "search_button_label": "Zoeken",
