@@ -1,8 +1,8 @@
 {%- comment -%}
   sections/community.liquid — Kwispelbox KB-v4
-  Premium social-proof / community sectie.
-  - featured  : grote uitgelichte review links (limit 1)
-  - photo     : community fotowall rechts (onbeperkt, herschikbaar)
+  Levendige community-galerij (geen klassieke reviewsectie).
+  - featured  : uitgelichte review als verhaal-middelpunt (limit 1)
+  - photo     : community fotowall met social-tags + badges (onbeperkt)
   - stat      : community trustbar met statistiek-kaarten
   Mobiel: intro → featured → fotowall (horizontaal swipebaar) → stats.
 {%- endcomment -%}
@@ -45,6 +45,8 @@
 
       {%- if featured -%}
         <article class="com__featured com__featured--{{ featured.settings.color }}" {{ featured.shopify_attributes }}>
+          <span class="com__featured-paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
+
           <div class="com__featured-media">
             {%- if featured.settings.image != blank -%}
               <img
@@ -66,20 +68,28 @@
           </div>
 
           <div class="com__featured-body">
+            <span class="com__quote-mark" aria-hidden="true">&ldquo;</span>
+
             {%- assign rating = featured.settings.rating | default: 5 -%}
             <span class="com__stars" role="img" aria-label="{{ rating }} van 5 sterren">
               {%- for i in (1..5) -%}
                 <svg class="com__star{% if i <= rating %} is-on{% endif %}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg>
               {%- endfor -%}
             </span>
+
             {%- if featured.settings.quote != blank -%}
               <blockquote class="com__quote">{{ featured.settings.quote }}</blockquote>
             {%- endif -%}
+
             <div class="com__owner">
               <span class="com__owner-avatar" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
               <span class="com__owner-text">
-                {%- if featured.settings.owner_name != blank -%}<strong>{{ featured.settings.owner_name }}</strong>{%- endif -%}
-                {%- if featured.settings.dog_name != blank -%}<span>baasje van {{ featured.settings.dog_name }}</span>{%- endif -%}
+                <strong>
+                  {%- if featured.settings.owner_name != blank -%}{{ featured.settings.owner_name }}{%- endif -%}
+                  {%- if featured.settings.owner_name != blank and featured.settings.dog_name != blank %} &amp; {% endif -%}
+                  {%- if featured.settings.dog_name != blank -%}{{ featured.settings.dog_name }}{%- endif -%}
+                </strong>
+                {%- if featured.settings.meta != blank -%}<span>{{ featured.settings.meta }}</span>{%- endif -%}
               </span>
             </div>
           </div>
@@ -89,6 +99,7 @@
       {%- if photo_blocks.size > 0 -%}
         <div class="com__wall">
           {%- for block in photo_blocks -%}
+            {%- assign badge = block.settings.badge -%}
             <figure class="com__photo" {{ block.shopify_attributes }}>
               {%- if block.settings.image != blank -%}
                 <img
@@ -100,6 +111,25 @@
               {%- else -%}
                 <div class="com__photo-img com__photo-img--placeholder">{%- render 'lucide', icon: 'dog' -%}</div>
               {%- endif -%}
+
+              {%- if badge != blank and badge != 'none' -%}
+                {%- case badge -%}
+                  {%- when 'Hond van de maand' -%}{%- assign badge_icon = 'star' -%}{%- assign badge_color = 'yellow' -%}
+                  {%- when 'Jarig vandaag' -%}{%- assign badge_icon = 'gift' -%}{%- assign badge_color = 'pink' -%}
+                  {%- when 'Favoriet' -%}{%- assign badge_icon = 'heart' -%}{%- assign badge_color = 'pink' -%}
+                  {%- when 'Eerste box' -%}{%- assign badge_icon = 'sparkles' -%}{%- assign badge_color = 'green' -%}
+                  {%- when 'Kwispelclub' -%}{%- assign badge_icon = 'paw' -%}{%- assign badge_color = 'green' -%}
+                  {%- when 'Special Edition' -%}{%- assign badge_icon = 'sparkles' -%}{%- assign badge_color = 'orange' -%}
+                  {%- when 'Mega Box' -%}{%- assign badge_icon = 'gift' -%}{%- assign badge_color = 'orange' -%}
+                  {%- when 'Mini Box' -%}{%- assign badge_icon = 'gift' -%}{%- assign badge_color = 'yellow' -%}
+                  {%- else -%}{%- assign badge_icon = 'gift' -%}{%- assign badge_color = 'green' -%}
+                {%- endcase -%}
+                <span class="com__photo-badge com__photo-badge--{{ badge_color }}">
+                  <span class="com__photo-badge-icon" aria-hidden="true">{%- render 'lucide', icon: badge_icon -%}</span>
+                  {{ badge }}
+                </span>
+              {%- endif -%}
+
               {%- if block.settings.dog_name != blank -%}
                 <figcaption class="com__name-label">
                   <span class="com__name-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
@@ -171,61 +201,101 @@
 /* ── Main: featured + wall ───────────────────────────── */
 .com__main {
   display: grid;
-  grid-template-columns: 0.92fr 1.08fr;
-  gap: 26px;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
   align-items: start;
 }
 
-/* Uitgelichte review */
+/* ── Uitgelichte review (middelpunt) ─────────────────── */
 .com__featured {
   --c: var(--color-green); --c-soft: #e8f5e2;
-  background: #fff; border-radius: 28px; overflow: hidden;
-  box-shadow: 0 28px 70px rgba(61, 34, 9, .14);
-  display: flex; flex-direction: column;
+  position: relative;
+  isolation: isolate;
+  background: #fff;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 32px 80px rgba(61, 34, 9, .16);
 }
 .com__featured--green  { --c: var(--color-green);  --c-soft: #e8f5e2; }
 .com__featured--pink   { --c: var(--color-pink);   --c-soft: #ffe0ee; }
 .com__featured--orange { --c: var(--color-orange); --c-soft: #fff0e4; }
 .com__featured--yellow { --c: #d99100;             --c-soft: #fffae0; }
-.com__featured-media { position: relative; aspect-ratio: 4 / 3; background: var(--c-soft); }
+
+/* Half-transparante pootafdruk die deels buiten de kaart valt */
+.com__featured-paw { position: absolute; z-index: -1; right: -24px; bottom: -22px; width: 110px; height: 110px; color: var(--c); opacity: .13; transform: rotate(-10deg); pointer-events: none; }
+.com__featured-paw svg { display: block; width: 100%; height: 100%; }
+
+.com__featured-media { position: relative; aspect-ratio: 4 / 3; background: var(--c-soft); border-radius: 28px 28px 0 0; overflow: hidden; }
 .com__featured-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .com__featured-img--placeholder { display: flex; align-items: center; justify-content: center; color: var(--c); }
 .com__featured-img--placeholder .lucide { width: 88px; height: 88px; }
 .com__featured-heart { position: absolute; top: 16px; right: 16px; width: 30px; height: 30px; color: #fff; opacity: .9; filter: drop-shadow(0 4px 8px rgba(61,34,9,.25)); transform: rotate(8deg); }
 .com__featured-heart svg { display: block; width: 100%; height: 100%; }
-.com__featured-body { padding: 26px 28px 28px; display: flex; flex-direction: column; gap: 14px; }
 
-.com__stars { display: inline-flex; gap: 3px; }
-.com__star { width: 20px; height: 20px; color: #e6ddca; }
+/* Body als persoonlijk verhaal, veel lucht */
+.com__featured-body { position: relative; padding: 38px 40px 40px; display: flex; flex-direction: column; gap: 16px; }
+.com__quote-mark { position: absolute; top: -6px; left: 24px; z-index: 0; font-family: var(--font-heading); font-size: 130px; line-height: 1; color: var(--c); opacity: .12; pointer-events: none; }
+
+.com__stars { position: relative; z-index: 1; display: inline-flex; gap: 4px; }
+.com__star { width: 22px; height: 22px; color: #e6ddca; }
 .com__star.is-on { color: #f4a72c; }
-.com__quote { font-family: var(--font-body); font-size: 1.2rem; line-height: 1.5; color: var(--color-ink); font-weight: 600; margin: 0; }
-.com__owner { display: flex; align-items: center; gap: 12px; margin-top: 2px; }
-.com__owner-avatar { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: var(--c-soft); color: var(--c); flex-shrink: 0; }
-.com__owner-avatar .lucide { width: 20px; height: 20px; }
+.com__quote { position: relative; z-index: 1; font-family: var(--font-body); font-size: 1.34rem; line-height: 1.55; color: var(--color-ink); font-weight: 600; margin: 0; }
+.com__owner { position: relative; z-index: 1; display: flex; align-items: center; gap: 13px; margin-top: 6px; }
+.com__owner-avatar { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: var(--c-soft); color: var(--c); flex-shrink: 0; }
+.com__owner-avatar .lucide { width: 22px; height: 22px; }
 .com__owner-text { display: flex; flex-direction: column; line-height: 1.3; }
-.com__owner-text strong { font-family: var(--font-body); font-size: .95rem; font-weight: 800; color: var(--color-ink); }
-.com__owner-text span { font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); }
+.com__owner-text strong { font-family: var(--font-heading); font-size: 1.08rem; color: var(--color-ink); }
+.com__owner-text span { font-family: var(--font-body); font-size: .82rem; font-weight: 600; color: var(--color-muted); margin-top: 1px; }
 
-/* Naamlabel */
+/* ── Social-tag naamlabel ────────────────────────────── */
 .com__name-label {
   position: absolute; left: 12px; bottom: 12px;
   display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(255, 255, 255, .92); backdrop-filter: blur(4px);
+  background: rgba(255, 255, 255, .94); backdrop-filter: blur(4px);
   color: var(--color-ink); font-family: var(--font-body); font-size: .76rem; font-weight: 800;
   padding: 6px 12px 6px 9px; border-radius: var(--radius-pill);
   box-shadow: 0 4px 12px rgba(61, 34, 9, .12);
 }
-.com__name-label--lg { left: 16px; bottom: 16px; font-size: .84rem; padding: 8px 14px 8px 11px; }
+.com__name-label--lg { left: 16px; bottom: 16px; font-size: .86rem; padding: 8px 15px 8px 11px; }
 .com__name-icon { display: inline-flex; color: var(--color-pink); }
 .com__name-icon .lucide { width: 14px; height: 14px; }
 
-/* Fotowall */
+/* ── Fotowall ────────────────────────────────────────── */
 .com__wall { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.com__photo { position: relative; margin: 0; border-radius: 20px; overflow: hidden; aspect-ratio: 1 / 1; background: #e8f5e2; box-shadow: 0 10px 26px rgba(61, 34, 9, .08); transition: transform 220ms ease; }
-.com__photo:hover { transform: translateY(-4px); }
-.com__photo-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.com__photo {
+  position: relative; margin: 0; border-radius: 20px; overflow: hidden;
+  aspect-ratio: 1 / 1; background: #e8f5e2;
+  box-shadow: 0 10px 26px rgba(61, 34, 9, .08);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+.com__photo:hover { transform: translateY(-4px); box-shadow: 0 18px 38px rgba(61, 34, 9, .14); }
+.com__photo-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 600ms cubic-bezier(.2,.6,.2,1); }
+.com__photo:hover .com__photo-img { transform: scale(1.07); }
 .com__photo-img--placeholder { display: flex; align-items: center; justify-content: center; color: var(--color-green); }
 .com__photo-img--placeholder .lucide { width: 44px; height: 44px; }
+/* naamtag beweegt subtiel omhoog bij hover */
+.com__photo .com__name-label { transition: transform 300ms ease, box-shadow 300ms ease; }
+.com__photo:hover .com__name-label { transform: translateY(-4px); box-shadow: 0 8px 18px rgba(61, 34, 9, .18); }
+
+/* Badge op de foto */
+.com__photo-badge {
+  --bc: var(--color-green); --bc-soft: #e8f5e2;
+  position: absolute; top: 10px; left: 10px;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-body); font-size: .68rem; font-weight: 800;
+  padding: 5px 10px 5px 8px; border-radius: var(--radius-pill);
+  background: var(--bc); color: #fff;
+  box-shadow: 0 4px 12px rgba(61, 34, 9, .18);
+  transition: transform 300ms ease;
+}
+.com__photo-badge--green  { --bc: var(--color-green); }
+.com__photo-badge--pink   { --bc: var(--color-pink); color: var(--color-ink); }
+.com__photo-badge--orange { --bc: var(--color-orange); }
+.com__photo-badge--yellow { --bc: var(--color-yellow); color: var(--color-ink); }
+.com__photo-badge-icon { display: inline-flex; }
+.com__photo-badge-icon .lucide { width: 12px; height: 12px; }
+.com__photo:hover .com__photo-badge { transform: translateY(-2px) scale(1.05) rotate(-2deg); }
 
 /* ── Community trustbar (stats) ──────────────────────── */
 .com__stats {
@@ -259,15 +329,15 @@
 @media (max-width: 859px) {
   .com { padding: 56px 0; }
   .com__head { margin-bottom: 32px; }
-
-  /* intro → featured → wall */
   .com__main { grid-template-columns: 1fr; gap: 28px; }
+  .com__featured-body { padding: 30px 26px 30px; }
+  .com__quote-mark { font-size: 100px; }
+  .com__quote { font-size: 1.2rem; }
 
   /* Fotowall → horizontaal swipebaar */
   .com__wall {
     display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 12px;
-    padding: 4px 2px 12px; margin: 0 calc(-1 * var(--page-margin));
-    padding-left: var(--page-margin); padding-right: var(--page-margin);
+    margin: 0 calc(-1 * var(--page-margin)); padding: 4px var(--page-margin) 12px;
     scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
   }
   .com__wall::-webkit-scrollbar { display: none; }
@@ -285,6 +355,15 @@
   .com__photo { flex-basis: 72%; }
   .com__stats { grid-template-columns: 1fr; }
   .com__stat { flex-direction: row; }
+}
+
+/* ── Toegankelijkheid: minder beweging ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .com__photo, .com__photo-img, .com__name-label, .com__photo-badge { transition: none; }
+  .com__photo:hover { transform: none; }
+  .com__photo:hover .com__photo-img { transform: none; }
+  .com__photo:hover .com__name-label { transform: none; }
+  .com__photo:hover .com__photo-badge { transform: none; }
 }
 
 {% endstylesheet %}
@@ -308,9 +387,10 @@
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Hondenfoto" },
         { "type": "text", "id": "dog_name", "label": "Naam hond", "default": "Max" },
-        { "type": "textarea", "id": "quote", "label": "Review quote", "default": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest!" },
+        { "type": "textarea", "id": "quote", "label": "Review quote", "default": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest in huis!" },
         { "type": "range", "id": "rating", "label": "Sterren", "min": 1, "max": 5, "step": 1, "default": 5 },
         { "type": "text", "id": "owner_name", "label": "Naam baasje", "default": "Sanne" },
+        { "type": "text", "id": "meta", "label": "Extra regel (bv. Happy Box fan)", "default": "Happy Box fan · lid sinds 2024" },
         {
           "type": "select", "id": "color", "label": "Accentkleur", "default": "green",
           "options": [
@@ -327,7 +407,22 @@
       "name": "Communityfoto",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Hondenfoto" },
-        { "type": "text", "id": "dog_name", "label": "Naam hond", "default": "Bella" }
+        { "type": "text", "id": "dog_name", "label": "Naam hond", "default": "Bella" },
+        {
+          "type": "select", "id": "badge", "label": "Badge (optioneel)", "default": "none",
+          "options": [
+            { "value": "none", "label": "Geen badge" },
+            { "value": "Happy Box", "label": "Happy Box" },
+            { "value": "Mega Box", "label": "Mega Box" },
+            { "value": "Mini Box", "label": "Mini Box" },
+            { "value": "Kwispelclub", "label": "Kwispelclub" },
+            { "value": "Favoriet", "label": "Favoriet" },
+            { "value": "Eerste box", "label": "Eerste box" },
+            { "value": "Jarig vandaag", "label": "Jarig vandaag" },
+            { "value": "Hond van de maand", "label": "Hond van de maand" },
+            { "value": "Special Edition", "label": "Special Edition" }
+          ]
+        }
       ]
     },
     {
@@ -365,13 +460,13 @@
     {
       "name": "Hondencommunity",
       "blocks": [
-        { "type": "featured", "settings": { "dog_name": "Max", "quote": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest!", "rating": 5, "owner_name": "Sanne", "color": "green" } },
-        { "type": "photo", "settings": { "dog_name": "Bella" } },
-        { "type": "photo", "settings": { "dog_name": "Loki" } },
-        { "type": "photo", "settings": { "dog_name": "Noa" } },
-        { "type": "photo", "settings": { "dog_name": "Storm" } },
-        { "type": "photo", "settings": { "dog_name": "Pip" } },
-        { "type": "photo", "settings": { "dog_name": "Bo" } },
+        { "type": "featured", "settings": { "dog_name": "Max", "quote": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest in huis!", "rating": 5, "owner_name": "Sanne", "meta": "Happy Box fan · lid sinds 2024", "color": "green" } },
+        { "type": "photo", "settings": { "dog_name": "Bella", "badge": "Hond van de maand" } },
+        { "type": "photo", "settings": { "dog_name": "Loki", "badge": "Mega Box" } },
+        { "type": "photo", "settings": { "dog_name": "Noa", "badge": "Favoriet" } },
+        { "type": "photo", "settings": { "dog_name": "Storm", "badge": "Eerste box" } },
+        { "type": "photo", "settings": { "dog_name": "Pip", "badge": "Jarig vandaag" } },
+        { "type": "photo", "settings": { "dog_name": "Bo", "badge": "Kwispelclub" } },
         { "type": "stat", "settings": { "icon": "paw", "color": "green", "value": "1.200+", "label": "blije honden" } },
         { "type": "stat", "settings": { "icon": "sparkles", "color": "pink", "value": "Dagelijks", "label": "nieuwe foto's & verhalen" } },
         { "type": "stat", "settings": { "icon": "heart", "color": "orange", "value": "8.500+", "label": "leden in de community" } },

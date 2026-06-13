@@ -79,15 +79,15 @@
             "accent": "orange",
             "title": "Mini Kwispelbox",
             "description": "De perfecte kennismaking voor kleinere honden.",
+            "benefit_1": "3 tot 4 verrassingen per box",
+            "benefit_2": "Ideaal voor kleinere honden",
+            "benefit_3": "Perfect om kennis te maken",
+            "benefit_4": "Maandelijks opzegbaar",
             "price": "€49,95",
             "price_suffix": "per maand",
             "highlight": false,
             "button_label": "Bestel nu",
-            "button_url": "",
-            "benefit_1": "3 tot 4 verrassingen per box",
-            "benefit_2": "Ideaal voor kleinere honden",
-            "benefit_3": "Perfect om kennis te maken",
-            "benefit_4": "Maandelijks opzegbaar"
+            "button_url": ""
           }
         },
         "box_happy": {
@@ -96,17 +96,17 @@
             "accent": "green",
             "title": "Happy Kwispelbox",
             "description": "Onze populairste box, boordevol speelgoed, snacks en verwennerij.",
+            "benefit_1": "5 tot 6 verrassingen per box",
+            "benefit_2": "Mix van speelgoed én snacks",
+            "benefit_3": "Geschikt voor elke hond",
+            "benefit_4": "Gratis verzending",
+            "benefit_5": "Maandelijks opzegbaar",
             "price": "€64,95",
             "price_suffix": "per maand",
             "badge": "Meest gekozen",
             "highlight": true,
             "button_label": "Bestel nu",
-            "button_url": "",
-            "benefit_1": "5 tot 6 verrassingen per box",
-            "benefit_2": "Mix van speelgoed én snacks",
-            "benefit_3": "Geschikt voor elke hond",
-            "benefit_4": "Gratis verzending",
-            "benefit_5": "Maandelijks opzegbaar"
+            "button_url": ""
           }
         },
         "box_mega": {
@@ -115,16 +115,16 @@
             "accent": "pink",
             "title": "Mega Kwispelbox",
             "description": "Voor grote honden of echte avonturiers die van afwisseling houden.",
-            "price": "€79,95",
-            "price_suffix": "per maand",
-            "highlight": false,
-            "button_label": "Bestel nu",
-            "button_url": "",
             "benefit_1": "7 tot 8 verrassingen per box",
             "benefit_2": "Extra veel speelgoed",
             "benefit_3": "Voor grote honden",
             "benefit_4": "Gratis verzending",
-            "benefit_5": "Maandelijks opzegbaar"
+            "benefit_5": "Maandelijks opzegbaar",
+            "price": "€79,95",
+            "price_suffix": "per maand",
+            "highlight": false,
+            "button_label": "Bestel nu",
+            "button_url": ""
           }
         },
         "ben_1": {
