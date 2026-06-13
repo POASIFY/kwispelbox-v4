@@ -66,6 +66,7 @@
         "cta_secondary_url": "",
         "review_text": "4,9/5 uit 1.200+ reviews",
         "image": "shopify://shop_images/ChatGPT_Image_9_jun_2026_13_10_00.png",
+        "image_priority": true,
         "badge_text": "Elke maand een feestje voor je hond ♥"
       }
     },
@@ -75,10 +76,12 @@
         "box_mini": {
           "type": "box",
           "settings": {
-            "title": "Mini Box",
+            "accent": "orange",
+            "title": "Mini Kwispelbox",
+            "description": "De perfecte kennismaking voor kleinere honden.",
+            "benefits": "3 tot 4 verrassingen per box\nIdeaal voor kleinere honden\nPerfect om kennis te maken\nMaandelijks opzegbaar",
             "price": "€49,95",
             "price_suffix": "per maand",
-            "description": "Een leuke kennismaking met 3 tot 4 verrassingen voor jouw hond.",
             "highlight": false,
             "button_label": "Bestel nu",
             "button_url": ""
@@ -87,10 +90,12 @@
         "box_happy": {
           "type": "box",
           "settings": {
-            "title": "Happy Box",
+            "accent": "green",
+            "title": "Happy Kwispelbox",
+            "description": "Onze populairste box, boordevol speelgoed, snacks en verwennerij.",
+            "benefits": "5 tot 6 verrassingen per box\nMix van speelgoed én snacks\nGeschikt voor elke hond\nGratis verzending\nMaandelijks opzegbaar",
             "price": "€64,95",
             "price_suffix": "per maand",
-            "description": "Onze populairste box boordevol speeltjes, snacks en verwennerij.",
             "badge": "Meest gekozen",
             "highlight": true,
             "button_label": "Bestel nu",
@@ -100,25 +105,84 @@
         "box_mega": {
           "type": "box",
           "settings": {
-            "title": "Mega Box",
+            "accent": "pink",
+            "title": "Mega Kwispelbox",
+            "description": "Voor grote honden of echte avonturiers die van afwisseling houden.",
+            "benefits": "7 tot 8 verrassingen per box\nExtra veel speelgoed\nVoor grote honden\nGratis verzending\nMaandelijks opzegbaar",
             "price": "€79,95",
             "price_suffix": "per maand",
-            "description": "Het ultieme feestje: extra veel speelgoed, snacks en cadeautjes.",
             "highlight": false,
             "button_label": "Bestel nu",
             "button_url": ""
+          }
+        },
+        "ben_1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Zorgvuldig geselecteerde producten",
+            "icon": "icon-check-circle.svg",
+            "color": "green"
+          }
+        },
+        "ben_2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Met liefde samengesteld",
+            "icon": "icon-heart.svg",
+            "color": "pink"
+          }
+        },
+        "ben_3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Iedere maand een nieuwe verrassing",
+            "icon": "icon-gift.svg",
+            "color": "orange"
+          }
+        },
+        "ben_4": {
+          "type": "benefit",
+          "settings": {
+            "title": "Meer dan 1.200 blije honden",
+            "icon": "icon-paw.svg",
+            "color": "green"
+          }
+        },
+        "ben_5": {
+          "type": "benefit",
+          "settings": {
+            "title": "Duurzame verpakkingen",
+            "icon": "icon-leaf.svg",
+            "color": "green"
+          }
+        },
+        "ben_6": {
+          "type": "benefit",
+          "settings": {
+            "title": "Uitstekend beoordeeld door klanten",
+            "icon": "icon-star.svg",
+            "color": "yellow"
           }
         }
       },
       "block_order": [
         "box_mini",
         "box_happy",
-        "box_mega"
+        "box_mega",
+        "ben_1",
+        "ben_2",
+        "ben_3",
+        "ben_4",
+        "ben_5",
+        "ben_6"
       ],
       "settings": {
         "label": "Onze boxen",
-        "heading": "Kies de box die past bij jouw hond",
-        "intro": "Elke maand een nieuwe verrassing, met liefde samengesteld. Geen verplichtingen, altijd opzegbaar."
+        "heading": "Voor iedere hond",
+        "heading_highlight": "de perfecte box",
+        "intro": "Klein, gemiddeld of juist groot: kies de box die past bij jouw hond. Elke maand een nieuwe verrassing, altijd maandelijks opzegbaar.",
+        "show_decorations": true,
+        "trust_title": "Waarom families voor Kwispelbox kiezen"
       }
     }
   },

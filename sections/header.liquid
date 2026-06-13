@@ -1160,6 +1160,7 @@
   function openDD(dd, trigger) {
     clearTimeout(closeTimer);
     clearTimeout(openTimer);
+    updateTop(); /* herbereken positie t.o.v. de (sticky) header bij openen, ook na scrollen */
     if (activeDD && activeDD !== dd) closeDD(activeDD, null);
     dd.setAttribute('data-open', '');
     trigger && trigger.setAttribute('aria-expanded', 'true');
