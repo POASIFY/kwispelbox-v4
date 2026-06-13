@@ -1,0 +1,100 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Kwispelbox KB-v3",
+    "theme_version": "3.0.0",
+    "theme_author": "POASIFY",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Indeling",
+    "settings": [
+      {
+        "type": "select",
+        "id": "max_page_width",
+        "label": "Paginabreedte",
+        "options": [
+          {
+            "value": "90rem",
+            "label": "Smal"
+          },
+          {
+            "value": "110rem",
+            "label": "Breed"
+          }
+        ],
+        "default": "90rem"
+      },
+      {
+        "type": "range",
+        "id": "min_page_margin",
+        "min": 10,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Paginamarge",
+        "default": 20
+      }
+    ]
+  },
+  {
+    "name": "Merkkleur",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_brand_pink",
+        "label": "Roze accent",
+        "default": "#e75480"
+      },
+      {
+        "type": "color",
+        "id": "color_brand_green",
+        "label": "Groen",
+        "default": "#66AA44"
+      },
+      {
+        "type": "color",
+        "id": "color_brand_orange",
+        "label": "Oranje",
+        "default": "#F7A048"
+      },
+      {
+        "type": "color",
+        "id": "color_brand_yellow",
+        "label": "Geel accent",
+        "default": "#FFE071"
+      },
+      {
+        "type": "color",
+        "id": "color_ink",
+        "label": "Koppen",
+        "default": "#3d2209"
+      },
+      {
+        "type": "color",
+        "id": "color_body",
+        "label": "Bodytekst",
+        "default": "#603A15"
+      },
+      {
+        "type": "color",
+        "id": "color_muted",
+        "label": "Subtekst",
+        "default": "#A88259"
+      },
+      {
+        "type": "color",
+        "id": "color_cream",
+        "label": "Achtergrond creme",
+        "default": "#F8EFDD"
+      },
+      {
+        "type": "color",
+        "id": "color_line",
+        "label": "Lijnkleur",
+        "default": "#EDE2C9"
+      }
+    ]
+  }
+]

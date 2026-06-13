@@ -1,0 +1,2195 @@
+{%- comment -%}
+  sections/header.liquid — Kwispelbox KB-v3
+  5 rijke dropdown layouts per menu-item:
+  - standard:    2-koloms links + banner (Special Editions)
+  - featured:    featured products + links (Verrassingsboxen)
+  - categories:  sub-categorie kolommen met foto (Shop)
+  - club:        Kwispelclub layout
+  - about:       Over ons brand layout
+{%- endcomment -%}
+
+{%- assign trust_blocks    = section.blocks | where: 'type', 'trust_item' -%}
+{%- assign dd_blocks       = section.blocks | where: 'type', 'dropdown_config' -%}
+{%- assign col_blocks      = section.blocks | where: 'type', 'dropdown_col' -%}
+{%- assign prod_blocks     = section.blocks | where: 'type', 'dropdown_product' -%}
+{%- assign link_blocks     = section.blocks | where: 'type', 'link_item' -%}
+
+<div class="site-header__wrapper full-width">
+
+  <!-- ══ RIJ 1: LOGO + ZOEK + ACTIES ══════════════════ -->
+  <div class="site-header__top">
+    <div class="site-header__top-inner">
+
+      <!-- Logo -->
+      <a href="{{ routes.root_url }}" class="site-header__logo" aria-label="{{ shop.name }}">
+        {%- if section.settings.logo != blank -%}
+          <img
+            src="{{ section.settings.logo | image_url: width: 400 }}"
+            srcset="{{ section.settings.logo | image_url: width: 200 }} 200w,
+                    {{ section.settings.logo | image_url: width: 400 }} 400w"
+            sizes="{{ section.settings.logo_width }}px"
+            alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+            width="{{ section.settings.logo_width }}"
+            height="{{ section.settings.logo_width | divided_by: section.settings.logo.aspect_ratio | round }}"
+            loading="eager" fetchpriority="high" class="site-header__logo-img">
+        {%- else -%}
+          <span class="site-header__logo-text">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+
+      <!-- Zoekbalk (desktop) -->
+      <form action="{{ routes.search_url }}" method="get" role="search" class="site-header__search-bar" data-search-form>
+        <input type="hidden" name="type" value="product">
+        <label for="header-search-main" class="site-header__sr-only">Zoeken</label>
+        <div class="site-header__search-bar-field">
+          <span class="site-header__search-bar-icon" aria-hidden="true">{{- 'icon-search.svg' | inline_asset_content -}}</span>
+          <input type="search" id="header-search-main" name="q"
+            class="site-header__search-bar-input"
+            placeholder="{{ section.settings.search_placeholder }}"
+            autocomplete="off" autocorrect="off" spellcheck="false"
+            data-search-input aria-autocomplete="list" aria-controls="search-results">
+          <button type="button" class="site-header__search-clear" aria-label="Wissen" hidden data-search-clear>
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </button>
+          <button type="submit" class="site-header__search-bar-btn" aria-label="Zoeken">
+            {{- 'icon-search.svg' | inline_asset_content -}}
+          </button>
+        </div>
+        <div class="site-header__search-results" id="search-results" role="listbox" hidden data-search-results></div>
+      </form>
+
+      <!-- Acties rechts -->
+      <div class="site-header__actions">
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}" class="site-header__action-btn">
+            <span class="site-header__action-icon" aria-hidden="true" style="width:22px;height:22px;">{{- 'icon-account.svg' | inline_asset_content -}}</span>
+            <span class="site-header__action-label">Mijn account</span>
+          </a>
+        {%- endif -%}
+        <a href="{{ routes.cart_url }}" class="site-header__action-btn site-header__cart-btn"
+           aria-label="Winkelwagen, {{ cart.item_count }} items">
+          <span class="site-header__action-icon" aria-hidden="true" style="width:22px;height:22px;">
+            {{- 'icon-cart.svg' | inline_asset_content -}}
+            {%- if cart.item_count > 0 -%}
+              <span class="site-header__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
+            {%- endif -%}
+          </span>
+          <span class="site-header__action-label">Winkelwagen</span>
+        </a>
+        <!-- Hamburger (mobiel) -->
+        <button class="site-header__burger"
+                aria-expanded="false"
+                aria-controls="header-drawer"
+                aria-label="Menu openen">
+          {{- 'icon-menu.svg' | inline_asset_content -}}
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ RIJ 2: NAVIGATIE ═══════════════════════════════ -->
+  {%- if section.settings.menu != blank -%}
+    <header class="site-header" role="banner">
+      <div class="site-header__nav-row">
+        <span class="site-header__nav-deco site-header__nav-deco--left" aria-hidden="true">
+          <svg width="40" height="32" viewBox="0 0 40 32" fill="none"><path d="M2 28 C8 20, 14 8, 24 12 S36 28, 38 20" stroke="#66AA44" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M30 6 C32 2, 36 4, 34 8" stroke="#66AA44" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+        </span>
+        <nav class="site-header__nav" aria-label="Hoofdnavigatie">
+          <ul class="site-header__chips" role="list">
+            {%- for link in section.settings.menu.links -%}
+              {%- assign lx = forloop.index -%}
+              {%- assign dd = nil -%}
+              {%- for b in dd_blocks -%}
+                {%- if b.settings.menu_item_index == lx -%}{%- assign dd = b -%}{%- endif -%}
+              {%- endfor -%}
+              {%- assign has_dd = false -%}
+              {%- if dd != nil or link.links.size > 0 -%}{%- assign has_dd = true -%}{%- endif -%}
+
+              <li class="site-header__chip-item{% if has_dd %} site-header__chip-item--has-dd{% endif %}" data-nav-item>
+
+                <a href="{{ link.url }}"
+                   class="site-header__chip{% if dd %} site-header__chip--{{ dd.settings.accent_color }}{% endif %}"
+                   {% if link.active %}aria-current="page"{% endif %}
+                   {% if has_dd %}aria-haspopup="true" aria-expanded="false" data-nav-trigger{% endif %}>
+                  {%- if lx == 1 -%}<span class="site-header__chip-icon" aria-hidden="true">{{- 'icon-gift.svg' | inline_asset_content -}}</span>
+                  {%- elsif lx == 2 -%}<span class="site-header__chip-icon" aria-hidden="true">{{- 'icon-sparkles.svg' | inline_asset_content -}}</span>
+                  {%- elsif lx == 3 -%}<span class="site-header__chip-icon" aria-hidden="true">{{- 'icon-bone.svg' | inline_asset_content -}}</span>
+                  {%- elsif lx == 4 -%}<span class="site-header__chip-icon" aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span>
+                  {%- elsif lx == 5 -%}<span class="site-header__chip-icon" aria-hidden="true">{{- 'icon-heart.svg' | inline_asset_content -}}</span>
+                  {%- endif -%}
+                  {{ link.title }}
+                  {%- if has_dd -%}
+                    <span class="site-header__chip-chevron" aria-hidden="true">
+                      {{- 'icon-chevron-down.svg' | inline_asset_content -}}
+                    </span>
+                  {%- endif -%}
+                </a>
+
+                {%- if has_dd -%}
+                  <div class="site-header__dropdown" data-nav-dropdown>
+                    <div class="site-header__dropdown-card">
+                      {%- assign layout = dd.settings.layout_type | default: 'standard' -%}
+
+                      {%- comment -%} ══ LAYOUT: FEATURED / MEGA (Verrassingsboxen) ══ {%- endcomment -%}
+                      {%- if layout == 'featured' -%}
+                        <div class="dd-verr">
+
+                          {%- comment -%} Kolom 1: Verrassingsboxen — producten + extra links {%- endcomment -%}
+                          <div class="dd-verr__col dd-verr__col--products">
+                            <div class="dd-verr__col-head">
+                              <span class="dd-verr__col-icon dd-verr__col-icon--{{ dd.settings.accent_color }}" aria-hidden="true">
+                                {{- 'icon-gift.svg' | inline_asset_content -}}
+                              </span>
+                              <div>
+                                <a href="{{ link.url }}" class="dd-verr__col-title dd-verr__col-title--{{ dd.settings.accent_color }}">{{ link.title }}</a>
+                                {%- if dd.settings.col1_desc != blank -%}
+                                  <p class="dd-verr__col-desc">{{ dd.settings.col1_desc }}</p>
+                                {%- endif -%}
+                              </div>
+                            </div>
+
+                            <div class="dd-verr__products">
+                              {%- for pb in prod_blocks -%}
+                                {%- if pb.settings.menu_item_index == lx -%}
+                                  {%- assign p = pb.settings.product -%}
+                                  {%- if p != blank -%}
+                                    <a href="{{ p.url }}" class="dd-verr__product" {{ pb.shopify_attributes }}>
+                                      {%- if p.featured_image -%}
+                                        <img src="{{ p.featured_image | image_url: width: 140 }}"
+                                             alt="{{ p.featured_image.alt | default: p.title | escape }}"
+                                             width="70" height="70" loading="lazy"
+                                             class="dd-verr__product-img">
+                                      {%- endif -%}
+                                      <div class="dd-verr__product-info">
+                                        <div class="dd-verr__product-name-row">
+                                          <strong>{{ p.title }}</strong>
+                                          {%- if pb.settings.badge != blank -%}
+                                            <span class="dd-verr__product-badge">{{ pb.settings.badge }}</span>
+                                          {%- endif -%}
+                                        </div>
+                                        {%- if pb.settings.description != blank -%}
+                                          <span class="dd-verr__product-desc">{{ pb.settings.description }}</span>
+                                        {%- endif -%}
+                                      </div>
+                                      <svg class="dd-verr__chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                                    </a>
+                                  {%- endif -%}
+                                {%- endif -%}
+                              {%- endfor -%}
+                            </div>
+
+                            {%- if dd.settings.link_list != blank -%}
+                              <ul class="dd-verr__extra-links" role="list">
+                                {%- for child in dd.settings.link_list.links -%}
+                                  <li>
+                                    <a href="{{ child.url }}" class="dd-verr__extra-link">
+                                      <span class="dd-verr__link-icon dd-verr__link-icon--{{ dd.settings.accent_color }}" aria-hidden="true">
+                                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                      </span>
+                                      <span>{{ child.title }}</span>
+                                      <svg class="dd-verr__chevron" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            {%- endif -%}
+                          </div>
+
+                          {%- comment -%} Kolommen 2-N via dropdown_col blocks {%- endcomment -%}
+                          {%- for cb in col_blocks -%}
+                            {%- if cb.settings.menu_item_index == lx -%}
+                              <div class="dd-verr__col" {{ cb.shopify_attributes }}>
+                                <div class="dd-verr__col-head">
+                                  <span class="dd-verr__col-icon dd-verr__col-icon--{{ cb.settings.color }}" aria-hidden="true">
+                                    {{- cb.settings.icon | inline_asset_content -}}
+                                  </span>
+                                  <div>
+                                    <a href="{{ cb.settings.cta_url | default: '#' }}" class="dd-verr__col-title dd-verr__col-title--{{ cb.settings.color }}">{{ cb.settings.heading }}</a>
+                                    {%- if cb.settings.description != blank -%}
+                                      <p class="dd-verr__col-desc">{{ cb.settings.description }}</p>
+                                    {%- endif -%}
+                                  </div>
+                                </div>
+
+                                {%- assign col_link_items = link_blocks | where: 'settings.col_index', cb.settings.col_order -%}
+                                {%- if col_link_items.size > 0 -%}
+                                  <ul class="dd-verr__col-links" role="list">
+                                    {%- for li in col_link_items -%}
+                                      <li {{ li.shopify_attributes }}>
+                                        <a href="{{ li.settings.url }}" class="dd-verr__col-link">
+                                          <span class="dd-verr__link-icon dd-verr__link-icon--{{ cb.settings.color }}" aria-hidden="true">
+                                            {%- case li.settings.icon -%}
+                                              {%- when 'gift' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                                              {%- when 'question' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                                              {%- when 'paw' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="4" cy="8" r="2"/><path d="M11 4c-3 4-5 6-5 10a7 7 0 0 0 14 0c0-4-2-6-5-10"/></svg>
+                                              {%- when 'star' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                              {%- when 'heart' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                                              {%- when 'cake' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8"/><path d="M4 16s.5-1 2-1 2.5 2 4 2 2.5-2 4-2 2.5 2 4 2 2-1 2-1"/><path d="M2 21h20"/><path d="M7 8v3"/><path d="M12 8v3"/><path d="M17 8v3"/><path d="M7 4h.01"/><path d="M12 4h.01"/><path d="M17 4h.01"/></svg>
+                                              {%- when 'camera' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                                              {%- when 'bone' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z"/></svg>
+                                              {%- when 'sparkles' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3 9.5 9.5 3 12l6.5 2.5L12 21l2.5-6.5L21 12l-6.5-2.5Z"/></svg>
+                                              {%- when 'shield' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                              {%- when 'leaf' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+                                              {%- when 'refresh' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                                              {%- when 'users' -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                              {%- else -%}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                            {%- endcase -%}
+                                          </span>
+                                          <span>{{ li.settings.label }}</span>
+                                          <svg class="dd-verr__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                                        </a>
+                                      </li>
+                                    {%- endfor -%}
+                                  </ul>
+                                {%- elsif cb.settings.link_list != blank -%}
+                                  <ul class="dd-verr__col-links" role="list">
+                                    {%- for child in cb.settings.link_list.links limit: 8 -%}
+                                      <li>
+                                        <a href="{{ child.url }}" class="dd-verr__col-link{% unless cb.settings.show_link_icons %} dd-verr__col-link--no-icon{% endunless %}">
+                                          {%- if cb.settings.show_link_icons -%}
+                                            <span class="dd-verr__link-icon dd-verr__link-icon--{{ cb.settings.color }}" aria-hidden="true">
+                                              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                            </span>
+                                          {%- endif -%}
+                                          <span>{{ child.title }}</span>
+                                          <svg class="dd-verr__chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                                        </a>
+                                      </li>
+                                    {%- endfor -%}
+                                  </ul>
+                                {%- endif -%}
+
+                                {%- if cb.settings.cta_label != blank -%}
+                                  <a href="{{ cb.settings.cta_url | default: '#' }}" class="dd-verr__col-cta dd-verr__col-cta--{{ cb.settings.color }}">
+                                    {{ cb.settings.cta_label }}
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                  </a>
+                                {%- endif -%}
+
+                                {%- comment -%} Mini-banner onderaan kolom (bv. "Nieuw binnen!") {%- endcomment -%}
+                                {%- if cb.settings.mini_banner_label != blank -%}
+                                  <div class="dd-verr__mini-banner">
+                                    <div class="dd-verr__mini-banner-text">
+                                      <strong>{{ cb.settings.mini_banner_label }}</strong>
+                                      {%- if cb.settings.mini_banner_sub != blank -%}
+                                        <span>{{ cb.settings.mini_banner_sub }}</span>
+                                      {%- endif -%}
+                                      {%- if cb.settings.mini_banner_url != blank -%}
+                                        <a href="{{ cb.settings.mini_banner_url }}" class="dd-verr__mini-banner-btn" aria-label="{{ cb.settings.mini_banner_label }}">
+                                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                        </a>
+                                      {%- endif -%}
+                                    </div>
+                                    {%- if cb.settings.mini_banner_image != blank -%}
+                                      <img src="{{ cb.settings.mini_banner_image | image_url: width: 160 }}"
+                                           alt="{{ cb.settings.mini_banner_image.alt | escape }}"
+                                           width="80" height="80" loading="lazy"
+                                           class="dd-verr__mini-banner-img">
+                                    {%- endif -%}
+                                  </div>
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          {%- endfor -%}
+
+                          {%- comment -%} Banner rechts: cream achtergrond, foto, CTA-knop {%- endcomment -%}
+                          {%- if dd.settings.banner_title != blank -%}
+                            <div class="dd-verr__banner">
+                              <div class="dd-verr__banner-body">
+                                <strong class="dd-verr__banner-title">{{ dd.settings.banner_title }}</strong>
+                                {%- if dd.settings.banner_text != blank -%}
+                                  <span class="dd-verr__banner-text">{{ dd.settings.banner_text }}</span>
+                                {%- endif -%}
+                              </div>
+                              {%- if dd.settings.banner_image != blank -%}
+                                <div class="dd-verr__banner-img-wrap">
+                                  <img src="{{ dd.settings.banner_image | image_url: width: 500 }}"
+                                       alt="{{ dd.settings.banner_image.alt | default: dd.settings.banner_title | escape }}"
+                                       width="500" height="340" loading="lazy"
+                                       class="dd-verr__banner-img">
+                                </div>
+                              {%- endif -%}
+                              {%- if dd.settings.banner_cta_label != blank -%}
+                                <div class="dd-verr__banner-cta-wrap">
+                                  <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-verr__banner-cta">
+                                    {{ dd.settings.banner_cta_label }}
+                                    {{- 'icon-paw.svg' | inline_asset_content -}}
+                                  </a>
+                                </div>
+                              {%- endif -%}
+                            </div>
+                          {%- endif -%}
+
+                        </div>
+
+                      {%- comment -%} ══ LAYOUT: CATEGORIES (Shop) ══ {%- endcomment -%}
+                      {%- elsif layout == 'categories' -%}
+                        <div class="dd-categories">
+                          {%- for cb in col_blocks -%}
+                            {%- if cb.settings.menu_item_index == lx -%}
+                              <div class="dd-cat-col dd-cat-col--{{ cb.settings.color }}" {{ cb.shopify_attributes }}>
+                                <div class="dd-cat-col__head">
+                                  {%- if cb.settings.icon != blank -%}
+                                    <span class="dd-cat-col__icon" aria-hidden="true">
+                                      {{- cb.settings.icon | inline_asset_content -}}
+                                    </span>
+                                  {%- endif -%}
+                                  <div>
+                                    <strong class="dd-cat-col__title">{{ cb.settings.heading }}</strong>
+                                    {%- if cb.settings.description != blank -%}
+                                      <span class="dd-cat-col__desc">{{ cb.settings.description }}</span>
+                                    {%- endif -%}
+                                  </div>
+                                </div>
+                                {%- if cb.settings.link_list != blank -%}
+                                  <ul class="dd-cat-col__links" role="list">
+                                    {%- for child in cb.settings.link_list.links -%}
+                                      <li>
+                                        <a href="{{ child.url }}" class="dd-cat-col__link">
+                                          <span class="dd-cat-col__link-icon" aria-hidden="true">
+                                            {{- 'icon-paw.svg' | inline_asset_content -}}
+                                          </span>
+                                          {{ child.title }}
+                                        </a>
+                                      </li>
+                                    {%- endfor -%}
+                                  </ul>
+                                {%- endif -%}
+                                {%- if cb.settings.cta_label != blank -%}
+                                  <a href="{{ cb.settings.cta_url | default: '#' }}" class="dd-cat-col__cta dd-cat-col__cta--{{ cb.settings.color }}">
+                                    {{ cb.settings.cta_label }}
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                  </a>
+                                {%- endif -%}
+                                {%- if cb.settings.image != blank -%}
+                                  <div class="dd-cat-col__img-wrap" aria-hidden="true">
+                                    <img src="{{ cb.settings.image | image_url: width: 280 }}"
+                                         alt="{{ cb.settings.image.alt | escape }}"
+                                         width="280" height="200" loading="lazy"
+                                         class="dd-cat-col__img">
+                                  </div>
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          {%- endfor -%}
+                          {%- if dd.settings.banner_title != blank -%}
+                            <div class="dd-cat-banner">
+                              <strong class="dd-cat-banner__title">{{ dd.settings.banner_title }}</strong>
+                              {%- if dd.settings.banner_text != blank -%}<span class="dd-cat-banner__text">{{ dd.settings.banner_text }}</span>{%- endif -%}
+                              {%- if dd.settings.banner_image != blank -%}
+                                <img src="{{ dd.settings.banner_image | image_url: width: 320 }}"
+                                     alt="{{ dd.settings.banner_image.alt | escape }}"
+                                     width="320" height="200" loading="lazy" class="dd-cat-banner__img">
+                              {%- endif -%}
+                              {%- if dd.settings.banner_cta_label != blank -%}
+                                <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-cta-btn dd-cta-btn--{{ dd.settings.accent_color }}">
+                                  {{ dd.settings.banner_cta_label }}
+                                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </a>
+                              {%- endif -%}
+                            </div>
+                          {%- endif -%}
+                        </div>
+
+                      {%- comment -%} ══ LAYOUT: CLUB (Kwispelclub) ══ {%- endcomment -%}
+                      {%- elsif layout == 'club' -%}
+                        <div class="dd-club">
+                          <div class="dd-club__intro">
+                            <strong class="dd-club__intro-title">{{ dd.settings.club_intro_title }}</strong>
+                            {%- if dd.settings.club_intro_text != blank -%}
+                              <p class="dd-club__intro-body">{{ dd.settings.club_intro_text }}</p>
+                            {%- endif -%}
+                            <ul class="dd-club__checks" role="list">
+                              {%- if dd.settings.club_check_1 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_1 }}</li>{%- endif -%}
+                              {%- if dd.settings.club_check_2 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_2 }}</li>{%- endif -%}
+                              {%- if dd.settings.club_check_3 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_3 }}</li>{%- endif -%}
+                              {%- if dd.settings.club_check_4 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_4 }}</li>{%- endif -%}
+                              {%- if dd.settings.club_check_5 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_5 }}</li>{%- endif -%}
+                            </ul>
+                            {%- if dd.settings.club_intro_image != blank -%}
+                              <img src="{{ dd.settings.club_intro_image | image_url: width: 240 }}"
+                                   alt="{{ dd.settings.club_intro_image.alt | escape }}"
+                                   width="240" height="180" loading="lazy" class="dd-club__intro-img">
+                            {%- endif -%}
+                            {%- if dd.settings.banner_cta_label != blank -%}
+                              <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-cta-btn dd-cta-btn--{{ dd.settings.accent_color }}">
+                                {{ dd.settings.banner_cta_label }}
+                                {{- 'icon-paw.svg' | inline_asset_content -}}
+                              </a>
+                            {%- endif -%}
+                          </div>
+                          {%- if dd.settings.link_list != blank -%}
+                            <div class="dd-club__links">
+                              <ul class="dd-club__link-list" role="list">
+                                {%- for child in dd.settings.link_list.links -%}
+                                  <li>
+                                    <a href="{{ child.url }}" class="dd-club__link">
+                                      <span class="dd-club__link-icon dd-link-icon--{{ dd.settings.accent_color }}" aria-hidden="true">
+                                        {{- 'icon-paw.svg' | inline_asset_content -}}
+                                      </span>
+                                      <span class="dd-club__link-text">
+                                        <strong>{{ child.title }}</strong>
+                                      </span>
+                                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                            </div>
+                          {%- endif -%}
+                          <div class="dd-club__right">
+                            {%- if dd.settings.club_rewards_image != blank -%}
+                              <div class="dd-club__rewards">
+                                <strong class="dd-club__rewards-title">{{ dd.settings.club_rewards_title }}</strong>
+                                <img src="{{ dd.settings.club_rewards_image | image_url: width: 320 }}"
+                                     alt="{{ dd.settings.club_rewards_title | default: 'Kwispels beloningen' | escape }}"
+                                     width="320" height="200" loading="lazy" class="dd-club__rewards-img">
+                                {%- if dd.settings.view_all_label != blank -%}
+                                  <a href="{{ dd.settings.view_all_url | default: link.url }}" class="dd-view-all dd-view-all--{{ dd.settings.accent_color }}">
+                                    {{ dd.settings.view_all_label }}
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                  </a>
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                            {%- if dd.settings.club_motm_image != blank -%}
+                              <div class="dd-club__motm">
+                                <strong class="dd-club__motm-title">{{ dd.settings.club_motm_title }}</strong>
+                                <div class="dd-polaroid">
+                                  <img src="{{ dd.settings.club_motm_image | image_url: width: 240 }}"
+                                       alt="{{ dd.settings.club_motm_name | default: 'Hond van de maand' | escape }}"
+                                       width="240" height="180" loading="lazy" class="dd-polaroid__img">
+                                  {%- if dd.settings.club_motm_name != blank -%}
+                                    <span class="dd-polaroid__label">{{ dd.settings.club_motm_name }}</span>
+                                  {%- endif -%}
+                                </div>
+                                {%- if dd.settings.banner_cta_label != blank -%}
+                                  <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-cta-btn dd-cta-btn--pink">
+                                    {{- 'icon-camera.svg' | inline_asset_content -}}
+                                    Deel jouw foto
+                                  </a>
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          </div>
+                        </div>
+
+                      {%- comment -%} ══ LAYOUT: ABOUT (Over ons) ══ {%- endcomment -%}
+                      {%- elsif layout == 'about' -%}
+                        <div class="dd-about">
+                          {%- if dd.settings.link_list != blank -%}
+                            <div class="dd-about__links">
+                              <ul class="dd-about__link-list" role="list">
+                                {%- for child in dd.settings.link_list.links -%}
+                                  <li>
+                                    <a href="{{ child.url }}" class="dd-about__link">
+                                      <span class="dd-about__link-icon dd-link-icon--{{ dd.settings.accent_color }}" aria-hidden="true">
+                                        {{- 'icon-heart.svg' | inline_asset_content -}}
+                                      </span>
+                                      <span class="dd-about__link-text">
+                                        <strong>{{ child.title }}</strong>
+                                      </span>
+                                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                    </a>
+                                  </li>
+                                {%- endfor -%}
+                              </ul>
+                              {%- if dd.settings.about_tagline != blank -%}
+                                <div class="dd-about__tagline">
+                                  <strong>{{ dd.settings.about_tagline }}</strong>
+                                  {%- if dd.settings.about_tagline_sub != blank -%}
+                                    <span class="dd-about__tagline-sub">{{ dd.settings.about_tagline_sub }}</span>
+                                  {%- endif -%}
+                                </div>
+                              {%- endif -%}
+                            </div>
+                          {%- endif -%}
+                          <div class="dd-about__content">
+                            <strong class="dd-about__content-title">{{ dd.settings.banner_title }}</strong>
+                            {%- if dd.settings.banner_text != blank -%}
+                              <p class="dd-about__content-body">{{ dd.settings.banner_text }}</p>
+                            {%- endif -%}
+                            {%- if dd.settings.banner_cta_label != blank -%}
+                              <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-cta-btn dd-cta-btn--{{ dd.settings.accent_color }}">
+                                {{ dd.settings.banner_cta_label }}
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                              </a>
+                            {%- endif -%}
+                            {%- if dd.settings.banner_image != blank -%}
+                              <img src="{{ dd.settings.banner_image | image_url: width: 400 }}"
+                                   alt="{{ dd.settings.banner_image.alt | escape }}"
+                                   width="400" height="260" loading="lazy" class="dd-about__content-img">
+                            {%- endif -%}
+                          </div>
+                          {%- if dd.settings.about_team_image != blank or dd.settings.about_team_title != blank -%}
+                            <div class="dd-about__team">
+                              <strong class="dd-about__team-title">{{ dd.settings.about_team_title }}</strong>
+                              {%- if dd.settings.about_team_image != blank -%}
+                                <div class="dd-polaroid">
+                                  <img src="{{ dd.settings.about_team_image | image_url: width: 280 }}"
+                                       alt="{{ dd.settings.about_team_title | default: 'Het team' | escape }}"
+                                       width="280" height="200" loading="lazy" class="dd-polaroid__img">
+                                </div>
+                              {%- endif -%}
+                              {%- if dd.settings.about_team_tagline != blank -%}
+                                <span class="dd-about__team-tagline">{{ dd.settings.about_team_tagline }}</span>
+                              {%- endif -%}
+                            </div>
+                          {%- endif -%}
+                        </div>
+
+                      {%- comment -%} ══ LAYOUT: STANDARD (Special Editions, default) ══ {%- endcomment -%}
+                      {%- else -%}
+                        <div class="dd-standard">
+                          <div class="dd-standard__links-wrap">
+                            {%- if dd.settings.link_list != blank -%}
+                              <div class="dd-standard__grid">
+                                {%- for child in dd.settings.link_list.links -%}
+                                  <a href="{{ child.url }}" class="dd-standard__item"
+                                     {% if child.active %}aria-current="page"{% endif %}>
+                                    <span class="dd-standard__item-icon dd-link-icon--{{ dd.settings.accent_color }}" aria-hidden="true">
+                                      {{- 'icon-paw.svg' | inline_asset_content -}}
+                                    </span>
+                                    <span class="dd-standard__item-text">
+                                      <strong>{{ child.title }}</strong>
+                                    </span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                  </a>
+                                {%- endfor -%}
+                              </div>
+                            {%- endif -%}
+                            {%- if dd.settings.view_all_label != blank -%}
+                              <a href="{{ dd.settings.view_all_url | default: link.url }}" class="dd-view-all dd-view-all--{{ dd.settings.accent_color }}">
+                                {{ dd.settings.view_all_label }}
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                              </a>
+                            {%- endif -%}
+                          </div>
+                          {%- if dd.settings.banner_title != blank -%}
+                            <div class="dd-banner">
+                              {%- if dd.settings.banner_image != blank -%}
+                                <div class="dd-banner__img-wrap">
+                                  <img src="{{ dd.settings.banner_image | image_url: width: 600 }}"
+                                       alt="{{ dd.settings.banner_image.alt | default: dd.settings.banner_title | escape }}"
+                                       width="600" height="400" loading="lazy" class="dd-banner__img">
+                                  {%- if dd.settings.banner_badge != blank -%}
+                                    <span class="dd-banner__badge dd-banner__badge--{{ dd.settings.accent_color }}">{{ dd.settings.banner_badge }}</span>
+                                  {%- endif -%}
+                                </div>
+                              {%- endif -%}
+                              <div class="dd-banner__body">
+                                <strong class="dd-banner__title">{{ dd.settings.banner_title }}</strong>
+                                {%- if dd.settings.banner_text != blank -%}<span class="dd-banner__text">{{ dd.settings.banner_text }}</span>{%- endif -%}
+                                {%- if dd.settings.banner_cta_label != blank -%}
+                                  <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-cta-btn dd-cta-btn--{{ dd.settings.accent_color }}">
+                                    {{ dd.settings.banner_cta_label }}
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                  </a>
+                                {%- endif -%}
+                              </div>
+                            </div>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+
+                    </div>
+                  </div>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+        </nav>
+        <span class="site-header__nav-deco site-header__nav-deco--right" aria-hidden="true">
+          <svg width="40" height="32" viewBox="0 0 40 32" fill="none"><path d="M38 28 C32 20, 26 8, 16 12 S4 28, 2 20" stroke="#66AA44" stroke-width="2.5" stroke-linecap="round" fill="none"/><path d="M10 6 C8 2, 4 4, 6 8" stroke="#66AA44" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+        </span>
+      </div>
+    </header>
+  {%- endif -%}
+
+  <!-- ══ TRUST BAR ════════════════════════════════════ -->
+  {%- if trust_blocks.size > 0 -%}
+    <div class="site-header__trust-bar">
+      <div class="site-header__trust-inner">
+        {%- for block in trust_blocks -%}
+          <div class="site-header__trust-item" {{ block.shopify_attributes }}>
+            {%- if block.settings.url != blank -%}<a href="{{ block.settings.url }}" class="site-header__trust-link">{%- else -%}<span class="site-header__trust-link">{%- endif -%}
+              <span class="site-header__trust-icon" aria-hidden="true">{{- block.settings.icon | inline_asset_content -}}</span>
+              <span class="site-header__trust-text">
+                <strong>{{ block.settings.title }}</strong>
+                {%- if block.settings.subtitle != blank -%}<span>{{ block.settings.subtitle }}</span>{%- endif -%}
+              </span>
+            {%- if block.settings.url != blank -%}</a>{%- else -%}</span>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+</div>
+
+<!-- ══ OVERLAY ══════════════════════════════════════════ -->
+<div class="site-header__overlay" id="nav-overlay" aria-hidden="true" data-nav-overlay></div>
+
+<!-- ══ MOBIEL DRAWER ════════════════════════════════════ -->
+<div class="header-drawer" id="header-drawer" role="dialog" aria-modal="true" aria-label="Navigatiemenu" aria-hidden="true">
+
+  <!-- Header -->
+  <div class="header-drawer__header">
+    <a href="{{ routes.root_url }}" class="header-drawer__logo" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 300 }}"
+             alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+             width="120" height="auto" loading="lazy" class="header-drawer__logo-img">
+      {%- else -%}
+        <span class="header-drawer__logo-text">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+    <div class="header-drawer__header-actions">
+      {%- if shop.customer_accounts_enabled -%}
+        <a href="{{ routes.account_url }}" class="header-drawer__icon-btn" aria-label="Account">
+          {{- 'icon-account.svg' | inline_asset_content -}}
+        </a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="header-drawer__icon-btn header-drawer__cart-btn" aria-label="Winkelwagen">
+        {{- 'icon-cart.svg' | inline_asset_content -}}
+        {%- if cart.item_count > 0 -%}
+          <span class="header-drawer__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+      <button class="header-drawer__close" aria-label="Sluiten" data-drawer-close>
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </button>
+    </div>
+  </div>
+
+  <!-- Trust bar -->
+  {%- assign trust_blocks_drawer = section.blocks | where: 'type', 'trust_item' -%}
+  {%- if trust_blocks_drawer.size > 0 -%}
+    <div class="header-drawer__trust">
+      {%- for block in trust_blocks_drawer limit: 3 -%}
+        <div class="header-drawer__trust-item">
+          <span class="header-drawer__trust-icon" aria-hidden="true">{{- block.settings.icon | inline_asset_content -}}</span>
+          <span class="header-drawer__trust-text">{{ block.settings.title }}{%- if block.settings.subtitle != blank -%} {{ block.settings.subtitle }}{%- endif -%}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <!-- Navigatie -->
+  <nav aria-label="Mobiel menu" class="header-drawer__nav-wrap">
+    <ul class="header-drawer__nav" role="list">
+      {%- for link in section.settings.menu.links -%}
+        {%- assign nav_lx = forloop.index -%}
+        <li class="header-drawer__nav-item{% if link.links.size > 0 %} header-drawer__nav-item--has-sub{% endif %}">
+          <div class="header-drawer__nav-row">
+            <span class="header-drawer__nav-icon header-drawer__nav-icon--{% if nav_lx == 1 %}green{% elsif nav_lx == 2 %}pink{% elsif nav_lx == 3 %}green{% elsif nav_lx == 4 %}orange{% else %}orange{% endif %}" aria-hidden="true">
+              {%- if nav_lx == 1 -%}{{- 'icon-gift.svg' | inline_asset_content -}}
+              {%- elsif nav_lx == 2 -%}{{- 'icon-gift.svg' | inline_asset_content -}}
+              {%- elsif nav_lx == 3 -%}{{- 'icon-bone.svg' | inline_asset_content -}}
+              {%- elsif nav_lx == 4 -%}{{- 'icon-paw.svg' | inline_asset_content -}}
+              {%- else -%}{{- 'icon-heart.svg' | inline_asset_content -}}
+              {%- endif -%}
+            </span>
+            <a href="{{ link.url }}" class="header-drawer__nav-link" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
+            {%- if link.links.size > 0 -%}
+              <button class="header-drawer__sub-toggle" aria-expanded="false" aria-label="{{ link.title }} submenu">
+                {{- 'icon-chevron-down.svg' | inline_asset_content -}}
+              </button>
+            {%- else -%}
+              <svg class="header-drawer__nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+            {%- endif -%}
+          </div>
+          {%- if link.links.size > 0 -%}
+            <ul class="header-drawer__sub-nav" role="list" hidden>
+              {%- for child in link.links -%}
+                <li><a href="{{ child.url }}" class="header-drawer__sub-link" {% if child.active %}aria-current="page"{% endif %}>{{ child.title }}</a></li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+
+  <!-- Extra links -->
+  <div class="header-drawer__extras">
+    <a href="{{ routes.search_url }}" class="header-drawer__extra-link">
+      <span class="header-drawer__extra-icon" aria-hidden="true">{{- 'icon-search.svg' | inline_asset_content -}}</span>
+      <span>Zoeken</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+    {%- if shop.customer_accounts_enabled -%}
+      <a href="{{ routes.account_url }}" class="header-drawer__extra-link">
+        <span class="header-drawer__extra-icon" aria-hidden="true">{{- 'icon-account.svg' | inline_asset_content -}}</span>
+        <span>{%- if customer -%}Mijn account{%- else -%}{{ section.settings.account_label }}{%- endif -%}</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    {%- endif -%}
+    <a href="{{ routes.cart_url }}" class="header-drawer__extra-link">
+      <span class="header-drawer__extra-icon" aria-hidden="true">{{- 'icon-cart.svg' | inline_asset_content -}}</span>
+      <span>Winkelwagen</span>
+      <span class="header-drawer__extra-badge">
+        {%- if cart.item_count > 0 -%}<span class="header-drawer__cart-count">{{ cart.item_count }}</span>{%- endif -%}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </span>
+    </a>
+    <a href="/pages/klantenservice" class="header-drawer__extra-link">
+      <span class="header-drawer__extra-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+      </span>
+      <span>Klantenservice</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+    <a href="/pages/veelgestelde-vragen" class="header-drawer__extra-link">
+      <span class="header-drawer__extra-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </span>
+      <span>Veelgestelde vragen</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+    </a>
+  </div>
+
+  <!-- Banner Kwispelclub -->
+  {%- if section.settings.drawer_banner_title != blank -%}
+    <div class="header-drawer__banner">
+      <div class="header-drawer__banner-content">
+        <strong class="header-drawer__banner-title">{{ section.settings.drawer_banner_title }}</strong>
+        {%- if section.settings.drawer_banner_text != blank -%}
+          <p class="header-drawer__banner-text">{{ section.settings.drawer_banner_text }}</p>
+        {%- endif -%}
+        {%- if section.settings.drawer_banner_cta != blank -%}
+          <a href="{{ section.settings.drawer_banner_url | default: routes.root_url }}" class="header-drawer__banner-btn">
+            {{ section.settings.drawer_banner_cta }}
+            {{- 'icon-paw.svg' | inline_asset_content -}}
+          </a>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.drawer_banner_image != blank -%}
+        <div class="header-drawer__banner-img-wrap">
+          <img src="{{ section.settings.drawer_banner_image | image_url: width: 300 }}"
+               alt="{{ section.settings.drawer_banner_image.alt | escape }}"
+               width="150" height="150" loading="lazy" class="header-drawer__banner-img">
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  <!-- Footer -->
+  <div class="header-drawer__footer">
+    <span class="header-drawer__footer-text">Woeff, tot snel! ♡</span>
+    <div class="header-drawer__footer-wave" aria-hidden="true">
+      <svg viewBox="0 0 375 48" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M0 24C62.5 24 62.5 48 125 48C187.5 48 187.5 24 250 24C312.5 24 312.5 48 375 48V0H0V24Z" fill="var(--color-green)" opacity="0.3"/>
+        <path d="M0 32C62.5 32 62.5 48 125 48C187.5 48 187.5 32 250 32C312.5 32 312.5 48 375 48V48H0V32Z" fill="var(--color-green)"/>
+      </svg>
+    </div>
+  </div>
+
+</div>
+<div class="header-drawer__overlay" id="header-overlay" aria-hidden="true" data-drawer-overlay></div>
+
+{% stylesheet %}
+/* ── Helpers ──────────────────────────────────────────── */
+.site-header__sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
+
+/* ── Wrapper ──────────────────────────────────────────── */
+.site-header__wrapper{position:sticky;top:0;z-index:100;background:#fff;box-shadow:0 1px 0 var(--color-line);}
+
+/* ══ RIJ 1: TOP BAR (Logo + Zoek + Acties) ═══════════ */
+.site-header__top{background:#fff;border-bottom:1px solid var(--color-line);}
+.site-header__top-inner{
+  max-width:var(--page-width);
+  margin:0 auto;
+  padding:0 var(--page-margin);
+  height:80px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:24px;
+}
+
+/* Logo */
+.site-header__logo{display:flex;flex-direction:column;text-decoration:none;flex-shrink:0;}
+.site-header__logo-img{height:auto;max-height:56px;width:auto;display:block;}
+.site-header__logo-text{font-family:var(--font-heading);font-size:1.5rem;color:var(--color-ink);white-space:nowrap;}
+
+/* Zoekbalk desktop */
+.site-header__search-bar{position:relative;display:flex;align-items:center;width:100%;}
+.site-header__search-bar-field{
+  flex:1;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  height:48px;
+  background:var(--color-cream);
+  border:1.5px solid var(--color-line);
+  border-radius:var(--radius-pill);
+  padding:0 16px;
+  transition:border-color 160ms;
+}
+.site-header__search-bar-field:focus-within{border-color:var(--color-orange);background:#fff;}
+.site-header__search-bar-icon{display:flex;align-items:center;color:var(--color-muted);flex-shrink:0;}
+.site-header__search-bar-icon svg{width:18px;height:18px;}
+.site-header__search-bar-input{
+  flex:1;
+  background:none;
+  border:none;
+  outline:none;
+  font-family:var(--font-body);
+  font-size:.95rem;
+  color:var(--color-ink);
+  min-width:0;
+  height:100%;
+}
+.site-header__search-bar-input::placeholder{color:var(--color-muted);}
+.site-header__search-clear{display:flex;align-items:center;background:none;border:none;cursor:pointer;color:var(--color-muted);padding:4px;}
+.site-header__search-clear svg{width:16px;height:16px;}
+.site-header__search-bar-btn{
+  height:48px;
+  width:48px;
+  background:none;
+  border:none;
+  border-radius:0 var(--radius-pill) var(--radius-pill) 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  flex-shrink:0;
+  color:var(--color-muted);
+  transition:color 160ms;
+}
+.site-header__search-bar-btn:hover{color:var(--color-ink);}
+.site-header__search-bar-btn svg{width:20px;height:20px;}
+.site-header__search-results{
+  position:absolute;
+  top:calc(100% + 4px);
+  left:0;
+  right:52px;
+  background:#fff;
+  border:1.5px solid var(--color-line);
+  border-radius:var(--radius-md);
+  box-shadow:0 8px 24px rgba(0,0,0,.08);
+  overflow:hidden;
+  z-index:200;
+}
+
+/* Acties rechts */
+.site-header__actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.site-header__action-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:var(--radius-md);
+  text-decoration:none;
+  color:var(--color-ink);
+  font-family:var(--font-body);
+  font-size:.85rem;
+  font-weight:700;
+  transition:background 160ms;
+  white-space:nowrap;
+  position:relative;
+}
+.site-header__action-btn:hover{background:var(--color-cream);}
+.site-header__action-icon{display:flex;align-items:center;position:relative;width:22px;height:22px;flex-shrink:0;}
+.site-header__action-icon svg,.site-header__action-icon img{width:22px!important;height:22px!important;max-width:22px!important;display:block;}
+.site-header__action-icon svg{width:22px;height:22px;}
+.site-header__action-label{display:block;}
+.site-header__account{display:flex;}
+.site-header__cart-count{
+  position:absolute;
+  top:-6px;right:-6px;
+  background:var(--color-pink);
+  color:#fff;
+  font-family:var(--font-body);
+  font-size:.58rem;
+  font-weight:800;
+  min-width:18px;
+  height:18px;
+  padding:0 4px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px solid #fff;
+}
+
+/* Hamburger (mobiel) */
+.site-header__burger{display:none;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:8px;color:var(--color-ink);}
+.site-header__burger svg{width:24px;height:24px;display:block;}
+
+/* ══ RIJ 2: NAVIGATIE ════════════════════════════════ */
+.site-header{background:#fff;}
+.site-header__nav-row{
+  max-width:var(--page-width);
+  margin:0 auto;
+  padding:0 var(--page-margin);
+  height:56px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+.site-header__nav-deco{display:flex;align-items:center;opacity:.7;}
+.site-header__nav{display:flex;align-items:center;}
+.site-header__chips{display:flex;align-items:center;gap:2px;list-style:none;margin:0;padding:0;}
+.site-header__chip-item{position:static;}
+.site-header__chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 14px;
+  border-radius:var(--radius-pill);
+  font-family:var(--font-body);
+  font-size:.88rem;
+  font-weight:700;
+  text-decoration:none;
+  white-space:nowrap;
+  color:var(--color-ink);
+  background:none;
+  border:2px solid transparent;
+  cursor:pointer;
+  transition:background 160ms,color 160ms,border-color 160ms;
+}
+.site-header__chip:hover,.site-header__chip[aria-current="page"]{background:var(--color-cream);}
+.site-header__chip[aria-expanded="true"]{background:var(--color-cream);}
+.site-header__chip--green{color:var(--color-green);border-color:var(--color-green);}
+.site-header__chip--green:hover,.site-header__chip--green[aria-expanded="true"]{background:#e8f5e2;}
+.site-header__chip--pink{color:var(--color-pink);}.site-header__chip--pink:hover,.site-header__chip--pink[aria-expanded="true"]{background:#ffe0ee;}
+.site-header__chip--orange{color:var(--color-orange);}.site-header__chip--orange:hover,.site-header__chip--orange[aria-expanded="true"]{background:#fff0e4;}
+.site-header__chip--yellow{color:var(--color-yellow);}.site-header__chip--yellow:hover,.site-header__chip--yellow[aria-expanded="true"]{background:#fffae0;}
+.site-header__chip-icon{display:inline-flex;align-items:center;flex-shrink:0;}
+.site-header__chip-icon svg{width:15px;height:15px;}
+.site-header__chip-chevron{display:inline-flex;align-items:center;margin-left:2px;transition:transform 200ms ease;}
+.site-header__chip-chevron svg{width:13px;height:13px;}
+.site-header__chip[aria-expanded="true"] .site-header__chip-chevron{transform:rotate(180deg);}
+
+/* ══ DROPDOWN ════════════════════════════════════════ */
+.site-header__dropdown{
+  position:fixed;
+  left:0;right:0;
+  top:var(--header-bottom,136px);
+  background:transparent;
+  z-index:99;
+  opacity:0;visibility:hidden;
+  transform:translateY(-6px);
+  transition:opacity 200ms ease,visibility 200ms ease,transform 200ms ease;
+  pointer-events:none;
+  padding:8px 0 0;
+}
+.site-header__dropdown[data-open]{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;}
+.site-header__dropdown-card{
+  background:#fff;
+  border-radius:20px;
+  box-shadow:0 20px 60px rgba(61,34,9,.12);
+  border:1.5px solid var(--color-line);
+  overflow:hidden;
+  max-width:var(--page-width);
+  margin:0 auto;
+}
+
+/* ══ TRUST BAR ═══════════════════════════════════════ */
+.site-header__trust-bar{background:#fff;border-top:1.5px solid var(--color-line);}
+.site-header__trust-inner{max-width:var(--page-width);margin:0 auto;padding:0 var(--page-margin);height:52px;display:flex;align-items:center;justify-content:center;gap:0;}
+.site-header__trust-item{display:flex;}
+.site-header__trust-link{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 20px;
+  font-family:var(--font-body);font-size:.78rem;font-weight:700;
+  color:var(--color-body);text-decoration:none;
+  border-right:1px solid var(--color-line);
+  transition:color 160ms;white-space:nowrap;
+}
+.site-header__trust-item:last-child .site-header__trust-link{border-right:none;}
+.site-header__trust-link:hover{color:var(--color-ink);}
+.site-header__trust-icon{display:flex;align-items:center;flex-shrink:0;color:var(--color-muted);}
+.site-header__trust-icon svg{width:16px;height:16px;}
+.site-header__trust-text strong{font-family:var(--font-body);font-size:.78rem;font-weight:800;color:var(--color-ink);}
+.site-header__trust-text span{font-family:var(--font-body);font-size:.72rem;color:var(--color-muted);margin-left:3px;}
+
+/* ══ OVERLAY ═════════════════════════════════════════ */
+.site-header__overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:98;opacity:0;visibility:hidden;transition:opacity 200ms,visibility 200ms;}
+.site-header__overlay[aria-hidden="false"]{opacity:1;visibility:visible;}
+
+/* ══ ZOEKRESULTATEN ══════════════════════════════════ */
+.search-result-item{display:flex;align-items:center;gap:12px;padding:10px 16px;text-decoration:none;color:var(--color-ink);border-bottom:1px solid var(--color-line);transition:background 120ms;}
+.search-result-item:last-child{border-bottom:none;}
+.search-result-item:hover,.search-result-item[aria-selected="true"]{background:var(--color-cream);}
+.search-result-item__img{width:44px;height:44px;object-fit:cover;border-radius:var(--radius-sm);flex-shrink:0;background:var(--color-cream);}
+.search-result-item__title{font-family:var(--font-body);font-size:.88rem;font-weight:700;color:var(--color-ink);}
+.search-result-item__price{font-family:var(--font-body);font-size:.82rem;color:var(--color-muted);margin-top:2px;}
+.search-result-item__all{display:block;padding:10px 16px;font-family:var(--font-body);font-size:.85rem;font-weight:700;color:var(--color-ink);text-decoration:none;text-align:center;border-top:1px solid var(--color-line);}
+.search-result-item__all:hover{background:var(--color-cream);}
+
+/* ══ MOBIEL ══════════════════════════════════════════ */
+@media(max-width:989px){
+  .site-header__top-inner{
+    grid-template-columns:1fr auto;
+    height:64px;
+    gap:12px;
+  }
+  .site-header__search-bar{display:none;}
+  .site-header__action-label{display:none;}
+  .site-header__action-btn{padding:8px;}
+  .site-header__burger{display:flex;}
+  .site-header{display:none;}
+  .site-header__trust-bar{display:none;}
+  .site-header__nav-deco{display:none;}
+}
+
+/* ══ FEATURED layout (Verrassingsboxen) ════════════════ */
+.dd-verr{display:flex;gap:0;align-items:stretch;min-height:360px;}
+.dd-verr__col{flex:1;min-width:0;padding:20px 18px;border-right:1.5px solid var(--color-line);display:flex;flex-direction:column;gap:10px;}
+.dd-verr__col:last-of-type{border-right:none;}
+.dd-verr__col--products{flex:1.4;}
+.dd-verr__col-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:2px;}
+.dd-verr__col-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dd-verr__col-icon svg{width:18px;height:18px;}
+.dd-verr__col-icon--green{background:#e8f5e2;color:var(--color-green);}
+.dd-verr__col-icon--pink{background:#ffe0ee;color:var(--color-pink);}
+.dd-verr__col-icon--orange{background:#fff0e4;color:var(--color-orange);}
+.dd-verr__col-icon--yellow{background:#fffae0;color:var(--color-yellow);}
+.dd-verr__col-icon--ink{background:var(--color-cream);color:var(--color-ink);}
+.dd-verr__col-title{font-family:var(--font-heading);font-size:1.05rem;text-decoration:none;display:block;line-height:1.2;}
+.dd-verr__col-title--green{color:var(--color-green);}
+.dd-verr__col-title--pink{color:var(--color-pink);}
+.dd-verr__col-title--orange{color:var(--color-orange);}
+.dd-verr__col-title--yellow{color:var(--color-yellow);}
+.dd-verr__col-title--ink{color:var(--color-ink);}
+.dd-verr__col-title:hover{opacity:.8;}
+.dd-verr__col-desc{font-family:var(--font-body);font-size:.75rem;color:var(--color-muted);line-height:1.4;margin:2px 0 0;}
+.dd-verr__chevron{flex-shrink:0;color:var(--color-muted);opacity:.5;transition:opacity 120ms,transform 120ms;}
+.dd-verr__products{display:flex;flex-direction:column;gap:2px;}
+.dd-verr__product{display:flex;align-items:center;gap:12px;padding:8px 8px;border-radius:var(--radius-md);text-decoration:none;color:var(--color-ink);transition:background 120ms;}
+.dd-verr__product:hover{background:var(--color-cream);}
+.dd-verr__product:hover .dd-verr__chevron{opacity:.8;transform:translateX(2px);}
+.dd-verr__product-img{width:64px;height:64px;object-fit:cover;border-radius:var(--radius-sm);flex-shrink:0;}
+.dd-verr__product-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.dd-verr__product-name-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.dd-verr__product-name-row strong{font-family:var(--font-body);font-size:.88rem;font-weight:700;color:var(--color-ink);}
+.dd-verr__product-badge{background:var(--color-pink);color:#fff;font-family:var(--font-body);font-size:.6rem;font-weight:800;padding:2px 8px;border-radius:999px;white-space:nowrap;}
+.dd-verr__product-desc{font-family:var(--font-body);font-size:.72rem;color:var(--color-muted);}
+.dd-verr__extra-links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px;padding-top:10px;border-top:1px solid var(--color-line);}
+.dd-verr__extra-link{display:grid;grid-template-columns:28px 1fr 12px;align-items:center;gap:8px;padding:8px 8px;border-radius:var(--radius-sm);text-decoration:none;font-family:var(--font-body);font-size:.83rem;font-weight:600;color:var(--color-ink);transition:background 120ms;}
+.dd-verr__extra-link:hover{background:var(--color-cream);}
+.dd-verr__extra-link:hover .dd-verr__chevron{opacity:.8;transform:translateX(2px);}
+
+.dd-verr__col-links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:1px;}
+.dd-verr__col-link{display:grid;grid-template-columns:28px 1fr 12px;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--radius-sm);text-decoration:none;font-family:var(--font-body);font-size:.83rem;font-weight:600;color:var(--color-ink);transition:background 120ms;}
+.dd-verr__col-link--no-icon{grid-template-columns:1fr 12px;}
+.dd-verr__col-link:hover{background:var(--color-cream);}
+.dd-verr__col-link:hover .dd-verr__chevron{opacity:.8;transform:translateX(2px);}
+
+.dd-verr__link-icon{width:28px;height:28px;aspect-ratio:1;border-radius:50%;flex-shrink:0;flex-grow:0;display:flex;align-items:center;justify-content:center;box-sizing:content-box;}
+.dd-verr__link-icon svg{width:12px;height:12px;flex-shrink:0;}
+.dd-verr__link-icon--green{background:#d4edca;color:var(--color-green);}
+.dd-verr__link-icon--pink{background:#ffc8de;color:var(--color-pink);}
+.dd-verr__link-icon--orange{background:#fde3c8;color:var(--color-orange);}
+.dd-verr__link-icon--yellow{background:#fef3b0;color:#b07d00;}
+.dd-verr__link-icon--ink{background:var(--color-cream);color:var(--color-ink);}
+.dd-verr__link-icon-sm--pink{background:#ffe0ee;color:var(--color-pink);}
+.dd-verr__link-icon-sm--orange{background:#fff0e4;color:var(--color-orange);}
+.dd-verr__link-icon-sm--yellow{background:#fffae0;color:var(--color-yellow);}
+.dd-verr__col-cta{display:inline-flex;align-items:center;gap:5px;margin-top:12px;padding-top:10px;border-top:1px solid var(--color-line);font-family:var(--font-body);font-size:.82rem;font-weight:800;text-decoration:none;transition:gap 160ms;}
+.dd-verr__col-cta:hover{gap:8px;}
+.dd-verr__col-cta svg{width:13px;height:13px;}
+.dd-verr__col-cta--green{color:var(--color-green);}
+.dd-verr__col-cta--pink{color:var(--color-pink);}
+.dd-verr__col-cta--orange{color:var(--color-orange);}
+.dd-verr__col-cta--yellow{color:var(--color-yellow);}
+.dd-verr__col-cta--ink{color:var(--color-ink);}
+.dd-verr__mini-banner{display:flex;align-items:center;gap:8px;margin-top:auto;padding:10px 10px;border-radius:var(--radius-md);background:var(--color-cream);}
+.dd-verr__mini-banner-text{flex:1;display:flex;flex-direction:column;gap:3px;}
+.dd-verr__mini-banner-text strong{font-family:var(--font-body);font-size:.78rem;font-weight:800;color:var(--color-ink);}
+.dd-verr__mini-banner-text span{font-family:var(--font-body);font-size:.72rem;color:var(--color-muted);}
+.dd-verr__mini-banner-btn{width:26px;height:26px;border-radius:50%;background:var(--color-orange);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:4px;}
+.dd-verr__mini-banner-btn svg{width:13px;height:13px;color:#fff;}
+.dd-verr__mini-banner-img{width:64px;height:64px;object-fit:contain;flex-shrink:0;}
+.dd-verr__banner{width:220px;flex-shrink:0;background:var(--color-cream);display:flex;flex-direction:column;overflow:hidden;border-left:1.5px solid var(--color-line);}
+.dd-verr__banner-body{padding:18px 18px 0;display:flex;flex-direction:column;gap:6px;}
+.dd-verr__banner-title{font-family:var(--font-heading);font-size:1.15rem;color:var(--color-ink);line-height:1.2;}
+.dd-verr__banner-text{font-family:var(--font-body);font-size:.78rem;color:var(--color-muted);line-height:1.5;}
+.dd-verr__banner-img-wrap{flex:1;overflow:hidden;min-height:160px;}
+.dd-verr__banner-img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
+.dd-verr__banner-cta-wrap{padding:14px 16px;flex-shrink:0;}
+.dd-verr__banner-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px 16px;background:var(--color-pink);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.88rem;text-decoration:none;transition:background 160ms;}
+.dd-verr__banner-cta:hover{background:#c4396a;}
+.dd-verr__banner-cta svg{width:16px;height:16px;}
+/* ══ MOBIEL DRAWER ══════════════════════════════════════ */
+.header-drawer{position:fixed;top:0;left:0;bottom:0;width:min(390px,100vw);background:#fff;z-index:300;overflow-y:auto;overscroll-behavior:contain;transform:translateX(-100%);transition:transform 280ms cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+.header-drawer[aria-hidden="false"]{transform:translateX(0);}
+.header-drawer__header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;flex-shrink:0;}
+.header-drawer__logo{display:flex;align-items:center;text-decoration:none;}
+.header-drawer__logo-img{height:48px;width:auto;}
+.header-drawer__logo-text{font-family:var(--font-heading);font-size:1.4rem;color:var(--color-ink);}
+.header-drawer__header-actions{display:flex;align-items:center;gap:4px;}
+.header-drawer__icon-btn{display:flex;align-items:center;justify-content:center;position:relative;background:none;border:none;cursor:pointer;padding:8px;color:var(--color-ink);border-radius:var(--radius-sm);text-decoration:none;}
+.header-drawer__icon-btn svg{width:22px;height:22px;}
+.header-drawer__cart-btn{position:relative;}
+.header-drawer__cart-count{position:absolute;top:-2px;right:-2px;background:var(--color-pink);color:#fff;font-family:var(--font-body);font-size:.6rem;font-weight:800;min-width:18px;height:18px;padding:0 4px;border-radius:999px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
+.header-drawer__close{display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:8px;color:var(--color-ink);}
+.header-drawer__close svg{width:22px;height:22px;}
+.header-drawer__trust{display:flex;background:var(--color-cream);padding:12px 20px;gap:0;border-top:1px solid var(--color-line);border-bottom:1px solid var(--color-line);flex-shrink:0;}
+.header-drawer__trust-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:0 4px;}
+.header-drawer__trust-item+.header-drawer__trust-item{border-left:1px solid var(--color-line);}
+.header-drawer__trust-icon{display:flex;align-items:center;justify-content:center;color:var(--color-muted);}
+.header-drawer__trust-icon svg{width:18px;height:18px;}
+.header-drawer__trust-text{font-family:var(--font-body);font-size:.65rem;font-weight:600;color:var(--color-body);line-height:1.3;}
+.header-drawer__nav-wrap{flex-shrink:0;}
+.header-drawer__nav{list-style:none;margin:0;padding:8px 0;}
+.header-drawer__nav-item{border-bottom:1px solid var(--color-line);}
+.header-drawer__nav-row{display:grid;grid-template-columns:64px 1fr 40px;align-items:center;padding:4px 16px;}
+.header-drawer__nav-icon{width:48px;height:48px;aspect-ratio:1;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;flex-grow:0;}
+.header-drawer__nav-icon svg{width:22px;height:22px;}
+.header-drawer__nav-icon--green{background:#e8f5e2;color:var(--color-green);}
+.header-drawer__nav-icon--pink{background:#ffe0ee;color:var(--color-pink);}
+.header-drawer__nav-icon--orange{background:#fff0e4;color:var(--color-orange);}
+.header-drawer__nav-link{font-family:var(--font-body);font-size:1.05rem;font-weight:700;color:var(--color-ink);text-decoration:none;padding:16px 0;display:flex;align-items:center;}
+.header-drawer__nav-chevron{color:var(--color-muted);opacity:.4;flex-shrink:0;}
+.header-drawer__sub-toggle{background:none;border:none;cursor:pointer;padding:8px;color:var(--color-muted);display:flex;align-items:center;justify-content:center;transition:transform 200ms;}
+.header-drawer__sub-toggle svg{width:18px;height:18px;}
+.header-drawer__sub-toggle[aria-expanded="true"]{transform:rotate(180deg);}
+.header-drawer__sub-nav{list-style:none;margin:0;padding:0;background:var(--color-cream);}
+.header-drawer__sub-link{display:block;padding:10px 20px 10px 80px;text-decoration:none;font-family:var(--font-body);font-size:.88rem;color:var(--color-body);border-top:1px solid var(--color-line);}
+.header-drawer__sub-link:hover{color:var(--color-pink);}
+.header-drawer__extras{padding:8px 0;border-top:1px solid var(--color-line);flex-shrink:0;}
+.header-drawer__extra-link{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:4px;padding:12px 20px;text-decoration:none;color:var(--color-ink);font-family:var(--font-body);font-size:.9rem;font-weight:600;transition:background 120ms;}
+.header-drawer__extra-link:hover{background:var(--color-cream);}
+.header-drawer__extra-icon{width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--color-muted);}
+.header-drawer__extra-icon svg{width:18px;height:18px;}
+.header-drawer__extra-badge{display:flex;align-items:center;gap:4px;}
+.header-drawer__banner{margin:16px;border-radius:var(--radius-lg);background:var(--color-cream);display:flex;align-items:flex-end;overflow:hidden;min-height:160px;flex-shrink:0;}
+.header-drawer__banner-content{flex:1;padding:20px 16px 20px 20px;display:flex;flex-direction:column;gap:10px;}
+.header-drawer__banner-title{font-family:var(--font-heading);font-size:1.3rem;color:var(--color-green);line-height:1.2;}
+.header-drawer__banner-text{font-family:var(--font-body);font-size:.82rem;color:var(--color-body);line-height:1.5;margin:0;}
+.header-drawer__banner-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--color-green);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.85rem;text-decoration:none;width:fit-content;}
+.header-drawer__banner-btn svg{width:14px;height:14px;}
+.header-drawer__banner-img-wrap{width:140px;flex-shrink:0;}
+.header-drawer__banner-img{width:100%;height:100%;object-fit:cover;object-position:top;}
+.header-drawer__footer{flex-shrink:0;margin-top:auto;}
+.header-drawer__footer-text{display:block;text-align:center;font-family:var(--font-heading);font-size:.95rem;color:var(--color-muted);padding:16px 20px 8px;}
+.header-drawer__footer-wave{display:block;line-height:0;}
+.header-drawer__footer-wave svg{width:100%;height:48px;}
+.header-drawer__overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;opacity:0;visibility:hidden;transition:opacity 280ms,visibility 280ms;}
+.header-drawer__overlay[aria-hidden="false"]{opacity:1;visibility:visible;}
+.header-drawer__nav-item--has-sub .header-drawer__nav-chevron{display:none;}
+{% endstylesheet %}
+
+{% javascript %}
+(function () {
+  'use strict';
+
+  var wrapper   = document.querySelector('.site-header__wrapper');
+  var searchBar = document.querySelector('.site-header__search-bar');
+  var overlay   = document.getElementById('nav-overlay');
+  var triggers  = document.querySelectorAll('[data-nav-trigger]');
+  var closeTimer = null;
+  var openTimer  = null;
+  var activeDD   = null;
+
+  function updateTop() {
+    if (!wrapper) return;
+    var h = wrapper.getBoundingClientRect().bottom;
+    document.querySelectorAll('.site-header__dropdown').forEach(function (d) {
+      d.style.top = h + 'px';
+    });
+  }
+  updateTop();
+  window.addEventListener('resize', updateTop, { passive: true });
+
+  function openDD(dd, trigger) {
+    clearTimeout(closeTimer);
+    clearTimeout(openTimer);
+    if (activeDD && activeDD !== dd) closeDD(activeDD, null);
+    dd.setAttribute('data-open', '');
+    trigger && trigger.setAttribute('aria-expanded', 'true');
+    overlay && overlay.setAttribute('aria-hidden', 'false');
+    activeDD = dd;
+  }
+
+  function closeDD(dd, trigger) {
+    dd.removeAttribute('data-open');
+    var t = trigger || dd.closest('.site-header__chip-item') && dd.closest('.site-header__chip-item').querySelector('[data-nav-trigger]');
+    t && t.setAttribute('aria-expanded', 'false');
+  }
+
+  function closeAll() {
+    closeTimer = setTimeout(function () {
+      document.querySelectorAll('[data-nav-dropdown][data-open]').forEach(function (d) { closeDD(d, null); });
+      overlay && overlay.setAttribute('aria-hidden', 'true');
+      activeDD = null;
+    }, 120);
+  }
+
+  triggers.forEach(function (trigger) {
+    var item = trigger.closest('.site-header__chip-item--has-dd');
+    var dd   = item && item.querySelector('[data-nav-dropdown]');
+    if (!dd) return;
+
+    item.addEventListener('mouseenter', function () {
+      clearTimeout(closeTimer);
+      openTimer = setTimeout(function () { openDD(dd, trigger); }, 80);
+    });
+    item.addEventListener('mouseleave', closeAll);
+
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (trigger.getAttribute('aria-expanded') === 'true') closeAll();
+        else openDD(dd, trigger);
+      }
+      if (e.key === 'Escape') { closeAll(); trigger.focus(); }
+    });
+  });
+
+  document.querySelectorAll('[data-nav-dropdown]').forEach(function (dd) {
+    dd.addEventListener('mouseenter', function () { clearTimeout(closeTimer); clearTimeout(openTimer); });
+    dd.addEventListener('mouseleave', closeAll);
+  });
+
+  overlay && overlay.addEventListener('click', closeAll);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && activeDD) closeAll(); });
+
+  /* ── Zoekpaneel ──────────────────────────────────────── */
+  var searchToggle  = document.querySelector('[data-search-toggle]');
+  var searchPanel   = document.getElementById('header-search-panel');
+  var searchInput   = document.querySelector('[data-search-input]');
+  var searchResults = document.querySelector('[data-search-results]');
+  var searchClear   = document.querySelector('[data-search-clear]');
+  var searchForm    = document.querySelector('[data-search-form]');
+
+  if (searchToggle && searchPanel) {
+    searchToggle.addEventListener('click', function () {
+      var open = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !open);
+      searchPanel.setAttribute('aria-hidden', open);
+      if (!open && searchInput) setTimeout(function () { searchInput.focus(); }, 300);
+    });
+  }
+
+  if (searchInput && searchResults) {
+    var debounceTimer = null;
+    function money(c) { return '\u20ac' + (c / 100).toFixed(2).replace('.', ','); }
+    function renderResults(results, q) {
+      if (!results.length) { searchResults.hidden = true; return; }
+      var html = results.map(function (i) {
+        var img = i.image ? '<img src="' + i.image + '" alt="" class="search-result-item__img" width="44" height="44" loading="lazy">' : '<div class="search-result-item__img"></div>';
+        var price = i.price ? '<span class="search-result-item__price">' + money(i.price) + '</span>' : '';
+        return '<a href="' + i.url + '" class="search-result-item" role="option">' + img + '<span><span class="search-result-item__title">' + i.title + '</span>' + price + '</span></a>';
+      }).join('') + '<a href="/search?type=product&q=' + encodeURIComponent(q) + '" class="search-result-item__all">Alle resultaten &rarr;</a>';
+      searchResults.innerHTML = html;
+      searchResults.hidden = false;
+    }
+    function fetchSuggestions(q) {
+      if (q.length < 2) { searchResults.hidden = true; return; }
+      fetch('/search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=5&resources[fields]=title,handle,image,price')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          var p = (data.resources && data.resources.results && data.resources.results.products) || [];
+          renderResults(p.map(function (x) { return { title: x.title, url: x.url, image: x.image ? x.image.src : null, price: x.price }; }), q);
+        }).catch(function () { searchResults.hidden = true; });
+    }
+    searchInput.addEventListener('input', function () {
+      var q = this.value.trim();
+      searchClear && (searchClear.hidden = q.length === 0);
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function () { fetchSuggestions(q); }, 220);
+    });
+    searchClear && searchClear.addEventListener('click', function () { searchInput.value = ''; searchInput.focus(); this.hidden = true; searchResults.hidden = true; });
+    document.addEventListener('click', function (e) {
+      if (searchForm && !searchForm.contains(e.target) && searchToggle && !searchToggle.contains(e.target)) searchResults.hidden = true;
+    });
+  }
+
+  /* ── Mobiel drawer ───────────────────────────────────── */
+  var drawer  = document.getElementById('header-drawer');
+  var drOvrl  = document.getElementById('header-overlay');
+  var burger  = document.querySelector('.site-header__burger');
+  var closeBtn = document.querySelector('[data-drawer-close]');
+
+  function openDrawer() {
+    if (!drawer) return;
+    drawer.setAttribute('aria-hidden','false');
+    drOvrl && drOvrl.setAttribute('aria-hidden','false');
+    burger && burger.setAttribute('aria-expanded','true');
+    document.documentElement.style.overflow = 'hidden';
+    closeBtn && closeBtn.focus();
+  }
+  function closeDrawer() {
+    if (!drawer) return;
+    drawer.setAttribute('aria-hidden','true');
+    drOvrl && drOvrl.setAttribute('aria-hidden','true');
+    burger && burger.setAttribute('aria-expanded','false');
+    document.documentElement.style.overflow = '';
+    burger && burger.focus();
+  }
+  burger   && burger.addEventListener('click', openDrawer);
+  closeBtn && closeBtn.addEventListener('click', closeDrawer);
+  drOvrl   && drOvrl.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && drawer && drawer.getAttribute('aria-hidden') === 'false') closeDrawer();
+  });
+  document.querySelectorAll('.header-drawer__sub-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var exp = this.getAttribute('aria-expanded') === 'true';
+      var sub = this.closest('.header-drawer__nav-item').querySelector('.header-drawer__sub-nav');
+      this.setAttribute('aria-expanded', !exp);
+      if (sub) sub.hidden = exp;
+    });
+  });
+}());
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Header",
+  "blocks": [
+    {
+      "type": "dropdown_config",
+      "name": "Dropdown instellingen",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "range",
+          "id": "menu_item_index",
+          "label": "Menu-item nummer",
+          "info": "1 = eerste, 2 = tweede, etc.",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "select",
+          "id": "layout_type",
+          "label": "Dropdown layout",
+          "default": "standard",
+          "options": [
+            {
+              "value": "standard",
+              "label": "Standaard (links + banner)"
+            },
+            {
+              "value": "featured",
+              "label": "Featured producten"
+            },
+            {
+              "value": "categories",
+              "label": "Categorie kolommen (Shop)"
+            },
+            {
+              "value": "club",
+              "label": "Kwispelclub"
+            },
+            {
+              "value": "about",
+              "label": "Over ons"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "accent_color",
+          "label": "Accentkleur",
+          "default": "green",
+          "options": [
+            {
+              "value": "green",
+              "label": "Groen"
+            },
+            {
+              "value": "pink",
+              "label": "Roze"
+            },
+            {
+              "value": "orange",
+              "label": "Oranje"
+            },
+            {
+              "value": "yellow",
+              "label": "Geel"
+            },
+            {
+              "value": "ink",
+              "label": "Donkerbruin"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "col1_desc",
+          "label": "Kolom 1 subtekst"
+        },
+        {
+          "type": "header",
+          "content": "Links"
+        },
+        {
+          "type": "link_list",
+          "id": "link_list",
+          "label": "Sub-menu"
+        },
+        {
+          "type": "text",
+          "id": "view_all_label",
+          "label": "Bekijk alle tekst",
+          "default": "Bekijk alles"
+        },
+        {
+          "type": "url",
+          "id": "view_all_url",
+          "label": "Bekijk alle link"
+        },
+        {
+          "type": "header",
+          "content": "Banner / afbeelding rechts"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image",
+          "label": "Banner afbeelding"
+        },
+        {
+          "type": "text",
+          "id": "banner_badge",
+          "label": "Badge tekst"
+        },
+        {
+          "type": "text",
+          "id": "banner_title",
+          "label": "Banner titel",
+          "default": "Ontdek onze boxen"
+        },
+        {
+          "type": "text",
+          "id": "banner_text",
+          "label": "Banner tekst",
+          "default": "Speciaal samengesteld voor jouw hond."
+        },
+        {
+          "type": "text",
+          "id": "banner_cta_label",
+          "label": "Knoptekst",
+          "default": "Bekijk nu"
+        },
+        {
+          "type": "url",
+          "id": "banner_cta_url",
+          "label": "Knop link"
+        },
+        {
+          "type": "header",
+          "content": "Kwispelclub specifiek"
+        },
+        {
+          "type": "text",
+          "id": "club_intro_title",
+          "label": "Intro titel",
+          "default": "Welkom bij de Kwispelclub"
+        },
+        {
+          "type": "textarea",
+          "id": "club_intro_text",
+          "label": "Intro tekst"
+        },
+        {
+          "type": "text",
+          "id": "club_check_1",
+          "label": "Voordeel 1",
+          "default": "Gratis lidmaatschap"
+        },
+        {
+          "type": "text",
+          "id": "club_check_2",
+          "label": "Voordeel 2",
+          "default": "Exclusieve kortingen"
+        },
+        {
+          "type": "text",
+          "id": "club_check_3",
+          "label": "Voordeel 3",
+          "default": "Sparen voor beloningen"
+        },
+        {
+          "type": "text",
+          "id": "club_check_4",
+          "label": "Voordeel 4",
+          "default": "Verrassingen & acties"
+        },
+        {
+          "type": "text",
+          "id": "club_check_5",
+          "label": "Voordeel 5",
+          "default": "Hond van de maand"
+        },
+        {
+          "type": "image_picker",
+          "id": "club_intro_image",
+          "label": "Intro afbeelding (hond)"
+        },
+        {
+          "type": "text",
+          "id": "club_rewards_title",
+          "label": "Beloningen titel",
+          "default": "Spaar Kwispels!"
+        },
+        {
+          "type": "image_picker",
+          "id": "club_rewards_image",
+          "label": "Beloningen afbeelding"
+        },
+        {
+          "type": "text",
+          "id": "club_motm_title",
+          "label": "MOTM titel",
+          "default": "Hond van de maand"
+        },
+        {
+          "type": "image_picker",
+          "id": "club_motm_image",
+          "label": "MOTM foto"
+        },
+        {
+          "type": "text",
+          "id": "club_motm_name",
+          "label": "MOTM naam"
+        },
+        {
+          "type": "header",
+          "content": "Over ons specifiek"
+        },
+        {
+          "type": "text",
+          "id": "about_tagline",
+          "label": "Tagline",
+          "default": "Samen maken we honden blij!"
+        },
+        {
+          "type": "text",
+          "id": "about_tagline_sub",
+          "label": "Tagline sub"
+        },
+        {
+          "type": "text",
+          "id": "about_team_title",
+          "label": "Team titel",
+          "default": "Het Kwispelbox team"
+        },
+        {
+          "type": "image_picker",
+          "id": "about_team_image",
+          "label": "Team foto"
+        },
+        {
+          "type": "text",
+          "id": "about_team_tagline",
+          "label": "Team tagline",
+          "default": "Liefs, team Kwispelbox"
+        }
+      ]
+    },
+    {
+      "type": "dropdown_col",
+      "name": "Dropdown categorie kolom",
+      "limit": 20,
+      "settings": [
+        {
+          "type": "range",
+          "id": "menu_item_index",
+          "label": "Menu-item nummer",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 3
+        },
+        {
+          "type": "range",
+          "id": "col_order",
+          "label": "Kolom ID (voor link blocks)",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Kolomtitel",
+          "default": "Speeltjes"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Omschrijving",
+          "default": "Voor uren speelplezier"
+        },
+        {
+          "type": "select",
+          "id": "color",
+          "label": "Kleur",
+          "default": "green",
+          "options": [
+            {
+              "value": "green",
+              "label": "Groen"
+            },
+            {
+              "value": "pink",
+              "label": "Roze"
+            },
+            {
+              "value": "orange",
+              "label": "Oranje"
+            },
+            {
+              "value": "purple",
+              "label": "Paars"
+            }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icoon",
+          "default": "icon-paw.svg",
+          "options": [
+            {
+              "value": "icon-paw.svg",
+              "label": "Poot"
+            },
+            {
+              "value": "icon-gift.svg",
+              "label": "Cadeau"
+            },
+            {
+              "value": "icon-heart.svg",
+              "label": "Hart"
+            },
+            {
+              "value": "icon-star.svg",
+              "label": "Ster"
+            },
+            {
+              "value": "icon-bone.svg",
+              "label": "Botje"
+            },
+            {
+              "value": "icon-sparkles.svg",
+              "label": "Sparkles"
+            },
+            {
+              "value": "icon-leaf.svg",
+              "label": "Blad"
+            },
+            {
+              "value": "icon-cake.svg",
+              "label": "Taart"
+            },
+            {
+              "value": "icon-users.svg",
+              "label": "Community"
+            },
+            {
+              "value": "icon-shield.svg",
+              "label": "Schild"
+            }
+          ]
+        },
+        {
+          "type": "checkbox",
+          "id": "show_link_icons",
+          "label": "Icoon per link tonen",
+          "default": true
+        },
+        {
+          "type": "link_list",
+          "id": "link_list",
+          "label": "Links voor deze kolom"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA knoptekst",
+          "default": "Bekijk alles"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "CTA link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Kolom foto (onderkant)"
+        },
+        {
+          "type": "header",
+          "content": "Mini-banner onderaan"
+        },
+        {
+          "type": "text",
+          "id": "mini_banner_label",
+          "label": "Mini-banner koptekst"
+        },
+        {
+          "type": "text",
+          "id": "mini_banner_sub",
+          "label": "Mini-banner subtekst"
+        },
+        {
+          "type": "url",
+          "id": "mini_banner_url",
+          "label": "Mini-banner link"
+        },
+        {
+          "type": "image_picker",
+          "id": "mini_banner_image",
+          "label": "Mini-banner afbeelding"
+        }
+      ]
+    },
+    {
+      "type": "dropdown_product",
+      "name": "Featured product",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "range",
+          "id": "menu_item_index",
+          "label": "Menu-item nummer",
+          "min": 1,
+          "max": 10,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge tekst (optioneel)"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Korte omschrijving"
+        }
+      ]
+    },
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Titel",
+          "default": "Gratis verzending"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitel",
+          "default": "vanaf €75"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link (optioneel)"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icoon",
+          "default": "icon-truck.svg",
+          "options": [
+            {
+              "value": "icon-truck.svg",
+              "label": "Vrachtwagen"
+            },
+            {
+              "value": "icon-heart.svg",
+              "label": "Hart"
+            },
+            {
+              "value": "icon-shield.svg",
+              "label": "Schild"
+            },
+            {
+              "value": "icon-refresh.svg",
+              "label": "Terugkeer"
+            },
+            {
+              "value": "icon-star.svg",
+              "label": "Ster"
+            },
+            {
+              "value": "icon-paw.svg",
+              "label": "Poot"
+            },
+            {
+              "value": "icon-gift.svg",
+              "label": "Cadeau"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "link_item",
+      "name": "Menu link",
+      "limit": 20,
+      "settings": [
+        {
+          "type": "range",
+          "id": "col_index",
+          "label": "Kolom nummer",
+          "min": 1,
+          "max": 20,
+          "step": 1,
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Linktekst"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link URL"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icoon",
+          "default": "check",
+          "options": [
+            {
+              "value": "check",
+              "label": "Vinkje"
+            },
+            {
+              "value": "gift",
+              "label": "Cadeau"
+            },
+            {
+              "value": "paw",
+              "label": "Poot"
+            },
+            {
+              "value": "star",
+              "label": "Ster"
+            },
+            {
+              "value": "heart",
+              "label": "Hart"
+            },
+            {
+              "value": "cake",
+              "label": "Taart"
+            },
+            {
+              "value": "camera",
+              "label": "Camera"
+            },
+            {
+              "value": "bone",
+              "label": "Botje"
+            },
+            {
+              "value": "sparkles",
+              "label": "Sparkles"
+            },
+            {
+              "value": "shield",
+              "label": "Schild"
+            },
+            {
+              "value": "question",
+              "label": "Vraagteken"
+            },
+            {
+              "value": "refresh",
+              "label": "Pijl/Terugkeer"
+            },
+            {
+              "value": "leaf",
+              "label": "Blad"
+            },
+            {
+              "value": "users",
+              "label": "Community"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo afbeelding"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "label": "Logo breedte (px)",
+      "min": 60,
+      "max": 240,
+      "step": 4,
+      "unit": "px",
+      "default": 160
+    },
+    {
+      "type": "header",
+      "content": "Navigatie"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Hoofdmenu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "Account menu",
+      "default": "customer-account-main-menu"
+    },
+    {
+      "type": "header",
+      "content": "Zoeken"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search",
+      "label": "Zoeken tonen",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Placeholder",
+      "default": "Zoek naar speeltjes, boxen..."
+    },
+    {
+      "type": "text",
+      "id": "search_button_label",
+      "label": "Zoekknop",
+      "default": "Zoeken"
+    },
+    {
+      "type": "header",
+      "content": "Account"
+    },
+    {
+      "type": "text",
+      "id": "account_label",
+      "label": "Account label",
+      "default": "Mijn account"
+    },
+    {
+      "type": "header",
+      "content": "Mobiel drawer banner"
+    },
+    {
+      "type": "text",
+      "id": "drawer_banner_title",
+      "label": "Banner titel"
+    },
+    {
+      "type": "textarea",
+      "id": "drawer_banner_text",
+      "label": "Banner tekst"
+    },
+    {
+      "type": "text",
+      "id": "drawer_banner_cta",
+      "label": "Banner knoptekst"
+    },
+    {
+      "type": "url",
+      "id": "drawer_banner_url",
+      "label": "Banner knop link"
+    },
+    {
+      "type": "image_picker",
+      "id": "drawer_banner_image",
+      "label": "Banner afbeelding"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header",
+      "blocks": [
+        {
+          "type": "dropdown_config",
+          "settings": {
+            "menu_item_index": 1,
+            "layout_type": "featured",
+            "accent_color": "green",
+            "view_all_label": "Vergelijk alle boxen",
+            "banner_title": "Kies jouw box",
+            "banner_text": "Mini, Happy of Mega. Elke maand een nieuwe verrassing!",
+            "banner_badge": "Populair",
+            "banner_cta_label": "Vergelijk de boxen"
+          }
+        },
+        {
+          "type": "dropdown_config",
+          "settings": {
+            "menu_item_index": 2,
+            "layout_type": "standard",
+            "accent_color": "pink",
+            "view_all_label": "Bekijk alle special editions",
+            "banner_title": "Halloween Box",
+            "banner_text": "Spooky leuk, super zacht en boordevol verrassingen. Op = op!",
+            "banner_badge": "Limited edition",
+            "banner_cta_label": "Ontdek Halloween Box"
+          }
+        },
+        {
+          "type": "dropdown_config",
+          "settings": {
+            "menu_item_index": 3,
+            "layout_type": "categories",
+            "accent_color": "orange",
+            "banner_title": "Klein spulletje, groot geluk!",
+            "banner_text": "Ontdek onze favoriete items voor elke hond.",
+            "banner_cta_label": "Naar de shop"
+          }
+        },
+        {
+          "type": "dropdown_col",
+          "settings": {
+            "menu_item_index": 3,
+            "heading": "Speeltjes",
+            "description": "Voor uren speelplezier",
+            "color": "green",
+            "icon": "icon-paw.svg",
+            "cta_label": "Alle speeltjes"
+          }
+        },
+        {
+          "type": "dropdown_col",
+          "settings": {
+            "menu_item_index": 3,
+            "heading": "Knuffels",
+            "description": "Zacht, lief en extra knuffelbaar",
+            "color": "pink",
+            "icon": "icon-heart.svg",
+            "cta_label": "Alle knuffels"
+          }
+        },
+        {
+          "type": "dropdown_col",
+          "settings": {
+            "menu_item_index": 3,
+            "heading": "Snacks",
+            "description": "Heerlijke en natuurlijke lekkernijen",
+            "color": "orange",
+            "icon": "icon-bone.svg",
+            "cta_label": "Alle snacks"
+          }
+        },
+        {
+          "type": "dropdown_col",
+          "settings": {
+            "menu_item_index": 3,
+            "heading": "Puppy favorieten",
+            "description": "Speciaal voor kleine kwispelaars",
+            "color": "purple",
+            "icon": "icon-sparkles.svg",
+            "cta_label": "Bekijk puppy shop"
+          }
+        },
+        {
+          "type": "dropdown_config",
+          "settings": {
+            "menu_item_index": 4,
+            "layout_type": "club",
+            "accent_color": "pink",
+            "club_intro_title": "Welkom bij de Kwispelclub",
+            "club_intro_text": "Meer plezier, meer voordelen voor jou en je hond!",
+            "club_check_1": "Gratis lidmaatschap",
+            "club_check_2": "Exclusieve kortingen",
+            "club_check_3": "Sparen voor beloningen",
+            "club_check_4": "Verrassingen & acties",
+            "club_check_5": "Hond van de maand",
+            "club_rewards_title": "Spaar Kwispels!",
+            "club_motm_title": "Hond van de maand",
+            "banner_cta_label": "Word gratis lid",
+            "view_all_label": "Bekijk alle beloningen"
+          }
+        },
+        {
+          "type": "dropdown_config",
+          "settings": {
+            "menu_item_index": 5,
+            "layout_type": "about",
+            "accent_color": "ink",
+            "banner_title": "Over Kwispelbox",
+            "banner_text": "Wij geloven dat elke hond iets extra's verdient. Daarom stellen we met liefde de leukste verrassingsboxen samen.",
+            "banner_cta_label": "Lees ons verhaal",
+            "about_tagline": "Samen maken we honden blij!",
+            "about_team_title": "Het Kwispelbox team",
+            "about_team_tagline": "Liefs, team Kwispelbox"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "title": "Gratis verzending",
+            "subtitle": "vanaf €75",
+            "icon": "icon-truck.svg"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "title": "Niet goed?",
+            "subtitle": "Geld terug",
+            "icon": "icon-refresh.svg"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "title": "100% veilig betalen",
+            "subtitle": "iDEAL & Klarna",
+            "icon": "icon-shield.svg"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "title": "Voor 23:59 besteld",
+            "subtitle": "morgen in huis",
+            "icon": "icon-truck.svg"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "title": "Uitstekend beoordeeld",
+            "subtitle": "4,9/5",
+            "icon": "icon-star.svg"
+          }
+        }
+      ]
+    }
+  ],
+  "tag": "div",
+  "class": "full-width"
+}
+{% endschema %}
