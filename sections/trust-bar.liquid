@@ -62,11 +62,18 @@
 .trust-bar {
   background: var(--color-green);
   position: relative;
+  z-index: 10;
 }
 
 .trust-bar__wave {
   display: block;
   line-height: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.trust-bar__wave--bottom {
+  margin-bottom: -32px;
 }
 
 .trust-bar__wave svg {
