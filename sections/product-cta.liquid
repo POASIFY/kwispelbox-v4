@@ -1,0 +1,76 @@
+{%- comment -%}
+  sections/product-cta.liquid — Kwispelbox KB-v4
+  Afsluitende CTA-banner met blije hond + open Kwispelbox.
+{%- endcomment -%}
+
+<div class="pcta full-width">
+  <div class="pcta__inner">
+    <section class="pcta__banner">
+      {%- if section.settings.show_decorations -%}
+        <span class="pcta__deco pcta__deco--paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
+        <span class="pcta__deco pcta__deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+        <span class="pcta__deco pcta__deco--squiggle" aria-hidden="true"><svg viewBox="0 0 60 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 11c6-9 10 6 16-1s10 6 16-1 10 5 22-2"/></svg></span>
+      {%- endif -%}
+      <div class="pcta__text">
+        {%- if section.settings.title != blank -%}<h2 class="pcta__title">{{ section.settings.title }}</h2>{%- endif -%}
+        {%- if section.settings.text != blank -%}<p class="pcta__intro">{{ section.settings.text }}</p>{%- endif -%}
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_url | default: '#' }}" class="pcta__btn">{{ section.settings.button_label }}<span aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span></a>
+        {%- endif -%}
+      </div>
+      <div class="pcta__media">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.image.alt | escape }}" width="400" height="320" loading="lazy" class="pcta__img">
+        {%- else -%}
+          <div class="pcta__img pcta__img--ph">{%- render 'lucide', icon: 'dog' -%}</div>
+        {%- endif -%}
+      </div>
+    </section>
+  </div>
+</div>
+
+{% stylesheet %}
+.pcta { background: var(--color-cream); padding: 20px 0 64px; }
+.pcta__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.pcta__banner { position: relative; display: flex; flex-direction: column; gap: 8px; background: #e8f5e2; border-radius: 32px; overflow: hidden; }
+.pcta__deco { position: absolute; pointer-events: none; z-index: 1; }
+.pcta__deco svg { display: block; width: 100%; height: 100%; }
+.pcta__deco--paw { top: 18px; left: 18px; width: 30px; height: 30px; color: var(--color-green); opacity: .3; transform: rotate(-12deg); }
+.pcta__deco--heart { top: 60px; right: 24px; width: 24px; height: 24px; color: var(--color-pink); opacity: .4; }
+.pcta__deco--squiggle { bottom: 16px; left: 30px; width: 60px; height: 16px; color: var(--color-orange); opacity: .35; }
+.pcta__text { position: relative; z-index: 2; padding: 36px 28px 16px; }
+.pcta__title { font-family: var(--font-heading); font-size: clamp(1.8rem, 6vw, 2.8rem); color: var(--color-ink); line-height: 1.08; margin: 0; }
+.pcta__intro { font-family: var(--font-body); font-size: 1.02rem; line-height: 1.6; color: var(--color-body); margin: 14px 0 22px; max-width: 40ch; }
+.pcta__btn { display: inline-flex; align-items: center; gap: 9px; padding: 16px 30px; background: var(--color-green); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.1rem; text-decoration: none; transition: background 160ms, transform 160ms, box-shadow 160ms; }
+.pcta__btn:hover { background: #5a9a3b; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(102, 170, 68, .3); }
+.pcta__btn span { display: inline-flex; }
+.pcta__btn svg { width: 18px; height: 18px; }
+.pcta__media { padding: 12px 28px 28px; }
+.pcta__img { width: 100%; height: 230px; object-fit: cover; border-radius: 24px; display: block; }
+.pcta__img--ph { display: flex; align-items: center; justify-content: center; background: #fff; color: var(--color-green); }
+.pcta__img--ph .lucide { width: 70px; height: 70px; }
+
+@media (min-width: 750px) {
+  .pcta__banner { flex-direction: row; align-items: center; }
+  .pcta__text { flex: 1.1; padding: 52px 8px 52px 48px; }
+  .pcta__media { flex: 1; padding: 28px; }
+  .pcta__img, .pcta__img--ph { height: 300px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product CTA",
+  "tag": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "title", "label": "Titel", "default": "Klaar om jouw hond te verrassen?" },
+    { "type": "textarea", "id": "text", "label": "Tekst", "default": "Geef jouw hond elke maand een feestje vol speelplezier, snacks en verrassingen." },
+    { "type": "text", "id": "button_label", "label": "Knoptekst", "default": "Ontdek onze boxen" },
+    { "type": "url", "id": "button_url", "label": "Knop link" },
+    { "type": "image_picker", "id": "image", "label": "Afbeelding" },
+    { "type": "checkbox", "id": "show_decorations", "label": "Decoratieve accenten tonen", "default": true }
+  ],
+  "presets": [{ "name": "Product CTA" }]
+}
+{% endschema %}

@@ -1,0 +1,480 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product-kwispelbox",
+      "blocks": {
+        "o1": {
+          "type": "box_option",
+          "settings": {
+            "variant_title": "Mini",
+            "description": "Voor kleinere honden",
+            "item_count": "3–4 verrassingen"
+          }
+        },
+        "o2": {
+          "type": "box_option",
+          "settings": {
+            "variant_title": "Happy",
+            "description": "Onze populairste box",
+            "item_count": "5–6 verrassingen",
+            "badge_text": "Meest gekozen",
+            "badge_color": "pink"
+          }
+        },
+        "o3": {
+          "type": "box_option",
+          "settings": {
+            "variant_title": "Mega",
+            "description": "Voor grote avonturiers",
+            "item_count": "7–8 verrassingen"
+          }
+        },
+        "tb1": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "truck",
+            "color": "green",
+            "text": "Gratis verzending vanaf €75"
+          }
+        },
+        "tb2": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "text": "Zorgvuldig samengesteld"
+          }
+        },
+        "tb3": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield-check",
+            "color": "green",
+            "text": "Veilig betalen"
+          }
+        },
+        "tb4": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "paw",
+            "color": "orange",
+            "text": "1.200+ blije honden"
+          }
+        }
+      },
+      "block_order": [
+        "o1",
+        "o2",
+        "o3",
+        "tb1",
+        "tb2",
+        "tb3",
+        "tb4"
+      ],
+      "settings": {}
+    },
+    "contents": {
+      "type": "box-contents",
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {
+            "icon": "bone",
+            "color": "green",
+            "title": "Speeltjes",
+            "text": "Stevige speeltjes om uren mee te ravotten en kwispelen."
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "icon": "leaf",
+            "color": "orange",
+            "title": "Gezonde snacks",
+            "text": "Natuurlijke, smakelijke beloningen waar honden dol op zijn."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "icon": "sparkles",
+            "color": "pink",
+            "title": "Maandelijkse verrassing",
+            "text": "Elke box zit vol nieuwe avonturen om te ontdekken."
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "icon": "shield-check",
+            "color": "yellow",
+            "title": "Veilig & zorgvuldig",
+            "text": "Alleen producten die wij zelf met een gerust hart geven."
+          }
+        },
+        "ct1": {
+          "type": "trust",
+          "settings": {
+            "icon": "truck",
+            "color": "green",
+            "title": "Gratis verzending vanaf €75"
+          }
+        },
+        "ct2": {
+          "type": "trust",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "Meer dan 1.200 blije honden"
+          }
+        },
+        "ct3": {
+          "type": "trust",
+          "settings": {
+            "icon": "gift",
+            "color": "orange",
+            "title": "Elke box voelt als een cadeautje"
+          }
+        },
+        "ct4": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield-check",
+            "color": "green",
+            "title": "100% veilig betalen"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "ct1",
+        "ct2",
+        "ct3",
+        "ct4"
+      ],
+      "settings": {}
+    },
+    "how": {
+      "type": "product-how-it-works",
+      "blocks": {
+        "h1": {
+          "type": "step",
+          "settings": {
+            "icon": "gift",
+            "title": "Kies jouw box",
+            "text": "Mini, Happy of Mega — kies wat past bij jouw hond."
+          }
+        },
+        "h2": {
+          "type": "step",
+          "settings": {
+            "icon": "dog",
+            "title": "Vertel over je hond",
+            "text": "Naam, formaat en favoriete speeltjes — wij doen de rest."
+          }
+        },
+        "h3": {
+          "type": "step",
+          "settings": {
+            "icon": "sparkles",
+            "title": "Wij stellen de box samen",
+            "text": "Met liefde gevuld met speelgoed, snacks en knuffels."
+          }
+        },
+        "h4": {
+          "type": "step",
+          "settings": {
+            "icon": "truck",
+            "title": "Verrassing bezorgd!",
+            "text": "De box valt op de mat en het feest kan beginnen."
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ],
+      "settings": {}
+    },
+    "community": {
+      "type": "community",
+      "blocks": {
+        "f1": {
+          "type": "featured",
+          "settings": {
+            "dog_name": "Max",
+            "quote": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest in huis!",
+            "rating": 5,
+            "owner_name": "Sanne",
+            "meta": "Happy Box fan · lid sinds 2024",
+            "color": "green"
+          }
+        },
+        "p1": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Bella",
+            "badge": "Hond van de maand"
+          }
+        },
+        "p2": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Loki",
+            "badge": "Mega Box"
+          }
+        },
+        "p3": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Noa",
+            "badge": "Favoriet"
+          }
+        },
+        "p4": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Storm",
+            "badge": "Eerste box"
+          }
+        },
+        "p5": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Pip",
+            "badge": "Jarig vandaag"
+          }
+        },
+        "p6": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Bo",
+            "badge": "Kwispelclub"
+          }
+        },
+        "st1": {
+          "type": "stat",
+          "settings": {
+            "icon": "paw",
+            "color": "green",
+            "value": "1.200+",
+            "label": "blije honden"
+          }
+        },
+        "st2": {
+          "type": "stat",
+          "settings": {
+            "icon": "sparkles",
+            "color": "pink",
+            "value": "Dagelijks",
+            "label": "nieuwe foto's & verhalen"
+          }
+        },
+        "st3": {
+          "type": "stat",
+          "settings": {
+            "icon": "heart",
+            "color": "orange",
+            "value": "8.500+",
+            "label": "leden in de community"
+          }
+        },
+        "st4": {
+          "type": "stat",
+          "settings": {
+            "icon": "star",
+            "color": "yellow",
+            "value": "4,9/5",
+            "label": "gemiddelde beoordeling"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "st1",
+        "st2",
+        "st3",
+        "st4"
+      ],
+      "settings": {}
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Luna",
+            "breed": "Golden Retriever",
+            "badge": "Happy Box",
+            "badge_color": "pink",
+            "rating": 5,
+            "review_title": "Elke maand weer een feestje!",
+            "review_text": "Luna wordt altijd zó enthousiast als de Kwispelbox binnenkomt. De speeltjes zijn stevig en superleuk, en ze is dol op de knuffels. Echt een aanrader!",
+            "verified_text": "Geverifieerde aankoop",
+            "accent": "pink"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Milo",
+            "breed": "Border Collie",
+            "badge": "Mega Box",
+            "badge_color": "orange",
+            "rating": 5,
+            "review_title": "Kwaliteit waar je blij van wordt",
+            "review_text": "Je merkt dat er echt aandacht is besteed aan de selectie van de producten. Milo speelt overal mee en de box voelt als een cadeau, elke keer weer.",
+            "verified_text": "Geverifieerde aankoop",
+            "accent": "orange"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Bobby",
+            "breed": "Cockapoo",
+            "badge": "Mini Box",
+            "badge_color": "green",
+            "rating": 5,
+            "review_title": "Perfect voor onze kleine avonturier",
+            "review_text": "Bobby is kieskeurig, maar alles in de Kwispelbox is een hit! Zelfs de snacks zijn favoriet. Super service en snelle levering ook!",
+            "verified_text": "Geverifieerde aankoop",
+            "accent": "green"
+          }
+        },
+        "rt1": {
+          "type": "trust",
+          "settings": {
+            "icon": "paw",
+            "color": "green",
+            "title": "1.200+",
+            "text": "Blije honden in onze community"
+          }
+        },
+        "rt2": {
+          "type": "trust",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "4,9/5",
+            "text": "Uitstekend beoordeeld",
+            "show_stars": true,
+            "subtext": "op basis van 500+ reviews"
+          }
+        },
+        "rt3": {
+          "type": "trust",
+          "settings": {
+            "icon": "gift",
+            "color": "yellow",
+            "title": "100%",
+            "text": "Tevredenheidsgarantie",
+            "subtext": "Niet tevreden? Geld terug."
+          }
+        },
+        "rt4": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield-check",
+            "color": "green",
+            "title": "Veilig & vertrouwd",
+            "text": "Betaal veilig via iDEAL, Klarna of Bancontact.",
+            "show_heart": true
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "rt1",
+        "rt2",
+        "rt3",
+        "rt4"
+      ],
+      "settings": {}
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Hoe snel wordt mijn box geleverd?",
+            "answer": "Voor 23:59 besteld? Dan is je box meestal de volgende werkdag in huis. Gepersonaliseerde boxen kunnen iets meer tijd nodig hebben."
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan ik de box retourneren?",
+            "answer": "Niet goed? Geld terug! Neem binnen 14 dagen contact met ons op en we lossen het samen op."
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Houden jullie rekening met allergieën?",
+            "answer": "Zeker! Vul de allergieën van je hond in bij het personaliseren en wij stellen de box veilig samen."
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan ik de Kwispelbox cadeau geven?",
+            "answer": "Ja! Voeg een persoonlijk bericht toe bij het bestellen — perfect als cadeautje voor een hondenliefhebber."
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "Wat zit er precies in een box?",
+            "answer": "Elke box is uniek en zit vol speelgoed, knuffels, natuurlijke snacks en kleine verrassingen. Geen twee boxen zijn hetzelfde!"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {}
+    },
+    "cta": {
+      "type": "product-cta",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "contents",
+    "how",
+    "community",
+    "reviews",
+    "faq",
+    "cta"
+  ]
+}

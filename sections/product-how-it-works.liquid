@@ -1,0 +1,101 @@
+{%- comment -%}
+  sections/product-how-it-works.liquid — Kwispelbox KB-v4
+  Speelse "Hoe werkt het?" tijdlijn. Stappen als blocks. Mobiel-first.
+{%- endcomment -%}
+
+{%- assign step_blocks = section.blocks | where: 'type', 'step' -%}
+
+<div class="hiw full-width">
+  <div class="hiw__inner">
+    {%- if section.settings.eyebrow != blank -%}<span class="hiw__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+    {%- if section.settings.title != blank -%}<h2 class="hiw__title">{{ section.settings.title }}</h2>{%- endif -%}
+    {%- if step_blocks.size > 0 -%}
+      <ol class="hiw__list">
+        {%- for block in step_blocks -%}
+          <li class="hiw__step" {{ block.shopify_attributes }}>
+            <div class="hiw__step-media">
+              {%- if block.settings.image != blank -%}
+                <img src="{{ block.settings.image | image_url: width: 360 }}" alt="{{ block.settings.title | escape }}" width="180" height="180" loading="lazy">
+              {%- else -%}
+                <span class="hiw__step-ph" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
+              {%- endif -%}
+              <span class="hiw__step-num">{{ forloop.index }}</span>
+            </div>
+            {%- if block.settings.title != blank -%}<strong class="hiw__step-title">{{ block.settings.title }}</strong>{%- endif -%}
+            {%- if block.settings.text != blank -%}<span class="hiw__step-text">{{ block.settings.text }}</span>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ol>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+.hiw { background: var(--color-cream); padding: 52px 0; }
+.hiw__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.hiw__eyebrow { display: block; text-align: center; font-family: var(--font-body); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--color-pink); margin-bottom: 10px; }
+.hiw__title { text-align: center; font-family: var(--font-heading); font-size: clamp(1.7rem, 5vw, 2.6rem); color: var(--color-ink); margin: 0 0 36px; }
+.hiw__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 26px; position: relative; }
+.hiw__step { position: relative; display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 18px; }
+.hiw__list::before { content: ""; position: absolute; left: 45px; top: 30px; bottom: 30px; width: 3px; border-radius: 3px; background: repeating-linear-gradient(to bottom, rgba(247,160,72,.45) 0 7px, transparent 7px 15px); }
+.hiw__step-media { position: relative; z-index: 1; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; background: #fff; box-shadow: 0 10px 26px rgba(61, 34, 9, .1); display: flex; align-items: center; justify-content: center; }
+.hiw__step-media img { width: 100%; height: 100%; object-fit: cover; }
+.hiw__step-ph { display: flex; color: var(--color-green); }
+.hiw__step-ph .lucide { width: 38px; height: 38px; }
+.hiw__step-num { position: absolute; top: -2px; right: -2px; z-index: 2; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--color-pink); color: #fff; font-family: var(--font-heading); font-size: .85rem; border: 2.5px solid var(--color-cream); }
+.hiw__step-title { display: block; font-family: var(--font-heading); font-size: 1.2rem; color: var(--color-ink); line-height: 1.15; margin-bottom: 4px; }
+.hiw__step-text { font-family: var(--font-body); font-size: .9rem; line-height: 1.5; color: var(--color-body); }
+
+@media (min-width: 750px) {
+  .hiw { padding: 72px 0; }
+  .hiw__list { flex-direction: row; gap: 16px; }
+  .hiw__step { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 14px; flex: 1; }
+  .hiw__list::before { left: 12%; right: 12%; top: 46px; bottom: auto; width: auto; height: 3px; background: repeating-linear-gradient(to right, rgba(247,160,72,.45) 0 7px, transparent 7px 15px); }
+  .hiw__step-media { width: 100px; height: 100px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hoe werkt het",
+  "tag": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Zo makkelijk is het" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Hoe werkt het?" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Stap",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Afbeelding" },
+        {
+          "type": "select", "id": "icon", "label": "Icoon (zonder afbeelding)", "default": "gift",
+          "options": [
+            { "value": "gift", "label": "Cadeau" },
+            { "value": "dog", "label": "Hond" },
+            { "value": "heart", "label": "Hart" },
+            { "value": "truck", "label": "Vrachtwagen" },
+            { "value": "sparkles", "label": "Sparkles" },
+            { "value": "paw", "label": "Poot" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Kies jouw box" },
+        { "type": "text", "id": "text", "label": "Tekst", "default": "Mini, Happy of Mega — kies wat past bij jouw hond." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hoe werkt het",
+      "blocks": [
+        { "type": "step", "settings": { "icon": "gift", "title": "Kies jouw box", "text": "Mini, Happy of Mega — kies wat past bij jouw hond." } },
+        { "type": "step", "settings": { "icon": "dog", "title": "Vertel over je hond", "text": "Naam, formaat en favoriete speeltjes — wij doen de rest." } },
+        { "type": "step", "settings": { "icon": "sparkles", "title": "Wij stellen de box samen", "text": "Met liefde gevuld met speelgoed, snacks en knuffels." } },
+        { "type": "step", "settings": { "icon": "truck", "title": "Verrassing bezorgd!", "text": "De box valt op de mat en het feest kan beginnen." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

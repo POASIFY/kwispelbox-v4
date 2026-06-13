@@ -1,0 +1,113 @@
+{%- comment -%}
+  sections/product-faq.liquid — Kwispelbox KB-v4
+  FAQ-accordion + vriendelijke contactkaart. FAQ-items als blocks.
+{%- endcomment -%}
+
+{%- assign faq_blocks = section.blocks | where: 'type', 'faq' -%}
+
+<div class="pfaq full-width">
+  <div class="pfaq__inner">
+    <div class="pfaq__cols">
+      <div class="pfaq__faq">
+        {%- if section.settings.title != blank -%}<h2 class="pfaq__title">{{ section.settings.title }}</h2>{%- endif -%}
+        {%- for block in faq_blocks -%}
+          <details class="pfaq__item" {{ block.shopify_attributes }}>
+            <summary class="pfaq__q">{{ block.settings.question }}<span class="pfaq__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+            {%- if block.settings.answer != blank -%}<div class="pfaq__a">{{ block.settings.answer }}</div>{%- endif -%}
+          </details>
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.contact_title != blank -%}
+        <div class="pfaq__contact">
+          <div class="pfaq__contact-media">
+            {%- if section.settings.contact_image != blank -%}
+              <img src="{{ section.settings.contact_image | image_url: width: 480 }}" alt="" width="240" height="170" loading="lazy">
+            {%- else -%}
+              <span class="pfaq__contact-ph" aria-hidden="true">{%- render 'lucide', icon: 'dog' -%}</span>
+            {%- endif -%}
+          </div>
+          <span class="pfaq__contact-icon" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+          <strong class="pfaq__contact-title">{{ section.settings.contact_title }}</strong>
+          {%- if section.settings.contact_text != blank -%}<p class="pfaq__contact-text">{{ section.settings.contact_text }}</p>{%- endif -%}
+          {%- if section.settings.contact_cta_label != blank -%}<a href="{{ section.settings.contact_cta_url | default: '#' }}" class="pfaq__contact-cta">{{ section.settings.contact_cta_label }}</a>{%- endif -%}
+          {%- if section.settings.contact_email != blank -%}<a href="mailto:{{ section.settings.contact_email }}" class="pfaq__contact-mail"><span aria-hidden="true">{%- render 'lucide', icon: 'mail' -%}</span>{{ section.settings.contact_email }}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.pfaq { background: var(--color-cream); padding: 52px 0; }
+.pfaq__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.pfaq__cols { display: flex; flex-direction: column; gap: 24px; }
+.pfaq__title { font-family: var(--font-heading); font-size: clamp(1.6rem, 4.5vw, 2.3rem); color: var(--color-ink); margin: 0 0 18px; }
+.pfaq__item { background: #fff; border: 1.5px solid var(--color-line); border-radius: 18px; box-shadow: 0 6px 18px rgba(61, 34, 9, .05); margin-bottom: 12px; overflow: hidden; }
+.pfaq__q { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 18px 20px; cursor: pointer; list-style: none; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); }
+.pfaq__q::-webkit-details-marker { display: none; }
+.pfaq__chev { display: flex; flex-shrink: 0; color: var(--color-green); transition: transform 260ms ease; }
+.pfaq__chev svg { width: 20px; height: 20px; }
+.pfaq__item[open] .pfaq__chev { transform: rotate(180deg); }
+.pfaq__a { padding: 0 20px 18px; font-family: var(--font-body); font-size: .92rem; line-height: 1.6; color: var(--color-body); }
+.pfaq__contact { background: #fff; border: 1.5px solid var(--color-line); border-radius: 24px; box-shadow: 0 14px 34px rgba(61, 34, 9, .07); padding: 0 0 26px; text-align: center; overflow: hidden; }
+.pfaq__contact-media { height: 160px; background: #ffe0ee; }
+.pfaq__contact-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pfaq__contact-ph { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--color-pink); }
+.pfaq__contact-ph .lucide { width: 60px; height: 60px; }
+.pfaq__contact-icon { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%; background: #ffe0ee; color: var(--color-pink); margin: -26px 0 12px; border: 4px solid #fff; }
+.pfaq__contact-icon .lucide { width: 24px; height: 24px; }
+.pfaq__contact-title { display: block; font-family: var(--font-heading); font-size: 1.35rem; color: var(--color-ink); padding: 0 22px; }
+.pfaq__contact-text { font-family: var(--font-body); font-size: .9rem; line-height: 1.55; color: var(--color-body); margin: 10px 22px 18px; }
+.pfaq__contact-cta { display: inline-flex; align-items: center; justify-content: center; padding: 13px 26px; background: var(--color-green); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; text-decoration: none; transition: background 160ms, transform 160ms; }
+.pfaq__contact-cta:hover { background: #5a9a3b; transform: translateY(-1px); }
+.pfaq__contact-mail { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; font-family: var(--font-body); font-size: .85rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
+.pfaq__contact-mail span { display: inline-flex; color: var(--color-green); }
+.pfaq__contact-mail .lucide { width: 16px; height: 16px; }
+
+@media (min-width: 990px) {
+  .pfaq { padding: 72px 0; }
+  .pfaq__cols { flex-direction: row; align-items: flex-start; gap: 32px; }
+  .pfaq__faq { flex: 1.5; }
+  .pfaq__contact { flex: 1; position: sticky; top: 150px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product FAQ",
+  "tag": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "title", "label": "FAQ titel", "default": "Veelgestelde vragen" },
+    { "type": "header", "content": "Contactkaart" },
+    { "type": "image_picker", "id": "contact_image", "label": "Foto hond" },
+    { "type": "text", "id": "contact_title", "label": "Titel", "default": "Toch nog vragen?" },
+    { "type": "textarea", "id": "contact_text", "label": "Tekst", "default": "Ons team van hondenliefhebbers helpt je graag snel en persoonlijk verder." },
+    { "type": "text", "id": "contact_cta_label", "label": "Knoptekst", "default": "Neem contact op" },
+    { "type": "url", "id": "contact_cta_url", "label": "Knop link" },
+    { "type": "text", "id": "contact_email", "label": "E-mailadres", "default": "hallo@kwispelbox.nl" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ vraag",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Vraag", "default": "Hoe snel wordt mijn box geleverd?" },
+        { "type": "textarea", "id": "answer", "label": "Antwoord", "default": "Voor 23:59 besteld? Dan is je box meestal de volgende dag in huis." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product FAQ",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "Hoe snel wordt mijn box geleverd?", "answer": "Voor 23:59 besteld? Dan is je box meestal de volgende werkdag in huis. Gepersonaliseerde boxen kunnen iets meer tijd nodig hebben." } },
+        { "type": "faq", "settings": { "question": "Kan ik de box retourneren?", "answer": "Niet goed? Geld terug! Neem binnen 14 dagen contact met ons op en we lossen het samen op." } },
+        { "type": "faq", "settings": { "question": "Houden jullie rekening met allergieën?", "answer": "Zeker! Vul de allergieën van je hond in bij het personaliseren en wij stellen de box veilig samen." } },
+        { "type": "faq", "settings": { "question": "Kan ik de Kwispelbox cadeau geven?", "answer": "Ja! Voeg een persoonlijk bericht toe bij het bestellen — perfect als cadeautje voor een hondenliefhebber." } },
+        { "type": "faq", "settings": { "question": "Wat zit er precies in een box?", "answer": "Elke box is uniek en zit vol speelgoed, knuffels, natuurlijke snacks en kleine verrassingen. Geen twee boxen zijn hetzelfde!" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
