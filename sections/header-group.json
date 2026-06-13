@@ -24,7 +24,7 @@
             "link_list": "menu-verrassingsboxen",
             "view_all_label": "Vergelijk alle boxen",
             "view_all_url": "",
-            "banner_badge": "",
+            "banner_badge": "Populair",
             "banner_title": "Elke box een nieuwe verrassing!",
             "banner_text": "Met liefde samengesteld voor jouw hond.",
             "banner_cta_label": "Ontdek de boxen",
@@ -42,7 +42,8 @@
             "about_tagline": "Samen maken we honden blij!",
             "about_tagline_sub": "",
             "about_team_title": "Het Kwispelbox team",
-            "about_team_tagline": "Liefs, team Kwispelbox"
+            "about_team_tagline": "Liefs, team Kwispelbox",
+            "links_heading": "Zo werkt het"
           }
         },
         "prod_1": {
@@ -70,60 +71,6 @@
             "product": "mega-kwispelbox",
             "badge": "",
             "description": "Voor honden die van veel afwisseling houden"
-          }
-        },
-        "col_special": {
-          "type": "dropdown_col",
-          "settings": {
-            "menu_item_index": 1,
-            "col_order": 1,
-            "heading": "Special Editions",
-            "description": "Thema boxen voor de leukste momenten samen.",
-            "color": "pink",
-            "icon": "icon-gift.svg",
-            "show_link_icons": false,
-            "link_list": "menu-special-editions",
-            "cta_label": "Bekijk alle special editions",
-            "cta_url": "/collections/special-editions",
-            "mini_banner_label": "",
-            "mini_banner_sub": "",
-            "mini_banner_url": ""
-          }
-        },
-        "col_shop": {
-          "type": "dropdown_col",
-          "settings": {
-            "menu_item_index": 1,
-            "col_order": 10,
-            "heading": "Shop",
-            "description": "Losse producten voor jouw hond z’n geluksmomentjes.",
-            "color": "orange",
-            "icon": "icon-bone.svg",
-            "show_link_icons": true,
-            "link_list": "menu-speeltjes",
-            "cta_label": "",
-            "cta_url": "",
-            "mini_banner_label": "Nieuw binnen!",
-            "mini_banner_sub": "Ontdek de nieuwste favorieten",
-            "mini_banner_url": "/collections/nieuw"
-          }
-        },
-        "col_club": {
-          "type": "dropdown_col",
-          "settings": {
-            "menu_item_index": 1,
-            "col_order": 11,
-            "heading": "Kwispelclub",
-            "description": "Gratis lidmaatschap vol voordelen en verrassingen!",
-            "color": "pink",
-            "icon": "icon-paw.svg",
-            "show_link_icons": true,
-            "link_list": "menu-kwispelclub",
-            "cta_label": "",
-            "cta_url": "",
-            "mini_banner_label": "",
-            "mini_banner_sub": "",
-            "mini_banner_url": ""
           }
         },
         "trust_1": {
@@ -160,96 +107,6 @@
             "subtitle": "4,9/5",
             "url": "",
             "icon": "icon-star.svg"
-          }
-        },
-        "li_shop_1": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 10,
-            "label": "Speeltjes",
-            "url": "/collections/speeltjes",
-            "icon": "paw"
-          }
-        },
-        "li_shop_2": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 10,
-            "label": "Knuffels",
-            "url": "/collections/knuffels",
-            "icon": "heart"
-          }
-        },
-        "li_shop_3": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 10,
-            "label": "Snacks",
-            "url": "/collections/snacks",
-            "icon": "bone"
-          }
-        },
-        "li_shop_4": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 10,
-            "label": "Puppy favorieten",
-            "url": "/collections/puppy",
-            "icon": "sparkles"
-          }
-        },
-        "li_club_1": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 11,
-            "label": "Word gratis lid",
-            "url": "/pages/kwispelclub",
-            "icon": "gift"
-          }
-        },
-        "li_club_2": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 11,
-            "label": "Kwispels sparen",
-            "url": "/pages/kwispels-sparen",
-            "icon": "star"
-          }
-        },
-        "li_club_3": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 11,
-            "label": "Exclusieve kortingen",
-            "url": "/pages/kortingen",
-            "icon": "shield"
-          }
-        },
-        "li_club_4": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 11,
-            "label": "Hond van de maand",
-            "url": "/pages/hond-van-de-maand",
-            "icon": "camera"
-          }
-        },
-        "li_club_5": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 11,
-            "label": "Verjaardagsvoordelen",
-            "url": "/pages/verjaardag",
-            "icon": "cake"
-          }
-        },
-        "li_club_6": {
-          "type": "link_item",
-          "settings": {
-            "col_index": 11,
-            "label": "Clubnieuws",
-            "url": "/pages/clubnieuws",
-            "icon": "sparkles"
           }
         },
         "dd_config_2": {
@@ -438,23 +295,10 @@
         "prod_1",
         "prod_2",
         "prod_3",
-        "col_special",
-        "col_shop",
-        "col_club",
         "trust_1",
         "trust_2",
         "trust_3",
         "trust_4",
-        "li_shop_1",
-        "li_shop_2",
-        "li_shop_3",
-        "li_shop_4",
-        "li_club_1",
-        "li_club_2",
-        "li_club_3",
-        "li_club_4",
-        "li_club_5",
-        "li_club_6",
         "dd_config_2",
         "se1",
         "se2",
