@@ -5,9 +5,23 @@
 {%- endcomment -%}
 
 <section class="hero">
-  <div class="hero__inner">
 
-    <!-- Tekst kolom -->
+  {%- if section.settings.image != blank -%}
+    <div class="hero__bg">
+      <img
+        src="{{ section.settings.image | image_url: width: 1400 }}"
+        srcset="{{ section.settings.image | image_url: width: 800 }} 800w,
+                {{ section.settings.image | image_url: width: 1400 }} 1400w"
+        sizes="100vw"
+        alt="{{ section.settings.image.alt | default: shop.name | escape }}"
+        width="1400"
+        height="600"
+        {%- if section.index <= 1 -%}loading="eager" fetchpriority="high"{%- else -%}loading="lazy"{%- endif -%}
+        class="hero__bg-img">
+    </div>
+  {%- endif -%}
+
+  <div class="hero__inner">
     <div class="hero__content">
 
       {%- if section.settings.label != blank -%}
@@ -50,31 +64,13 @@
         </div>
       {%- endif -%}
 
+      {%- if section.settings.badge_text != blank -%}
+        <div class="hero__badge">
+          <span class="hero__badge-text">{{ section.settings.badge_text }}</span>
+        </div>
+      {%- endif -%}
+
     </div>
-
-    <!-- Afbeelding kolom -->
-    {%- if section.settings.image != blank -%}
-      <div class="hero__media">
-        <img
-          src="{{ section.settings.image | image_url: width: 800 }}"
-          srcset="{{ section.settings.image | image_url: width: 400 }} 400w,
-                  {{ section.settings.image | image_url: width: 800 }} 800w,
-                  {{ section.settings.image | image_url: width: 1200 }} 1200w"
-          sizes="(max-width: 749px) 100vw, 50vw"
-          alt="{{ section.settings.image.alt | default: shop.name | escape }}"
-          width="800"
-          height="600"
-          {%- if section.index <= 1 -%}loading="eager" fetchpriority="high"{%- else -%}loading="lazy"{%- endif -%}
-          class="hero__img">
-
-        {%- if section.settings.badge_text != blank -%}
-          <div class="hero__badge">
-            <span class="hero__badge-text">{{ section.settings.badge_text }}</span>
-          </div>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
   </div>
 </section>
 
@@ -82,21 +78,38 @@
 
 .hero {
   background: var(--color-cream);
+  position: relative;
   overflow: hidden;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  display: block;
 }
 
 .hero__inner {
+  position: relative;
+  z-index: 1;
   max-width: var(--page-width);
   margin: 0 auto;
-  padding: 48px var(--page-margin);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 48px;
-  min-height: 480px;
+  padding: 64px var(--page-margin);
+  width: 100%;
 }
 
 /* Tekst kolom */
+.hero__content { max-width: 520px; }
 .hero__label {
   display: inline-block;
   font-family: var(--font-body);
@@ -210,28 +223,14 @@
   font-weight: 600;
 }
 
-/* Afbeelding kolom */
-.hero__media {
-  position: relative;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
 
-.hero__img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: var(--radius-lg);
-  object-fit: cover;
-  aspect-ratio: 4/3;
-}
 
 .hero__badge {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 100px;
-  height: 100px;
+  top: 40px;
+  right: var(--page-margin);
+  width: 110px;
+  height: 110px;
   background: var(--color-pink);
   border-radius: 50%;
   display: flex;
@@ -250,16 +249,20 @@
 
 /* Mobiel */
 @media (max-width: 749px) {
-  .hero__inner {
-    grid-template-columns: 1fr;
-    padding: 32px var(--page-margin);
-    gap: 24px;
-    min-height: auto;
+  .hero {
+    min-height: 400px;
+    align-items: flex-end;
   }
 
-  .hero__media { order: -1; }
+  .hero__bg-img { object-position: top center; }
+
+  .hero__inner { padding: 32px var(--page-margin) 48px; }
+
+  .hero__content { max-width: 100%; }
 
   .hero__title { font-size: 2rem; }
+
+  .hero__badge { display: none; }
 }
 
 {% endstylesheet %}
