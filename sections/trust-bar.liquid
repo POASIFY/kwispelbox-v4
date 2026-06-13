@@ -48,11 +48,7 @@
     </div>
   {%- endif -%}
 
-  <div class="trust-bar__wave trust-bar__wave--bottom" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none">
-      <path d="M0,15 C180,60 360,0 540,30 C720,60 900,8 1080,38 C1260,60 1380,15 1440,30 L1440,60 L0,60 Z" fill="#fff"/>
-    </svg>
-  </div>
+
 
 </div>
 {%- endif -%}
@@ -72,16 +68,9 @@
   z-index: 2;
 }
 
-.trust-bar__wave--bottom {
-  position: absolute;
-  bottom: -59px;
-  left: 0;
-  right: 0;
-  z-index: 20;
-}
 
-.trust-bar__wave--top svg { display: block; width: 100%; height: 32px; }
-.trust-bar__wave--bottom svg { display: block; width: 100%; height: 60px; }
+
+.trust-bar__wave svg { display: block; width: 100%; height: 32px; }
 
 .trust-bar__body {
   z-index: 1;
