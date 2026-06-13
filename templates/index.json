@@ -83,7 +83,11 @@
             "price_suffix": "per maand",
             "highlight": false,
             "button_label": "Bestel nu",
-            "button_url": ""
+            "button_url": "",
+            "benefit_1": "3 tot 4 verrassingen per box",
+            "benefit_2": "Ideaal voor kleinere honden",
+            "benefit_3": "Perfect om kennis te maken",
+            "benefit_4": "Maandelijks opzegbaar"
           }
         },
         "box_happy": {
@@ -97,7 +101,12 @@
             "badge": "Meest gekozen",
             "highlight": true,
             "button_label": "Bestel nu",
-            "button_url": ""
+            "button_url": "",
+            "benefit_1": "5 tot 6 verrassingen per box",
+            "benefit_2": "Mix van speelgoed én snacks",
+            "benefit_3": "Geschikt voor elke hond",
+            "benefit_4": "Gratis verzending",
+            "benefit_5": "Maandelijks opzegbaar"
           }
         },
         "box_mega": {
@@ -110,7 +119,12 @@
             "price_suffix": "per maand",
             "highlight": false,
             "button_label": "Bestel nu",
-            "button_url": ""
+            "button_url": "",
+            "benefit_1": "7 tot 8 verrassingen per box",
+            "benefit_2": "Extra veel speelgoed",
+            "benefit_3": "Voor grote honden",
+            "benefit_4": "Gratis verzending",
+            "benefit_5": "Maandelijks opzegbaar"
           }
         },
         "ben_1": {
@@ -181,11 +195,95 @@
         "show_decorations": true,
         "trust_title": "Waarom families voor Kwispelbox kiezen"
       }
+    },
+    "why-kwispelbox": {
+      "type": "why-kwispelbox",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "dog",
+            "color": "green",
+            "title": "Meer speelplezier",
+            "text": "Nieuwe verrassingen houden honden nieuwsgierig, actief en blij."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "award",
+            "color": "orange",
+            "title": "Zorgvuldig geselecteerd",
+            "text": "Alleen veilige, duurzame en kwalitatieve speeltjes waar wij 100% achter staan."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "gift",
+            "color": "pink",
+            "title": "Elke box is uniek",
+            "text": "Geen twee honden zijn hetzelfde. Geen twee boxen dus ook."
+          }
+        },
+        "t1": {
+          "type": "trust",
+          "settings": {
+            "icon": "truck",
+            "color": "green",
+            "title": "Gratis verzending vanaf €75"
+          }
+        },
+        "t2": {
+          "type": "trust",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "Meer dan 1.200 blije honden"
+          }
+        },
+        "t3": {
+          "type": "trust",
+          "settings": {
+            "icon": "gift",
+            "color": "orange",
+            "title": "Elke box voelt als een cadeautje"
+          }
+        },
+        "t4": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield-check",
+            "color": "green",
+            "title": "100% veilig betalen"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "show_badge": true,
+        "badge_text": "Met liefde gemaakt",
+        "badge_icon": "heart",
+        "badge_color": "pink",
+        "show_decorations": true,
+        "eyebrow": "Waarom honden dol zijn op",
+        "heading": "Kwispelbox",
+        "intro": "Wij geloven dat elke hond het verdient om te spelen, te ontdekken en te genieten. Daarom stellen wij elke box samen met zorg, kwaliteit en een flinke dosis liefde."
+      }
     }
   },
   "order": [
     "trust-bar",
     "hero",
-    "product-boxes"
+    "product-boxes",
+    "why-kwispelbox"
   ]
 }
