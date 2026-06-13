@@ -84,19 +84,20 @@
                 <p class="kbx-card__desc">{{ block.settings.description }}</p>
               {%- endif -%}
 
-              {%- assign box_benefits = block.settings.benefits | newline_to_br | split: '<br />' -%}
-              {%- if box_benefits.size > 0 -%}
-                <ul class="kbx-card__benefits" role="list">
-                  {%- for benefit in box_benefits -%}
-                    {%- assign benefit = benefit | strip -%}
-                    {%- if benefit != blank -%}
-                      <li>
-                        <span class="kbx-card__check" aria-hidden="true">{{- 'icon-check-circle.svg' | inline_asset_content -}}</span>
-                        <span>{{ benefit }}</span>
-                      </li>
-                    {%- endif -%}
-                  {%- endfor -%}
-                </ul>
+              {%- capture benefit_items -%}
+                {%- for i in (1..5) -%}
+                  {%- assign benefit_key = 'benefit_' | append: i -%}
+                  {%- assign benefit_val = block.settings[benefit_key] -%}
+                  {%- if benefit_val != blank -%}
+                    <li>
+                      <span class="kbx-card__check" aria-hidden="true">{{- 'icon-check-circle.svg' | inline_asset_content -}}</span>
+                      <span>{{ benefit_val }}</span>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endcapture -%}
+              {%- if benefit_items != blank -%}
+                <ul class="kbx-card__benefits" role="list">{{ benefit_items }}</ul>
               {%- endif -%}
 
               <div class="kbx-card__foot">
@@ -532,7 +533,13 @@
         },
         { "type": "text", "id": "title", "label": "Titel", "default": "Mini Kwispelbox" },
         { "type": "textarea", "id": "description", "label": "Korte omschrijving", "default": "De perfecte kennismaking voor kleinere honden." },
-        { "type": "textarea", "id": "benefits", "label": "Voordelen (één per regel)", "default": "3 tot 4 verrassingen per box\nIdeaal voor kleinere honden\nPerfect om kennis te maken\nMaandelijks opzegbaar" },
+        { "type": "header", "content": "Voordelen" },
+        { "type": "text", "id": "benefit_1", "label": "Voordeel 1", "default": "3 tot 4 verrassingen per box" },
+        { "type": "text", "id": "benefit_2", "label": "Voordeel 2", "default": "Ideaal voor kleinere honden" },
+        { "type": "text", "id": "benefit_3", "label": "Voordeel 3", "default": "Perfect om kennis te maken" },
+        { "type": "text", "id": "benefit_4", "label": "Voordeel 4", "default": "Maandelijks opzegbaar" },
+        { "type": "text", "id": "benefit_5", "label": "Voordeel 5 (optioneel)" },
+        { "type": "header", "content": "Prijs & knop" },
         { "type": "text", "id": "price", "label": "Prijs", "default": "€49,95" },
         { "type": "text", "id": "price_suffix", "label": "Prijs achtervoegsel", "default": "per maand" },
         { "type": "text", "id": "badge", "label": "Badge (optioneel, bv. Meest gekozen)" },
@@ -589,7 +596,10 @@
             "accent": "orange",
             "title": "Mini Kwispelbox",
             "description": "De perfecte kennismaking voor kleinere honden.",
-            "benefits": "3 tot 4 verrassingen per box\nIdeaal voor kleinere honden\nPerfect om kennis te maken\nMaandelijks opzegbaar",
+            "benefit_1": "3 tot 4 verrassingen per box",
+            "benefit_2": "Ideaal voor kleinere honden",
+            "benefit_3": "Perfect om kennis te maken",
+            "benefit_4": "Maandelijks opzegbaar",
             "price": "€49,95",
             "price_suffix": "per maand",
             "button_label": "Bestel nu"
@@ -601,7 +611,11 @@
             "accent": "green",
             "title": "Happy Kwispelbox",
             "description": "Onze populairste box, boordevol speelgoed, snacks en verwennerij.",
-            "benefits": "5 tot 6 verrassingen per box\nMix van speelgoed én snacks\nGeschikt voor elke hond\nGratis verzending\nMaandelijks opzegbaar",
+            "benefit_1": "5 tot 6 verrassingen per box",
+            "benefit_2": "Mix van speelgoed én snacks",
+            "benefit_3": "Geschikt voor elke hond",
+            "benefit_4": "Gratis verzending",
+            "benefit_5": "Maandelijks opzegbaar",
             "price": "€64,95",
             "price_suffix": "per maand",
             "badge": "Meest gekozen",
@@ -615,7 +629,11 @@
             "accent": "pink",
             "title": "Mega Kwispelbox",
             "description": "Voor grote honden of echte avonturiers die van afwisseling houden.",
-            "benefits": "7 tot 8 verrassingen per box\nExtra veel speelgoed\nVoor grote honden\nGratis verzending\nMaandelijks opzegbaar",
+            "benefit_1": "7 tot 8 verrassingen per box",
+            "benefit_2": "Extra veel speelgoed",
+            "benefit_3": "Voor grote honden",
+            "benefit_4": "Gratis verzending",
+            "benefit_5": "Maandelijks opzegbaar",
             "price": "€79,95",
             "price_suffix": "per maand",
             "button_label": "Bestel nu"
