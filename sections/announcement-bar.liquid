@@ -90,16 +90,20 @@
 .ann-bar__icon {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
 }
 
-.ann-bar__icon svg { width: 16px; height: 16px; }
+.ann-bar__icon svg { width: 15px; height: 15px; }
 
-.ann-bar__icon--orange { color: var(--color-orange); }
-.ann-bar__icon--green  { color: var(--color-green); }
-.ann-bar__icon--pink   { color: var(--color-pink); }
-.ann-bar__icon--yellow { color: var(--color-yellow); }
-.ann-bar__icon--muted  { color: var(--color-muted); }
+.ann-bar__icon--orange { background: #fff0e4; color: var(--color-orange); }
+.ann-bar__icon--green  { background: #e8f5e2; color: var(--color-green); }
+.ann-bar__icon--pink   { background: #ffe0ee; color: var(--color-pink); }
+.ann-bar__icon--yellow { background: #fffae0; color: #b07d00; }
+.ann-bar__icon--muted  { background: var(--color-cream); color: var(--color-muted); }
 
 .ann-bar__text { color: var(--color-ink); }
 .ann-bar__text a { color: var(--color-ink); text-decoration: none; }
