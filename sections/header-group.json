@@ -404,12 +404,66 @@
         "image": "shopify://shop_images/ChatGPT_Image_9_jun_2026_13_10_00.png",
         "badge_text": "Elke maand een feestje voor je hond ♥"
       }
+    },
+    "product-boxes": {
+      "type": "product-boxes",
+      "name": "Kwispelboxen",
+      "blocks": {
+        "box_mini": {
+          "type": "box",
+          "settings": {
+            "title": "Mini Box",
+            "price": "€49,95",
+            "price_suffix": "per maand",
+            "description": "Een leuke kennismaking met 3 tot 4 verrassingen voor jouw hond.",
+            "highlight": false,
+            "button_label": "Bestel nu",
+            "button_url": ""
+          }
+        },
+        "box_happy": {
+          "type": "box",
+          "settings": {
+            "title": "Happy Box",
+            "price": "€64,95",
+            "price_suffix": "per maand",
+            "description": "Onze populairste box boordevol speeltjes, snacks en verwennerij.",
+            "badge": "Meest gekozen",
+            "highlight": true,
+            "button_label": "Bestel nu",
+            "button_url": ""
+          }
+        },
+        "box_mega": {
+          "type": "box",
+          "settings": {
+            "title": "Mega Box",
+            "price": "€79,95",
+            "price_suffix": "per maand",
+            "description": "Het ultieme feestje: extra veel speelgoed, snacks en cadeautjes.",
+            "highlight": false,
+            "button_label": "Bestel nu",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "box_mini",
+        "box_happy",
+        "box_mega"
+      ],
+      "settings": {
+        "label": "Onze boxen",
+        "heading": "Kies de box die past bij jouw hond",
+        "intro": "Elke maand een nieuwe verrassing, met liefde samengesteld. Geen verplichtingen, altijd opzegbaar."
+      }
     }
   },
   "order": [
     "announcement-bar",
     "header",
     "trust-bar",
-    "hero_mbMyWU"
+    "hero_mbMyWU",
+    "product-boxes"
   ]
 }
