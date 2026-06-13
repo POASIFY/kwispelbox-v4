@@ -33,17 +33,20 @@
       </ul>
     </div>
 
-    {%- if section.settings.dog_image != blank -%}
-      <div class="trust-bar__dog">
-        <img
-          src="{{ section.settings.dog_image | image_url: width: 300 }}"
-          alt=""
-          width="150"
-          height="200"
-          loading="lazy">
-      </div>
-    {%- endif -%}
   </div>
+
+  {%- if section.settings.dog_image != blank -%}
+    <div class="trust-bar__bg-img">
+      <img
+        src="{{ section.settings.dog_image | image_url: width: 1400 }}"
+        srcset="{{ section.settings.dog_image | image_url: width: 800 }} 800w, {{ section.settings.dog_image | image_url: width: 1400 }} 1400w"
+        sizes="100vw"
+        alt=""
+        width="1400"
+        height="160"
+        loading="lazy">
+    </div>
+  {%- endif -%}
 
   <div class="trust-bar__wave trust-bar__wave--bottom" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 32" preserveAspectRatio="none">
@@ -73,6 +76,7 @@
 }
 
 .trust-bar__body {
+  z-index: 1;
   position: relative;
   display: flex;
   align-items: center;
@@ -142,21 +146,19 @@
   color: rgba(255,255,255,.8);
 }
 
-.trust-bar__dog {
+.trust-bar__bg-img {
   position: absolute;
-  right: 24px;
-  bottom: 0;
-  width: 150px;
+  inset: 0;
   pointer-events: none;
-  z-index: 2;
+  z-index: 0;
 }
 
-.trust-bar__dog img {
+.trust-bar__bg-img img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
-  object-fit: contain;
-  object-position: bottom;
+  object-fit: cover;
+  object-position: center;
 }
 
 @media (max-width: 749px) {
