@@ -13,6 +13,7 @@
 {%- assign prod_blocks     = section.blocks | where: 'type', 'dropdown_product' -%}
 {%- assign se_blocks       = section.blocks | where: 'type', 'se_item' -%}
 {%- assign se_usp_blocks   = section.blocks | where: 'type', 'se_usp' -%}
+{%- assign shop_blocks     = section.blocks | where: 'type', 'shop_cat' -%}
 
 <div class="site-header__wrapper full-width">
 
@@ -562,6 +563,90 @@
                           {%- endif -%}
                         </div>
 
+                      {%- comment -%} ══ LAYOUT: SHOP (mega categorieën) ══ {%- endcomment -%}
+                      {%- elsif layout == 'shop' -%}
+                        <div class="dd-shop">
+                          <span class="dd-se__pointer" aria-hidden="true"></span>
+                          <div class="dd-shop__body">
+                            <div class="dd-shop__cats">
+                              {%- for cb in shop_blocks -%}
+                                {%- if cb.settings.menu_item_index == lx -%}
+                                  <div class="dd-shop__cat dd-shop__cat--{{ cb.settings.color }}" {{ cb.shopify_attributes }}>
+                                    <div class="dd-shop__cat-head">
+                                      <span class="dd-shop__cat-icon" aria-hidden="true">{%- render 'lucide', icon: cb.settings.icon -%}</span>
+                                      <div>
+                                        <strong class="dd-shop__cat-title">{{ cb.settings.title }}</strong>
+                                        {%- if cb.settings.description != blank -%}<span class="dd-shop__cat-desc">{{ cb.settings.description }}</span>{%- endif -%}
+                                      </div>
+                                    </div>
+                                    {%- if cb.settings.link_list != blank and cb.settings.link_list.links.size > 0 -%}
+                                      <ul class="dd-shop__cat-links" role="list">
+                                        {%- for child in cb.settings.link_list.links -%}
+                                          <li><a href="{{ child.url }}" class="dd-shop__cat-link"><span class="dd-shop__cat-dot" aria-hidden="true"></span>{{ child.title }}</a></li>
+                                        {%- endfor -%}
+                                      </ul>
+                                    {%- endif -%}
+                                    {%- if cb.settings.cta_label != blank -%}
+                                      <a href="{{ cb.settings.cta_url | default: '#' }}" class="dd-shop__cat-cta">{{ cb.settings.cta_label }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                                    {%- endif -%}
+                                    {%- if cb.settings.image != blank -%}
+                                      <div class="dd-shop__cat-photo">
+                                        <img src="{{ cb.settings.image | image_url: width: 460 }}" alt="{{ cb.settings.image.alt | default: cb.settings.title | escape }}" width="230" height="130" loading="lazy">
+                                        <span class="dd-shop__cat-photo-deco" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                {%- endif -%}
+                              {%- endfor -%}
+                            </div>
+
+                            {%- if dd.settings.banner_title != blank or dd.settings.banner_image != blank -%}
+                              <div class="dd-shop__promo">
+                                <div class="dd-shop__promo-top">
+                                  {%- if dd.settings.banner_badge != blank -%}<span class="dd-shop__promo-badge">{{ dd.settings.banner_badge }}</span>{%- endif -%}
+                                  <strong class="dd-shop__promo-title">{{ dd.settings.banner_title }}</strong>
+                                  {%- if dd.settings.banner_text != blank -%}<p class="dd-shop__promo-text">{{ dd.settings.banner_text }}</p>{%- endif -%}
+                                </div>
+                                <div class="dd-shop__promo-media">
+                                  {%- if dd.settings.banner_image != blank -%}
+                                    <img src="{{ dd.settings.banner_image | image_url: width: 700 }}" alt="{{ dd.settings.banner_image.alt | default: dd.settings.banner_title | escape }}" width="350" height="280" loading="lazy" class="dd-shop__promo-img">
+                                  {%- else -%}
+                                    <div class="dd-shop__promo-img dd-shop__promo-img--ph">{%- render 'lucide', icon: 'gift' -%}</div>
+                                  {%- endif -%}
+                                  <span class="dd-shop__promo-deco dd-shop__promo-deco--paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
+                                  <span class="dd-shop__promo-deco dd-shop__promo-deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                                </div>
+                                {%- if dd.settings.banner_cta_label != blank -%}
+                                  <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-shop__promo-cta">{{ dd.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</a>
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          </div>
+
+                          {%- assign shop_usp_count = 0 -%}
+                          {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}{%- assign shop_usp_count = shop_usp_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+                          {%- if shop_usp_count > 0 -%}
+                            <div class="dd-shop__trust">
+                              {%- for u in se_usp_blocks -%}
+                                {%- if u.settings.menu_item_index == lx -%}
+                                  <span class="dd-se__usp" {{ u.shopify_attributes }}>
+                                    <span class="dd-se__usp-icon dd-se__usp-icon--{{ u.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: u.settings.icon -%}</span>
+                                    {{ u.settings.text }}
+                                  </span>
+                                {%- endif -%}
+                              {%- endfor -%}
+                            </div>
+                          {%- endif -%}
+
+                          <div class="dd-shop__wave" aria-hidden="true">
+                            <svg class="dd-shop__wave-svg" viewBox="0 0 1200 48" preserveAspectRatio="none"><path d="M0 26 C150 6 300 44 450 24 C600 6 750 44 900 24 C1050 8 1150 18 1200 26 L1200 48 L0 48 Z" fill="var(--color-green)"/></svg>
+                            <span class="dd-shop__wave-deco dd-shop__wave-deco--1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
+                            <span class="dd-shop__wave-deco dd-shop__wave-deco--2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                            <span class="dd-shop__wave-deco dd-shop__wave-deco--3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
+                            <span class="dd-shop__wave-deco dd-shop__wave-deco--4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg></span>
+                          </div>
+                        </div>
+
                       {%- comment -%} ══ LAYOUT: STANDARD (Special Editions, default) ══ {%- endcomment -%}
                       {%- else -%}
                         <div class="dd-standard">
@@ -687,8 +772,10 @@
         {%- assign nav_lx = forloop.index -%}
         {%- assign nav_se_count = 0 -%}
         {%- for b in se_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_se_count = nav_se_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+        {%- assign nav_shop_count = 0 -%}
+        {%- for b in shop_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_shop_count = nav_shop_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
         {%- assign drawer_has_sub = false -%}
-        {%- if link.links.size > 0 or nav_se_count > 0 -%}{%- assign drawer_has_sub = true -%}{%- endif -%}
+        {%- if link.links.size > 0 or nav_se_count > 0 or nav_shop_count > 0 -%}{%- assign drawer_has_sub = true -%}{%- endif -%}
         <li class="header-drawer__nav-item{% if drawer_has_sub %} header-drawer__nav-item--has-sub{% endif %}">
           <div class="header-drawer__nav-row">
             <span class="header-drawer__nav-icon header-drawer__nav-icon--{% if nav_lx == 1 %}green{% elsif nav_lx == 2 %}pink{% elsif nav_lx == 3 %}green{% elsif nav_lx == 4 %}orange{% else %}orange{% endif %}" aria-hidden="true">
@@ -739,6 +826,47 @@
                     {%- if dd_se.settings.banner_cta_label != blank -%}
                       <span class="header-drawer__se-promo-cta">{{ dd_se.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</span>
                     {%- endif -%}
+                  </span>
+                </a>
+              {%- endif -%}
+            </div>
+          {%- elsif nav_shop_count > 0 -%}
+            <div class="header-drawer__sub-nav header-drawer__sub-nav--shop" hidden>
+              {%- for cb in shop_blocks -%}
+                {%- if cb.settings.menu_item_index == nav_lx -%}
+                  <details class="header-drawer__shop-cat header-drawer__shop-cat--{{ cb.settings.color }}" {{ cb.shopify_attributes }}>
+                    <summary class="header-drawer__shop-summary">
+                      <span class="header-drawer__shop-icon" aria-hidden="true">{%- render 'lucide', icon: cb.settings.icon -%}</span>
+                      <span class="header-drawer__shop-text">
+                        <strong>{{ cb.settings.title }}</strong>
+                        {%- if cb.settings.description != blank -%}<span>{{ cb.settings.description }}</span>{%- endif -%}
+                      </span>
+                      <svg class="header-drawer__shop-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                    </summary>
+                    {%- if cb.settings.link_list != blank and cb.settings.link_list.links.size > 0 -%}
+                      <ul class="header-drawer__shop-links" role="list">
+                        {%- for child in cb.settings.link_list.links -%}
+                          <li><a href="{{ child.url }}" class="header-drawer__shop-link">{{ child.title }}</a></li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
+                    {%- if cb.settings.cta_label != blank -%}
+                      <a href="{{ cb.settings.cta_url | default: '#' }}" class="header-drawer__shop-cta header-drawer__shop-cta--{{ cb.settings.color }}">{{ cb.settings.cta_label }}</a>
+                    {%- endif -%}
+                  </details>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- assign dd_shop = nil -%}
+              {%- for b in dd_blocks -%}{%- if b.settings.menu_item_index == nav_lx and b.settings.layout_type == 'shop' -%}{%- assign dd_shop = b -%}{%- endif -%}{%- endfor -%}
+              {%- if dd_shop and dd_shop.settings.banner_title != blank -%}
+                <a href="{{ dd_shop.settings.banner_cta_url | default: link.url }}" class="header-drawer__se-promo">
+                  {%- if dd_shop.settings.banner_image != blank -%}
+                    <img src="{{ dd_shop.settings.banner_image | image_url: width: 640 }}" alt="{{ dd_shop.settings.banner_title | escape }}" width="320" height="170" loading="lazy" class="header-drawer__se-promo-img">
+                  {%- endif -%}
+                  <span class="header-drawer__se-promo-body">
+                    {%- if dd_shop.settings.banner_badge != blank -%}<span class="header-drawer__se-promo-badge">{{ dd_shop.settings.banner_badge }}</span>{%- endif -%}
+                    <strong>{{ dd_shop.settings.banner_title }}</strong>
+                    {%- if dd_shop.settings.banner_cta_label != blank -%}<span class="header-drawer__se-promo-cta">{{ dd_shop.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</span>{%- endif -%}
                   </span>
                 </a>
               {%- endif -%}
@@ -1299,6 +1427,96 @@
 .header-drawer__se-promo-body strong{font-family:var(--font-heading);font-size:1.2rem;color:var(--color-ink);line-height:1.1;}
 .header-drawer__se-promo-cta{display:inline-flex;align-items:center;gap:7px;margin-top:2px;padding:9px 16px;background:var(--color-pink);color:#fff;border-radius:999px;font-family:var(--font-heading);font-size:.85rem;}
 .header-drawer__se-promo-cta svg{width:14px;height:14px;}
+
+/* ══ SHOP MEGA MENU ══════════════════════════════════ */
+.site-header__dropdown-card:has(.dd-shop){overflow:visible;background:var(--color-cream);border-color:rgba(61,34,9,.08);box-shadow:0 28px 70px rgba(61,34,9,.16);border-radius:28px;}
+.dd-shop{position:relative;padding:26px 30px 0;}
+.dd-shop__body{display:flex;gap:24px;align-items:stretch;}
+.dd-shop__cats{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.dd-shop__cat{--cc:var(--color-green);--cc-soft:#e8f5e2;display:flex;flex-direction:column;padding:14px 12px;border-radius:18px;transition:background 160ms;}
+.dd-shop__cat:hover{background:#fff;}
+.dd-shop__cat--green{--cc:var(--color-green);--cc-soft:#e8f5e2;}
+.dd-shop__cat--pink{--cc:var(--color-pink);--cc-soft:#ffe0ee;}
+.dd-shop__cat--orange{--cc:var(--color-orange);--cc-soft:#fff0e4;}
+.dd-shop__cat--yellow{--cc:#d99100;--cc-soft:#fffae0;}
+.dd-shop__cat--purple{--cc:#8b5fd1;--cc-soft:#efe6fb;}
+.dd-shop__cat-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;}
+.dd-shop__cat-icon{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--cc-soft);color:var(--cc);flex-shrink:0;}
+.dd-shop__cat-icon .lucide{width:21px;height:21px;}
+.dd-shop__cat-title{display:block;font-family:var(--font-heading);font-size:1.1rem;color:var(--color-ink);line-height:1.1;}
+.dd-shop__cat-desc{display:block;font-family:var(--font-body);font-size:.72rem;color:var(--color-muted);line-height:1.3;margin-top:2px;}
+.dd-shop__cat-links{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:1px;}
+.dd-shop__cat-link{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:9px;text-decoration:none;font-family:var(--font-body);font-size:.82rem;font-weight:600;color:var(--color-ink);transition:background 120ms,color 120ms;}
+.dd-shop__cat-link:hover{background:var(--cc-soft);color:var(--cc);}
+.dd-shop__cat-dot{width:6px;height:6px;border-radius:50%;background:var(--cc);flex-shrink:0;}
+.dd-shop__cat-cta{display:inline-flex;align-items:center;justify-content:center;gap:6px;margin-top:auto;padding:9px 14px;background:var(--cc);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.82rem;text-decoration:none;transition:transform 160ms,filter 160ms;}
+.dd-shop__cat--yellow .dd-shop__cat-cta{color:var(--color-ink);}
+.dd-shop__cat-cta:hover{transform:translateY(-1px);filter:brightness(1.05);}
+.dd-shop__cat-cta svg{width:13px;height:13px;}
+.dd-shop__cat-photo{position:relative;margin-top:12px;border-radius:14px;overflow:hidden;}
+.dd-shop__cat-photo img{width:100%;height:108px;object-fit:cover;display:block;}
+.dd-shop__cat-photo-deco{position:absolute;bottom:8px;right:8px;width:18px;height:18px;color:#fff;opacity:.9;filter:drop-shadow(0 2px 4px rgba(61,34,9,.3));}
+.dd-shop__cat-photo-deco svg{width:100%;height:100%;}
+
+.dd-shop__promo{width:300px;flex-shrink:0;display:flex;flex-direction:column;background:#f3e7d2;border:1.5px solid rgba(61,34,9,.07);border-radius:20px;overflow:hidden;}
+.dd-shop__promo-top{padding:22px 22px 12px;}
+.dd-shop__promo-badge{display:inline-flex;background:var(--color-green);color:#fff;font-family:var(--font-body);font-size:.68rem;font-weight:800;padding:5px 11px;border-radius:999px;margin-bottom:10px;}
+.dd-shop__promo-title{display:block;font-family:var(--font-heading);font-size:1.5rem;color:var(--color-ink);line-height:1.1;}
+.dd-shop__promo-text{font-family:var(--font-body);font-size:.84rem;line-height:1.5;color:var(--color-body);margin:8px 0 0;}
+.dd-shop__promo-media{position:relative;flex:1;min-height:180px;background:#e9dcc4;}
+.dd-shop__promo-img{width:100%;height:100%;object-fit:cover;display:block;}
+.dd-shop__promo-img--ph{display:flex;align-items:center;justify-content:center;color:var(--color-orange);height:100%;}
+.dd-shop__promo-img--ph .lucide{width:56px;height:56px;}
+.dd-shop__promo-deco{position:absolute;pointer-events:none;color:#fff;opacity:.9;filter:drop-shadow(0 2px 5px rgba(61,34,9,.3));}
+.dd-shop__promo-deco svg{display:block;width:100%;height:100%;}
+.dd-shop__promo-deco--paw{top:12px;right:12px;width:22px;height:22px;color:var(--color-ink);opacity:.4;}
+.dd-shop__promo-deco--heart{bottom:12px;left:14px;width:20px;height:20px;transform:rotate(-10deg);}
+.dd-shop__promo-cta{display:flex;align-items:center;justify-content:center;gap:8px;margin:16px;padding:13px 18px;background:var(--color-green);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.95rem;text-decoration:none;transition:background 160ms,transform 160ms;}
+.dd-shop__promo-cta:hover{background:#5a9a3b;transform:translateY(-1px);}
+.dd-shop__promo-cta svg{width:16px;height:16px;}
+
+.dd-shop__trust{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(61,34,9,.08);}
+
+.dd-shop__wave{position:relative;margin:18px -30px 0;height:46px;overflow:hidden;border-radius:0 0 28px 28px;}
+.dd-shop__wave-svg{display:block;width:100%;height:100%;}
+.dd-shop__wave-deco{position:absolute;display:block;color:#fff;opacity:.8;}
+.dd-shop__wave-deco svg{display:block;width:100%;height:100%;}
+.dd-shop__wave-deco--1{bottom:8px;left:14%;width:16px;height:16px;animation:dd-bob 3s ease-in-out infinite;}
+.dd-shop__wave-deco--2{bottom:13px;left:38%;width:14px;height:14px;animation:dd-bob 3s ease-in-out .4s infinite;}
+.dd-shop__wave-deco--3{bottom:9px;left:62%;width:16px;height:16px;animation:dd-bob 3s ease-in-out .8s infinite;}
+.dd-shop__wave-deco--4{bottom:14px;left:84%;width:13px;height:13px;animation:dd-bob 3s ease-in-out 1.2s infinite;}
+@keyframes dd-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+@media(max-width:1200px){
+  .dd-shop__cat-photo{display:none;}
+  .dd-shop__body{gap:18px;}
+  .dd-shop__promo{width:260px;}
+}
+@media(prefers-reduced-motion:reduce){
+  .dd-shop__wave-deco{animation:none;}
+}
+
+/* ══ DRAWER: Shop categorieën ════════════════════════ */
+.header-drawer__sub-nav--shop{background:var(--color-cream);padding:8px 14px 14px;}
+.header-drawer__shop-cat{--cc:var(--color-green);--cc-soft:#e8f5e2;background:#fff;border:1.5px solid var(--color-line);border-radius:16px;margin-bottom:8px;overflow:hidden;}
+.header-drawer__shop-cat--green{--cc:var(--color-green);--cc-soft:#e8f5e2;}
+.header-drawer__shop-cat--pink{--cc:var(--color-pink);--cc-soft:#ffe0ee;}
+.header-drawer__shop-cat--orange{--cc:var(--color-orange);--cc-soft:#fff0e4;}
+.header-drawer__shop-cat--yellow{--cc:#d99100;--cc-soft:#fffae0;}
+.header-drawer__shop-cat--purple{--cc:#8b5fd1;--cc-soft:#efe6fb;}
+.header-drawer__shop-summary{display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;list-style:none;}
+.header-drawer__shop-summary::-webkit-details-marker{display:none;}
+.header-drawer__shop-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--cc-soft);color:var(--cc);flex-shrink:0;}
+.header-drawer__shop-icon .lucide{width:21px;height:21px;}
+.header-drawer__shop-text{flex:1;display:flex;flex-direction:column;min-width:0;}
+.header-drawer__shop-text strong{font-family:var(--font-body);font-size:.98rem;font-weight:800;color:var(--color-ink);line-height:1.2;}
+.header-drawer__shop-text span{font-family:var(--font-body);font-size:.76rem;color:var(--color-muted);}
+.header-drawer__shop-chevron{color:var(--color-muted);flex-shrink:0;transition:transform 200ms;}
+.header-drawer__shop-cat[open] .header-drawer__shop-chevron{transform:rotate(90deg);}
+.header-drawer__shop-links{list-style:none;margin:0;padding:0 14px 6px 68px;display:flex;flex-direction:column;}
+.header-drawer__shop-link{display:block;padding:9px 0;font-family:var(--font-body);font-size:.88rem;color:var(--color-body);text-decoration:none;border-top:1px solid var(--color-line);}
+.header-drawer__shop-cta{display:block;margin:4px 14px 14px;padding:10px;text-align:center;background:var(--cc);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.85rem;text-decoration:none;}
+.header-drawer__shop-cta--yellow{color:var(--color-ink);}
 {% endstylesheet %}
 
 {% javascript %}
@@ -1515,6 +1733,10 @@
             {
               "value": "special",
               "label": "Special Editions (mega)"
+            },
+            {
+              "value": "shop",
+              "label": "Shop (mega categorieën)"
             }
           ]
         },
@@ -1988,6 +2210,46 @@
           ]
         },
         { "type": "text", "id": "text", "label": "Tekst", "default": "Gratis verzending vanaf €75" }
+      ]
+    },
+    {
+      "type": "shop_cat",
+      "name": "Shop categorie",
+      "limit": 5,
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 3 },
+        {
+          "type": "select", "id": "color", "label": "Accentkleur", "default": "green",
+          "options": [
+            { "value": "green", "label": "Groen" },
+            { "value": "pink", "label": "Roze" },
+            { "value": "orange", "label": "Oranje" },
+            { "value": "purple", "label": "Paars" },
+            { "value": "yellow", "label": "Geel" }
+          ]
+        },
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "ball",
+          "options": [
+            { "value": "ball", "label": "Bal (speelgoed)" },
+            { "value": "teddy", "label": "Teddybeer" },
+            { "value": "rabbit", "label": "Konijn (knuffel)" },
+            { "value": "bone", "label": "Botje (snack)" },
+            { "value": "dog", "label": "Hond (puppy)" },
+            { "value": "paw", "label": "Poot" },
+            { "value": "heart", "label": "Hart" },
+            { "value": "gift", "label": "Cadeau" },
+            { "value": "sparkles", "label": "Sparkles" },
+            { "value": "leaf", "label": "Blad" },
+            { "value": "star", "label": "Ster" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Speeltjes" },
+        { "type": "text", "id": "description", "label": "Beschrijving", "default": "Voor uren speelplezier" },
+        { "type": "link_list", "id": "link_list", "label": "Sublinks (menu)" },
+        { "type": "text", "id": "cta_label", "label": "Knoptekst", "default": "Alle speeltjes" },
+        { "type": "url", "id": "cta_url", "label": "Knop link" },
+        { "type": "image_picker", "id": "image", "label": "Categoriefoto" }
       ]
     },
     {
