@@ -556,6 +556,165 @@
                           {%- endif -%}
                         </div>
 
+                      {%- comment -%} ══ LAYOUT: SPECIAL (Special Editions mega menu) ══ {%- endcomment -%}
+                      {%- elsif layout == 'special' -%}
+                        <div class="dd-se">
+                          <span class="dd-se__pointer" aria-hidden="true"></span>
+                          <span class="dd-se__corner dd-se__corner--tl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg></span>
+                          <span class="dd-se__corner dd-se__corner--br" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+
+                          <div class="dd-se__body">
+                            <div class="dd-se__left">
+                              <div class="dd-se__head">
+                                <span class="dd-se__head-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+                                <div>
+                                  <a href="{{ link.url }}" class="dd-se__title">{{ link.title }}</a>
+                                  {%- if dd.settings.col1_desc != blank -%}<p class="dd-se__subtitle">{{ dd.settings.col1_desc }}</p>{%- endif -%}
+                                </div>
+                              </div>
+                              <div class="dd-se__cols">
+                                {%- for colnum in (1..2) -%}
+                                  <ul class="dd-se__col" role="list">
+                                    {%- for b in se_blocks -%}
+                                      {%- assign se_col = b.settings.column | plus: 0 -%}
+                                      {%- if b.settings.menu_item_index == lx and se_col == colnum -%}
+                                        <li {{ b.shopify_attributes }}>
+                                          <a href="{{ b.settings.url | default: '#' }}" class="dd-se__edition dd-se__edition--{{ b.settings.color }}">
+                                            <span class="dd-se__edition-icon" aria-hidden="true">{%- render 'lucide', icon: b.settings.icon -%}</span>
+                                            <span class="dd-se__edition-text">
+                                              <strong>{{ b.settings.title }}</strong>
+                                              {%- if b.settings.description != blank -%}<span>{{ b.settings.description }}</span>{%- endif -%}
+                                            </span>
+                                            <svg class="dd-se__edition-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                                          </a>
+                                        </li>
+                                      {%- endif -%}
+                                    {%- endfor -%}
+                                  </ul>
+                                {%- endfor -%}
+                              </div>
+                              {%- if dd.settings.view_all_label != blank -%}
+                                <a href="{{ dd.settings.view_all_url | default: link.url }}" class="dd-se__viewall">{{ dd.settings.view_all_label }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                              {%- endif -%}
+                            </div>
+
+                            {%- if dd.settings.banner_title != blank or dd.settings.banner_image != blank -%}
+                              <div class="dd-se__promo">
+                                <div class="dd-se__promo-media">
+                                  {%- if dd.settings.banner_image != blank -%}
+                                    <img src="{{ dd.settings.banner_image | image_url: width: 760 }}" srcset="{{ dd.settings.banner_image | image_url: width: 500 }} 500w, {{ dd.settings.banner_image | image_url: width: 760 }} 760w" sizes="380px" alt="{{ dd.settings.banner_image.alt | default: dd.settings.banner_title | escape }}" width="380" height="240" loading="lazy" class="dd-se__promo-img">
+                                  {%- else -%}
+                                    <div class="dd-se__promo-img dd-se__promo-img--ph">{%- render 'lucide', icon: 'gift' -%}</div>
+                                  {%- endif -%}
+                                  {%- if dd.settings.banner_badge != blank -%}<span class="dd-se__promo-badge">{{ dd.settings.banner_badge }}</span>{%- endif -%}
+                                  <span class="dd-se__promo-deco dd-se__promo-deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                                </div>
+                                <div class="dd-se__promo-body">
+                                  <strong class="dd-se__promo-title">{{ dd.settings.banner_title }}</strong>
+                                  {%- if dd.settings.banner_text != blank -%}<p class="dd-se__promo-text">{{ dd.settings.banner_text }}</p>{%- endif -%}
+                                  {%- if dd.settings.banner_cta_label != blank -%}
+                                    <div class="dd-se__promo-cta-row">
+                                      <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-se__promo-cta">{{ dd.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</a>
+                                    </div>
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                            {%- endif -%}
+                          </div>
+
+                          {%- assign se_usp_count = 0 -%}
+                          {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}{%- assign se_usp_count = se_usp_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+                          {%- if se_usp_count > 0 -%}
+                            <div class="dd-se__trust">
+                              {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}
+                                <span class="dd-se__usp" {{ u.shopify_attributes }}>
+                                  <span class="dd-se__usp-icon dd-se__usp-icon--{{ u.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: u.settings.icon -%}</span>
+                                  {{ u.settings.text }}
+                                </span>
+                              {%- endif -%}{%- endfor -%}
+                            </div>
+                          {%- endif -%}
+                        </div>
+
+                      {%- comment -%} ══ LAYOUT: SHOP (mega categorieën) ══ {%- endcomment -%}
+                      {%- elsif layout == 'shop' -%}
+                        <div class="dd-shop">
+                          <span class="dd-se__pointer" aria-hidden="true"></span>
+                          <div class="dd-shop__body">
+                            <div class="dd-shop__cats">
+                              {%- for cb in shop_blocks -%}
+                                {%- if cb.settings.menu_item_index == lx -%}
+                                  <div class="dd-shop__cat dd-shop__cat--{{ cb.settings.color }}" {{ cb.shopify_attributes }}>
+                                    <div class="dd-shop__cat-head">
+                                      <span class="dd-shop__cat-icon" aria-hidden="true">{%- render 'lucide', icon: cb.settings.icon -%}</span>
+                                      <div>
+                                        <strong class="dd-shop__cat-title">{{ cb.settings.title }}</strong>
+                                        {%- if cb.settings.description != blank -%}<span class="dd-shop__cat-desc">{{ cb.settings.description }}</span>{%- endif -%}
+                                      </div>
+                                    </div>
+                                    {%- if cb.settings.link_list != blank and cb.settings.link_list.links.size > 0 -%}
+                                      <ul class="dd-shop__cat-links" role="list">
+                                        {%- for child in cb.settings.link_list.links -%}
+                                          <li><a href="{{ child.url }}" class="dd-shop__cat-link"><span class="dd-shop__cat-dot" aria-hidden="true"></span>{{ child.title }}</a></li>
+                                        {%- endfor -%}
+                                      </ul>
+                                    {%- endif -%}
+                                    {%- if cb.settings.cta_label != blank -%}
+                                      <a href="{{ cb.settings.cta_url | default: '#' }}" class="dd-shop__cat-cta">{{ cb.settings.cta_label }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                                    {%- endif -%}
+                                    {%- if cb.settings.image != blank -%}
+                                      <div class="dd-shop__cat-photo">
+                                        <img src="{{ cb.settings.image | image_url: width: 460 }}" alt="{{ cb.settings.image.alt | default: cb.settings.title | escape }}" width="230" height="130" loading="lazy">
+                                        <span class="dd-shop__cat-photo-deco" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                                      </div>
+                                    {%- endif -%}
+                                  </div>
+                                {%- endif -%}
+                              {%- endfor -%}
+                            </div>
+                            {%- if dd.settings.banner_title != blank or dd.settings.banner_image != blank -%}
+                              <div class="dd-shop__promo">
+                                <div class="dd-shop__promo-top">
+                                  {%- if dd.settings.banner_badge != blank -%}<span class="dd-shop__promo-badge">{{ dd.settings.banner_badge }}</span>{%- endif -%}
+                                  <strong class="dd-shop__promo-title">{{ dd.settings.banner_title }}</strong>
+                                  {%- if dd.settings.banner_text != blank -%}<p class="dd-shop__promo-text">{{ dd.settings.banner_text }}</p>{%- endif -%}
+                                </div>
+                                <div class="dd-shop__promo-media">
+                                  {%- if dd.settings.banner_image != blank -%}
+                                    <img src="{{ dd.settings.banner_image | image_url: width: 700 }}" alt="{{ dd.settings.banner_image.alt | default: dd.settings.banner_title | escape }}" width="350" height="280" loading="lazy" class="dd-shop__promo-img">
+                                  {%- else -%}
+                                    <div class="dd-shop__promo-img dd-shop__promo-img--ph">{%- render 'lucide', icon: 'gift' -%}</div>
+                                  {%- endif -%}
+                                  <span class="dd-shop__promo-deco dd-shop__promo-deco--paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
+                                  <span class="dd-shop__promo-deco dd-shop__promo-deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                                </div>
+                                {%- if dd.settings.banner_cta_label != blank -%}
+                                  <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-shop__promo-cta">{{ dd.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</a>
+                                {%- endif -%}
+                              </div>
+                            {%- endif -%}
+                          </div>
+                          {%- assign shop_usp_count = 0 -%}
+                          {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}{%- assign shop_usp_count = shop_usp_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+                          {%- if shop_usp_count > 0 -%}
+                            <div class="dd-shop__trust">
+                              {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}
+                                <span class="dd-se__usp" {{ u.shopify_attributes }}>
+                                  <span class="dd-se__usp-icon dd-se__usp-icon--{{ u.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: u.settings.icon -%}</span>
+                                  {{ u.settings.text }}
+                                </span>
+                              {%- endif -%}{%- endfor -%}
+                            </div>
+                          {%- endif -%}
+                          <div class="dd-shop__wave" aria-hidden="true">
+                            <svg class="dd-shop__wave-svg" viewBox="0 0 1200 48" preserveAspectRatio="none"><path d="M0 26 C150 6 300 44 450 24 C600 6 750 44 900 24 C1050 8 1150 18 1200 26 L1200 48 L0 48 Z" fill="var(--color-green)"/></svg>
+                            <span class="dd-shop__wave-deco dd-shop__wave-deco--1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
+                            <span class="dd-shop__wave-deco dd-shop__wave-deco--2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                            <span class="dd-shop__wave-deco dd-shop__wave-deco--3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
+                            <span class="dd-shop__wave-deco dd-shop__wave-deco--4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg></span>
+                          </div>
+                        </div>
+
                       {%- comment -%} ══ LAYOUT: STANDARD (Special Editions, default) ══ {%- endcomment -%}
                       {%- else -%}
                         <div class="dd-standard">
