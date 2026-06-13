@@ -11,58 +11,6 @@
   "type": "header",
   "name": "Navigatie",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
-      "blocks": {
-        "m1": {
-          "type": "message",
-          "settings": {
-            "text": "Vandaag besteld, morgen in huis",
-            "stars": "",
-            "link": "",
-            "icon": "icon-truck.svg",
-            "icon_color": "orange"
-          }
-        },
-        "m2": {
-          "type": "message",
-          "settings": {
-            "text": "Gratis verzending vanaf €75",
-            "stars": "",
-            "link": "",
-            "icon": "icon-gift.svg",
-            "icon_color": "orange"
-          }
-        },
-        "m3": {
-          "type": "message",
-          "settings": {
-            "text": "100% blije honden garantie",
-            "stars": "",
-            "link": "",
-            "icon": "icon-heart.svg",
-            "icon_color": "pink"
-          }
-        },
-        "m4": {
-          "type": "message",
-          "settings": {
-            "text": "Klanten beoordelen ons met 4,9/5",
-            "stars": "★★★★★",
-            "link": "",
-            "icon": "icon-star.svg",
-            "icon_color": "yellow"
-          }
-        }
-      },
-      "block_order": [
-        "m1",
-        "m2",
-        "m3",
-        "m4"
-      ],
-      "settings": {}
-    },
     "header": {
       "type": "header",
       "blocks": {
@@ -190,28 +138,28 @@
         "trust_2": {
           "type": "trust_item",
           "settings": {
-            "title": "Niet goed?",
-            "subtitle": "Geld terug",
+            "title": "Meer dan 1.200 blije honden",
+            "subtitle": "",
             "url": "",
-            "icon": "icon-refresh.svg"
+            "icon": "icon-paw.svg"
           }
         },
         "trust_3": {
           "type": "trust_item",
           "settings": {
-            "title": "100% veilig betalen",
-            "subtitle": "iDEAL & Klarna",
+            "title": "Elke box voelt als een cadeautje",
+            "subtitle": "",
             "url": "",
-            "icon": "icon-shield.svg"
+            "icon": "icon-gift.svg"
           }
         },
         "trust_4": {
           "type": "trust_item",
           "settings": {
-            "title": "Voor 23:59 besteld",
-            "subtitle": "morgen in huis",
+            "title": "Uitstekend beoordeeld",
+            "subtitle": "4,9/5",
             "url": "",
-            "icon": "icon-truck.svg"
+            "icon": "icon-star.svg"
           }
         },
         "li_shop_1": {
@@ -303,6 +251,186 @@
             "url": "/pages/clubnieuws",
             "icon": "sparkles"
           }
+        },
+        "dd_config_2": {
+          "type": "dropdown_config",
+          "settings": {
+            "menu_item_index": 2,
+            "layout_type": "special",
+            "accent_color": "pink",
+            "col1_desc": "Verrassingen voor bijzondere momenten",
+            "view_all_label": "Bekijk alle special editions",
+            "view_all_url": "",
+            "banner_badge": "Limited edition ♡",
+            "banner_title": "Halloween Box 🎃",
+            "banner_text": "Spooky leuk, super zacht en boordevol verrassingen. Op = op!",
+            "banner_cta_label": "Ontdek Halloween Box"
+          }
+        },
+        "se1": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "1",
+            "icon": "cake",
+            "color": "pink",
+            "title": "Verjaardagsbox",
+            "description": "Vier de verjaardag van jouw hond",
+            "url": ""
+          }
+        },
+        "se2": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "1",
+            "icon": "pumpkin",
+            "color": "orange",
+            "title": "Halloween Box",
+            "description": "Spooky speelplezier voor nieuwsgierige neuzen",
+            "url": ""
+          }
+        },
+        "se3": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "1",
+            "icon": "tree",
+            "color": "green",
+            "title": "Kerst Box",
+            "description": "Het leukste cadeautje onder de boom",
+            "url": ""
+          }
+        },
+        "se4": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "1",
+            "icon": "heart",
+            "color": "pink",
+            "title": "Valentijn Box",
+            "description": "Voor jouw allerbeste vriend",
+            "url": ""
+          }
+        },
+        "se5": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "1",
+            "icon": "paw",
+            "color": "green",
+            "title": "Dierendag Box",
+            "description": "Extra verwennerij voor jouw hond",
+            "url": ""
+          }
+        },
+        "se6": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "2",
+            "icon": "flower",
+            "color": "green",
+            "title": "Lente Box",
+            "description": "Tijd voor nieuwe avonturen",
+            "url": ""
+          }
+        },
+        "se7": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "2",
+            "icon": "sun",
+            "color": "yellow",
+            "title": "Zomer Box",
+            "description": "Spelen in de zon",
+            "url": ""
+          }
+        },
+        "se8": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "2",
+            "icon": "leaf",
+            "color": "orange",
+            "title": "Herfst Box",
+            "description": "Knus speelplezier voor regenachtige dagen",
+            "url": ""
+          }
+        },
+        "se9": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "2",
+            "icon": "party",
+            "color": "pink",
+            "title": "Nieuwjaars Box",
+            "description": "Begin het nieuwe jaar met een kwispel",
+            "url": ""
+          }
+        },
+        "se10": {
+          "type": "se_item",
+          "settings": {
+            "menu_item_index": 2,
+            "column": "2",
+            "icon": "pencil",
+            "color": "orange",
+            "title": "Back to School Box",
+            "description": "Klaar voor nieuwe avonturen",
+            "url": ""
+          }
+        },
+        "seu1": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 2,
+            "icon": "truck",
+            "color": "green",
+            "text": "Gratis verzending vanaf €75"
+          }
+        },
+        "seu2": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 2,
+            "icon": "refresh",
+            "color": "orange",
+            "text": "Niet goed? Geld terug"
+          }
+        },
+        "seu3": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 2,
+            "icon": "shield-check",
+            "color": "green",
+            "text": "100% veilig betalen"
+          }
+        },
+        "seu4": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 2,
+            "icon": "truck",
+            "color": "pink",
+            "text": "Voor 23:59 besteld, morgen in huis"
+          }
+        },
+        "seu5": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 2,
+            "icon": "star",
+            "color": "yellow",
+            "text": "Uitstekend beoordeeld 4,9/5"
+          }
         }
       },
       "block_order": [
@@ -326,7 +454,23 @@
         "li_club_3",
         "li_club_4",
         "li_club_5",
-        "li_club_6"
+        "li_club_6",
+        "dd_config_2",
+        "se1",
+        "se2",
+        "se3",
+        "se4",
+        "se5",
+        "se6",
+        "se7",
+        "se8",
+        "se9",
+        "se10",
+        "seu1",
+        "seu2",
+        "seu3",
+        "seu4",
+        "seu5"
       ],
       "settings": {
         "logo": "shopify://shop_images/Een_titel_toevoegen_2.svg",
@@ -334,7 +478,7 @@
         "menu": "main-menu",
         "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
-        "search_placeholder": "Zoek naar speeltjes, boxen...",
+        "search_placeholder": "Zoek naar speeltjes, boxen of verrassingen...",
         "search_button_label": "Zoeken",
         "account_label": "Mijn account",
         "drawer_banner_title": "Lid van de Kwispelclub?",
@@ -346,7 +490,6 @@
     }
   },
   "order": [
-    "announcement-bar",
     "header"
   ]
 }
