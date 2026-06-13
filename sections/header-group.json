@@ -387,11 +387,29 @@
         "u4"
       ],
       "settings": {}
+    },
+    "hero_mbMyWU": {
+      "type": "hero",
+      "name": "Hero",
+      "settings": {
+        "label": "",
+        "title": "Elke box een nieuwe",
+        "title_highlight": "verrassing!",
+        "text": "Met liefde samengesteld voor jouw hond.\nVol plezier, verwennerij en gezonde snacks.",
+        "cta_primary_label": "Ontdek de boxen",
+        "cta_primary_url": "",
+        "cta_secondary_label": "Hoe het werkt",
+        "cta_secondary_url": "",
+        "review_text": "4,9/5 uit 1.200+ reviews",
+        "image": "shopify://shop_images/ChatGPT_Image_9_jun_2026_13_10_00.png",
+        "badge_text": "Elke maand een feestje voor je hond ♥"
+      }
     }
   },
   "order": [
     "announcement-bar",
     "header",
-    "trust-bar"
+    "trust-bar",
+    "hero_mbMyWU"
   ]
 }
