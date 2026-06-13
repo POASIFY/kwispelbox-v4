@@ -45,7 +45,12 @@
           }
         }
       },
-      "block_order": ["u1", "u2", "u3", "u4"],
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4"
+      ],
       "settings": {}
     },
     "hero": {
@@ -105,7 +110,11 @@
           }
         }
       },
-      "block_order": ["box_mini", "box_happy", "box_mega"],
+      "block_order": [
+        "box_mini",
+        "box_happy",
+        "box_mega"
+      ],
       "settings": {
         "label": "Onze boxen",
         "heading": "Kies de box die past bij jouw hond",
@@ -113,5 +122,9 @@
       }
     }
   },
-  "order": ["trust-bar", "hero", "product-boxes"]
+  "order": [
+    "trust-bar",
+    "hero",
+    "product-boxes"
+  ]
 }

@@ -22,7 +22,7 @@
         alt="{{ section.settings.image.alt | default: shop.name | escape }}"
         width="1400"
         height="600"
-        {%- if section.index <= 1 -%}loading="eager" fetchpriority="high"{%- else -%}loading="lazy"{%- endif -%}
+        {%- if section.settings.image_priority -%}loading="eager" fetchpriority="high"{%- else -%}loading="lazy"{%- endif -%}
         class="hero__bg-img">
     </div>
   {%- endif -%}
@@ -310,6 +310,7 @@
     { "type": "text", "id": "review_text", "label": "Review tekst", "default": "4,9/5 uit 1.200+ reviews" },
     { "type": "image_picker", "id": "review_avatars", "label": "Avatar foto's (optioneel)" },
     { "type": "image_picker", "id": "image", "label": "Hero afbeelding" },
+    { "type": "checkbox", "id": "image_priority", "label": "Afbeelding met hoge prioriteit laden (boven de vouw)", "default": true },
     { "type": "text", "id": "badge_text", "label": "Badge tekst (optioneel)", "default": "Elke maand een feestje voor je hond" }
   ],
   "presets": [
