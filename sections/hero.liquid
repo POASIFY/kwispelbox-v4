@@ -1,519 +1,265 @@
-{% comment %}
-  sections/hero.liquid — Kwispelbox KB-v3
-  Homepage hero sectie met twee layouts:
-  - split: tekst links, afbeelding rechts (desktop), gestapeld op mobiel
-  - fullscreen: afbeelding op volle breedte met tekst overlay
+{%- comment -%}
+  sections/hero.liquid — Kwispelbox KB-v4
+  Split layout: tekst links, afbeelding rechts
+  LCP-geoptimaliseerd
+{%- endcomment -%}
 
-  LCP-geoptimaliseerd: <img> tag met fetchpriority="high" en loading="eager"
-  als section.index <= 3 (boven de vouw).
-{% endcomment %}
+<section class="hero">
+  <div class="hero__inner">
 
-{%- assign is_above_fold = false -%}
-{%- if section.index <= 3 -%}
-  {%- assign is_above_fold = true -%}
-{%- endif -%}
+    <!-- Tekst kolom -->
+    <div class="hero__content">
 
-{%- assign layout = section.settings.layout -%}
-{%- assign has_image = false -%}
-{%- if section.settings.image != blank -%}{%- assign has_image = true -%}{%- endif -%}
-{%- assign has_mobile_image = false -%}
-{%- if section.settings.mobile_image != blank -%}{%- assign has_mobile_image = true -%}{%- endif -%}
+      {%- if section.settings.label != blank -%}
+        <span class="hero__label">{{ section.settings.label }}</span>
+      {%- endif -%}
 
-<div class="hero hero--{{ layout }}{% if section.settings.full_width %} full-width{% endif %}"
-     data-section-id="{{ section.id }}">
-
-  {%- if layout == 'split' -%}
-    {# ── SPLIT LAYOUT ── #}
-    <div class="hero__inner hero__inner--split">
-
-      {# Tekst kolom #}
-      <div class="hero__content">
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="hero__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1 class="hero__title">
+        {{ section.settings.title }}
+        {%- if section.settings.title_highlight != blank -%}
+          <span class="hero__title-highlight">{{ section.settings.title_highlight }}</span>
         {%- endif -%}
+      </h1>
 
-        {%- if section.settings.heading != blank -%}
-          <h1 class="hero__heading">{{ section.settings.heading }}</h1>
-        {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="hero__text">{{ section.settings.text }}</p>
+      {%- endif -%}
 
-        {%- if section.settings.subheading != blank -%}
-          <p class="hero__subheading">{{ section.settings.subheading }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_url }}"
-             class="hero__btn hero__btn--primary">
-            {{ section.settings.button_label }}
+      <div class="hero__buttons">
+        {%- if section.settings.cta_primary_label != blank -%}
+          <a href="{{ section.settings.cta_primary_url }}" class="hero__btn hero__btn--primary">
+            {{ section.settings.cta_primary_label }}
+            <span class="hero__btn-icon" aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span>
           </a>
         {%- endif -%}
-
-        {%- if section.settings.button_label_2 != blank -%}
-          <a href="{{ section.settings.button_url_2 }}"
-             class="hero__btn hero__btn--secondary">
-            {{ section.settings.button_label_2 }}
+        {%- if section.settings.cta_secondary_label != blank -%}
+          <a href="{{ section.settings.cta_secondary_url }}" class="hero__btn hero__btn--secondary">
+            {{ section.settings.cta_secondary_label }}
+            <span class="hero__btn-icon" aria-hidden="true">{{- 'icon-chevron-down.svg' | inline_asset_content -}}</span>
           </a>
-        {%- endif -%}
-
-        {# Trust badges blokken #}
-        {%- assign trust_blocks = section.blocks | where: 'type', 'trust_badge' -%}
-        {%- if trust_blocks.size > 0 -%}
-          <ul class="hero__trust-list" role="list">
-            {%- for block in trust_blocks -%}
-              <li class="hero__trust-item" {{ block.shopify_attributes }}>
-                {%- if block.settings.icon != blank -%}
-                  <span class="hero__trust-icon">
-                    {{- block.settings.icon | inline_asset_content -}}
-                  </span>
-                {%- endif -%}
-                {%- if block.settings.label != blank -%}
-                  <span class="hero__trust-label">{{ block.settings.label }}</span>
-                {%- endif -%}
-              </li>
-            {%- endfor -%}
-          </ul>
         {%- endif -%}
       </div>
 
-      {# Afbeelding kolom #}
-      <div class="hero__media">
-        {%- if has_image -%}
-          {%- if is_above_fold -%}
-            {{- section.settings.image
-                | image_url: width: 1200
-                | image_tag:
-                    loading: 'eager',
-                    fetchpriority: 'high',
-                    widths: '400, 600, 800, 1000, 1200',
-                    sizes: '(max-width: 749px) 100vw, 50vw',
-                    class: 'hero__img',
-                    alt: section.settings.image.alt | default: shop.name -}}
-          {%- else -%}
-            {{- section.settings.image
-                | image_url: width: 1200
-                | image_tag:
-                    loading: 'lazy',
-                    widths: '400, 600, 800, 1000, 1200',
-                    sizes: '(max-width: 749px) 100vw, 50vw',
-                    class: 'hero__img',
-                    alt: section.settings.image.alt | default: shop.name -}}
+      {%- if section.settings.review_text != blank -%}
+        <div class="hero__reviews">
+          {%- if section.settings.review_avatars != blank -%}
+            <img src="{{ section.settings.review_avatars | image_url: width: 120 }}" alt="" width="60" height="20" loading="lazy" class="hero__review-avatars">
           {%- endif -%}
-        {%- else -%}
-          <div class="hero__img-placeholder">
-            {{ 'lifestyle-1' | placeholder_svg_tag: 'hero__placeholder-svg' }}
-          </div>
-        {%- endif -%}
-      </div>
-
-    </div>
-
-  {%- else -%}
-    {# ── FULLSCREEN LAYOUT ── #}
-    <div class="hero__inner hero__inner--fullscreen">
-
-      {# Achtergrondafbeelding #}
-      {%- if has_image -%}
-        <div class="hero__bg-wrap">
-          {%- if has_mobile_image -%}
-            <picture>
-              <source
-                media="(max-width: 749px)"
-                srcset="{{ section.settings.mobile_image | image_url: width: 800 }} 800w,
-                        {{ section.settings.mobile_image | image_url: width: 600 }} 600w,
-                        {{ section.settings.mobile_image | image_url: width: 400 }} 400w"
-                sizes="100vw">
-              <source
-                media="(min-width: 750px)"
-                srcset="{{ section.settings.image | image_url: width: 2000 }} 2000w,
-                        {{ section.settings.image | image_url: width: 1600 }} 1600w,
-                        {{ section.settings.image | image_url: width: 1200 }} 1200w"
-                sizes="100vw">
-              <img
-                src="{{ section.settings.image | image_url: width: 1600 }}"
-                alt="{{ section.settings.image.alt | default: shop.name }}"
-                class="hero__bg-img"
-                width="{{ section.settings.image.width }}"
-                height="{{ section.settings.image.height }}"
-              loading="{% if is_above_fold %}eager{% else %}lazy{% endif %}"
-                {% if is_above_fold %}fetchpriority="high"{% endif %}>
-            </picture>
-          {%- else -%}
-            <img
-              src="{{ section.settings.image | image_url: width: 1600 }}"
-              srcset="{{ section.settings.image | image_url: width: 2000 }} 2000w,
-                      {{ section.settings.image | image_url: width: 1600 }} 1600w,
-                      {{ section.settings.image | image_url: width: 1200 }} 1200w,
-                      {{ section.settings.image | image_url: width: 800  }} 800w"
-              sizes="100vw"
-              alt="{{ section.settings.image.alt | default: shop.name }}"
-              class="hero__bg-img"
-              width="{{ section.settings.image.width }}"
-              height="{{ section.settings.image.height }}"
-              loading="{% if is_above_fold %}eager{% else %}lazy{% endif %}"
-              {% if is_above_fold %}fetchpriority="high"{% endif %}>
-          {%- endif -%}
-        </div>
-      {%- else -%}
-        <div class="hero__bg-placeholder">
-          {{ 'lifestyle-2' | placeholder_svg_tag: 'hero__placeholder-svg' }}
+          <span class="hero__review-stars" aria-hidden="true">★★★★★</span>
+          <span class="hero__review-text">{{ section.settings.review_text }}</span>
         </div>
       {%- endif -%}
 
-      {# Overlay #}
-      <div class="hero__overlay" style="--overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+    </div>
 
-      {# Tekst inhoud #}
-      <div class="hero__content hero__content--{{ section.settings.text_align }}">
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="hero__eyebrow">{{ section.settings.eyebrow }}</p>
-        {%- endif -%}
+    <!-- Afbeelding kolom -->
+    {%- if section.settings.image != blank -%}
+      <div class="hero__media">
+        <img
+          src="{{ section.settings.image | image_url: width: 800 }}"
+          srcset="{{ section.settings.image | image_url: width: 400 }} 400w,
+                  {{ section.settings.image | image_url: width: 800 }} 800w,
+                  {{ section.settings.image | image_url: width: 1200 }} 1200w"
+          sizes="(max-width: 749px) 100vw, 50vw"
+          alt="{{ section.settings.image.alt | default: shop.name | escape }}"
+          width="800"
+          height="600"
+          {%- if section.index <= 1 -%}loading="eager" fetchpriority="high"{%- else -%}loading="lazy"{%- endif -%}
+          class="hero__img">
 
-        {%- if section.settings.heading != blank -%}
-          <h1 class="hero__heading">{{ section.settings.heading }}</h1>
-        {%- endif -%}
-
-        {%- if section.settings.subheading != blank -%}
-          <p class="hero__subheading">{{ section.settings.subheading }}</p>
-        {%- endif -%}
-
-        <div class="hero__btn-group">
-          {%- if section.settings.button_label != blank -%}
-            <a href="{{ section.settings.button_url }}"
-               class="hero__btn hero__btn--primary">
-              {{ section.settings.button_label }}
-            </a>
-          {%- endif -%}
-          {%- if section.settings.button_label_2 != blank -%}
-            <a href="{{ section.settings.button_url_2 }}"
-               class="hero__btn hero__btn--secondary">
-              {{ section.settings.button_label_2 }}
-            </a>
-          {%- endif -%}
-        </div>
-
-        {# Trust badges blokken #}
-        {%- assign trust_blocks = section.blocks | where: 'type', 'trust_badge' -%}
-        {%- if trust_blocks.size > 0 -%}
-          <ul class="hero__trust-list" role="list">
-            {%- for block in trust_blocks -%}
-              <li class="hero__trust-item" {{ block.shopify_attributes }}>
-                {%- if block.settings.icon != blank -%}
-                  <span class="hero__trust-icon">
-                    {{- block.settings.icon | inline_asset_content -}}
-                  </span>
-                {%- endif -%}
-                {%- if block.settings.label != blank -%}
-                  <span class="hero__trust-label">{{ block.settings.label }}</span>
-                {%- endif -%}
-              </li>
-            {%- endfor -%}
-          </ul>
+        {%- if section.settings.badge_text != blank -%}
+          <div class="hero__badge">
+            <span class="hero__badge-text">{{ section.settings.badge_text }}</span>
+          </div>
         {%- endif -%}
       </div>
+    {%- endif -%}
 
-    </div>
-  {%- endif -%}
-
-</div>
+  </div>
+</section>
 
 {% stylesheet %}
 
-/* ─── Hero base ─────────────────────────────────────── */
 .hero {
-  position: relative;
+  background: var(--color-cream);
   overflow: hidden;
 }
 
-.hero.full-width {
-  width: 100%;
-}
-
-/* ─── Split layout ──────────────────────────────────── */
-.hero--split .hero__inner--split {
+.hero__inner {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 48px var(--page-margin);
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
   gap: 48px;
-  max-width: var(--page-width);
-  margin: 0 auto;
-  padding: 80px var(--page-margin);
+  min-height: 480px;
 }
 
-.hero--split .hero__media {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-
-.hero--split .hero__img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-}
-
-/* ─── Fullscreen layout ─────────────────────────────── */
-.hero--fullscreen .hero__inner--fullscreen {
-  position: relative;
-  min-height: 560px;
-  display: flex;
-  align-items: center;
-}
-
-.hero__bg-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.hero__bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.hero__bg-placeholder {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.hero__bg-placeholder .hero__placeholder-svg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero__overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background-color: rgba(0, 0, 0, var(--overlay-opacity, 0.3));
-}
-
-.hero--fullscreen .hero__content {
-  position: relative;
-  z-index: 2;
-  max-width: var(--page-width);
-  width: 100%;
-  margin: 0 auto;
-  padding: 80px var(--page-margin);
-  color: #fff;
-}
-
-.hero--fullscreen .hero__content--center {
-  text-align: center;
-}
-
-.hero--fullscreen .hero__content--left {
-  text-align: left;
-  max-width: 640px;
-}
-
-/* ─── Gedeelde tekst stijlen ────────────────────────── */
-.hero__eyebrow {
+/* Tekst kolom */
+.hero__label {
+  display: inline-block;
   font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: .78rem;
+  font-weight: 800;
+  color: var(--color-green);
   text-transform: uppercase;
-  color: var(--color-orange);
+  letter-spacing: .08em;
   margin-bottom: 12px;
 }
 
-.hero--fullscreen .hero__eyebrow {
-  color: var(--color-yellow);
-}
-
-.hero__heading {
+.hero__title {
   font-family: var(--font-heading);
-  font-size: clamp(36px, 5vw, 64px);
-  line-height: 1.1;
+  font-size: clamp(2rem, 3.5vw, 3rem);
   color: var(--color-ink);
-  margin-bottom: 16px;
+  line-height: 1.15;
+  margin: 0 0 8px;
 }
 
-.hero--fullscreen .hero__heading {
-  color: #fff;
+.hero__title-highlight {
+  display: block;
+  color: var(--color-pink);
 }
 
-.hero__subheading {
+.hero__text {
   font-family: var(--font-body);
-  font-size: clamp(16px, 2vw, 20px);
-  line-height: 1.6;
+  font-size: 1rem;
   color: var(--color-body);
-  margin-bottom: 32px;
-  max-width: 520px;
+  line-height: 1.6;
+  margin: 16px 0 28px;
+  max-width: 42ch;
 }
 
-.hero--fullscreen .hero__subheading {
-  color: rgba(255, 255, 255, 0.88);
-}
-
-.hero--fullscreen .hero__content--center .hero__subheading {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ─── Knoppen ───────────────────────────────────────── */
-.hero__btn-group {
+.hero__buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
   align-items: center;
-}
-
-.hero--fullscreen .hero__content--center .hero__btn-group {
-  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .hero__btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 14px 28px;
+  gap: 8px;
+  padding: 14px 24px;
   border-radius: var(--radius-pill);
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 1rem;
   text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  cursor: pointer;
+  transition: transform 160ms, box-shadow 160ms;
 }
 
-.hero__btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
+.hero__btn:hover { transform: translateY(-1px); }
 
 .hero__btn--primary {
-  background-color: var(--color-orange);
+  background: var(--color-pink);
   color: #fff;
+}
+
+.hero__btn--primary:hover {
+  box-shadow: 0 6px 20px rgba(212,83,126,.35);
 }
 
 .hero__btn--secondary {
-  background-color: transparent;
-  color: var(--color-ink);
-  border: 2px solid var(--color-ink);
+  background: none;
+  color: var(--color-green);
+  border: 2px solid var(--color-green);
 }
 
-.hero--fullscreen .hero__btn--secondary {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.6);
+.hero__btn--secondary:hover {
+  background: #e8f5e2;
 }
 
-/* Hero split: knoppen naast elkaar */
-.hero--split .hero__btn + .hero__btn {
-  margin-top: 0;
-}
-.hero--split .hero__content .hero__btn {
-  margin-top: 0;
-}
-.hero--split .hero__content {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.hero--split .hero__btn--primary,
-.hero--split .hero__btn--secondary {
-  margin-top: 0;
-}
-.hero--split .hero__btn + .hero__btn--secondary {
-  margin-top: 0;
-}
-.hero--split .hero__content > .hero__btn {
-  margin-bottom: 0;
-}
-/* Knoppenrij voor split layout */
-.hero--split .hero__btn-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-/* ─── Trust badges ──────────────────────────────────── */
-.hero__trust-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  list-style: none;
-  padding: 0;
-  margin-top: 28px;
-}
-
-.hero__trust-item {
+.hero__btn-icon {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-body);
 }
 
-.hero--fullscreen .hero__trust-item {
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.hero__trust-icon {
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
+.hero__btn-icon svg {
   width: 18px;
   height: 18px;
-  color: var(--color-green);
 }
 
-.hero--fullscreen .hero__trust-icon {
+.hero__btn--secondary .hero__btn-icon svg {
+  transform: rotate(-90deg);
+}
+
+.hero__reviews {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.hero__review-avatars {
+  height: 28px;
+  width: auto;
+  border-radius: var(--radius-pill);
+}
+
+.hero__review-stars {
   color: var(--color-yellow);
+  font-size: 1rem;
+  letter-spacing: 1px;
 }
 
-.hero__trust-icon svg {
-  width: 100%;
-  height: 100%;
+.hero__review-text {
+  font-family: var(--font-body);
+  font-size: .8rem;
+  color: var(--color-muted);
+  font-weight: 600;
 }
 
-/* ─── Placeholder ───────────────────────────────────── */
-.hero__img-placeholder {
+/* Afbeelding kolom */
+.hero__media {
+  position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  aspect-ratio: 4 / 3;
-  background-color: var(--color-cream);
 }
 
-.hero__placeholder-svg {
+.hero__img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  aspect-ratio: 4/3;
 }
 
-/* ─── Mobiel (≤ 749px) ──────────────────────────────── */
+.hero__badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 100px;
+  height: 100px;
+  background: var(--color-pink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.hero__badge-text {
+  font-family: var(--font-heading);
+  font-size: .75rem;
+  color: #fff;
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Mobiel */
 @media (max-width: 749px) {
-  .hero--split .hero__inner--split {
+  .hero__inner {
     grid-template-columns: 1fr;
-    gap: 32px;
-    padding: 48px var(--page-margin);
+    padding: 32px var(--page-margin);
+    gap: 24px;
+    min-height: auto;
   }
 
-  /* Afbeelding boven tekst op mobiel */
-  .hero--split .hero__media {
-    order: -1;
-  }
+  .hero__media { order: -1; }
 
-  .hero--fullscreen .hero__inner--fullscreen {
-    min-height: 480px;
-  }
-
-  .hero--fullscreen .hero__content {
-    padding: 48px var(--page-margin);
-  }
-
-  .hero__heading {
-    font-size: clamp(30px, 8vw, 42px);
-  }
-
-  .hero__trust-list {
-    gap: 12px;
-  }
+  .hero__title { font-size: 2rem; }
 }
 
 {% endstylesheet %}
@@ -522,133 +268,31 @@
 {
   "name": "Hero",
   "tag": "section",
-  "class": "section-hero",
   "settings": [
-    {
-      "type": "select",
-      "id": "layout",
-      "label": "Layout",
-      "options": [
-        { "value": "split",      "label": "Split (tekst + foto)" },
-        { "value": "fullscreen", "label": "Fullscreen (foto achtergrond)" }
-      ],
-      "default": "split"
-    },
-    {
-      "type": "checkbox",
-      "id": "full_width",
-      "label": "Volledige paginabreedte",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Afbeelding"
-    },
-    {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Afbeelding"
-    },
-    {
-      "type": "image_picker",
-      "id": "mobile_image",
-      "label": "Mobiele afbeelding (optioneel)",
-      "info": "Alleen voor fullscreen layout. Laat leeg om de hoofdafbeelding te gebruiken."
-    },
-    {
-      "type": "range",
-      "id": "overlay_opacity",
-      "label": "Overlay donkerheid",
-      "min": 0,
-      "max": 70,
-      "step": 5,
-      "default": 30,
-      "unit": "%",
-      "info": "Alleen voor fullscreen layout"
-    },
-    {
-      "type": "header",
-      "content": "Tekst"
-    },
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow tekst"
-    },
-    {
-      "type": "textarea",
-      "id": "heading",
-      "label": "Koptekst"
-    },
-    {
-      "type": "textarea",
-      "id": "subheading",
-      "label": "Subtekst"
-    },
-    {
-      "type": "select",
-      "id": "text_align",
-      "label": "Tekstuitlijning",
-      "options": [
-        { "value": "left",   "label": "Links" },
-        { "value": "center", "label": "Gecentreerd" }
-      ],
-      "default": "left",
-      "info": "Alleen voor fullscreen layout"
-    },
-    {
-      "type": "header",
-      "content": "Knoppen"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Primaire knop tekst"
-    },
-    {
-      "type": "url",
-      "id": "button_url",
-      "label": "Primaire knop URL"
-    },
-    {
-      "type": "text",
-      "id": "button_label_2",
-      "label": "Secundaire knop tekst"
-    },
-    {
-      "type": "url",
-      "id": "button_url_2",
-      "label": "Secundaire knop URL"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "trust_badge",
-      "name": "Trust badge",
-      "settings": [
-        {
-          "type": "inline_richtext",
-          "id": "icon",
-          "label": "SVG icoon (asset naam)"
-        },
-        {
-          "type": "text",
-          "id": "label",
-          "label": "Tekst"
-        }
-      ]
-    }
+    { "type": "text", "id": "label", "label": "Label boven titel" },
+    { "type": "textarea", "id": "title", "label": "Titel", "default": "Elke box een nieuwe" },
+    { "type": "text", "id": "title_highlight", "label": "Gemarkeerde tekst (roze)", "default": "verrassing!" },
+    { "type": "textarea", "id": "text", "label": "Tekst", "default": "Met liefde samengesteld voor jouw hond.\nVol plezier, verwennerij en gezonde snacks." },
+    { "type": "text", "id": "cta_primary_label", "label": "Knop 1 tekst", "default": "Ontdek de boxen" },
+    { "type": "url", "id": "cta_primary_url", "label": "Knop 1 link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Knop 2 tekst", "default": "Hoe het werkt" },
+    { "type": "url", "id": "cta_secondary_url", "label": "Knop 2 link" },
+    { "type": "text", "id": "review_text", "label": "Review tekst", "default": "4,9/5 uit 1.200+ reviews" },
+    { "type": "image_picker", "id": "review_avatars", "label": "Avatar foto's (optioneel)" },
+    { "type": "image_picker", "id": "image", "label": "Hero afbeelding" },
+    { "type": "text", "id": "badge_text", "label": "Badge tekst (optioneel)", "default": "Elke maand een feestje voor je hond" }
   ],
   "presets": [
     {
       "name": "Hero",
       "settings": {
-        "layout": "split",
-        "eyebrow": "Verrassingen voor jouw hond",
-        "heading": "Een feestje voor je hond.",
-        "subheading": "Verrassingsboxen vol speelgoed waar staarten sneller van gaan kwispelen.",
-        "button_label": "Ontdek de boxen",
-        "button_label_2": "Hoe werkt het?"
+        "title": "Elke box een nieuwe",
+        "title_highlight": "verrassing!",
+        "text": "Met liefde samengesteld voor jouw hond.\nVol plezier, verwennerij en gezonde snacks.",
+        "cta_primary_label": "Ontdek de boxen",
+        "cta_secondary_label": "Hoe het werkt",
+        "review_text": "4,9/5 uit 1.200+ reviews",
+        "badge_text": "Elke maand een feestje voor je hond \u2665"
       }
     }
   ]

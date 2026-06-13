@@ -1,56 +1,56 @@
 {%- comment -%}
   sections/trust-bar.liquid — Kwispelbox KB-v4
-  Groene balk met USPs en optionele hond foto rechts
+  Groene balk met golvende randen en optionele hond foto
 {%- endcomment -%}
 
 {%- assign usp_blocks = section.blocks | where: 'type', 'usp' -%}
 
 {%- if usp_blocks.size > 0 -%}
 <div class="trust-bar">
+
   <div class="trust-bar__wave trust-bar__wave--top" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 32" preserveAspectRatio="none">
       <path d="M0,16 C180,0 360,32 540,16 C720,0 900,32 1080,16 C1260,0 1380,24 1440,12 L1440,0 L0,0 Z" fill="#fff"/>
     </svg>
   </div>
-  <div class="trust-bar__inner">
 
-    <ul class="trust-bar__list" role="list">
-      {%- for block in usp_blocks -%}
-        <li class="trust-bar__item" {{ block.shopify_attributes }}>
-          <span class="trust-bar__icon-wrap" aria-hidden="true">
-            {{- block.settings.icon | inline_asset_content -}}
-          </span>
-          <span class="trust-bar__text">
-            <strong>{{ block.settings.title }}</strong>
-            {%- if block.settings.subtitle != blank -%}
-              <span>{{ block.settings.subtitle }}</span>
-            {%- endif -%}
-          </span>
-        </li>
-      {%- endfor -%}
-    </ul>
+  <div class="trust-bar__body">
+    <div class="trust-bar__inner">
+      <ul class="trust-bar__list" role="list">
+        {%- for block in usp_blocks -%}
+          <li class="trust-bar__item" {{ block.shopify_attributes }}>
+            <span class="trust-bar__icon-wrap" aria-hidden="true">
+              {{- block.settings.icon | inline_asset_content -}}
+            </span>
+            <span class="trust-bar__text">
+              <strong>{{ block.settings.title }}</strong>
+              {%- if block.settings.subtitle != blank -%}
+                <span>{{ block.settings.subtitle }}</span>
+              {%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
 
     {%- if section.settings.dog_image != blank -%}
-      <div class="trust-bar__dog" aria-hidden="true">
-        {%- assign dog_img = section.settings.dog_image -%}
+      <div class="trust-bar__dog">
         <img
-          src="{{ dog_img | image_url: width: 300 }}"
-          srcset="{{ dog_img | image_url: width: 150 }} 150w, {{ dog_img | image_url: width: 300 }} 300w"
-          sizes="150px"
+          src="{{ section.settings.dog_image | image_url: width: 300 }}"
           alt=""
           width="150"
-          height="180"
+          height="200"
           loading="lazy">
       </div>
     {%- endif -%}
+  </div>
 
+  <div class="trust-bar__wave trust-bar__wave--bottom" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 32" preserveAspectRatio="none">
+      <path d="M0,8 C180,32 360,0 540,16 C720,32 900,4 1080,20 C1260,36 1380,8 1440,16 L1440,32 L0,32 Z" fill="#fff"/>
+    </svg>
   </div>
-    <div class="trust-bar__wave trust-bar__wave--bottom" aria-hidden="true">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 48" preserveAspectRatio="none">
-        <path d="M0,24 C180,48 360,0 540,24 C720,48 900,0 1080,24 C1260,48 1380,12 1440,20 L1440,48 L0,48 Z" fill="#fff"/>
-      </svg>
-    </div>
-  </div>
+
 </div>
 {%- endif -%}
 
@@ -59,17 +59,30 @@
 .trust-bar {
   background: var(--color-green);
   position: relative;
-  overflow: hidden;
+}
+
+.trust-bar__wave {
+  display: block;
+  line-height: 0;
+}
+
+.trust-bar__wave svg {
+  display: block;
+  width: 100%;
+  height: 32px;
+}
+
+.trust-bar__body {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .trust-bar__inner {
+  flex: 1;
   max-width: var(--page-width);
   margin: 0 auto;
-  padding: 0 var(--page-margin);
-  display: flex;
-  align-items: center;
-  min-height: 80px;
-  position: relative;
+  padding: 8px var(--page-margin);
 }
 
 .trust-bar__list {
@@ -78,8 +91,6 @@
   padding: 0;
   display: flex;
   align-items: center;
-  flex: 1;
-  gap: 0;
 }
 
 .trust-bar__item {
@@ -87,13 +98,11 @@
   align-items: center;
   gap: 12px;
   flex: 1;
-  padding: 16px 20px;
-  border-right: 1px solid rgba(255,255,255,.2);
+  padding: 12px 20px;
+  border-right: 1px solid rgba(255,255,255,.25);
 }
 
-.trust-bar__item:last-child {
-  border-right: none;
-}
+.trust-bar__item:last-child { border-right: none; }
 
 .trust-bar__icon-wrap {
   display: flex;
@@ -135,9 +144,9 @@
 
 .trust-bar__dog {
   position: absolute;
-  right: var(--page-margin);
+  right: 24px;
   bottom: 0;
-  width: 160px;
+  width: 150px;
   pointer-events: none;
   z-index: 2;
 }
@@ -148,35 +157,16 @@
   display: block;
   object-fit: contain;
   object-position: bottom;
-  max-height: 180px;
-}
-
-.trust-bar__wave {
-  position: relative;
-  left: 0;
-  right: 0;
-  line-height: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.trust-bar__wave--top {
-  margin-bottom: -1px;
-}
-
-.trust-bar__wave--bottom {
-  margin-top: -1px;
-}
-
-.trust-bar__wave svg {
-  display: block;
-  width: 100%;
-  height: 32px;
 }
 
 @media (max-width: 749px) {
   .trust-bar__list { flex-wrap: wrap; }
-  .trust-bar__item { flex: 0 0 50%; border-right: none; border-bottom: 1px solid rgba(255,255,255,.2); }
+  .trust-bar__item {
+    flex: 0 0 50%;
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+    padding: 10px 12px;
+  }
   .trust-bar__item:nth-last-child(-n+2) { border-bottom: none; }
   .trust-bar__dog { display: none; }
 }
@@ -192,7 +182,7 @@
     {
       "type": "image_picker",
       "id": "dog_image",
-      "label": "Hond afbeelding (optioneel)"
+      "label": "Hond afbeelding (optioneel, PNG transparant)"
     }
   ],
   "blocks": [
@@ -201,18 +191,8 @@
       "name": "USP",
       "limit": 5,
       "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Titel",
-          "default": "Gratis verzending"
-        },
-        {
-          "type": "text",
-          "id": "subtitle",
-          "label": "Subtitel",
-          "default": "vanaf €75"
-        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Gratis verzending" },
+        { "type": "text", "id": "subtitle", "label": "Subtitel", "default": "vanaf \u20ac75" },
         {
           "type": "select",
           "id": "icon",
