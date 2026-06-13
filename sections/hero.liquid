@@ -4,7 +4,7 @@
   LCP-geoptimaliseerd
 {%- endcomment -%}
 
-<section class="hero">
+<section class="hero full-width">
 
   <div class="hero__wave" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none">
@@ -90,6 +90,9 @@
   display: flex;
   align-items: center;
   z-index: 1;
+  /* Trek de hero 1px omhoog onder de groene trust bar zodat de
+     groene golf naadloos aansluit en er geen witte naad ontstaat */
+  margin-top: -1px;
 }
 
 .hero__wave {
