@@ -1,0 +1,161 @@
+{%- comment -%}
+  sections/usp-bar.liquid — Kwispelbox KB-v4
+  Lichte USP balk met gekleurde bolletjes, voor onder de hero
+{%- endcomment -%}
+
+{%- assign usp_blocks = section.blocks | where: 'type', 'usp' -%}
+
+{%- if usp_blocks.size > 0 -%}
+<div class="usp-bar">
+  <div class="usp-bar__inner">
+    {%- for block in usp_blocks -%}
+      <div class="usp-bar__item" {{ block.shopify_attributes }}>
+        <span class="usp-bar__icon-wrap usp-bar__icon-wrap--{{ block.settings.icon_color }}" aria-hidden="true">
+          {{- block.settings.icon | inline_asset_content -}}
+        </span>
+        <span class="usp-bar__text">
+          <strong>{{ block.settings.title }}</strong>
+          {%- if block.settings.subtitle != blank -%}
+            <span>{{ block.settings.subtitle }}</span>
+          {%- endif -%}
+        </span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+{%- endif -%}
+
+{% stylesheet %}
+
+.usp-bar {
+  background: var(--color-cream);
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.usp-bar__inner {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding: 20px var(--page-margin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.usp-bar__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  padding: 0 24px;
+  border-right: 1px solid var(--color-line);
+}
+
+.usp-bar__item:first-child { padding-left: 0; }
+.usp-bar__item:last-child { border-right: none; padding-right: 0; }
+
+.usp-bar__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.usp-bar__icon-wrap svg {
+  width: 20px;
+  height: 20px;
+}
+
+.usp-bar__icon-wrap--green  { background: #e8f5e2; color: var(--color-green); }
+.usp-bar__icon-wrap--orange { background: #fff0e4; color: var(--color-orange); }
+.usp-bar__icon-wrap--pink   { background: #ffe0ee; color: var(--color-pink); }
+.usp-bar__icon-wrap--yellow { background: #fffae0; color: #b07d00; }
+
+.usp-bar__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.usp-bar__text strong {
+  font-family: var(--font-body);
+  font-size: .85rem;
+  font-weight: 800;
+  color: var(--color-ink);
+  line-height: 1.3;
+}
+
+.usp-bar__text span {
+  font-family: var(--font-body);
+  font-size: .78rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 749px) {
+  .usp-bar__inner { flex-wrap: wrap; gap: 16px; }
+  .usp-bar__item { flex: 0 0 calc(50% - 8px); border-right: none; padding: 0; }
+}
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "USP balk",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "USP",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titel", "default": "Natuurlijke producten" },
+        { "type": "text", "id": "subtitle", "label": "Subtitel", "default": "Veilig voor jouw hond" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icoon",
+          "default": "icon-leaf.svg",
+          "options": [
+            { "value": "icon-leaf.svg", "label": "Blad" },
+            { "value": "icon-heart.svg", "label": "Hart" },
+            { "value": "icon-gift.svg", "label": "Cadeau" },
+            { "value": "icon-star.svg", "label": "Ster" },
+            { "value": "icon-paw.svg", "label": "Poot" },
+            { "value": "icon-check-circle.svg", "label": "Vinkje" },
+            { "value": "icon-shield.svg", "label": "Schild" },
+            { "value": "icon-users.svg", "label": "Gebruikers" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "icon_color",
+          "label": "Icoon kleur",
+          "default": "green",
+          "options": [
+            { "value": "green", "label": "Groen" },
+            { "value": "orange", "label": "Oranje" },
+            { "value": "pink", "label": "Roze" },
+            { "value": "yellow", "label": "Geel" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "USP balk",
+      "blocks": [
+        { "type": "usp", "settings": { "title": "Natuurlijke & veilige producten", "icon": "icon-leaf.svg", "icon_color": "green" } },
+        { "type": "usp", "settings": { "title": "Met liefde samengesteld", "icon": "icon-heart.svg", "icon_color": "pink" } },
+        { "type": "usp", "settings": { "title": "Elke maand een verrassing", "icon": "icon-gift.svg", "icon_color": "orange" } },
+        { "type": "usp", "settings": { "title": "Meer dan 1.200 blije honden", "icon": "icon-paw.svg", "icon_color": "orange" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

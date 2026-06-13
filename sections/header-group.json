@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "type": "header",
   "name": "Navigatie",
@@ -342,10 +333,55 @@
         "drawer_banner_cta": "Word gratis lid",
         "drawer_banner_url": "/pages/kwispelclub"
       }
+    },
+    "trust-bar": {
+      "type": "trust-bar",
+      "blocks": {
+        "u1": {
+          "type": "usp",
+          "settings": {
+            "title": "Gratis verzending",
+            "subtitle": "vanaf €75",
+            "icon": "icon-truck.svg"
+          }
+        },
+        "u2": {
+          "type": "usp",
+          "settings": {
+            "title": "Niet goed?",
+            "subtitle": "Geld terug",
+            "icon": "icon-refresh.svg"
+          }
+        },
+        "u3": {
+          "type": "usp",
+          "settings": {
+            "title": "100% blije honden",
+            "subtitle": "garantie",
+            "icon": "icon-heart.svg"
+          }
+        },
+        "u4": {
+          "type": "usp",
+          "settings": {
+            "title": "Voor 23:59 besteld",
+            "subtitle": "morgen in huis",
+            "icon": "icon-truck.svg"
+          }
+        }
+      },
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "header",
+    "trust-bar"
   ]
 }
