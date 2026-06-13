@@ -79,15 +79,15 @@
             "accent": "orange",
             "title": "Mini Kwispelbox",
             "description": "De perfecte kennismaking voor kleinere honden.",
-            "benefit_1": "3 tot 4 verrassingen per box",
-            "benefit_2": "Ideaal voor kleinere honden",
-            "benefit_3": "Perfect om kennis te maken",
-            "benefit_4": "Maandelijks opzegbaar",
             "price": "€49,95",
             "price_suffix": "per maand",
             "highlight": false,
             "button_label": "Bestel nu",
-            "button_url": ""
+            "button_url": "",
+            "benefit_1": "3 tot 4 verrassingen per box",
+            "benefit_2": "Ideaal voor kleinere honden",
+            "benefit_3": "Perfect om kennis te maken",
+            "benefit_4": "Maandelijks opzegbaar"
           }
         },
         "box_happy": {
@@ -96,17 +96,17 @@
             "accent": "green",
             "title": "Happy Kwispelbox",
             "description": "Onze populairste box, boordevol speelgoed, snacks en verwennerij.",
-            "benefit_1": "5 tot 6 verrassingen per box",
-            "benefit_2": "Mix van speelgoed én snacks",
-            "benefit_3": "Geschikt voor elke hond",
-            "benefit_4": "Gratis verzending",
-            "benefit_5": "Maandelijks opzegbaar",
             "price": "€64,95",
             "price_suffix": "per maand",
             "badge": "Meest gekozen",
             "highlight": true,
             "button_label": "Bestel nu",
-            "button_url": ""
+            "button_url": "",
+            "benefit_1": "5 tot 6 verrassingen per box",
+            "benefit_2": "Mix van speelgoed én snacks",
+            "benefit_3": "Geschikt voor elke hond",
+            "benefit_4": "Gratis verzending",
+            "benefit_5": "Maandelijks opzegbaar"
           }
         },
         "box_mega": {
@@ -115,16 +115,16 @@
             "accent": "pink",
             "title": "Mega Kwispelbox",
             "description": "Voor grote honden of echte avonturiers die van afwisseling houden.",
-            "benefit_1": "7 tot 8 verrassingen per box",
-            "benefit_2": "Extra veel speelgoed",
-            "benefit_3": "Voor grote honden",
-            "benefit_4": "Gratis verzending",
-            "benefit_5": "Maandelijks opzegbaar",
             "price": "€79,95",
             "price_suffix": "per maand",
             "highlight": false,
             "button_label": "Bestel nu",
-            "button_url": ""
+            "button_url": "",
+            "benefit_1": "7 tot 8 verrassingen per box",
+            "benefit_2": "Extra veel speelgoed",
+            "benefit_3": "Voor grote honden",
+            "benefit_4": "Gratis verzending",
+            "benefit_5": "Maandelijks opzegbaar"
           }
         },
         "ben_1": {
@@ -382,43 +382,50 @@
             "quote": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest!",
             "rating": 5,
             "owner_name": "Sanne",
-            "color": "green"
+            "color": "green",
+            "meta": "Happy Box fan · lid sinds 2024"
           }
         },
         "p1": {
           "type": "photo",
           "settings": {
-            "dog_name": "Bella"
+            "dog_name": "Bella",
+            "badge": "Hond van de maand"
           }
         },
         "p2": {
           "type": "photo",
           "settings": {
-            "dog_name": "Loki"
+            "dog_name": "Loki",
+            "badge": "Mega Box"
           }
         },
         "p3": {
           "type": "photo",
           "settings": {
-            "dog_name": "Noa"
+            "dog_name": "Noa",
+            "badge": "Favoriet"
           }
         },
         "p4": {
           "type": "photo",
           "settings": {
-            "dog_name": "Storm"
+            "dog_name": "Storm",
+            "badge": "Eerste box"
           }
         },
         "p5": {
           "type": "photo",
           "settings": {
-            "dog_name": "Pip"
+            "dog_name": "Pip",
+            "badge": "Jarig vandaag"
           }
         },
         "p6": {
           "type": "photo",
           "settings": {
-            "dog_name": "Bo"
+            "dog_name": "Bo",
+            "badge": "Kwispelclub"
           }
         },
         "s1": {
@@ -477,6 +484,109 @@
         "intro": "Elke dag maken we honden en hun baasjes blij met een verrassingsbox vol speelplezier. Word jij ook onderdeel van de Kwispelbox-community?",
         "show_decorations": true
       }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Luna",
+            "breed": "Golden Retriever",
+            "badge": "Happy Box",
+            "badge_color": "pink",
+            "rating": 5,
+            "review_title": "Elke maand weer een feestje!",
+            "review_text": "Luna wordt altijd zó enthousiast als de Kwispelbox binnenkomt. De speeltjes zijn stevig en superleuk, en ze is dol op de knuffels. Echt een aanrader!",
+            "verified_text": "Geverifieerde aankoop",
+            "accent": "pink"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Milo",
+            "breed": "Border Collie",
+            "badge": "Mega Box",
+            "badge_color": "orange",
+            "rating": 5,
+            "review_title": "Kwaliteit waar je blij van wordt",
+            "review_text": "Je merkt dat er echt aandacht is besteed aan de selectie van de producten. Milo speelt overal mee en de box voelt als een cadeau, elke keer weer.",
+            "verified_text": "Geverifieerde aankoop",
+            "accent": "orange"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Bobby",
+            "breed": "Cockapoo",
+            "badge": "Mini Box",
+            "badge_color": "green",
+            "rating": 5,
+            "review_title": "Perfect voor onze kleine avonturier",
+            "review_text": "Bobby is kieskeurig, maar alles in de Kwispelbox is een hit! Zelfs de snacks zijn favoriet. Super service en snelle levering ook!",
+            "verified_text": "Geverifieerde aankoop",
+            "accent": "green"
+          }
+        },
+        "tr1": {
+          "type": "trust",
+          "settings": {
+            "icon": "paw",
+            "color": "green",
+            "title": "1.200+",
+            "text": "Blije honden in onze community"
+          }
+        },
+        "tr2": {
+          "type": "trust",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "4,9/5",
+            "text": "Uitstekend beoordeeld",
+            "show_stars": true,
+            "subtext": "op basis van 500+ reviews"
+          }
+        },
+        "tr3": {
+          "type": "trust",
+          "settings": {
+            "icon": "gift",
+            "color": "yellow",
+            "title": "100%",
+            "text": "Tevredenheidsgarantie",
+            "subtext": "Niet tevreden? Geld terug."
+          }
+        },
+        "tr4": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield-check",
+            "color": "green",
+            "title": "Veilig & vertrouwd",
+            "text": "Betaal veilig via iDEAL, Klarna of Bancontact.",
+            "show_heart": true
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "tr1",
+        "tr2",
+        "tr3",
+        "tr4"
+      ],
+      "settings": {
+        "eyebrow": "Geliefd door honden én hun baasjes",
+        "title": "Wat onze klanten zeggen",
+        "subtitle": "Duizenden honden genieten al elke maand van hun Kwispelbox. Lees wat hun baasjes hiervan vinden.",
+        "highlight_word": "Kwispelbox",
+        "show_decorations": true
+      }
     }
   },
   "order": [
@@ -485,6 +595,7 @@
     "product-boxes",
     "box-contents",
     "why-kwispelbox",
-    "community"
+    "community",
+    "reviews"
   ]
 }
