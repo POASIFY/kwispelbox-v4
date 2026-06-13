@@ -6,7 +6,7 @@
 {%- assign usp_blocks = section.blocks | where: 'type', 'usp' -%}
 
 {%- if usp_blocks.size > 0 -%}
-<div class="trust-bar">
+<div class="trust-bar full-width">
 
   <div class="trust-bar__wave trust-bar__wave--top" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 32" preserveAspectRatio="none">
@@ -178,7 +178,7 @@
 {
   "name": "Trust balk",
   "tag": "section",
-  "enabled_on": { "groups": ["header"] },
+  "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
     {
       "type": "image_picker",

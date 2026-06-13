@@ -1,9 +1,8 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
   <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Karla:wght@400;500;600;700;800&display=swap">
+    {{ 'karla-v33-latin.woff2' | asset_url | preload_tag: as: 'font' }}
+    {{ 'lilita-one-v17-latin.woff2' | asset_url | preload_tag: as: 'font' }}
     {%- render 'css-variables' -%}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
     {%- render 'meta-tags' -%}
