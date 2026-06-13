@@ -288,6 +288,116 @@
             "color": "yellow",
             "text": "Uitstekend beoordeeld 4,9/5"
           }
+        },
+        "dd_config_3": {
+          "type": "dropdown_config",
+          "settings": {
+            "menu_item_index": 3,
+            "layout_type": "shop",
+            "accent_color": "orange",
+            "banner_badge": "Favorieten",
+            "banner_title": "Klein spulletje, groot geluk!",
+            "banner_text": "Onze favoriete losse producten voor jouw hond — speelgoed, snacks en knuffels, allemaal op één plek.",
+            "banner_cta_label": "Naar de shop",
+            "banner_cta_url": "/collections/all"
+          }
+        },
+        "sc1": {
+          "type": "shop_cat",
+          "settings": {
+            "menu_item_index": 3,
+            "color": "green",
+            "icon": "ball",
+            "title": "Speeltjes",
+            "description": "Voor uren speelplezier",
+            "link_list": "menu-speeltjes",
+            "cta_label": "Alle speeltjes",
+            "cta_url": "/collections/speeltjes"
+          }
+        },
+        "sc2": {
+          "type": "shop_cat",
+          "settings": {
+            "menu_item_index": 3,
+            "color": "pink",
+            "icon": "rabbit",
+            "title": "Knuffels",
+            "description": "Zacht, lief en extra knuffelbaar",
+            "link_list": "menu-knuffels",
+            "cta_label": "Alle knuffels",
+            "cta_url": "/collections/knuffels"
+          }
+        },
+        "sc3": {
+          "type": "shop_cat",
+          "settings": {
+            "menu_item_index": 3,
+            "color": "orange",
+            "icon": "bone",
+            "title": "Snacks",
+            "description": "Heerlijke en natuurlijke lekkernijen",
+            "link_list": "menu-snacks",
+            "cta_label": "Alle snacks",
+            "cta_url": "/collections/snacks"
+          }
+        },
+        "sc4": {
+          "type": "shop_cat",
+          "settings": {
+            "menu_item_index": 3,
+            "color": "purple",
+            "icon": "dog",
+            "title": "Puppy favorieten",
+            "description": "Speciaal voor kleine kwispelaars",
+            "link_list": "menu-puppy",
+            "cta_label": "Bekijk puppy shop",
+            "cta_url": "/collections/puppy"
+          }
+        },
+        "shu1": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 3,
+            "icon": "truck",
+            "color": "green",
+            "text": "Gratis verzending vanaf €75"
+          }
+        },
+        "shu2": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 3,
+            "icon": "refresh",
+            "color": "orange",
+            "text": "Niet goed? Geld terug"
+          }
+        },
+        "shu3": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 3,
+            "icon": "shield-check",
+            "color": "green",
+            "text": "100% veilig betalen"
+          }
+        },
+        "shu4": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 3,
+            "icon": "truck",
+            "color": "pink",
+            "text": "Voor 23:59 besteld, morgen in huis"
+          }
+        },
+        "shu5": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 3,
+            "icon": "star",
+            "color": "yellow",
+            "text": "Uitstekend beoordeeld 4,9/5"
+          }
         }
       },
       "block_order": [
@@ -314,7 +424,17 @@
         "seu2",
         "seu3",
         "seu4",
-        "seu5"
+        "seu5",
+        "dd_config_3",
+        "sc1",
+        "sc2",
+        "sc3",
+        "sc4",
+        "shu1",
+        "shu2",
+        "shu3",
+        "shu4",
+        "shu5"
       ],
       "settings": {
         "logo": "shopify://shop_images/Een_titel_toevoegen_2.svg",
