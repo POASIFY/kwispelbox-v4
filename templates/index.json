@@ -371,6 +371,112 @@
         "heading": "Wat zit er in een Kwispelbox?",
         "intro": "Elke box is een feestje om uit te pakken. Vol speeltjes, snacks en verrassingen die jouw hond laten stralen — zorgvuldig samengesteld met liefde."
       }
+    },
+    "community": {
+      "type": "community",
+      "blocks": {
+        "f1": {
+          "type": "featured",
+          "settings": {
+            "dog_name": "Max",
+            "quote": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest!",
+            "rating": 5,
+            "owner_name": "Sanne",
+            "color": "green"
+          }
+        },
+        "p1": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Bella"
+          }
+        },
+        "p2": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Loki"
+          }
+        },
+        "p3": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Noa"
+          }
+        },
+        "p4": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Storm"
+          }
+        },
+        "p5": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Pip"
+          }
+        },
+        "p6": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Bo"
+          }
+        },
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "icon": "paw",
+            "color": "green",
+            "value": "1.200+",
+            "label": "blije honden"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "icon": "sparkles",
+            "color": "pink",
+            "value": "Dagelijks",
+            "label": "nieuwe foto's & verhalen"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "icon": "heart",
+            "color": "orange",
+            "value": "8.500+",
+            "label": "leden in de community"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "icon": "star",
+            "color": "yellow",
+            "value": "4,9/5",
+            "label": "gemiddelde beoordeling"
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "eyebrow": "Een community vol kwispelende staarten",
+        "heading": "Meer dan 1.200 blije honden.",
+        "intro": "Elke dag maken we honden en hun baasjes blij met een verrassingsbox vol speelplezier. Word jij ook onderdeel van de Kwispelbox-community?",
+        "show_decorations": true
+      }
     }
   },
   "order": [
@@ -378,6 +484,7 @@
     "hero",
     "product-boxes",
     "box-contents",
-    "why-kwispelbox"
+    "why-kwispelbox",
+    "community"
   ]
 }
