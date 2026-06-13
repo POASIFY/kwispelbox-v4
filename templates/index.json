@@ -278,12 +278,106 @@
         "heading": "Kwispelbox",
         "intro": "Wij geloven dat elke hond het verdient om te spelen, te ontdekken en te genieten. Daarom stellen wij elke box samen met zorg, kwaliteit en een flinke dosis liefde."
       }
+    },
+    "box-contents": {
+      "type": "box-contents",
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {
+            "icon": "bone",
+            "color": "green",
+            "title": "Speeltjes",
+            "text": "Stevige speeltjes om uren mee te ravotten en kwispelen."
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "icon": "leaf",
+            "color": "orange",
+            "title": "Gezonde snacks",
+            "text": "Natuurlijke, smakelijke beloningen waar honden dol op zijn."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "icon": "sparkles",
+            "color": "pink",
+            "title": "Maandelijkse verrassing",
+            "text": "Elke box zit vol nieuwe avonturen om te ontdekken."
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "icon": "shield-check",
+            "color": "yellow",
+            "title": "Veilig & zorgvuldig",
+            "text": "Alleen producten die wij zelf met een gerust hart geven."
+          }
+        },
+        "t1": {
+          "type": "trust",
+          "settings": {
+            "icon": "truck",
+            "color": "green",
+            "title": "Gratis verzending vanaf €75"
+          }
+        },
+        "t2": {
+          "type": "trust",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "Meer dan 1.200 blije honden"
+          }
+        },
+        "t3": {
+          "type": "trust",
+          "settings": {
+            "icon": "gift",
+            "color": "orange",
+            "title": "Elke box voelt als een cadeautje"
+          }
+        },
+        "t4": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield-check",
+            "color": "green",
+            "title": "100% veilig betalen"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {
+        "show_badge": true,
+        "badge_text": "Geen twee boxen zijn hetzelfde",
+        "badge_icon": "sparkles",
+        "badge_color": "pink",
+        "show_decorations": true,
+        "eyebrow": "Elke box zorgvuldig samengesteld",
+        "heading": "Wat zit er in een Kwispelbox?",
+        "intro": "Elke box is een feestje om uit te pakken. Vol speeltjes, snacks en verrassingen die jouw hond laten stralen — zorgvuldig samengesteld met liefde."
+      }
     }
   },
   "order": [
     "trust-bar",
     "hero",
     "product-boxes",
+    "box-contents",
     "why-kwispelbox"
   ]
 }
