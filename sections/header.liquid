@@ -14,6 +14,9 @@
 {%- assign se_blocks       = section.blocks | where: 'type', 'se_item' -%}
 {%- assign se_usp_blocks   = section.blocks | where: 'type', 'se_usp' -%}
 {%- assign shop_blocks     = section.blocks | where: 'type', 'shop_cat' -%}
+{%- assign club_item_blocks = section.blocks | where: 'type', 'club_item' -%}
+{%- assign club_reward_blocks = section.blocks | where: 'type', 'club_reward' -%}
+{%- assign club_benefit_blocks = section.blocks | where: 'type', 'club_benefit' -%}
 
 <div class="site-header__wrapper full-width">
 
@@ -322,84 +325,129 @@
                       {%- comment -%} ══ LAYOUT: CLUB (Kwispelclub) ══ {%- endcomment -%}
                       {%- elsif layout == 'club' -%}
                         <div class="dd-club">
-                          <div class="dd-club__intro">
-                            <strong class="dd-club__intro-title">{{ dd.settings.club_intro_title }}</strong>
-                            {%- if dd.settings.club_intro_text != blank -%}
-                              <p class="dd-club__intro-body">{{ dd.settings.club_intro_text }}</p>
-                            {%- endif -%}
-                            <ul class="dd-club__checks" role="list">
-                              {%- if dd.settings.club_check_1 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_1 }}</li>{%- endif -%}
-                              {%- if dd.settings.club_check_2 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_2 }}</li>{%- endif -%}
-                              {%- if dd.settings.club_check_3 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_3 }}</li>{%- endif -%}
-                              {%- if dd.settings.club_check_4 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_4 }}</li>{%- endif -%}
-                              {%- if dd.settings.club_check_5 != blank -%}<li>{{- 'icon-check-circle.svg' | inline_asset_content -}}{{ dd.settings.club_check_5 }}</li>{%- endif -%}
-                            </ul>
-                            {%- if dd.settings.club_intro_image != blank -%}
-                              <img src="{{ dd.settings.club_intro_image | image_url: width: 240 }}"
-                                   alt="{{ dd.settings.club_intro_image.alt | escape }}"
-                                   width="240" height="180" loading="lazy" class="dd-club__intro-img">
-                            {%- endif -%}
-                            {%- if dd.settings.banner_cta_label != blank -%}
-                              <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-cta-btn dd-cta-btn--{{ dd.settings.accent_color }}">
-                                {{ dd.settings.banner_cta_label }}
-                                {{- 'icon-paw.svg' | inline_asset_content -}}
-                              </a>
-                            {%- endif -%}
+                          <span class="dd-se__pointer" aria-hidden="true"></span>
+
+                          <div class="dd-club__body">
+
+                            <div class="dd-club__intro">
+                              {%- assign club_title = dd.settings.club_intro_title -%}
+                              {%- if dd.settings.club_intro_highlight != blank -%}
+                                {%- capture chl -%}<span class="dd-club__pink">{{ dd.settings.club_intro_highlight }}</span>{%- endcapture -%}
+                                {%- assign club_title = club_title | replace: dd.settings.club_intro_highlight, chl -%}
+                              {%- endif -%}
+                              <strong class="dd-club__intro-title">{{ club_title }}</strong>
+                              {%- if dd.settings.club_intro_text != blank -%}<p class="dd-club__intro-text">{{ dd.settings.club_intro_text }}</p>{%- endif -%}
+                              {%- if club_benefit_blocks.size > 0 -%}
+                                <ul class="dd-club__benefits" role="list">
+                                  {%- for cbn in club_benefit_blocks -%}{%- if cbn.settings.menu_item_index == lx -%}
+                                    <li {{ cbn.shopify_attributes }}><span class="dd-club__check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>{{ cbn.settings.text }}</li>
+                                  {%- endif -%}{%- endfor -%}
+                                </ul>
+                              {%- endif -%}
+                              {%- if dd.settings.club_intro_image != blank -%}
+                                <div class="dd-club__intro-photo">
+                                  <img src="{{ dd.settings.club_intro_image | image_url: width: 600 }}" alt="{{ dd.settings.club_intro_image.alt | escape }}" width="300" height="180" loading="lazy">
+                                  <span class="dd-club__intro-photo-heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                                </div>
+                              {%- endif -%}
+                              {%- if dd.settings.banner_cta_label != blank -%}
+                                <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-club__intro-cta">{{ dd.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</a>
+                              {%- endif -%}
+                              {%- if dd.settings.club_intro_note != blank -%}
+                                <span class="dd-club__intro-note">{{ dd.settings.club_intro_note }}<span class="dd-club__squiggle" aria-hidden="true"><svg viewBox="0 0 42 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 8c5-7 8 5 13-1s7 5 12-1 8 4 13-1"/></svg></span></span>
+                              {%- endif -%}
+                            </div>
+
+                            <div class="dd-club__items">
+                              {%- for ci in club_item_blocks -%}{%- if ci.settings.menu_item_index == lx -%}
+                                <a href="{{ ci.settings.url | default: '#' }}" class="dd-club__item dd-club__item--{{ ci.settings.color }}" {{ ci.shopify_attributes }}>
+                                  <span class="dd-club__item-icon" aria-hidden="true">{%- render 'lucide', icon: ci.settings.icon -%}</span>
+                                  <span class="dd-club__item-text">
+                                    <strong>{{ ci.settings.title }}</strong>
+                                    {%- if ci.settings.description != blank -%}<span>{{ ci.settings.description }}</span>{%- endif -%}
+                                  </span>
+                                  <svg class="dd-club__item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                                </a>
+                              {%- endif -%}{%- endfor -%}
+                            </div>
+
+                            <div class="dd-club__rewards">
+                              <span class="dd-club__reward-deco dd-club__reward-deco--star" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg></span>
+                              <strong class="dd-club__card-title">{{ dd.settings.club_rewards_title }}</strong>
+                              {%- if club_reward_blocks.size > 0 -%}
+                                <div class="dd-club__reward-grid">
+                                  {%- for cr in club_reward_blocks -%}{%- if cr.settings.menu_item_index == lx -%}
+                                    <div class="dd-club__reward" {{ cr.shopify_attributes }}>
+                                      <span class="dd-club__reward-bubble">
+                                        {%- if cr.settings.image != blank -%}<img src="{{ cr.settings.image | image_url: width: 160 }}" alt="{{ cr.settings.image.alt | escape }}" width="80" height="80" loading="lazy">{%- else -%}<span class="dd-club__reward-ph" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>{%- endif -%}
+                                      </span>
+                                      {%- if cr.settings.points != blank -%}<span class="dd-club__reward-badge">{{ cr.settings.points }}</span>{%- endif -%}
+                                    </div>
+                                  {%- endif -%}{%- endfor -%}
+                                </div>
+                              {%- endif -%}
+                              {%- if dd.settings.view_all_label != blank -%}
+                                <a href="{{ dd.settings.view_all_url | default: link.url }}" class="dd-club__rewards-cta">{{ dd.settings.view_all_label }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                              {%- endif -%}
+                            </div>
+
+                            <div class="dd-club__motm">
+                              <strong class="dd-club__card-title"><span class="dd-club__motm-star" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg></span>{{ dd.settings.club_motm_title }}</strong>
+                              <div class="dd-club__polaroid">
+                                <span class="dd-club__polaroid-tape" aria-hidden="true"></span>
+                                <span class="dd-club__polaroid-crown" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/></svg></span>
+                                {%- if dd.settings.club_motm_image != blank -%}
+                                  <img src="{{ dd.settings.club_motm_image | image_url: width: 320 }}" alt="{{ dd.settings.club_motm_name | escape }}" width="160" height="150" loading="lazy">
+                                {%- else -%}
+                                  <span class="dd-club__polaroid-ph" aria-hidden="true">{%- render 'lucide', icon: 'dog' -%}</span>
+                                {%- endif -%}
+                                {%- if dd.settings.club_motm_name != blank -%}<span class="dd-club__polaroid-label">{{ dd.settings.club_motm_name }}</span>{%- endif -%}
+                              </div>
+                              {%- if dd.settings.club_motm_quote != blank -%}<p class="dd-club__motm-quote">{{ dd.settings.club_motm_quote }}</p>{%- endif -%}
+                              {%- if dd.settings.club_motm_cta != blank -%}
+                                <a href="{{ dd.settings.club_motm_cta_url | default: link.url }}" class="dd-club__motm-cta"><span aria-hidden="true">{%- render 'lucide', icon: 'camera' -%}</span>{{ dd.settings.club_motm_cta }}</a>
+                              {%- endif -%}
+                            </div>
+
                           </div>
-                          {%- if dd.settings.link_list != blank -%}
-                            <div class="dd-club__links">
-                              <ul class="dd-club__link-list" role="list">
-                                {%- for child in dd.settings.link_list.links -%}
-                                  <li>
-                                    <a href="{{ child.url }}" class="dd-club__link">
-                                      <span class="dd-club__link-icon dd-link-icon--{{ dd.settings.accent_color }}" aria-hidden="true">
-                                        {{- 'icon-paw.svg' | inline_asset_content -}}
-                                      </span>
-                                      <span class="dd-club__link-text">
-                                        <strong>{{ child.title }}</strong>
-                                      </span>
-                                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                                    </a>
-                                  </li>
-                                {%- endfor -%}
-                              </ul>
+
+                          {%- if dd.settings.campaign_title != blank -%}
+                            <div class="dd-club__campaign">
+                              <div class="dd-club__campaign-img">
+                                {%- if dd.settings.campaign_image != blank -%}<img src="{{ dd.settings.campaign_image | image_url: width: 200 }}" alt="" width="80" height="80" loading="lazy">{%- else -%}<span aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>{%- endif -%}
+                              </div>
+                              <div class="dd-club__campaign-text">
+                                <strong>{{ dd.settings.campaign_title }}</strong>
+                                {%- if dd.settings.campaign_text != blank -%}
+                                  {%- assign camp = dd.settings.campaign_text -%}
+                                  {%- if dd.settings.campaign_highlight != blank -%}{%- capture chh -%}<span class="dd-club__pink">{{ dd.settings.campaign_highlight }}</span>{%- endcapture -%}{%- assign camp = camp | replace: dd.settings.campaign_highlight, chh -%}{%- endif -%}
+                                  <span>{{ camp }}</span>
+                                {%- endif -%}
+                              </div>
+                              {%- if dd.settings.campaign_cta_label != blank -%}
+                                <a href="{{ dd.settings.campaign_cta_url | default: link.url }}" class="dd-club__campaign-cta">{{ dd.settings.campaign_cta_label }}</a>
+                              {%- endif -%}
+                              <span class="dd-club__campaign-deco dd-club__campaign-deco--1" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                              <span class="dd-club__campaign-deco dd-club__campaign-deco--2" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg></span>
                             </div>
                           {%- endif -%}
-                          <div class="dd-club__right">
-                            {%- if dd.settings.club_rewards_image != blank -%}
-                              <div class="dd-club__rewards">
-                                <strong class="dd-club__rewards-title">{{ dd.settings.club_rewards_title }}</strong>
-                                <img src="{{ dd.settings.club_rewards_image | image_url: width: 320 }}"
-                                     alt="{{ dd.settings.club_rewards_title | default: 'Kwispels beloningen' | escape }}"
-                                     width="320" height="200" loading="lazy" class="dd-club__rewards-img">
-                                {%- if dd.settings.view_all_label != blank -%}
-                                  <a href="{{ dd.settings.view_all_url | default: link.url }}" class="dd-view-all dd-view-all--{{ dd.settings.accent_color }}">
-                                    {{ dd.settings.view_all_label }}
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                                  </a>
-                                {%- endif -%}
-                              </div>
-                            {%- endif -%}
-                            {%- if dd.settings.club_motm_image != blank -%}
-                              <div class="dd-club__motm">
-                                <strong class="dd-club__motm-title">{{ dd.settings.club_motm_title }}</strong>
-                                <div class="dd-polaroid">
-                                  <img src="{{ dd.settings.club_motm_image | image_url: width: 240 }}"
-                                       alt="{{ dd.settings.club_motm_name | default: 'Hond van de maand' | escape }}"
-                                       width="240" height="180" loading="lazy" class="dd-polaroid__img">
-                                  {%- if dd.settings.club_motm_name != blank -%}
-                                    <span class="dd-polaroid__label">{{ dd.settings.club_motm_name }}</span>
-                                  {%- endif -%}
-                                </div>
-                                {%- if dd.settings.banner_cta_label != blank -%}
-                                  <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-cta-btn dd-cta-btn--pink">
-                                    {{- 'icon-camera.svg' | inline_asset_content -}}
-                                    Deel jouw foto
-                                  </a>
-                                {%- endif -%}
-                              </div>
-                            {%- endif -%}
-                          </div>
+
+                          {%- assign club_usp_count = 0 -%}
+                          {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}{%- assign club_usp_count = club_usp_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+                          {%- if club_usp_count > 0 -%}
+                            <div class="dd-club__trust">
+                              {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}
+                                <span class="dd-se__usp" {{ u.shopify_attributes }}>
+                                  <span class="dd-se__usp-icon dd-se__usp-icon--{{ u.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: u.settings.icon -%}</span>
+                                  {{ u.settings.text }}
+                                </span>
+                              {%- endif -%}{%- endfor -%}
+                            </div>
+                          {%- endif -%}
+
+                          {%- if dd.settings.club_peek_image != blank -%}
+                            <span class="dd-club__peek" aria-hidden="true"><img src="{{ dd.settings.club_peek_image | image_url: width: 220 }}" alt="" width="110" height="110" loading="lazy"></span>
+                          {%- endif -%}
                         </div>
 
                       {%- comment -%} ══ LAYOUT: ABOUT (Over ons) ══ {%- endcomment -%}
@@ -774,8 +822,10 @@
         {%- for b in se_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_se_count = nav_se_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
         {%- assign nav_shop_count = 0 -%}
         {%- for b in shop_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_shop_count = nav_shop_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+        {%- assign nav_club_count = 0 -%}
+        {%- for b in club_item_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_club_count = nav_club_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
         {%- assign drawer_has_sub = false -%}
-        {%- if link.links.size > 0 or nav_se_count > 0 or nav_shop_count > 0 -%}{%- assign drawer_has_sub = true -%}{%- endif -%}
+        {%- if link.links.size > 0 or nav_se_count > 0 or nav_shop_count > 0 or nav_club_count > 0 -%}{%- assign drawer_has_sub = true -%}{%- endif -%}
         <li class="header-drawer__nav-item{% if drawer_has_sub %} header-drawer__nav-item--has-sub{% endif %}">
           <div class="header-drawer__nav-row">
             <span class="header-drawer__nav-icon header-drawer__nav-icon--{% if nav_lx == 1 %}green{% elsif nav_lx == 2 %}pink{% elsif nav_lx == 3 %}green{% elsif nav_lx == 4 %}orange{% else %}orange{% endif %}" aria-hidden="true">
@@ -869,6 +919,48 @@
                     {%- if dd_shop.settings.banner_cta_label != blank -%}<span class="header-drawer__se-promo-cta">{{ dd_shop.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</span>{%- endif -%}
                   </span>
                 </a>
+              {%- endif -%}
+            </div>
+          {%- elsif nav_club_count > 0 -%}
+            <div class="header-drawer__sub-nav header-drawer__sub-nav--club" hidden>
+              {%- assign dd_club = nil -%}
+              {%- for b in dd_blocks -%}{%- if b.settings.menu_item_index == nav_lx and b.settings.layout_type == 'club' -%}{%- assign dd_club = b -%}{%- endif -%}{%- endfor -%}
+              {%- if dd_club -%}
+                <div class="header-drawer__club-intro">
+                  <strong>{{ dd_club.settings.club_intro_title }}</strong>
+                  {%- if dd_club.settings.club_intro_text != blank -%}<p>{{ dd_club.settings.club_intro_text }}</p>{%- endif -%}
+                  {%- if dd_club.settings.banner_cta_label != blank -%}<a href="{{ dd_club.settings.banner_cta_url | default: link.url }}" class="header-drawer__club-cta">{{ dd_club.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</a>{%- endif -%}
+                </div>
+              {%- endif -%}
+              <ul class="header-drawer__club-items" role="list">
+                {%- for ci in club_item_blocks -%}{%- if ci.settings.menu_item_index == nav_lx -%}
+                  <li><a href="{{ ci.settings.url | default: '#' }}" class="header-drawer__club-item header-drawer__club-item--{{ ci.settings.color }}">
+                    <span class="header-drawer__club-item-icon" aria-hidden="true">{%- render 'lucide', icon: ci.settings.icon -%}</span>
+                    <span class="header-drawer__club-item-text"><strong>{{ ci.settings.title }}</strong>{%- if ci.settings.description != blank -%}<span>{{ ci.settings.description }}</span>{%- endif -%}</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                  </a></li>
+                {%- endif -%}{%- endfor -%}
+              </ul>
+              {%- if dd_club and dd_club.settings.club_rewards_title != blank -%}
+                <a href="{{ dd_club.settings.view_all_url | default: link.url }}" class="header-drawer__club-card header-drawer__club-card--rewards">
+                  <strong>{{ dd_club.settings.club_rewards_title }}</strong>
+                  {%- if dd_club.settings.view_all_label != blank -%}<span class="header-drawer__club-pill">{{ dd_club.settings.view_all_label }}</span>{%- endif -%}
+                </a>
+              {%- endif -%}
+              {%- if dd_club and dd_club.settings.club_motm_title != blank -%}
+                <div class="header-drawer__club-card header-drawer__club-card--motm">
+                  {%- if dd_club.settings.club_motm_image != blank -%}<img src="{{ dd_club.settings.club_motm_image | image_url: width: 400 }}" alt="{{ dd_club.settings.club_motm_name | escape }}" width="200" height="140" loading="lazy">{%- endif -%}
+                  <strong>{{ dd_club.settings.club_motm_title }}{%- if dd_club.settings.club_motm_name != blank %} · {{ dd_club.settings.club_motm_name }}{%- endif -%}</strong>
+                  {%- if dd_club.settings.club_motm_quote != blank -%}<p>{{ dd_club.settings.club_motm_quote }}</p>{%- endif -%}
+                  {%- if dd_club.settings.club_motm_cta != blank -%}<a href="{{ dd_club.settings.club_motm_cta_url | default: link.url }}" class="header-drawer__club-pill">{{ dd_club.settings.club_motm_cta }}</a>{%- endif -%}
+                </div>
+              {%- endif -%}
+              {%- if dd_club and dd_club.settings.campaign_title != blank -%}
+                <div class="header-drawer__club-card header-drawer__club-card--campaign">
+                  <strong>{{ dd_club.settings.campaign_title }}</strong>
+                  {%- if dd_club.settings.campaign_text != blank -%}<p>{{ dd_club.settings.campaign_text }}</p>{%- endif -%}
+                  {%- if dd_club.settings.campaign_cta_label != blank -%}<a href="{{ dd_club.settings.campaign_cta_url | default: link.url }}" class="header-drawer__club-pill">{{ dd_club.settings.campaign_cta_label }}</a>{%- endif -%}
+                </div>
               {%- endif -%}
             </div>
           {%- elsif link.links.size > 0 -%}
@@ -1517,6 +1609,125 @@
 .header-drawer__shop-link{display:block;padding:9px 0;font-family:var(--font-body);font-size:.88rem;color:var(--color-body);text-decoration:none;border-top:1px solid var(--color-line);}
 .header-drawer__shop-cta{display:block;margin:4px 14px 14px;padding:10px;text-align:center;background:var(--cc);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.85rem;text-decoration:none;}
 .header-drawer__shop-cta--yellow{color:var(--color-ink);}
+
+/* ══ KWISPELCLUB MEGA MENU ═══════════════════════════ */
+.site-header__dropdown-card:has(.dd-club){overflow:visible;background:var(--color-cream);border-color:rgba(61,34,9,.08);box-shadow:0 28px 70px rgba(61,34,9,.16);border-radius:28px;}
+.dd-club{position:relative;padding:26px 28px;}
+.dd-club__body{display:grid;grid-template-columns:1.25fr 1fr .95fr .85fr;gap:18px;align-items:stretch;}
+.dd-club__pink{color:var(--color-pink);}
+.dd-club__intro{display:flex;flex-direction:column;background:#eef7e7;border:1.5px solid rgba(102,170,68,.18);border-radius:20px;padding:20px;}
+.dd-club__intro-title{font-family:var(--font-heading);font-size:1.5rem;color:var(--color-ink);line-height:1.1;}
+.dd-club__intro-text{font-family:var(--font-body);font-size:.85rem;color:var(--color-body);line-height:1.5;margin:8px 0 12px;}
+.dd-club__benefits{list-style:none;margin:0 0 14px;padding:0;display:flex;flex-direction:column;gap:7px;}
+.dd-club__benefits li{display:flex;align-items:flex-start;gap:9px;font-family:var(--font-body);font-size:.84rem;font-weight:600;color:var(--color-ink);}
+.dd-club__check{display:flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:var(--color-green);color:#fff;flex-shrink:0;margin-top:1px;}
+.dd-club__check svg{width:12px;height:12px;}
+.dd-club__intro-photo{position:relative;border-radius:14px;overflow:hidden;margin-bottom:14px;}
+.dd-club__intro-photo img{width:100%;height:150px;object-fit:cover;display:block;}
+.dd-club__intro-photo-heart{position:absolute;bottom:8px;right:10px;width:22px;height:22px;color:var(--color-pink);filter:drop-shadow(0 2px 4px rgba(61,34,9,.3));}
+.dd-club__intro-photo-heart svg{width:100%;height:100%;}
+.dd-club__intro-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:auto;padding:13px 20px;background:var(--color-pink);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.98rem;text-decoration:none;transition:background 160ms,transform 160ms;}
+.dd-club__intro-cta:hover{background:#e85b8a;transform:translateY(-1px);}
+.dd-club__intro-cta svg{width:17px;height:17px;}
+.dd-club__intro-note{display:inline-flex;align-items:center;gap:6px;justify-content:center;font-family:var(--font-heading);font-size:.8rem;color:var(--color-orange);margin-top:8px;}
+.dd-club__squiggle{display:inline-flex;width:34px;height:10px;}
+.dd-club__squiggle svg{width:100%;height:100%;}
+.dd-club__items{display:flex;flex-direction:column;gap:6px;}
+.dd-club__item{--cc:var(--color-pink);--cc-soft:#ffe0ee;display:grid;grid-template-columns:42px 1fr 14px;align-items:center;gap:12px;padding:10px 12px;border-radius:14px;text-decoration:none;transition:background 160ms;}
+.dd-club__item:hover{background:#fff;}
+.dd-club__item--green{--cc:var(--color-green);--cc-soft:#e8f5e2;}
+.dd-club__item--pink{--cc:var(--color-pink);--cc-soft:#ffe0ee;}
+.dd-club__item--orange{--cc:var(--color-orange);--cc-soft:#fff0e4;}
+.dd-club__item--yellow{--cc:#d99100;--cc-soft:#fffae0;}
+.dd-club__item--purple{--cc:#8b5fd1;--cc-soft:#efe6fb;}
+.dd-club__item-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--cc-soft);color:var(--cc);}
+.dd-club__item-icon .lucide{width:21px;height:21px;}
+.dd-club__item-text{display:flex;flex-direction:column;min-width:0;}
+.dd-club__item-text strong{font-family:var(--font-body);font-size:.9rem;font-weight:800;color:var(--color-ink);line-height:1.2;}
+.dd-club__item-text span{font-family:var(--font-body);font-size:.74rem;color:var(--color-muted);line-height:1.3;}
+.dd-club__item-arrow{width:14px;height:14px;color:var(--cc);opacity:0;transform:translateX(-4px);transition:opacity 160ms,transform 160ms;}
+.dd-club__item:hover .dd-club__item-arrow{opacity:1;transform:translateX(0);}
+.dd-club__card-title{display:flex;align-items:center;gap:7px;font-family:var(--font-heading);font-size:1.12rem;color:var(--color-ink);line-height:1.15;margin-bottom:14px;}
+.dd-club__motm-star{display:inline-flex;width:18px;height:18px;color:var(--color-yellow);}
+.dd-club__motm-star svg{width:100%;height:100%;}
+.dd-club__rewards{position:relative;display:flex;flex-direction:column;background:#fbf3da;border:1.5px solid rgba(247,160,72,.18);border-radius:20px;padding:18px;overflow:hidden;}
+.dd-club__reward-deco--star{position:absolute;top:14px;right:14px;width:18px;height:18px;color:var(--color-yellow);opacity:.5;}
+.dd-club__reward-deco--star svg{width:100%;height:100%;}
+.dd-club__reward-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 10px;margin-bottom:14px;}
+.dd-club__reward{display:flex;flex-direction:column;align-items:center;gap:6px;}
+.dd-club__reward-bubble{display:flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(61,34,9,.1);overflow:hidden;}
+.dd-club__reward-bubble img{width:100%;height:100%;object-fit:cover;}
+.dd-club__reward-ph{display:flex;align-items:center;justify-content:center;color:var(--color-orange);}
+.dd-club__reward-ph .lucide{width:28px;height:28px;}
+.dd-club__reward-badge{background:var(--color-pink);color:#fff;font-family:var(--font-body);font-size:.66rem;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap;}
+.dd-club__rewards-cta{display:inline-flex;align-items:center;justify-content:center;gap:7px;margin-top:auto;padding:11px 16px;background:var(--color-green);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.86rem;text-decoration:none;transition:background 160ms;}
+.dd-club__rewards-cta:hover{background:#5a9a3b;}
+.dd-club__rewards-cta svg{width:14px;height:14px;}
+.dd-club__motm{display:flex;flex-direction:column;align-items:center;background:#ffeef5;border:1.5px solid rgba(255,107,154,.18);border-radius:20px;padding:18px;}
+.dd-club__motm .dd-club__card-title{align-self:flex-start;}
+.dd-club__polaroid{position:relative;background:#fff;padding:10px 10px 0;border-radius:6px;box-shadow:0 10px 26px rgba(61,34,9,.16);transform:rotate(-3deg);margin:6px 0 16px;}
+.dd-club__polaroid-tape{position:absolute;top:-10px;left:50%;transform:translateX(-50%) rotate(-4deg);width:54px;height:18px;background:rgba(255,224,113,.7);border-radius:2px;}
+.dd-club__polaroid-crown{position:absolute;top:-15px;left:50%;transform:translateX(-50%);width:26px;height:26px;color:var(--color-yellow);z-index:2;filter:drop-shadow(0 2px 3px rgba(61,34,9,.25));}
+.dd-club__polaroid-crown svg{width:100%;height:100%;}
+.dd-club__polaroid img{width:150px;height:140px;object-fit:cover;display:block;border-radius:3px;}
+.dd-club__polaroid-ph{display:flex;align-items:center;justify-content:center;width:150px;height:140px;background:#ffe0ee;color:var(--color-pink);border-radius:3px;}
+.dd-club__polaroid-ph .lucide{width:54px;height:54px;}
+.dd-club__polaroid-label{display:block;text-align:center;font-family:var(--font-heading);font-size:.95rem;color:var(--color-ink);padding:8px 0 10px;}
+.dd-club__motm-quote{font-family:var(--font-body);font-size:.8rem;font-style:italic;color:var(--color-body);line-height:1.5;text-align:center;margin:0 0 14px;}
+.dd-club__motm-cta{display:inline-flex;align-items:center;gap:7px;margin-top:auto;padding:10px 18px;background:var(--color-pink);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.85rem;text-decoration:none;transition:background 160ms;}
+.dd-club__motm-cta:hover{background:#e85b8a;}
+.dd-club__motm-cta span{display:inline-flex;}
+.dd-club__motm-cta .lucide{width:15px;height:15px;}
+.dd-club__campaign{position:relative;display:flex;align-items:center;gap:18px;margin-top:18px;padding:16px 22px;background:#e8f5e2;border:1.5px solid rgba(102,170,68,.2);border-radius:18px;overflow:hidden;}
+.dd-club__campaign-img{flex-shrink:0;width:60px;height:60px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.dd-club__campaign-img img{width:100%;height:100%;object-fit:cover;}
+.dd-club__campaign-img .lucide{width:30px;height:30px;color:var(--color-green);}
+.dd-club__campaign-text{flex:1;min-width:0;}
+.dd-club__campaign-text strong{display:block;font-family:var(--font-heading);font-size:1.15rem;color:var(--color-ink);line-height:1.15;}
+.dd-club__campaign-text span{font-family:var(--font-body);font-size:.82rem;color:var(--color-body);}
+.dd-club__campaign-cta{flex-shrink:0;display:inline-flex;align-items:center;padding:11px 20px;background:var(--color-green);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.9rem;text-decoration:none;transition:background 160ms,transform 160ms;}
+.dd-club__campaign-cta:hover{background:#5a9a3b;transform:translateY(-1px);}
+.dd-club__campaign-deco{position:absolute;pointer-events:none;}
+.dd-club__campaign-deco svg{width:100%;height:100%;}
+.dd-club__campaign-deco--1{top:8px;right:130px;width:16px;height:16px;color:var(--color-pink);opacity:.4;}
+.dd-club__campaign-deco--2{bottom:8px;right:160px;width:13px;height:13px;color:var(--color-yellow);opacity:.6;}
+.dd-club__trust{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:18px;border-top:1px solid rgba(61,34,9,.08);}
+.dd-club__peek{position:absolute;right:34px;bottom:-2px;width:92px;height:92px;pointer-events:none;z-index:1;}
+.dd-club__peek img{width:100%;height:auto;display:block;}
+@media(max-width:1200px){
+  .dd-club__body{grid-template-columns:1.2fr 1fr;gap:14px;}
+  .dd-club__peek{display:none;}
+}
+
+/* ══ DRAWER: Kwispelclub ═════════════════════════════ */
+.header-drawer__sub-nav--club{background:var(--color-cream);padding:10px 14px 14px;}
+.header-drawer__club-intro{background:#eef7e7;border:1.5px solid rgba(102,170,68,.18);border-radius:16px;padding:16px;margin-bottom:12px;}
+.header-drawer__club-intro strong{display:block;font-family:var(--font-heading);font-size:1.2rem;color:var(--color-ink);}
+.header-drawer__club-intro p{font-family:var(--font-body);font-size:.84rem;color:var(--color-body);margin:6px 0 12px;}
+.header-drawer__club-cta{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;background:var(--color-pink);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.9rem;text-decoration:none;}
+.header-drawer__club-cta svg{width:15px;height:15px;}
+.header-drawer__club-items{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:6px;}
+.header-drawer__club-item{--cc:var(--color-pink);--cc-soft:#ffe0ee;display:grid;grid-template-columns:42px 1fr 15px;align-items:center;gap:12px;padding:10px;border-radius:14px;background:#fff;border:1.5px solid var(--color-line);text-decoration:none;}
+.header-drawer__club-item--green{--cc:var(--color-green);--cc-soft:#e8f5e2;}
+.header-drawer__club-item--pink{--cc:var(--color-pink);--cc-soft:#ffe0ee;}
+.header-drawer__club-item--orange{--cc:var(--color-orange);--cc-soft:#fff0e4;}
+.header-drawer__club-item--yellow{--cc:#d99100;--cc-soft:#fffae0;}
+.header-drawer__club-item--purple{--cc:#8b5fd1;--cc-soft:#efe6fb;}
+.header-drawer__club-item-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--cc-soft);color:var(--cc);}
+.header-drawer__club-item-icon .lucide{width:21px;height:21px;}
+.header-drawer__club-item-text{display:flex;flex-direction:column;min-width:0;}
+.header-drawer__club-item-text strong{font-family:var(--font-body);font-size:.92rem;font-weight:800;color:var(--color-ink);line-height:1.2;}
+.header-drawer__club-item-text span{font-family:var(--font-body);font-size:.74rem;color:var(--color-muted);}
+.header-drawer__club-item svg{color:var(--color-muted);opacity:.5;}
+.header-drawer__club-card{display:block;margin-bottom:10px;padding:16px;border-radius:16px;text-decoration:none;}
+.header-drawer__club-card strong{display:block;font-family:var(--font-heading);font-size:1.05rem;color:var(--color-ink);}
+.header-drawer__club-card p{font-family:var(--font-body);font-size:.82rem;color:var(--color-body);margin:6px 0 0;}
+.header-drawer__club-card--rewards{background:#fbf3da;border:1.5px solid rgba(247,160,72,.18);}
+.header-drawer__club-card--motm{background:#ffeef5;border:1.5px solid rgba(255,107,154,.18);}
+.header-drawer__club-card--motm img{width:100%;height:150px;object-fit:cover;border-radius:12px;margin-bottom:10px;}
+.header-drawer__club-card--campaign{background:#e8f5e2;border:1.5px solid rgba(102,170,68,.2);}
+.header-drawer__club-pill{display:inline-flex;margin-top:10px;padding:9px 16px;background:var(--color-green);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.82rem;text-decoration:none;}
+.header-drawer__club-card--motm .header-drawer__club-pill{background:var(--color-pink);}
 {% endstylesheet %}
 
 {% javascript %}
@@ -1913,6 +2124,19 @@
           "id": "club_motm_name",
           "label": "MOTM naam"
         },
+        { "type": "textarea", "id": "club_motm_quote", "label": "MOTM quote" },
+        { "type": "text", "id": "club_motm_cta", "label": "MOTM knoptekst", "default": "Deel jouw foto" },
+        { "type": "url", "id": "club_motm_cta_url", "label": "MOTM knop link" },
+        { "type": "text", "id": "club_intro_highlight", "label": "Intro accentwoord (roze)", "default": "Kwispelclub" },
+        { "type": "text", "id": "club_intro_note", "label": "Intro speels zinnetje", "default": "Het is zo geregeld!" },
+        { "type": "image_picker", "id": "club_peek_image", "label": "Gluurhondje (PNG, optioneel)" },
+        { "type": "header", "content": "Kwispelclub campagnebalk" },
+        { "type": "image_picker", "id": "campaign_image", "label": "Campagne afbeelding" },
+        { "type": "text", "id": "campaign_title", "label": "Campagne titel", "default": "Extra verrassing voor nieuwe leden!" },
+        { "type": "textarea", "id": "campaign_text", "label": "Campagne tekst", "default": "Meld je vandaag aan en ontvang 50 Kwispels cadeau. Dat is goed voor een leuke beloning!" },
+        { "type": "text", "id": "campaign_highlight", "label": "Campagne accentwoord (roze)", "default": "50 Kwispels cadeau" },
+        { "type": "text", "id": "campaign_cta_label", "label": "Campagne knoptekst", "default": "Meld je gratis aan" },
+        { "type": "url", "id": "campaign_cta_url", "label": "Campagne knop link" },
         {
           "type": "header",
           "content": "Over ons specifiek"
@@ -2250,6 +2474,60 @@
         { "type": "text", "id": "cta_label", "label": "Knoptekst", "default": "Alle speeltjes" },
         { "type": "url", "id": "cta_url", "label": "Knop link" },
         { "type": "image_picker", "id": "image", "label": "Categoriefoto" }
+      ]
+    },
+    {
+      "type": "club_item",
+      "name": "Kwispelclub item",
+      "limit": 8,
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 4 },
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "paw",
+          "options": [
+            { "value": "paw", "label": "Poot" },
+            { "value": "coins", "label": "Munten" },
+            { "value": "gift", "label": "Cadeau" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "party", "label": "Feest" },
+            { "value": "mail", "label": "Mail" },
+            { "value": "star", "label": "Ster" },
+            { "value": "heart", "label": "Hart" },
+            { "value": "cake", "label": "Taart" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Accentkleur", "default": "pink",
+          "options": [
+            { "value": "pink", "label": "Roze" },
+            { "value": "green", "label": "Groen" },
+            { "value": "orange", "label": "Oranje" },
+            { "value": "yellow", "label": "Geel" },
+            { "value": "purple", "label": "Paars" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Word gratis lid" },
+        { "type": "text", "id": "description", "label": "Beschrijving", "default": "Meld je aan in een paar seconden en profiteer direct" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    },
+    {
+      "type": "club_reward",
+      "name": "Kwispelclub beloning",
+      "limit": 6,
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 4 },
+        { "type": "image_picker", "id": "image", "label": "Beloning afbeelding" },
+        { "type": "text", "id": "points", "label": "Punten badge", "default": "200 Kwispels" }
+      ]
+    },
+    {
+      "type": "club_benefit",
+      "name": "Kwispelclub voordeel",
+      "limit": 8,
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 4 },
+        { "type": "text", "id": "text", "label": "Voordeel", "default": "Gratis lidmaatschap" }
       ]
     },
     {
