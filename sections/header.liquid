@@ -17,6 +17,9 @@
 {%- assign club_item_blocks = section.blocks | where: 'type', 'club_item' -%}
 {%- assign club_reward_blocks = section.blocks | where: 'type', 'club_reward' -%}
 {%- assign club_benefit_blocks = section.blocks | where: 'type', 'club_benefit' -%}
+{%- assign about_item_blocks = section.blocks | where: 'type', 'about_item' -%}
+{%- assign about_usp_blocks = section.blocks | where: 'type', 'about_usp' -%}
+{%- assign about_value_blocks = section.blocks | where: 'type', 'about_value' -%}
 
 <div class="site-header__wrapper full-width">
 
@@ -453,246 +456,104 @@
                       {%- comment -%} ══ LAYOUT: ABOUT (Over ons) ══ {%- endcomment -%}
                       {%- elsif layout == 'about' -%}
                         <div class="dd-about">
-                          {%- if dd.settings.link_list != blank -%}
-                            <div class="dd-about__links">
-                              <ul class="dd-about__link-list" role="list">
-                                {%- for child in dd.settings.link_list.links -%}
-                                  <li>
-                                    <a href="{{ child.url }}" class="dd-about__link">
-                                      <span class="dd-about__link-icon dd-link-icon--{{ dd.settings.accent_color }}" aria-hidden="true">
-                                        {{- 'icon-heart.svg' | inline_asset_content -}}
-                                      </span>
-                                      <span class="dd-about__link-text">
-                                        <strong>{{ child.title }}</strong>
-                                      </span>
-                                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                                    </a>
-                                  </li>
-                                {%- endfor -%}
-                              </ul>
-                              {%- if dd.settings.about_tagline != blank -%}
-                                <div class="dd-about__tagline">
-                                  <strong>{{ dd.settings.about_tagline }}</strong>
-                                  {%- if dd.settings.about_tagline_sub != blank -%}
-                                    <span class="dd-about__tagline-sub">{{ dd.settings.about_tagline_sub }}</span>
-                                  {%- endif -%}
-                                </div>
-                              {%- endif -%}
-                            </div>
-                          {%- endif -%}
-                          <div class="dd-about__content">
-                            <strong class="dd-about__content-title">{{ dd.settings.banner_title }}</strong>
-                            {%- if dd.settings.banner_text != blank -%}
-                              <p class="dd-about__content-body">{{ dd.settings.banner_text }}</p>
-                            {%- endif -%}
-                            {%- if dd.settings.banner_cta_label != blank -%}
-                              <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-cta-btn dd-cta-btn--{{ dd.settings.accent_color }}">
-                                {{ dd.settings.banner_cta_label }}
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                              </a>
-                            {%- endif -%}
-                            {%- if dd.settings.banner_image != blank -%}
-                              <img src="{{ dd.settings.banner_image | image_url: width: 400 }}"
-                                   alt="{{ dd.settings.banner_image.alt | escape }}"
-                                   width="400" height="260" loading="lazy" class="dd-about__content-img">
-                            {%- endif -%}
-                          </div>
-                          {%- if dd.settings.about_team_image != blank or dd.settings.about_team_title != blank -%}
-                            <div class="dd-about__team">
-                              <strong class="dd-about__team-title">{{ dd.settings.about_team_title }}</strong>
-                              {%- if dd.settings.about_team_image != blank -%}
-                                <div class="dd-polaroid">
-                                  <img src="{{ dd.settings.about_team_image | image_url: width: 280 }}"
-                                       alt="{{ dd.settings.about_team_title | default: 'Het team' | escape }}"
-                                       width="280" height="200" loading="lazy" class="dd-polaroid__img">
-                                </div>
-                              {%- endif -%}
-                              {%- if dd.settings.about_team_tagline != blank -%}
-                                <span class="dd-about__team-tagline">{{ dd.settings.about_team_tagline }}</span>
-                              {%- endif -%}
-                            </div>
-                          {%- endif -%}
-                        </div>
-
-                      {%- comment -%} ══ LAYOUT: SPECIAL (Special Editions mega menu) ══ {%- endcomment -%}
-                      {%- elsif layout == 'special' -%}
-                        <div class="dd-se">
                           <span class="dd-se__pointer" aria-hidden="true"></span>
-                          <span class="dd-se__corner dd-se__corner--tl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg></span>
-                          <span class="dd-se__corner dd-se__corner--br" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                          <div class="dd-about__body">
 
-                          <div class="dd-se__body">
-                            <div class="dd-se__left">
-                              <div class="dd-se__head">
-                                <span class="dd-se__head-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
-                                <div>
-                                  <a href="{{ link.url }}" class="dd-se__title">{{ link.title }}</a>
-                                  {%- if dd.settings.col1_desc != blank -%}<p class="dd-se__subtitle">{{ dd.settings.col1_desc }}</p>{%- endif -%}
-                                </div>
-                              </div>
-
-                              <div class="dd-se__cols">
-                                {%- for colnum in (1..2) -%}
-                                  <ul class="dd-se__col" role="list">
-                                    {%- for b in se_blocks -%}
-                                      {%- assign se_col = b.settings.column | plus: 0 -%}
-                                      {%- if b.settings.menu_item_index == lx and se_col == colnum -%}
-                                        <li {{ b.shopify_attributes }}>
-                                          <a href="{{ b.settings.url | default: '#' }}" class="dd-se__edition dd-se__edition--{{ b.settings.color }}">
-                                            <span class="dd-se__edition-icon" aria-hidden="true">{%- render 'lucide', icon: b.settings.icon -%}</span>
-                                            <span class="dd-se__edition-text">
-                                              <strong>{{ b.settings.title }}</strong>
-                                              {%- if b.settings.description != blank -%}<span>{{ b.settings.description }}</span>{%- endif -%}
-                                            </span>
-                                            <svg class="dd-se__edition-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-                                          </a>
-                                        </li>
-                                      {%- endif -%}
-                                    {%- endfor -%}
-                                  </ul>
-                                {%- endfor -%}
-                              </div>
-
-                              {%- if dd.settings.view_all_label != blank -%}
-                                <a href="{{ dd.settings.view_all_url | default: link.url }}" class="dd-se__viewall">
-                                  {{ dd.settings.view_all_label }}
-                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            <div class="dd-about__nav">
+                              {%- for ai in about_item_blocks -%}{%- if ai.settings.menu_item_index == lx -%}
+                                <a href="{{ ai.settings.url | default: '#' }}" class="dd-about__item dd-about__item--{{ ai.settings.color }}" {{ ai.shopify_attributes }}>
+                                  <span class="dd-about__item-icon" aria-hidden="true">{%- render 'lucide', icon: ai.settings.icon -%}</span>
+                                  <span class="dd-about__item-text"><strong>{{ ai.settings.title }}</strong>{%- if ai.settings.description != blank -%}<span>{{ ai.settings.description }}</span>{%- endif -%}</span>
+                                  <svg class="dd-about__item-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
                                 </a>
+                              {%- endif -%}{%- endfor -%}
+                              {%- if dd.settings.about_navcard_text != blank -%}
+                                <div class="dd-about__navcard">
+                                  <span class="dd-about__navcard-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+                                  <span>{{ dd.settings.about_navcard_text }}</span>
+                                </div>
                               {%- endif -%}
                             </div>
 
-                            {%- if dd.settings.banner_title != blank or dd.settings.banner_image != blank -%}
-                              <div class="dd-se__promo">
-                                <div class="dd-se__promo-media">
-                                  {%- if dd.settings.banner_image != blank -%}
-                                    <img src="{{ dd.settings.banner_image | image_url: width: 760 }}"
-                                         srcset="{{ dd.settings.banner_image | image_url: width: 500 }} 500w, {{ dd.settings.banner_image | image_url: width: 760 }} 760w"
-                                         sizes="380px" alt="{{ dd.settings.banner_image.alt | default: dd.settings.banner_title | escape }}"
-                                         width="380" height="240" loading="lazy" class="dd-se__promo-img">
-                                  {%- else -%}
-                                    <div class="dd-se__promo-img dd-se__promo-img--ph">{%- render 'lucide', icon: 'gift' -%}</div>
-                                  {%- endif -%}
-                                  {%- if dd.settings.banner_badge != blank -%}
-                                    <span class="dd-se__promo-badge">{{ dd.settings.banner_badge }}</span>
-                                  {%- endif -%}
-                                  <span class="dd-se__promo-deco dd-se__promo-deco--bat" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1-3 3-4 5-3-1 1-1 2 0 3 1-1 3-1 5 1-3 0-4 2-5 4-1-2-2-3-5-3-3 0-4 1-5 3-1-2-2-4-5-4 2-2 4-2 5-1 1-1 1-2 0-3 2-1 4 0 5 3Z"/></svg></span>
-                                  <span class="dd-se__promo-deco dd-se__promo-deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                            <div class="dd-about__main">
+                              <strong class="dd-about__main-title">{{ dd.settings.banner_title }}<span class="dd-about__main-heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span></strong>
+                              <div class="dd-about__main-inner">
+                                <div class="dd-about__main-text">
+                                  {%- if dd.settings.banner_text != blank -%}<p>{{ dd.settings.banner_text }}</p>{%- endif -%}
+                                  {%- if dd.settings.banner_cta_label != blank -%}<a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-about__main-cta">{{ dd.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</a>{%- endif -%}
                                 </div>
-                                <div class="dd-se__promo-body">
-                                  <strong class="dd-se__promo-title">{{ dd.settings.banner_title }}</strong>
-                                  {%- if dd.settings.banner_text != blank -%}<p class="dd-se__promo-text">{{ dd.settings.banner_text }}</p>{%- endif -%}
-                                  {%- if dd.settings.banner_cta_label != blank -%}
-                                    <div class="dd-se__promo-cta-row">
-                                      <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-se__promo-cta">
-                                        {{ dd.settings.banner_cta_label }}
-                                        {{- 'icon-paw.svg' | inline_asset_content -}}
-                                      </a>
-                                      <span class="dd-se__promo-scribble" aria-hidden="true"><svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 16c4-9 7 6 11-2s7 6 11-2"/></svg></span>
-                                    </div>
+                                <div class="dd-about__main-photo">
+                                  {%- if dd.settings.banner_image != blank -%}
+                                    <img src="{{ dd.settings.banner_image | image_url: width: 700 }}" alt="{{ dd.settings.banner_image.alt | default: dd.settings.banner_title | escape }}" width="350" height="240" loading="lazy">
+                                  {%- else -%}
+                                    <div class="dd-about__main-ph" aria-hidden="true">{%- render 'lucide', icon: 'dog' -%}</div>
                                   {%- endif -%}
+                                  <span class="dd-about__main-deco dd-about__main-deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                                  <span class="dd-about__main-deco dd-about__main-deco--paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
                                 </div>
                               </div>
-                            {%- endif -%}
-                          </div>
-
-                          {%- assign se_usp_count = 0 -%}
-                          {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}{%- assign se_usp_count = se_usp_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
-                          {%- if se_usp_count > 0 -%}
-                            <div class="dd-se__trust">
-                              {%- for u in se_usp_blocks -%}
-                                {%- if u.settings.menu_item_index == lx -%}
-                                  <span class="dd-se__usp" {{ u.shopify_attributes }}>
-                                    <span class="dd-se__usp-icon dd-se__usp-icon--{{ u.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: u.settings.icon -%}</span>
-                                    {{ u.settings.text }}
-                                  </span>
-                                {%- endif -%}
-                              {%- endfor -%}
-                            </div>
-                          {%- endif -%}
-                        </div>
-
-                      {%- comment -%} ══ LAYOUT: SHOP (mega categorieën) ══ {%- endcomment -%}
-                      {%- elsif layout == 'shop' -%}
-                        <div class="dd-shop">
-                          <span class="dd-se__pointer" aria-hidden="true"></span>
-                          <div class="dd-shop__body">
-                            <div class="dd-shop__cats">
-                              {%- for cb in shop_blocks -%}
-                                {%- if cb.settings.menu_item_index == lx -%}
-                                  <div class="dd-shop__cat dd-shop__cat--{{ cb.settings.color }}" {{ cb.shopify_attributes }}>
-                                    <div class="dd-shop__cat-head">
-                                      <span class="dd-shop__cat-icon" aria-hidden="true">{%- render 'lucide', icon: cb.settings.icon -%}</span>
-                                      <div>
-                                        <strong class="dd-shop__cat-title">{{ cb.settings.title }}</strong>
-                                        {%- if cb.settings.description != blank -%}<span class="dd-shop__cat-desc">{{ cb.settings.description }}</span>{%- endif -%}
-                                      </div>
-                                    </div>
-                                    {%- if cb.settings.link_list != blank and cb.settings.link_list.links.size > 0 -%}
-                                      <ul class="dd-shop__cat-links" role="list">
-                                        {%- for child in cb.settings.link_list.links -%}
-                                          <li><a href="{{ child.url }}" class="dd-shop__cat-link"><span class="dd-shop__cat-dot" aria-hidden="true"></span>{{ child.title }}</a></li>
-                                        {%- endfor -%}
-                                      </ul>
-                                    {%- endif -%}
-                                    {%- if cb.settings.cta_label != blank -%}
-                                      <a href="{{ cb.settings.cta_url | default: '#' }}" class="dd-shop__cat-cta">{{ cb.settings.cta_label }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-                                    {%- endif -%}
-                                    {%- if cb.settings.image != blank -%}
-                                      <div class="dd-shop__cat-photo">
-                                        <img src="{{ cb.settings.image | image_url: width: 460 }}" alt="{{ cb.settings.image.alt | default: cb.settings.title | escape }}" width="230" height="130" loading="lazy">
-                                        <span class="dd-shop__cat-photo-deco" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
-                                      </div>
-                                    {%- endif -%}
-                                  </div>
-                                {%- endif -%}
-                              {%- endfor -%}
                             </div>
 
-                            {%- if dd.settings.banner_title != blank or dd.settings.banner_image != blank -%}
-                              <div class="dd-shop__promo">
-                                <div class="dd-shop__promo-top">
-                                  {%- if dd.settings.banner_badge != blank -%}<span class="dd-shop__promo-badge">{{ dd.settings.banner_badge }}</span>{%- endif -%}
-                                  <strong class="dd-shop__promo-title">{{ dd.settings.banner_title }}</strong>
-                                  {%- if dd.settings.banner_text != blank -%}<p class="dd-shop__promo-text">{{ dd.settings.banner_text }}</p>{%- endif -%}
+                            <div class="dd-about__usps">
+                              {%- for au in about_usp_blocks -%}{%- if au.settings.menu_item_index == lx -%}
+                                <div class="dd-about__usp dd-about__usp--{{ au.settings.color }}" {{ au.shopify_attributes }}>
+                                  <span class="dd-about__usp-icon" aria-hidden="true">{%- render 'lucide', icon: au.settings.icon -%}</span>
+                                  <strong>{{ au.settings.title }}</strong>
+                                  {%- if au.settings.description != blank -%}<span>{{ au.settings.description }}</span>{%- endif -%}
                                 </div>
-                                <div class="dd-shop__promo-media">
-                                  {%- if dd.settings.banner_image != blank -%}
-                                    <img src="{{ dd.settings.banner_image | image_url: width: 700 }}" alt="{{ dd.settings.banner_image.alt | default: dd.settings.banner_title | escape }}" width="350" height="280" loading="lazy" class="dd-shop__promo-img">
-                                  {%- else -%}
-                                    <div class="dd-shop__promo-img dd-shop__promo-img--ph">{%- render 'lucide', icon: 'gift' -%}</div>
-                                  {%- endif -%}
-                                  <span class="dd-shop__promo-deco dd-shop__promo-deco--paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
-                                  <span class="dd-shop__promo-deco dd-shop__promo-deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
-                                </div>
-                                {%- if dd.settings.banner_cta_label != blank -%}
-                                  <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-shop__promo-cta">{{ dd.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</a>
+                              {%- endif -%}{%- endfor -%}
+                            </div>
+
+                            <div class="dd-about__team">
+                              <strong class="dd-about__team-title">{{ dd.settings.about_team_title }}<span class="dd-about__team-dot" aria-hidden="true"></span></strong>
+                              {%- if dd.settings.about_team_text != blank -%}<p class="dd-about__team-text">{{ dd.settings.about_team_text }}</p>{%- endif -%}
+                              <div class="dd-about__polaroid">
+                                <span class="dd-about__polaroid-tape" aria-hidden="true"></span>
+                                {%- if dd.settings.about_team_image != blank -%}
+                                  <img src="{{ dd.settings.about_team_image | image_url: width: 460 }}" alt="{{ dd.settings.about_team_title | escape }}" width="230" height="160" loading="lazy">
+                                {%- else -%}
+                                  <span class="dd-about__polaroid-ph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
                                 {%- endif -%}
+                                {%- if dd.settings.about_team_tagline != blank -%}<span class="dd-about__polaroid-note">{{ dd.settings.about_team_tagline }}</span>{%- endif -%}
                               </div>
-                            {%- endif -%}
+                              <span class="dd-about__team-deco dd-about__team-deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                            </div>
+
                           </div>
 
-                          {%- assign shop_usp_count = 0 -%}
-                          {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}{%- assign shop_usp_count = shop_usp_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
-                          {%- if shop_usp_count > 0 -%}
-                            <div class="dd-shop__trust">
-                              {%- for u in se_usp_blocks -%}
-                                {%- if u.settings.menu_item_index == lx -%}
-                                  <span class="dd-se__usp" {{ u.shopify_attributes }}>
-                                    <span class="dd-se__usp-icon dd-se__usp-icon--{{ u.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: u.settings.icon -%}</span>
-                                    {{ u.settings.text }}
-                                  </span>
-                                {%- endif -%}
-                              {%- endfor -%}
+                          {%- if dd.settings.about_brandbar_title != blank -%}
+                            <div class="dd-about__brandbar">
+                              {%- if dd.settings.about_peek_image != blank -%}<span class="dd-about__peek" aria-hidden="true"><img src="{{ dd.settings.about_peek_image | image_url: width: 220 }}" alt="" width="110" height="110" loading="lazy"></span>{%- endif -%}
+                              <div class="dd-about__brandbar-text">
+                                {%- assign bb = dd.settings.about_brandbar_title -%}
+                                {%- if dd.settings.about_brandbar_highlight != blank -%}{%- capture bbh -%}<span class="dd-about__pink">{{ dd.settings.about_brandbar_highlight }}</span>{%- endcapture -%}{%- assign bb = bb | replace: dd.settings.about_brandbar_highlight, bbh -%}{%- endif -%}
+                                <strong>{{ bb }}</strong>
+                              </div>
+                              {%- assign about_val_count = 0 -%}{%- for v in about_value_blocks -%}{%- if v.settings.menu_item_index == lx -%}{%- assign about_val_count = about_val_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+                              {%- if about_val_count > 0 -%}
+                                <div class="dd-about__values">
+                                  {%- for v in about_value_blocks -%}{%- if v.settings.menu_item_index == lx -%}
+                                    <span class="dd-about__value" {{ v.shopify_attributes }}>
+                                      <span class="dd-about__value-icon dd-about__value-icon--{{ v.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: v.settings.icon -%}</span>
+                                      {{ v.settings.text }}
+                                    </span>
+                                  {%- endif -%}{%- endfor -%}
+                                </div>
+                              {%- endif -%}
                             </div>
                           {%- endif -%}
 
-                          <div class="dd-shop__wave" aria-hidden="true">
-                            <svg class="dd-shop__wave-svg" viewBox="0 0 1200 48" preserveAspectRatio="none"><path d="M0 26 C150 6 300 44 450 24 C600 6 750 44 900 24 C1050 8 1150 18 1200 26 L1200 48 L0 48 Z" fill="var(--color-green)"/></svg>
-                            <span class="dd-shop__wave-deco dd-shop__wave-deco--1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
-                            <span class="dd-shop__wave-deco dd-shop__wave-deco--2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
-                            <span class="dd-shop__wave-deco dd-shop__wave-deco--3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
-                            <span class="dd-shop__wave-deco dd-shop__wave-deco--4"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg></span>
-                          </div>
+                          {%- assign about_usp_count = 0 -%}{%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}{%- assign about_usp_count = about_usp_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+                          {%- if about_usp_count > 0 -%}
+                            <div class="dd-about__trust">
+                              {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}
+                                <span class="dd-se__usp" {{ u.shopify_attributes }}>
+                                  <span class="dd-se__usp-icon dd-se__usp-icon--{{ u.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: u.settings.icon -%}</span>
+                                  {{ u.settings.text }}
+                                </span>
+                              {%- endif -%}{%- endfor -%}
+                            </div>
+                          {%- endif -%}
                         </div>
 
                       {%- comment -%} ══ LAYOUT: STANDARD (Special Editions, default) ══ {%- endcomment -%}
@@ -824,8 +685,10 @@
         {%- for b in shop_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_shop_count = nav_shop_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
         {%- assign nav_club_count = 0 -%}
         {%- for b in club_item_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_club_count = nav_club_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+        {%- assign nav_about_count = 0 -%}
+        {%- for b in about_item_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_about_count = nav_about_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
         {%- assign drawer_has_sub = false -%}
-        {%- if link.links.size > 0 or nav_se_count > 0 or nav_shop_count > 0 or nav_club_count > 0 -%}{%- assign drawer_has_sub = true -%}{%- endif -%}
+        {%- if link.links.size > 0 or nav_se_count > 0 or nav_shop_count > 0 or nav_club_count > 0 or nav_about_count > 0 -%}{%- assign drawer_has_sub = true -%}{%- endif -%}
         <li class="header-drawer__nav-item{% if drawer_has_sub %} header-drawer__nav-item--has-sub{% endif %}">
           <div class="header-drawer__nav-row">
             <span class="header-drawer__nav-icon header-drawer__nav-icon--{% if nav_lx == 1 %}green{% elsif nav_lx == 2 %}pink{% elsif nav_lx == 3 %}green{% elsif nav_lx == 4 %}orange{% else %}orange{% endif %}" aria-hidden="true">
@@ -960,6 +823,59 @@
                   <strong>{{ dd_club.settings.campaign_title }}</strong>
                   {%- if dd_club.settings.campaign_text != blank -%}<p>{{ dd_club.settings.campaign_text }}</p>{%- endif -%}
                   {%- if dd_club.settings.campaign_cta_label != blank -%}<a href="{{ dd_club.settings.campaign_cta_url | default: link.url }}" class="header-drawer__club-pill">{{ dd_club.settings.campaign_cta_label }}</a>{%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- elsif nav_about_count > 0 -%}
+            <div class="header-drawer__sub-nav header-drawer__sub-nav--club" hidden>
+              {%- assign dd_about = nil -%}
+              {%- for b in dd_blocks -%}{%- if b.settings.menu_item_index == nav_lx and b.settings.layout_type == 'about' -%}{%- assign dd_about = b -%}{%- endif -%}{%- endfor -%}
+              {%- if dd_about -%}
+                <div class="header-drawer__club-intro">
+                  <strong>{{ dd_about.settings.banner_title }}</strong>
+                  {%- if dd_about.settings.banner_text != blank -%}<p>{{ dd_about.settings.banner_text }}</p>{%- endif -%}
+                  {%- if dd_about.settings.banner_image != blank -%}<img src="{{ dd_about.settings.banner_image | image_url: width: 640 }}" alt="" width="320" height="160" loading="lazy" class="header-drawer__about-photo">{%- endif -%}
+                  {%- if dd_about.settings.banner_cta_label != blank -%}<a href="{{ dd_about.settings.banner_cta_url | default: link.url }}" class="header-drawer__club-cta">{{ dd_about.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</a>{%- endif -%}
+                </div>
+              {%- endif -%}
+              <ul class="header-drawer__club-items" role="list">
+                {%- for ai in about_item_blocks -%}{%- if ai.settings.menu_item_index == nav_lx -%}
+                  <li><a href="{{ ai.settings.url | default: '#' }}" class="header-drawer__club-item header-drawer__club-item--{{ ai.settings.color }}">
+                    <span class="header-drawer__club-item-icon" aria-hidden="true">{%- render 'lucide', icon: ai.settings.icon -%}</span>
+                    <span class="header-drawer__club-item-text"><strong>{{ ai.settings.title }}</strong>{%- if ai.settings.description != blank -%}<span>{{ ai.settings.description }}</span>{%- endif -%}</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                  </a></li>
+                {%- endif -%}{%- endfor -%}
+              </ul>
+              {%- assign drawer_about_usp = 0 -%}{%- for au in about_usp_blocks -%}{%- if au.settings.menu_item_index == nav_lx -%}{%- assign drawer_about_usp = drawer_about_usp | plus: 1 -%}{%- endif -%}{%- endfor -%}
+              {%- if drawer_about_usp > 0 -%}
+                <div class="header-drawer__about-usps">
+                  {%- for au in about_usp_blocks -%}{%- if au.settings.menu_item_index == nav_lx -%}
+                    <div class="header-drawer__about-usp header-drawer__about-usp--{{ au.settings.color }}">
+                      <span class="header-drawer__about-usp-icon" aria-hidden="true">{%- render 'lucide', icon: au.settings.icon -%}</span>
+                      <strong>{{ au.settings.title }}</strong>
+                      {%- if au.settings.description != blank -%}<span>{{ au.settings.description }}</span>{%- endif -%}
+                    </div>
+                  {%- endif -%}{%- endfor -%}
+                </div>
+              {%- endif -%}
+              {%- if dd_about and dd_about.settings.about_team_title != blank -%}
+                <div class="header-drawer__club-card header-drawer__club-card--motm">
+                  {%- if dd_about.settings.about_team_image != blank -%}<img src="{{ dd_about.settings.about_team_image | image_url: width: 500 }}" alt="" width="250" height="150" loading="lazy">{%- endif -%}
+                  <strong>{{ dd_about.settings.about_team_title }}</strong>
+                  {%- if dd_about.settings.about_team_text != blank -%}<p>{{ dd_about.settings.about_team_text }}</p>{%- endif -%}
+                  {%- if dd_about.settings.about_team_tagline != blank -%}<span class="header-drawer__about-note">{{ dd_about.settings.about_team_tagline }}</span>{%- endif -%}
+                </div>
+              {%- endif -%}
+              {%- assign drawer_about_val = 0 -%}{%- for v in about_value_blocks -%}{%- if v.settings.menu_item_index == nav_lx -%}{%- assign drawer_about_val = drawer_about_val | plus: 1 -%}{%- endif -%}{%- endfor -%}
+              {%- if drawer_about_val > 0 -%}
+                <div class="header-drawer__club-card header-drawer__club-card--campaign">
+                  {%- if dd_about and dd_about.settings.about_brandbar_title != blank -%}<strong>{{ dd_about.settings.about_brandbar_title }}</strong>{%- endif -%}
+                  <ul class="header-drawer__about-values" role="list">
+                    {%- for v in about_value_blocks -%}{%- if v.settings.menu_item_index == nav_lx -%}
+                      <li><span class="header-drawer__about-value-icon" aria-hidden="true">{%- render 'lucide', icon: v.settings.icon -%}</span>{{ v.settings.text }}</li>
+                    {%- endif -%}{%- endfor -%}
+                  </ul>
                 </div>
               {%- endif -%}
             </div>
@@ -1728,6 +1644,114 @@
 .header-drawer__club-card--campaign{background:#e8f5e2;border:1.5px solid rgba(102,170,68,.2);}
 .header-drawer__club-pill{display:inline-flex;margin-top:10px;padding:9px 16px;background:var(--color-green);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.82rem;text-decoration:none;}
 .header-drawer__club-card--motm .header-drawer__club-pill{background:var(--color-pink);}
+
+/* ══ OVER ONS MEGA MENU ══════════════════════════════ */
+.site-header__dropdown-card:has(.dd-about){overflow:visible;background:var(--color-cream);border-color:rgba(61,34,9,.08);box-shadow:0 28px 70px rgba(61,34,9,.16);border-radius:28px;}
+.dd-about{position:relative;padding:26px 28px;}
+.dd-about__pink{color:var(--color-pink);}
+.dd-about__body{display:grid;grid-template-columns:.9fr 1.5fr .95fr;grid-template-areas:"nav main team" "nav usps team";gap:18px;align-items:stretch;}
+.dd-about__nav{grid-area:nav;display:flex;flex-direction:column;gap:5px;}
+.dd-about__item{--cc:var(--color-green);--cc-soft:#e8f5e2;display:grid;grid-template-columns:40px 1fr 13px;align-items:center;gap:11px;padding:9px 11px;border-radius:13px;text-decoration:none;transition:background 160ms;}
+.dd-about__item:hover{background:#fff;}
+.dd-about__item--green{--cc:var(--color-green);--cc-soft:#e8f5e2;}
+.dd-about__item--pink{--cc:var(--color-pink);--cc-soft:#ffe0ee;}
+.dd-about__item--orange{--cc:var(--color-orange);--cc-soft:#fff0e4;}
+.dd-about__item--yellow{--cc:#d99100;--cc-soft:#fffae0;}
+.dd-about__item--purple{--cc:#8b5fd1;--cc-soft:#efe6fb;}
+.dd-about__item-icon{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--cc-soft);color:var(--cc);}
+.dd-about__item-icon .lucide{width:20px;height:20px;}
+.dd-about__item-text{display:flex;flex-direction:column;min-width:0;}
+.dd-about__item-text strong{font-family:var(--font-body);font-size:.88rem;font-weight:800;color:var(--color-ink);line-height:1.2;}
+.dd-about__item-text span{font-family:var(--font-body);font-size:.72rem;color:var(--color-muted);line-height:1.3;}
+.dd-about__item-chev{width:13px;height:13px;color:var(--cc);opacity:0;transform:translateX(-4px);transition:opacity 160ms,transform 160ms;}
+.dd-about__item:hover .dd-about__item-chev{opacity:1;transform:translateX(0);}
+.dd-about__navcard{display:flex;align-items:center;gap:10px;margin-top:6px;padding:12px 14px;background:#ffe0ee;border-radius:14px;font-family:var(--font-heading);font-size:.9rem;color:var(--color-ink);}
+.dd-about__navcard-icon{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#fff;color:var(--color-pink);flex-shrink:0;}
+.dd-about__navcard-icon .lucide{width:18px;height:18px;}
+
+.dd-about__main{grid-area:main;background:#eef7e7;border:1.5px solid rgba(102,170,68,.18);border-radius:20px;padding:22px;}
+.dd-about__main-title{display:flex;align-items:center;gap:9px;font-family:var(--font-heading);font-size:1.55rem;color:var(--color-ink);line-height:1.1;margin-bottom:14px;}
+.dd-about__main-heart{display:inline-flex;width:20px;height:20px;color:var(--color-pink);}
+.dd-about__main-heart svg{width:100%;height:100%;}
+.dd-about__main-inner{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center;}
+.dd-about__main-text p{font-family:var(--font-body);font-size:.86rem;line-height:1.6;color:var(--color-body);margin:0 0 16px;}
+.dd-about__main-cta{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;background:var(--color-green);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:.92rem;text-decoration:none;transition:background 160ms,transform 160ms;}
+.dd-about__main-cta:hover{background:#5a9a3b;transform:translateY(-1px);}
+.dd-about__main-cta svg{width:16px;height:16px;}
+.dd-about__main-photo{position:relative;border-radius:16px;overflow:visible;}
+.dd-about__main-photo img{width:100%;height:190px;object-fit:cover;display:block;border-radius:16px;}
+.dd-about__main-ph{display:flex;align-items:center;justify-content:center;height:190px;background:#fff;color:var(--color-green);border-radius:16px;}
+.dd-about__main-ph .lucide{width:60px;height:60px;}
+.dd-about__main-deco{position:absolute;pointer-events:none;}
+.dd-about__main-deco svg{width:100%;height:100%;}
+.dd-about__main-deco--heart{top:-8px;right:-6px;width:24px;height:24px;color:var(--color-pink);filter:drop-shadow(0 2px 4px rgba(61,34,9,.18));transform:rotate(12deg);}
+.dd-about__main-deco--paw{bottom:-8px;left:-6px;width:24px;height:24px;color:var(--color-orange);opacity:.55;transform:rotate(-14deg);}
+
+.dd-about__usps{grid-area:usps;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.dd-about__usp{--cc:var(--color-green);--cc-soft:#e8f5e2;display:flex;flex-direction:column;background:#fff;border:1.5px solid var(--color-line);border-radius:16px;padding:14px 13px;}
+.dd-about__usp--green{--cc:var(--color-green);--cc-soft:#e8f5e2;}
+.dd-about__usp--pink{--cc:var(--color-pink);--cc-soft:#ffe0ee;}
+.dd-about__usp--orange{--cc:var(--color-orange);--cc-soft:#fff0e4;}
+.dd-about__usp--yellow{--cc:#d99100;--cc-soft:#fffae0;}
+.dd-about__usp-icon{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:12px;background:var(--cc-soft);color:var(--cc);margin-bottom:9px;}
+.dd-about__usp-icon .lucide{width:19px;height:19px;}
+.dd-about__usp strong{font-family:var(--font-heading);font-size:.92rem;color:var(--color-ink);line-height:1.15;margin-bottom:3px;}
+.dd-about__usp span{font-family:var(--font-body);font-size:.72rem;line-height:1.4;color:var(--color-muted);}
+
+.dd-about__team{grid-area:team;position:relative;display:flex;flex-direction:column;align-items:center;background:#ffeef5;border:1.5px solid rgba(255,107,154,.18);border-radius:20px;padding:20px 18px;overflow:hidden;}
+.dd-about__team-title{align-self:flex-start;display:flex;align-items:center;gap:8px;font-family:var(--font-heading);font-size:1.12rem;color:var(--color-ink);line-height:1.15;margin-bottom:8px;}
+.dd-about__team-dot{width:9px;height:9px;border-radius:50%;background:var(--color-green);flex-shrink:0;}
+.dd-about__team-text{align-self:flex-start;font-family:var(--font-body);font-size:.78rem;line-height:1.5;color:var(--color-body);margin:0 0 16px;}
+.dd-about__polaroid{position:relative;background:#fff;padding:10px 10px 0;border-radius:5px;box-shadow:0 10px 26px rgba(61,34,9,.16);transform:rotate(-2.5deg);margin-bottom:14px;}
+.dd-about__polaroid-tape{position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(3deg);width:56px;height:17px;background:rgba(255,224,113,.7);border-radius:2px;}
+.dd-about__polaroid img{width:100%;max-width:210px;height:150px;object-fit:cover;display:block;border-radius:3px;}
+.dd-about__polaroid-ph{display:flex;align-items:center;justify-content:center;width:210px;height:150px;background:#e8f5e2;color:var(--color-green);border-radius:3px;}
+.dd-about__polaroid-ph .lucide{width:54px;height:54px;}
+.dd-about__polaroid-note{display:block;text-align:center;font-family:var(--font-heading);font-size:.95rem;color:var(--color-ink);padding:8px 0 6px;}
+.dd-about__team-deco--heart{position:absolute;bottom:14px;right:14px;width:20px;height:20px;color:var(--color-pink);opacity:.5;transform:rotate(-10deg);}
+.dd-about__team-deco--heart svg{width:100%;height:100%;}
+
+.dd-about__brandbar{position:relative;display:flex;align-items:center;gap:20px;margin-top:18px;padding:16px 24px;background:#e8f5e2;border:1.5px solid rgba(102,170,68,.2);border-radius:18px;}
+.dd-about__peek{flex-shrink:0;width:74px;height:74px;align-self:flex-end;margin-bottom:-16px;}
+.dd-about__peek img{width:100%;height:auto;display:block;}
+.dd-about__brandbar-text{flex:1;min-width:0;}
+.dd-about__brandbar-text strong{font-family:var(--font-heading);font-size:1.2rem;color:var(--color-ink);line-height:1.2;}
+.dd-about__values{display:flex;gap:18px;flex-shrink:0;flex-wrap:wrap;}
+.dd-about__value{display:flex;align-items:center;gap:9px;max-width:200px;font-family:var(--font-body);font-size:.76rem;font-weight:600;color:var(--color-ink);line-height:1.3;}
+.dd-about__value-icon{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#e8f5e2;color:var(--color-green);flex-shrink:0;}
+.dd-about__value-icon .lucide{width:17px;height:17px;}
+.dd-about__value-icon--green{background:#fff;color:var(--color-green);}
+.dd-about__value-icon--pink{background:#fff;color:var(--color-pink);}
+.dd-about__value-icon--orange{background:#fff;color:var(--color-orange);}
+.dd-about__value-icon--yellow{background:#fff;color:#d99100;}
+
+.dd-about__trust{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding-top:18px;border-top:1px solid rgba(61,34,9,.08);}
+
+@media(max-width:1200px){
+  .dd-about__body{gap:14px;}
+  .dd-about__main-inner{grid-template-columns:1fr;}
+  .dd-about__usps{grid-template-columns:repeat(2,1fr);}
+  .dd-about__values{gap:12px;}
+  .dd-about__value{max-width:150px;}
+}
+
+/* ══ DRAWER: Over ons ════════════════════════════════ */
+.header-drawer__about-photo{width:100%;height:150px;object-fit:cover;border-radius:12px;margin-bottom:12px;}
+.header-drawer__about-usps{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+.header-drawer__about-usp{--cc:var(--color-green);--cc-soft:#e8f5e2;background:#fff;border:1.5px solid var(--color-line);border-radius:14px;padding:12px;}
+.header-drawer__about-usp--green{--cc:var(--color-green);--cc-soft:#e8f5e2;}
+.header-drawer__about-usp--pink{--cc:var(--color-pink);--cc-soft:#ffe0ee;}
+.header-drawer__about-usp--orange{--cc:var(--color-orange);--cc-soft:#fff0e4;}
+.header-drawer__about-usp--yellow{--cc:#d99100;--cc-soft:#fffae0;}
+.header-drawer__about-usp-icon{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:11px;background:var(--cc-soft);color:var(--cc);margin-bottom:8px;}
+.header-drawer__about-usp-icon .lucide{width:18px;height:18px;}
+.header-drawer__about-usp strong{display:block;font-family:var(--font-heading);font-size:.85rem;color:var(--color-ink);line-height:1.15;}
+.header-drawer__about-usp span{font-family:var(--font-body);font-size:.7rem;color:var(--color-muted);line-height:1.35;}
+.header-drawer__about-note{display:block;font-family:var(--font-heading);font-size:.9rem;color:var(--color-ink);margin-top:8px;}
+.header-drawer__about-values{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;}
+.header-drawer__about-values li{display:flex;align-items:center;gap:10px;font-family:var(--font-body);font-size:.8rem;font-weight:600;color:var(--color-ink);line-height:1.3;}
+.header-drawer__about-value-icon{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:#fff;color:var(--color-green);flex-shrink:0;}
+.header-drawer__about-value-icon .lucide{width:16px;height:16px;}
 {% endstylesheet %}
 
 {% javascript %}
@@ -2168,7 +2192,12 @@
           "id": "about_team_tagline",
           "label": "Team tagline",
           "default": "Liefs, team Kwispelbox"
-        }
+        },
+        { "type": "textarea", "id": "about_team_text", "label": "Team tekst", "default": "Een klein team van hondenliefhebbers werkt iedere dag aan het selecteren van de leukste producten en het creëren van blije momenten." },
+        { "type": "text", "id": "about_navcard_text", "label": "Nav-kaart tekst", "default": "Samen maken we honden blij!" },
+        { "type": "image_picker", "id": "about_peek_image", "label": "Gluurhondje balk (PNG, optioneel)" },
+        { "type": "text", "id": "about_brandbar_title", "label": "Merkbalk titel", "default": "Samen maken we elke dag een staart blijer!" },
+        { "type": "text", "id": "about_brandbar_highlight", "label": "Merkbalk accentwoord (roze)", "default": "staart blijer" }
       ]
     },
     {
@@ -2409,7 +2438,7 @@
     {
       "type": "se_usp",
       "name": "Special USP (trustbar)",
-      "limit": 15,
+      "limit": 25,
       "settings": [
         { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 2 },
         {
@@ -2528,6 +2557,101 @@
       "settings": [
         { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 4 },
         { "type": "text", "id": "text", "label": "Voordeel", "default": "Gratis lidmaatschap" }
+      ]
+    },
+    {
+      "type": "about_item",
+      "name": "Over ons link",
+      "limit": 8,
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 5 },
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "heart",
+          "options": [
+            { "value": "heart", "label": "Hart" },
+            { "value": "paw", "label": "Poot" },
+            { "value": "leaf", "label": "Blad" },
+            { "value": "users", "label": "Gebruikers" },
+            { "value": "help", "label": "Vraagteken" },
+            { "value": "mail", "label": "Envelop" },
+            { "value": "star", "label": "Ster" },
+            { "value": "gift", "label": "Cadeau" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Accentkleur", "default": "green",
+          "options": [
+            { "value": "green", "label": "Groen" },
+            { "value": "pink", "label": "Roze" },
+            { "value": "orange", "label": "Oranje" },
+            { "value": "yellow", "label": "Geel" },
+            { "value": "purple", "label": "Paars" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Ons verhaal" },
+        { "type": "text", "id": "description", "label": "Beschrijving", "default": "Het verhaal achter Kwispelbox en onze missie." },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    },
+    {
+      "type": "about_usp",
+      "name": "Over ons USP",
+      "limit": 6,
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 5 },
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "heart",
+          "options": [
+            { "value": "heart", "label": "Hart" },
+            { "value": "leaf", "label": "Blad" },
+            { "value": "shield-check", "label": "Schild" },
+            { "value": "gift", "label": "Cadeau" },
+            { "value": "paw", "label": "Poot" },
+            { "value": "star", "label": "Ster" },
+            { "value": "sparkles", "label": "Sparkles" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Accentkleur", "default": "pink",
+          "options": [
+            { "value": "green", "label": "Groen" },
+            { "value": "pink", "label": "Roze" },
+            { "value": "orange", "label": "Oranje" },
+            { "value": "yellow", "label": "Geel" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Met liefde samengesteld" },
+        { "type": "text", "id": "description", "label": "Beschrijving", "default": "Iedere box wordt met aandacht samengesteld." }
+      ]
+    },
+    {
+      "type": "about_value",
+      "name": "Over ons merkwaarde",
+      "limit": 5,
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 5 },
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "heart-handshake",
+          "options": [
+            { "value": "heart-handshake", "label": "Hart-handdruk" },
+            { "value": "recycle", "label": "Recycle" },
+            { "value": "handshake", "label": "Handdruk" },
+            { "value": "leaf", "label": "Blad" },
+            { "value": "users", "label": "Gebruikers" },
+            { "value": "heart", "label": "Hart" },
+            { "value": "paw", "label": "Poot" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Icoon kleur", "default": "green",
+          "options": [
+            { "value": "green", "label": "Groen" },
+            { "value": "pink", "label": "Roze" },
+            { "value": "orange", "label": "Oranje" },
+            { "value": "yellow", "label": "Geel" }
+          ]
+        },
+        { "type": "text", "id": "text", "label": "Tekst", "default": "Wij steunen regelmatig hondenasielen en dierenprojecten." }
       ]
     },
     {
