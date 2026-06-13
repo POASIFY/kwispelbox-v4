@@ -12,6 +12,8 @@
 {%- assign col_blocks      = section.blocks | where: 'type', 'dropdown_col' -%}
 {%- assign prod_blocks     = section.blocks | where: 'type', 'dropdown_product' -%}
 {%- assign link_blocks     = section.blocks | where: 'type', 'link_item' -%}
+{%- assign se_blocks       = section.blocks | where: 'type', 'se_item' -%}
+{%- assign se_usp_blocks   = section.blocks | where: 'type', 'se_usp' -%}
 
 <div class="site-header__wrapper full-width">
 
@@ -568,6 +570,103 @@
                           {%- endif -%}
                         </div>
 
+                      {%- comment -%} ══ LAYOUT: SPECIAL (Special Editions mega menu) ══ {%- endcomment -%}
+                      {%- elsif layout == 'special' -%}
+                        <div class="dd-se">
+                          <span class="dd-se__pointer" aria-hidden="true"></span>
+                          <span class="dd-se__corner dd-se__corner--tl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg></span>
+                          <span class="dd-se__corner dd-se__corner--br" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+
+                          <div class="dd-se__body">
+                            <div class="dd-se__left">
+                              <div class="dd-se__head">
+                                <span class="dd-se__head-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+                                <div>
+                                  <a href="{{ link.url }}" class="dd-se__title">{{ link.title }}</a>
+                                  {%- if dd.settings.col1_desc != blank -%}<p class="dd-se__subtitle">{{ dd.settings.col1_desc }}</p>{%- endif -%}
+                                </div>
+                              </div>
+
+                              <div class="dd-se__cols">
+                                {%- for colnum in (1..2) -%}
+                                  <ul class="dd-se__col" role="list">
+                                    {%- for b in se_blocks -%}
+                                      {%- assign se_col = b.settings.column | plus: 0 -%}
+                                      {%- if b.settings.menu_item_index == lx and se_col == colnum -%}
+                                        <li {{ b.shopify_attributes }}>
+                                          <a href="{{ b.settings.url | default: '#' }}" class="dd-se__edition dd-se__edition--{{ b.settings.color }}">
+                                            <span class="dd-se__edition-icon" aria-hidden="true">{%- render 'lucide', icon: b.settings.icon -%}</span>
+                                            <span class="dd-se__edition-text">
+                                              <strong>{{ b.settings.title }}</strong>
+                                              {%- if b.settings.description != blank -%}<span>{{ b.settings.description }}</span>{%- endif -%}
+                                            </span>
+                                            <svg class="dd-se__edition-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                                          </a>
+                                        </li>
+                                      {%- endif -%}
+                                    {%- endfor -%}
+                                  </ul>
+                                {%- endfor -%}
+                              </div>
+
+                              {%- if dd.settings.view_all_label != blank -%}
+                                <a href="{{ dd.settings.view_all_url | default: link.url }}" class="dd-se__viewall">
+                                  {{ dd.settings.view_all_label }}
+                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </a>
+                              {%- endif -%}
+                            </div>
+
+                            {%- if dd.settings.banner_title != blank or dd.settings.banner_image != blank -%}
+                              <div class="dd-se__promo">
+                                <div class="dd-se__promo-media">
+                                  {%- if dd.settings.banner_image != blank -%}
+                                    <img src="{{ dd.settings.banner_image | image_url: width: 760 }}"
+                                         srcset="{{ dd.settings.banner_image | image_url: width: 500 }} 500w, {{ dd.settings.banner_image | image_url: width: 760 }} 760w"
+                                         sizes="380px" alt="{{ dd.settings.banner_image.alt | default: dd.settings.banner_title | escape }}"
+                                         width="380" height="240" loading="lazy" class="dd-se__promo-img">
+                                  {%- else -%}
+                                    <div class="dd-se__promo-img dd-se__promo-img--ph">{%- render 'lucide', icon: 'gift' -%}</div>
+                                  {%- endif -%}
+                                  {%- if dd.settings.banner_badge != blank -%}
+                                    <span class="dd-se__promo-badge">{{ dd.settings.banner_badge }}</span>
+                                  {%- endif -%}
+                                  <span class="dd-se__promo-deco dd-se__promo-deco--bat" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1-3 3-4 5-3-1 1-1 2 0 3 1-1 3-1 5 1-3 0-4 2-5 4-1-2-2-3-5-3-3 0-4 1-5 3-1-2-2-4-5-4 2-2 4-2 5-1 1-1 1-2 0-3 2-1 4 0 5 3Z"/></svg></span>
+                                  <span class="dd-se__promo-deco dd-se__promo-deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+                                </div>
+                                <div class="dd-se__promo-body">
+                                  <strong class="dd-se__promo-title">{{ dd.settings.banner_title }}</strong>
+                                  {%- if dd.settings.banner_text != blank -%}<p class="dd-se__promo-text">{{ dd.settings.banner_text }}</p>{%- endif -%}
+                                  {%- if dd.settings.banner_cta_label != blank -%}
+                                    <div class="dd-se__promo-cta-row">
+                                      <a href="{{ dd.settings.banner_cta_url | default: link.url }}" class="dd-se__promo-cta">
+                                        {{ dd.settings.banner_cta_label }}
+                                        {{- 'icon-paw.svg' | inline_asset_content -}}
+                                      </a>
+                                      <span class="dd-se__promo-scribble" aria-hidden="true"><svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 16c4-9 7 6 11-2s7 6 11-2"/></svg></span>
+                                    </div>
+                                  {%- endif -%}
+                                </div>
+                              </div>
+                            {%- endif -%}
+                          </div>
+
+                          {%- assign se_usp_count = 0 -%}
+                          {%- for u in se_usp_blocks -%}{%- if u.settings.menu_item_index == lx -%}{%- assign se_usp_count = se_usp_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+                          {%- if se_usp_count > 0 -%}
+                            <div class="dd-se__trust">
+                              {%- for u in se_usp_blocks -%}
+                                {%- if u.settings.menu_item_index == lx -%}
+                                  <span class="dd-se__usp" {{ u.shopify_attributes }}>
+                                    <span class="dd-se__usp-icon dd-se__usp-icon--{{ u.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: u.settings.icon -%}</span>
+                                    {{ u.settings.text }}
+                                  </span>
+                                {%- endif -%}
+                              {%- endfor -%}
+                            </div>
+                          {%- endif -%}
+                        </div>
+
                       {%- comment -%} ══ LAYOUT: STANDARD (Special Editions, default) ══ {%- endcomment -%}
                       {%- else -%}
                         <div class="dd-standard">
@@ -691,7 +790,11 @@
     <ul class="header-drawer__nav" role="list">
       {%- for link in section.settings.menu.links -%}
         {%- assign nav_lx = forloop.index -%}
-        <li class="header-drawer__nav-item{% if link.links.size > 0 %} header-drawer__nav-item--has-sub{% endif %}">
+        {%- assign nav_se_count = 0 -%}
+        {%- for b in se_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_se_count = nav_se_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
+        {%- assign drawer_has_sub = false -%}
+        {%- if link.links.size > 0 or nav_se_count > 0 -%}{%- assign drawer_has_sub = true -%}{%- endif -%}
+        <li class="header-drawer__nav-item{% if drawer_has_sub %} header-drawer__nav-item--has-sub{% endif %}">
           <div class="header-drawer__nav-row">
             <span class="header-drawer__nav-icon header-drawer__nav-icon--{% if nav_lx == 1 %}green{% elsif nav_lx == 2 %}pink{% elsif nav_lx == 3 %}green{% elsif nav_lx == 4 %}orange{% else %}orange{% endif %}" aria-hidden="true">
               {%- if nav_lx == 1 -%}{{- 'icon-gift.svg' | inline_asset_content -}}
@@ -702,7 +805,7 @@
               {%- endif -%}
             </span>
             <a href="{{ link.url }}" class="header-drawer__nav-link" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
-            {%- if link.links.size > 0 -%}
+            {%- if drawer_has_sub -%}
               <button class="header-drawer__sub-toggle" aria-expanded="false" aria-label="{{ link.title }} submenu">
                 {{- 'icon-chevron-down.svg' | inline_asset_content -}}
               </button>
@@ -710,7 +813,42 @@
               <svg class="header-drawer__nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
             {%- endif -%}
           </div>
-          {%- if link.links.size > 0 -%}
+          {%- if nav_se_count > 0 -%}
+            <div class="header-drawer__sub-nav header-drawer__sub-nav--se" hidden>
+              <ul class="header-drawer__se-list" role="list">
+                {%- for b in se_blocks -%}
+                  {%- if b.settings.menu_item_index == nav_lx -%}
+                    <li>
+                      <a href="{{ b.settings.url | default: '#' }}" class="header-drawer__se-link">
+                        <span class="header-drawer__se-icon header-drawer__se-icon--{{ b.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: b.settings.icon -%}</span>
+                        <span class="header-drawer__se-text">
+                          <strong>{{ b.settings.title }}</strong>
+                          {%- if b.settings.description != blank -%}<span>{{ b.settings.description }}</span>{%- endif -%}
+                        </span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+              {%- assign dd_se = nil -%}
+              {%- for b in dd_blocks -%}{%- if b.settings.menu_item_index == nav_lx and b.settings.layout_type == 'special' -%}{%- assign dd_se = b -%}{%- endif -%}{%- endfor -%}
+              {%- if dd_se and dd_se.settings.banner_title != blank -%}
+                <a href="{{ dd_se.settings.banner_cta_url | default: link.url }}" class="header-drawer__se-promo">
+                  {%- if dd_se.settings.banner_image != blank -%}
+                    <img src="{{ dd_se.settings.banner_image | image_url: width: 640 }}" alt="{{ dd_se.settings.banner_title | escape }}" width="320" height="170" loading="lazy" class="header-drawer__se-promo-img">
+                  {%- endif -%}
+                  <span class="header-drawer__se-promo-body">
+                    {%- if dd_se.settings.banner_badge != blank -%}<span class="header-drawer__se-promo-badge">{{ dd_se.settings.banner_badge }}</span>{%- endif -%}
+                    <strong>{{ dd_se.settings.banner_title }}</strong>
+                    {%- if dd_se.settings.banner_cta_label != blank -%}
+                      <span class="header-drawer__se-promo-cta">{{ dd_se.settings.banner_cta_label }}{{- 'icon-paw.svg' | inline_asset_content -}}</span>
+                    {%- endif -%}
+                  </span>
+                </a>
+              {%- endif -%}
+            </div>
+          {%- elsif link.links.size > 0 -%}
             <ul class="header-drawer__sub-nav" role="list" hidden>
               {%- for child in link.links -%}
                 <li><a href="{{ child.url }}" class="header-drawer__sub-link" {% if child.active %}aria-current="page"{% endif %}>{{ child.title }}</a></li>
@@ -1199,6 +1337,104 @@
 .header-drawer__overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:299;opacity:0;visibility:hidden;transition:opacity 280ms,visibility 280ms;}
 .header-drawer__overlay[aria-hidden="false"]{opacity:1;visibility:visible;}
 .header-drawer__nav-item--has-sub .header-drawer__nav-chevron{display:none;}
+
+/* ══ SPECIAL EDITIONS MEGA MENU ══════════════════════ */
+.site-header__dropdown-card:has(.dd-se){overflow:visible;background:var(--color-cream);border-color:rgba(61,34,9,.08);box-shadow:0 28px 70px rgba(61,34,9,.16);border-radius:28px;}
+.dd-se{position:relative;padding:28px 30px;}
+.dd-se__pointer{position:absolute;top:-9px;left:16%;width:18px;height:18px;background:var(--color-cream);border-top:1.5px solid rgba(61,34,9,.08);border-left:1.5px solid rgba(61,34,9,.08);border-radius:5px 0 0 0;transform:rotate(45deg);}
+.dd-se__corner{position:absolute;pointer-events:none;}
+.dd-se__corner svg{display:block;width:100%;height:100%;}
+.dd-se__corner--tl{top:16px;right:18px;width:30px;height:30px;color:var(--color-green);opacity:.12;transform:rotate(-12deg);}
+.dd-se__corner--br{bottom:80px;left:18px;width:26px;height:26px;color:var(--color-pink);opacity:.12;transform:rotate(14deg);}
+
+.dd-se__body{display:grid;grid-template-columns:1fr 384px;gap:30px;align-items:stretch;}
+.dd-se__left{display:flex;flex-direction:column;min-width:0;}
+.dd-se__head{display:flex;align-items:flex-start;gap:12px;margin-bottom:18px;}
+.dd-se__head-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:13px;background:#ffe0ee;color:var(--color-pink);flex-shrink:0;}
+.dd-se__head-icon .lucide{width:22px;height:22px;}
+.dd-se__title{display:block;font-family:var(--font-heading);font-size:1.45rem;line-height:1.1;color:var(--color-pink);text-decoration:none;}
+.dd-se__subtitle{font-family:var(--font-body);font-size:.82rem;color:var(--color-muted);margin:3px 0 0;}
+
+.dd-se__cols{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;flex:1;}
+.dd-se__col{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
+.dd-se__edition{--ec:var(--color-green);--ec-soft:#e8f5e2;display:grid;grid-template-columns:40px 1fr 14px;align-items:center;gap:12px;padding:9px 12px;border-radius:14px;text-decoration:none;transition:background 160ms;}
+.dd-se__edition--pink{--ec:var(--color-pink);--ec-soft:#ffe0ee;}
+.dd-se__edition--orange{--ec:var(--color-orange);--ec-soft:#fff0e4;}
+.dd-se__edition--yellow{--ec:#d99100;--ec-soft:#fffae0;}
+.dd-se__edition--green{--ec:var(--color-green);--ec-soft:#e8f5e2;}
+.dd-se__edition:hover{background:#fff;}
+.dd-se__edition-icon{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;background:var(--ec-soft);color:var(--ec);}
+.dd-se__edition-icon .lucide{width:20px;height:20px;}
+.dd-se__edition-text{display:flex;flex-direction:column;min-width:0;}
+.dd-se__edition-text strong{font-family:var(--font-body);font-size:.92rem;font-weight:800;color:var(--color-ink);line-height:1.2;}
+.dd-se__edition-text span{font-family:var(--font-body);font-size:.76rem;color:var(--color-muted);line-height:1.3;}
+.dd-se__edition-arrow{width:14px;height:14px;color:var(--ec);opacity:0;transform:translateX(-4px);transition:opacity 160ms,transform 160ms;}
+.dd-se__edition:hover .dd-se__edition-arrow{opacity:1;transform:translateX(0);}
+
+.dd-se__viewall{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:2px 4px;font-family:var(--font-body);font-size:.9rem;font-weight:800;color:var(--color-pink);text-decoration:none;transition:gap 160ms;width:fit-content;}
+.dd-se__viewall:hover{gap:11px;}
+.dd-se__viewall svg{width:15px;height:15px;}
+
+/* Promotiekaart rechts */
+.dd-se__promo{display:flex;flex-direction:column;background:#f3e7d2;border-radius:20px;overflow:hidden;border:1.5px solid rgba(61,34,9,.07);}
+.dd-se__promo-media{position:relative;aspect-ratio:16/10;background:#e9dcc4;}
+.dd-se__promo-img{width:100%;height:100%;object-fit:cover;display:block;}
+.dd-se__promo-img--ph{display:flex;align-items:center;justify-content:center;color:var(--color-orange);}
+.dd-se__promo-img--ph .lucide{width:54px;height:54px;}
+.dd-se__promo-badge{position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;background:var(--color-green);color:#fff;font-family:var(--font-body);font-size:.7rem;font-weight:800;padding:5px 11px;border-radius:999px;box-shadow:0 4px 12px rgba(102,170,68,.35);}
+.dd-se__promo-deco{position:absolute;pointer-events:none;}
+.dd-se__promo-deco svg{display:block;width:100%;height:100%;}
+.dd-se__promo-deco--bat{top:10px;right:12px;width:26px;height:26px;color:var(--color-ink);opacity:.45;}
+.dd-se__promo-deco--heart{bottom:10px;right:14px;width:20px;height:20px;color:#fff;opacity:.85;transform:rotate(10deg);}
+.dd-se__promo-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;}
+.dd-se__promo-title{font-family:var(--font-heading);font-size:1.35rem;color:var(--color-ink);line-height:1.1;}
+.dd-se__promo-text{font-family:var(--font-body);font-size:.84rem;line-height:1.5;color:var(--color-body);margin:0;}
+.dd-se__promo-cta-row{display:flex;align-items:center;gap:10px;margin-top:4px;}
+.dd-se__promo-cta{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;background:var(--color-pink);color:#fff;border-radius:999px;font-family:var(--font-heading);font-size:.92rem;text-decoration:none;transition:background 160ms,transform 160ms;}
+.dd-se__promo-cta:hover{background:#e85b8a;transform:translateY(-1px);}
+.dd-se__promo-cta svg{width:16px;height:16px;}
+.dd-se__promo-scribble{display:inline-flex;width:36px;height:22px;color:var(--color-orange);opacity:.7;flex-shrink:0;}
+.dd-se__promo-scribble svg{width:100%;height:100%;}
+
+/* Trustbar onderaan */
+.dd-se__trust{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;padding-top:20px;border-top:1px solid rgba(61,34,9,.08);}
+.dd-se__usp{display:inline-flex;align-items:center;gap:8px;flex:1;min-width:160px;justify-content:center;background:#fff;border:1.5px solid rgba(61,34,9,.07);border-radius:999px;padding:7px 14px 7px 8px;font-family:var(--font-body);font-size:.76rem;font-weight:700;color:var(--color-ink);text-align:center;}
+.dd-se__usp-icon{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#e8f5e2;color:var(--color-green);flex-shrink:0;}
+.dd-se__usp-icon .lucide{width:15px;height:15px;}
+.dd-se__usp-icon--green{background:#e8f5e2;color:var(--color-green);}
+.dd-se__usp-icon--pink{background:#ffe0ee;color:var(--color-pink);}
+.dd-se__usp-icon--orange{background:#fff0e4;color:var(--color-orange);}
+.dd-se__usp-icon--yellow{background:#fffae0;color:#d99100;}
+
+@media(max-width:1200px){
+  .dd-se__body{grid-template-columns:1fr 320px;gap:22px;}
+  .dd-se__edition{grid-template-columns:36px 1fr 12px;gap:9px;padding:8px 9px;}
+  .dd-se__edition-icon{width:36px;height:36px;}
+  .dd-se__usp{min-width:130px;font-size:.72rem;}
+}
+
+/* ══ DRAWER: Special Editions ════════════════════════ */
+.header-drawer__sub-nav--se{background:var(--color-cream);padding:8px 14px 14px;}
+.header-drawer__se-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;}
+.header-drawer__se-link{display:grid;grid-template-columns:42px 1fr 15px;align-items:center;gap:12px;padding:10px 8px;border-radius:14px;text-decoration:none;color:var(--color-ink);}
+.header-drawer__se-link:hover{background:#fff;}
+.header-drawer__se-icon{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#e8f5e2;color:var(--color-green);}
+.header-drawer__se-icon .lucide{width:21px;height:21px;}
+.header-drawer__se-icon--pink{background:#ffe0ee;color:var(--color-pink);}
+.header-drawer__se-icon--orange{background:#fff0e4;color:var(--color-orange);}
+.header-drawer__se-icon--yellow{background:#fffae0;color:#d99100;}
+.header-drawer__se-icon--green{background:#e8f5e2;color:var(--color-green);}
+.header-drawer__se-text{display:flex;flex-direction:column;min-width:0;}
+.header-drawer__se-text strong{font-family:var(--font-body);font-size:.92rem;font-weight:800;color:var(--color-ink);line-height:1.2;}
+.header-drawer__se-text span{font-family:var(--font-body);font-size:.76rem;color:var(--color-muted);line-height:1.3;}
+.header-drawer__se-link svg{color:var(--color-muted);opacity:.5;}
+.header-drawer__se-promo{display:block;margin-top:12px;border-radius:18px;overflow:hidden;background:#f3e7d2;text-decoration:none;box-shadow:0 8px 22px rgba(61,34,9,.1);}
+.header-drawer__se-promo-img{width:100%;height:150px;object-fit:cover;display:block;}
+.header-drawer__se-promo-body{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:14px 16px 16px;}
+.header-drawer__se-promo-badge{display:inline-flex;background:var(--color-green);color:#fff;font-family:var(--font-body);font-size:.66rem;font-weight:800;padding:4px 10px;border-radius:999px;}
+.header-drawer__se-promo-body strong{font-family:var(--font-heading);font-size:1.2rem;color:var(--color-ink);line-height:1.1;}
+.header-drawer__se-promo-cta{display:inline-flex;align-items:center;gap:7px;margin-top:2px;padding:9px 16px;background:var(--color-pink);color:#fff;border-radius:999px;font-family:var(--font-heading);font-size:.85rem;}
+.header-drawer__se-promo-cta svg{width:14px;height:14px;}
 {% endstylesheet %}
 
 {% javascript %}
@@ -1411,6 +1647,10 @@
             {
               "value": "about",
               "label": "Over ons"
+            },
+            {
+              "value": "special",
+              "label": "Special Editions (mega)"
             }
           ]
         },
@@ -1804,6 +2044,80 @@
           "id": "description",
           "label": "Korte omschrijving"
         }
+      ]
+    },
+    {
+      "type": "se_item",
+      "name": "Special Edition",
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "info": "Welk menu-item (1 = eerste, 2 = tweede ...)", "min": 1, "max": 10, "step": 1, "default": 2 },
+        {
+          "type": "select", "id": "column", "label": "Kolom", "default": "1",
+          "options": [
+            { "value": "1", "label": "Kolom 1 (links)" },
+            { "value": "2", "label": "Kolom 2 (rechts)" }
+          ]
+        },
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "cake",
+          "options": [
+            { "value": "cake", "label": "Taart (verjaardag)" },
+            { "value": "pumpkin", "label": "Pompoen (Halloween)" },
+            { "value": "tree", "label": "Kerstboom" },
+            { "value": "heart", "label": "Hart (Valentijn)" },
+            { "value": "paw", "label": "Poot (Dierendag)" },
+            { "value": "flower", "label": "Bloem (Lente)" },
+            { "value": "sun", "label": "Zon (Zomer)" },
+            { "value": "leaf", "label": "Blad (Herfst)" },
+            { "value": "party", "label": "Vuurwerk (Nieuwjaar)" },
+            { "value": "pencil", "label": "Potlood (Back to School)" },
+            { "value": "gift", "label": "Cadeau" },
+            { "value": "star", "label": "Ster" },
+            { "value": "sparkles", "label": "Sparkles" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Icoon kleur", "default": "pink",
+          "options": [
+            { "value": "pink", "label": "Roze" },
+            { "value": "orange", "label": "Oranje" },
+            { "value": "green", "label": "Groen" },
+            { "value": "yellow", "label": "Geel" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Verjaardagsbox" },
+        { "type": "text", "id": "description", "label": "Beschrijving", "default": "Vier de verjaardag van jouw hond" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    },
+    {
+      "type": "se_usp",
+      "name": "Special USP (trustbar)",
+      "limit": 6,
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "min": 1, "max": 10, "step": 1, "default": 2 },
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Vrachtwagen" },
+            { "value": "refresh", "label": "Terugbetaling" },
+            { "value": "shield-check", "label": "Schild" },
+            { "value": "heart", "label": "Hart" },
+            { "value": "star", "label": "Ster" },
+            { "value": "gift", "label": "Cadeau" },
+            { "value": "paw", "label": "Poot" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Icoon kleur", "default": "green",
+          "options": [
+            { "value": "green", "label": "Groen" },
+            { "value": "pink", "label": "Roze" },
+            { "value": "orange", "label": "Oranje" },
+            { "value": "yellow", "label": "Geel" }
+          ]
+        },
+        { "type": "text", "id": "text", "label": "Tekst", "default": "Gratis verzending vanaf €75" }
       ]
     },
     {
