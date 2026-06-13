@@ -7,6 +7,11 @@
 
 {%- if usp_blocks.size > 0 -%}
 <div class="trust-bar">
+  <div class="trust-bar__wave trust-bar__wave--top" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 32" preserveAspectRatio="none">
+      <path d="M0,16 C180,0 360,32 540,16 C720,0 900,32 1080,16 C1260,0 1380,24 1440,12 L1440,0 L0,0 Z" fill="#fff"/>
+    </svg>
+  </div>
   <div class="trust-bar__inner">
 
     <ul class="trust-bar__list" role="list">
@@ -27,8 +32,11 @@
 
     {%- if section.settings.dog_image != blank -%}
       <div class="trust-bar__dog" aria-hidden="true">
+        {%- assign dog_img = section.settings.dog_image -%}
         <img
-          src="{{ section.settings.dog_image | image_url: width: 300 }}"
+          src="{{ dog_img | image_url: width: 300 }}"
+          srcset="{{ dog_img | image_url: width: 150 }} 150w, {{ dog_img | image_url: width: 300 }} 300w"
+          sizes="150px"
           alt=""
           width="150"
           height="180"
@@ -37,7 +45,7 @@
     {%- endif -%}
 
   </div>
-    <div class="trust-bar__wave" aria-hidden="true">
+    <div class="trust-bar__wave trust-bar__wave--bottom" aria-hidden="true">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 48" preserveAspectRatio="none">
         <path d="M0,24 C180,48 360,0 540,24 C720,48 900,0 1080,24 C1260,48 1380,12 1440,20 L1440,48 L0,48 Z" fill="#fff"/>
       </svg>
@@ -51,8 +59,7 @@
 .trust-bar {
   background: var(--color-green);
   position: relative;
-  overflow: visible;
-  padding-bottom: 28px;
+  overflow: hidden;
 }
 
 .trust-bar__inner {
@@ -130,8 +137,9 @@
   position: absolute;
   right: var(--page-margin);
   bottom: 0;
-  width: 150px;
+  width: 160px;
   pointer-events: none;
+  z-index: 2;
 }
 
 .trust-bar__dog img {
@@ -140,15 +148,24 @@
   display: block;
   object-fit: contain;
   object-position: bottom;
+  max-height: 180px;
 }
 
 .trust-bar__wave {
-  position: absolute;
-  bottom: -1px;
+  position: relative;
   left: 0;
   right: 0;
   line-height: 0;
   pointer-events: none;
+  z-index: 1;
+}
+
+.trust-bar__wave--top {
+  margin-bottom: -1px;
+}
+
+.trust-bar__wave--bottom {
+  margin-top: -1px;
 }
 
 .trust-bar__wave svg {
