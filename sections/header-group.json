@@ -590,6 +590,202 @@
             "color": "pink",
             "text": "Voor 23:59 besteld, morgen in huis"
           }
+        },
+        "dd_config_5": {
+          "type": "dropdown_config",
+          "settings": {
+            "menu_item_index": 5,
+            "layout_type": "about",
+            "accent_color": "pink",
+            "banner_title": "Over Kwispelbox",
+            "banner_text": "Kwispelbox ontstond uit liefde voor honden en het idee dat iedere hond regelmatig verrast mag worden met iets leuks. Daarom stellen we iedere box met zorg samen, vol leuke speeltjes, knuffels en snacks.",
+            "banner_cta_label": "Lees ons verhaal",
+            "banner_cta_url": "/pages/over-ons",
+            "about_navcard_text": "Samen maken we honden blij!",
+            "about_team_title": "Het Kwispelbox team",
+            "about_team_text": "Een klein team van hondenliefhebbers werkt iedere dag aan het selecteren van de leukste producten en het creëren van blije momenten voor honden en hun baasjes.",
+            "about_team_tagline": "Liefs, team Kwispelbox",
+            "about_brandbar_title": "Samen maken we elke dag een staart blijer!",
+            "about_brandbar_highlight": "staart blijer"
+          }
+        },
+        "ait1": {
+          "type": "about_item",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "heart",
+            "color": "pink",
+            "title": "Ons verhaal",
+            "description": "Het verhaal achter Kwispelbox en onze missie.",
+            "url": "/pages/over-ons"
+          }
+        },
+        "ait2": {
+          "type": "about_item",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "paw",
+            "color": "green",
+            "title": "Waarom Kwispelbox?",
+            "description": "Ontdek wat onze boxen zo speciaal maakt.",
+            "url": "/pages/waarom-kwispelbox"
+          }
+        },
+        "ait3": {
+          "type": "about_item",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "leaf",
+            "color": "green",
+            "title": "Duurzaamheid",
+            "description": "Goed voor jouw hond én voor de wereld.",
+            "url": "/pages/duurzaamheid"
+          }
+        },
+        "ait4": {
+          "type": "about_item",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "users",
+            "color": "orange",
+            "title": "Klantenservice",
+            "description": "We helpen je graag snel en persoonlijk.",
+            "url": "/pages/klantenservice"
+          }
+        },
+        "ait5": {
+          "type": "about_item",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "help",
+            "color": "yellow",
+            "title": "Veelgestelde vragen",
+            "description": "Antwoorden op de meest gestelde vragen.",
+            "url": "/pages/veelgestelde-vragen"
+          }
+        },
+        "ait6": {
+          "type": "about_item",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "mail",
+            "color": "pink",
+            "title": "Contact",
+            "description": "Stel je vraag of stuur ons een bericht.",
+            "url": "/pages/contact"
+          }
+        },
+        "aus1": {
+          "type": "about_usp",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "heart",
+            "color": "pink",
+            "title": "Met liefde samengesteld",
+            "description": "Iedere box wordt met aandacht en zorg samengesteld."
+          }
+        },
+        "aus2": {
+          "type": "about_usp",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "leaf",
+            "color": "green",
+            "title": "Natuurlijke & veilige producten",
+            "description": "Alleen kwaliteit waar wij 100% achter staan."
+          }
+        },
+        "aus3": {
+          "type": "about_usp",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "gift",
+            "color": "orange",
+            "title": "Elke maand een feestje",
+            "description": "Telkens een nieuwe verrassing om uit te pakken."
+          }
+        },
+        "aus4": {
+          "type": "about_usp",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "paw",
+            "color": "green",
+            "title": "Meer dan 1.200 blije honden",
+            "description": "Een groeiende community van blije kwispelaars."
+          }
+        },
+        "avl1": {
+          "type": "about_value",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "heart-handshake",
+            "color": "pink",
+            "text": "Wij steunen regelmatig hondenasielen en dierenprojecten."
+          }
+        },
+        "avl2": {
+          "type": "about_value",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "recycle",
+            "color": "green",
+            "text": "Duurzame verpakkingen, waar mogelijk."
+          }
+        },
+        "avl3": {
+          "type": "about_value",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "handshake",
+            "color": "orange",
+            "text": "Samenwerkingen met lokale partners en leveranciers."
+          }
+        },
+        "au1": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "truck",
+            "color": "green",
+            "text": "Gratis verzending vanaf €75"
+          }
+        },
+        "au2": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "refresh",
+            "color": "orange",
+            "text": "Niet goed? Geld terug"
+          }
+        },
+        "au3": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "shield-check",
+            "color": "green",
+            "text": "100% veilig betalen"
+          }
+        },
+        "au4": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "truck",
+            "color": "pink",
+            "text": "Voor 23:59 besteld, morgen in huis"
+          }
+        },
+        "au5": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "star",
+            "color": "yellow",
+            "text": "Uitstekend beoordeeld 4,9/5"
+          }
         }
       },
       "block_order": [
@@ -646,7 +842,26 @@
         "cu1",
         "cu2",
         "cu3",
-        "cu4"
+        "cu4",
+        "dd_config_5",
+        "ait1",
+        "ait2",
+        "ait3",
+        "ait4",
+        "ait5",
+        "ait6",
+        "aus1",
+        "aus2",
+        "aus3",
+        "aus4",
+        "avl1",
+        "avl2",
+        "avl3",
+        "au1",
+        "au2",
+        "au3",
+        "au4",
+        "au5"
       ],
       "settings": {
         "logo": "shopify://shop_images/Een_titel_toevoegen_2.svg",
