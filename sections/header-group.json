@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Navigatie",
@@ -331,7 +340,8 @@
         "drawer_banner_title": "Lid van de Kwispelclub?",
         "drawer_banner_text": "Spaar Kwispels en ontvang leuke beloningen & verrassingen!",
         "drawer_banner_cta": "Word gratis lid",
-        "drawer_banner_url": "/pages/kwispelclub"
+        "drawer_banner_url": "/pages/kwispelclub",
+        "drawer_banner_image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_17_56_23.png"
       }
     },
     "trust-bar": {
