@@ -5,6 +5,8 @@
     --page-margin:  {{ settings.min_page_margin }}px;
     --font-heading: 'Lilita One', cursive;
     --font-body:    'Karla', sans-serif;
+    /* Skeleton critical.css verwacht deze var voor de body-font */
+    --font-primary--family: var(--font-body);
     --color-pink:   {{ settings.color_brand_pink }};
     --color-green:  {{ settings.color_brand_green }};
     --color-orange: {{ settings.color_brand_orange }};
@@ -18,5 +20,9 @@
     --radius-md:    16px;
     --radius-lg:    24px;
     --radius-pill:  999px;
+    /* Skeleton critical.css verwacht deze vars op de body/inputs/dialogs */
+    --color-background:           #fff;
+    --color-foreground:           {{ settings.color_body }};
+    --style-border-radius-inputs: var(--radius-sm);
   }
 {%- endstyle -%}
