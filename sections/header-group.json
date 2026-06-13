@@ -329,7 +329,8 @@
         "li_club_6"
       ],
       "settings": {
-        "logo_width": 160,
+        "logo": "shopify://shop_images/Een_titel_toevoegen_2.svg",
+        "logo_width": 240,
         "menu": "main-menu",
         "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
