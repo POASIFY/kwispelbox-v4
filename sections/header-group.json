@@ -386,9 +386,7 @@
         "u3",
         "u4"
       ],
-      "settings": {
-        "dog_image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_17_56_23.png"
-      }
+      "settings": {}
     },
     "hero_mbMyWU": {
       "type": "hero",
