@@ -398,6 +398,198 @@
             "color": "yellow",
             "text": "Uitstekend beoordeeld 4,9/5"
           }
+        },
+        "dd_config_4": {
+          "type": "dropdown_config",
+          "settings": {
+            "menu_item_index": 4,
+            "layout_type": "club",
+            "accent_color": "pink",
+            "club_intro_title": "Welkom bij de Kwispelclub",
+            "club_intro_highlight": "Kwispelclub",
+            "club_intro_text": "Meer plezier, meer voordelen voor jou en je hond.",
+            "club_intro_note": "Het is zo geregeld!",
+            "banner_cta_label": "Word gratis lid",
+            "banner_cta_url": "/pages/kwispelclub",
+            "club_rewards_title": "Spaar Kwispels en kies je beloning!",
+            "view_all_label": "Bekijk alle beloningen",
+            "view_all_url": "/pages/beloningen",
+            "club_motm_title": "Hond van de maand",
+            "club_motm_name": "Luna ♡",
+            "club_motm_quote": "Luna is dol op haar Kwispelbox! Vooral het nieuwe speeltje is favoriet.",
+            "club_motm_cta": "Deel jouw foto",
+            "club_motm_cta_url": "/pages/hond-van-de-maand",
+            "campaign_title": "Extra verrassing voor nieuwe leden!",
+            "campaign_text": "Meld je vandaag aan en ontvang 50 Kwispels cadeau. Dat is goed voor een leuke beloning!",
+            "campaign_highlight": "50 Kwispels cadeau",
+            "campaign_cta_label": "Meld je gratis aan",
+            "campaign_cta_url": "/pages/kwispelclub"
+          }
+        },
+        "cb1": {
+          "type": "club_benefit",
+          "settings": {
+            "menu_item_index": 4,
+            "text": "Gratis lidmaatschap"
+          }
+        },
+        "cb2": {
+          "type": "club_benefit",
+          "settings": {
+            "menu_item_index": 4,
+            "text": "Exclusieve kortingen"
+          }
+        },
+        "cb3": {
+          "type": "club_benefit",
+          "settings": {
+            "menu_item_index": 4,
+            "text": "Sparen voor leuke beloningen"
+          }
+        },
+        "cb4": {
+          "type": "club_benefit",
+          "settings": {
+            "menu_item_index": 4,
+            "text": "Verrassingen & acties"
+          }
+        },
+        "cb5": {
+          "type": "club_benefit",
+          "settings": {
+            "menu_item_index": 4,
+            "text": "Hond van de maand"
+          }
+        },
+        "cit1": {
+          "type": "club_item",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "paw",
+            "color": "green",
+            "title": "Word gratis lid",
+            "description": "Meld je aan in een paar seconden en profiteer direct",
+            "url": "/pages/kwispelclub"
+          }
+        },
+        "cit2": {
+          "type": "club_item",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "coins",
+            "color": "yellow",
+            "title": "Kwispels sparen",
+            "description": "Spaar Kwispels bij elke bestelling en wissel ze in voor leuke beloningen",
+            "url": "/pages/kwispels-sparen"
+          }
+        },
+        "cit3": {
+          "type": "club_item",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "gift",
+            "color": "pink",
+            "title": "Exclusieve kortingen",
+            "description": "Alleen voor leden: speciale acties en kortingen het hele jaar door",
+            "url": "/pages/kortingen"
+          }
+        },
+        "cit4": {
+          "type": "club_item",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "camera",
+            "color": "orange",
+            "title": "Hond van de maand",
+            "description": "Deel jouw foto en maak kans op een plekje in de spotlight",
+            "url": "/pages/hond-van-de-maand"
+          }
+        },
+        "cit5": {
+          "type": "club_item",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "party",
+            "color": "purple",
+            "title": "Verjaardagsvoordelen",
+            "description": "Tijd voor taart! Ontvang een leuke verrassing voor jouw hond",
+            "url": "/pages/verjaardag"
+          }
+        },
+        "cit6": {
+          "type": "club_item",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "mail",
+            "color": "green",
+            "title": "Clubnieuws & surprises",
+            "description": "Als eerste op de hoogte van nieuwe boxen, acties en verrassingen.",
+            "url": "/pages/clubnieuws"
+          }
+        },
+        "crw1": {
+          "type": "club_reward",
+          "settings": {
+            "menu_item_index": 4,
+            "points": "200 Kwispels"
+          }
+        },
+        "crw2": {
+          "type": "club_reward",
+          "settings": {
+            "menu_item_index": 4,
+            "points": "400 Kwispels"
+          }
+        },
+        "crw3": {
+          "type": "club_reward",
+          "settings": {
+            "menu_item_index": 4,
+            "points": "600 Kwispels"
+          }
+        },
+        "crw4": {
+          "type": "club_reward",
+          "settings": {
+            "menu_item_index": 4,
+            "points": "1000 Kwispels"
+          }
+        },
+        "cu1": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "truck",
+            "color": "green",
+            "text": "Gratis verzending vanaf €75"
+          }
+        },
+        "cu2": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "refresh",
+            "color": "orange",
+            "text": "Niet goed? Geld terug"
+          }
+        },
+        "cu3": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "shield-check",
+            "color": "green",
+            "text": "100% veilig betalen"
+          }
+        },
+        "cu4": {
+          "type": "se_usp",
+          "settings": {
+            "menu_item_index": 4,
+            "icon": "truck",
+            "color": "pink",
+            "text": "Voor 23:59 besteld, morgen in huis"
+          }
         }
       },
       "block_order": [
@@ -434,7 +626,27 @@
         "shu2",
         "shu3",
         "shu4",
-        "shu5"
+        "shu5",
+        "dd_config_4",
+        "cb1",
+        "cb2",
+        "cb3",
+        "cb4",
+        "cb5",
+        "cit1",
+        "cit2",
+        "cit3",
+        "cit4",
+        "cit5",
+        "cit6",
+        "crw1",
+        "crw2",
+        "crw3",
+        "crw4",
+        "cu1",
+        "cu2",
+        "cu3",
+        "cu4"
       ],
       "settings": {
         "logo": "shopify://shop_images/Een_titel_toevoegen_2.svg",
