@@ -80,7 +80,9 @@
         "tb3",
         "tb4"
       ],
-      "settings": {}
+      "settings": {
+        "show_subscription": true
+      }
     },
     "contents": {
       "type": "box-contents",
