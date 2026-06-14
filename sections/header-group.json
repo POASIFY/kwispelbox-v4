@@ -21,6 +21,7 @@
             "layout_type": "featured",
             "accent_color": "green",
             "col1_desc": "Onze originele boxen zonder thema. Elke maand een feestje!",
+            "links_heading": "Zo werkt het",
             "link_list": "menu-verrassingsboxen",
             "view_all_label": "Vergelijk alle boxen",
             "view_all_url": "",
@@ -42,8 +43,7 @@
             "about_tagline": "Samen maken we honden blij!",
             "about_tagline_sub": "",
             "about_team_title": "Het Kwispelbox team",
-            "about_team_tagline": "Liefs, team Kwispelbox",
-            "links_heading": "Zo werkt het"
+            "about_team_tagline": "Liefs, team Kwispelbox"
           }
         },
         "prod_1": {
@@ -68,7 +68,7 @@
           "type": "dropdown_product",
           "settings": {
             "menu_item_index": 1,
-            "product": "mega-kwispelbox",
+            "product": "kwispelbox",
             "badge": "",
             "description": "Voor honden die van veel afwisseling houden"
           }
@@ -405,20 +405,20 @@
             "menu_item_index": 4,
             "layout_type": "club",
             "accent_color": "pink",
-            "club_intro_title": "Welkom bij de Kwispelclub",
-            "club_intro_highlight": "Kwispelclub",
-            "club_intro_text": "Meer plezier, meer voordelen voor jou en je hond.",
-            "club_intro_note": "Het is zo geregeld!",
-            "banner_cta_label": "Word gratis lid",
-            "banner_cta_url": "/pages/kwispelclub",
-            "club_rewards_title": "Spaar Kwispels en kies je beloning!",
             "view_all_label": "Bekijk alle beloningen",
             "view_all_url": "/pages/beloningen",
+            "banner_cta_label": "Word gratis lid",
+            "banner_cta_url": "/pages/kwispelclub",
+            "club_intro_title": "Welkom bij de Kwispelclub",
+            "club_intro_text": "Meer plezier, meer voordelen voor jou en je hond.",
+            "club_rewards_title": "Spaar Kwispels en kies je beloning!",
             "club_motm_title": "Hond van de maand",
             "club_motm_name": "Luna ♡",
             "club_motm_quote": "Luna is dol op haar Kwispelbox! Vooral het nieuwe speeltje is favoriet.",
             "club_motm_cta": "Deel jouw foto",
             "club_motm_cta_url": "/pages/hond-van-de-maand",
+            "club_intro_highlight": "Kwispelclub",
+            "club_intro_note": "Het is zo geregeld!",
             "campaign_title": "Extra verrassing voor nieuwe leden!",
             "campaign_text": "Meld je vandaag aan en ontvang 50 Kwispels cadeau. Dat is goed voor een leuke beloning!",
             "campaign_highlight": "50 Kwispels cadeau",
@@ -601,10 +601,10 @@
             "banner_text": "Kwispelbox ontstond uit liefde voor honden en het idee dat iedere hond regelmatig verrast mag worden met iets leuks. Daarom stellen we iedere box met zorg samen, vol leuke speeltjes, knuffels en snacks.",
             "banner_cta_label": "Lees ons verhaal",
             "banner_cta_url": "/pages/over-ons",
-            "about_navcard_text": "Samen maken we honden blij!",
             "about_team_title": "Het Kwispelbox team",
-            "about_team_text": "Een klein team van hondenliefhebbers werkt iedere dag aan het selecteren van de leukste producten en het creëren van blije momenten voor honden en hun baasjes.",
             "about_team_tagline": "Liefs, team Kwispelbox",
+            "about_team_text": "Een klein team van hondenliefhebbers werkt iedere dag aan het selecteren van de leukste producten en het creëren van blije momenten voor honden en hun baasjes.",
+            "about_navcard_text": "Samen maken we honden blij!",
             "about_brandbar_title": "Samen maken we elke dag een staart blijer!",
             "about_brandbar_highlight": "staart blijer"
           }
