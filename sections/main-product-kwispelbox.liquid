@@ -9,7 +9,7 @@
 {%- assign badge_blocks = section.blocks | where: 'type', 'trust_badge' -%}
 {%- assign current = product.selected_or_first_available_variant -%}
 
-<div class="pdp full-width">
+<div class="pdp pdp--{{ section.settings.accent | default: 'green' }} full-width">
   <div class="pdp__inner">
 
     <div class="pdp-hero">
@@ -63,9 +63,6 @@
           {%- if section.settings.review_count != blank -%}<span class="pdp-info__reviews">{{ section.settings.review_count }}</span>{%- endif -%}
         </div>
 
-        {%- if section.settings.intro != blank -%}<p class="pdp-info__intro">{{ section.settings.intro }}</p>
-        {%- elsif product.description != blank -%}<div class="pdp-info__intro">{{ product.description }}</div>{%- endif -%}
-
         <div class="pdp-info__price" data-price-wrap>
           <span class="pdp-info__price-now" data-price>{{ current.price | money }}</span>
           {%- if current.compare_at_price > current.price -%}
@@ -73,7 +70,19 @@
           {%- else -%}
             <span class="pdp-info__price-was" data-compare hidden></span>
           {%- endif -%}
+          {%- if section.settings.urgency_text != blank -%}<span class="pdp-info__urgency">{{ section.settings.urgency_text }}</span>{%- endif -%}
         </div>
+
+        {%- if section.settings.countdown_date != blank -%}
+          <div class="pdp-countdown" data-countdown="{{ section.settings.countdown_date }}">
+            <span class="pdp-countdown__icon" aria-hidden="true">{%- render 'lucide', icon: 'sparkles' -%}</span>
+            <span class="pdp-countdown__label">{{ section.settings.countdown_label | default: 'Nog te bestellen:' }}</span>
+            <span class="pdp-countdown__time" data-countdown-time>—</span>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.intro != blank -%}<div class="pdp-info__intro">{{ section.settings.intro }}</div>
+        {%- elsif product.description != blank -%}<div class="pdp-info__intro">{{ product.description }}</div>{%- endif -%}
 
         {%- if badge_blocks.size > 0 -%}
           <ul class="pdp-info__badges" role="list">
@@ -164,13 +173,36 @@
         {%- endform -%}
       </div>
     </div>
+
+    <div class="pdp-sticky" data-sticky>
+      <div class="pdp-sticky__info">
+        <span class="pdp-sticky__name">{{ product.title }}</span>
+        <span class="pdp-sticky__price" data-sticky-price>{{ current.price | money }}</span>
+      </div>
+      <button type="submit" form="pdp-form" name="add" class="pdp-sticky__btn"{% unless product.available %} disabled{% endunless %}>
+        {% if product.available %}{{ section.settings.atc_label | default: 'In winkelwagen' }}{% else %}Uitverkocht{% endif %}
+        <span class="pdp-sticky__paw" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+      </button>
+    </div>
   </div>
 </div>
 
 {% stylesheet %}
 
-.pdp { background: var(--color-cream); padding: 32px 0 56px; }
+.pdp { --pac: var(--color-green); --pac-soft: #e8f5e2; background: var(--color-cream); padding: 32px 0 56px; }
+.pdp--green { --pac: var(--color-green); --pac-soft: #e8f5e2; }
+.pdp--pink { --pac: var(--color-pink); --pac-soft: #ffe0ee; }
+.pdp--orange { --pac: var(--color-orange); --pac-soft: #fff0e4; }
+.pdp--yellow { --pac: #d99100; --pac-soft: #fffae0; }
+.pdp--purple { --pac: #8b5fd1; --pac-soft: #efe6fb; }
 .pdp__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+/* urgency + countdown */
+.pdp-info__urgency { display: inline-flex; align-items: center; background: var(--pac-soft); color: var(--pac); font-family: var(--font-body); font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; padding: 5px 12px; border-radius: var(--radius-pill); }
+.pdp-countdown { display: inline-flex; align-items: center; gap: 9px; background: #fff; border: 1.5px solid var(--pac); border-radius: 16px; padding: 10px 16px; margin-bottom: 18px; }
+.pdp-countdown__icon { display: inline-flex; color: var(--pac); }
+.pdp-countdown__icon .lucide { width: 17px; height: 17px; }
+.pdp-countdown__label { font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-ink); }
+.pdp-countdown__time { font-family: var(--font-heading); font-size: .95rem; color: var(--pac); font-variant-numeric: tabular-nums; }
 .pdp-hero { display: flex; flex-direction: column; gap: 28px; }
 
 /* ── Galerij ──────────────────────────────────────────── */
@@ -200,7 +232,7 @@
 .pdp-info__reviews { color: var(--color-muted); font-weight: 600; }
 .pdp-info__intro { font-family: var(--font-body); font-size: 1rem; line-height: 1.6; color: var(--color-body); margin: 0 0 20px; }
 .pdp-info__price { display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px; }
-.pdp-info__price-now { font-family: var(--font-heading); font-size: 2.2rem; color: var(--color-green); }
+.pdp-info__price-now { font-family: var(--font-heading); font-size: 2.2rem; color: var(--pac); }
 .pdp-info__price-was { font-family: var(--font-body); font-size: 1.1rem; color: var(--color-muted); text-decoration: line-through; }
 .pdp-info__badges { list-style: none; margin: 0 0 24px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
 .pdp-info__badges li { display: flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-ink); }
@@ -218,7 +250,7 @@
 .pdp-opt { position: relative; display: grid; grid-template-columns: 72px 1fr auto; grid-template-areas: "media name price" "media desc price" "media count price"; align-items: center; column-gap: 14px; row-gap: 2px; background: #fff; border: 2px solid var(--color-line); border-radius: 20px; padding: 14px; cursor: pointer; transition: border-color 180ms, box-shadow 180ms, transform 180ms; }
 .pdp-opt:hover { transform: translateY(-2px); }
 .pdp-opt input { position: absolute; opacity: 0; pointer-events: none; }
-.pdp-opt:has(input:checked) { border-color: var(--color-green); box-shadow: 0 10px 28px rgba(102, 170, 68, .18); }
+.pdp-opt:has(input:checked) { border-color: var(--pac); box-shadow: 0 10px 28px rgba(61, 34, 9, .14); }
 .pdp-opt--sold { opacity: .55; }
 .pdp-opt__media { grid-area: media; width: 72px; height: 72px; border-radius: 14px; overflow: hidden; background: #e8f5e2; display: flex; align-items: center; justify-content: center; }
 .pdp-opt__media img { width: 100%; height: 100%; object-fit: cover; }
@@ -232,7 +264,7 @@
 .pdp-opt__badge--pink { background: var(--color-pink); }
 .pdp-opt__badge--green { background: var(--color-green); }
 .pdp-opt__badge--orange { background: var(--color-orange); }
-.pdp-opt__check { position: absolute; top: 12px; right: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--color-green); color: #fff; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(.6); transition: opacity 180ms, transform 180ms; }
+.pdp-opt__check { position: absolute; top: 12px; right: 12px; width: 24px; height: 24px; border-radius: 50%; background: var(--pac); color: #fff; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(.6); transition: opacity 180ms, transform 180ms; }
 .pdp-opt__check .lucide { width: 14px; height: 14px; }
 .pdp-opt:has(input:checked) .pdp-opt__check { opacity: 1; transform: scale(1); }
 
@@ -255,10 +287,10 @@
 .pdp-personalize__note .lucide { width: 15px; height: 15px; color: var(--color-orange); flex-shrink: 0; }
 
 /* ── Add to cart ──────────────────────────────────────── */
-.pdp-atc { background: #e8f5e2; border: 1.5px solid rgba(102, 170, 68, .22); border-radius: 24px; padding: 22px; }
+.pdp-atc { background: var(--pac-soft); border: 1.5px solid color-mix(in srgb, var(--pac) 30%, transparent); border-radius: 24px; padding: 22px; }
 .pdp-atc__summary { display: flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); margin: 0 0 16px; }
-.pdp-atc__btn { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 18px 24px; background: var(--color-green); color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.2rem; cursor: pointer; transition: background 160ms, transform 160ms, box-shadow 160ms; }
-.pdp-atc__btn:hover:not(:disabled) { background: #5a9a3b; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(102, 170, 68, .35); }
+.pdp-atc__btn { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 18px 24px; background: var(--pac); color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.2rem; cursor: pointer; transition: filter 160ms, transform 160ms, box-shadow 160ms; }
+.pdp-atc__btn:hover:not(:disabled) { filter: brightness(.93); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(61, 34, 9, .22); }
 .pdp-atc__btn:disabled { background: var(--color-muted); cursor: not-allowed; }
 .pdp-atc__btn-paw { display: inline-flex; animation: pdp-wag 1.6s ease-in-out infinite; }
 .pdp-atc__btn-paw .lucide { width: 22px; height: 22px; }
@@ -267,6 +299,28 @@
 .pdp-atc__trust li { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: .78rem; font-weight: 700; color: var(--color-ink); }
 .pdp-atc__trust li span { display: inline-flex; color: var(--color-green); }
 .pdp-atc__trust li .lucide { width: 15px; height: 15px; }
+
+/* ── Sticky mobiele koopbalk ──────────────────────────── */
+.pdp-sticky { display: none; }
+.pdp-sticky__paw { display: inline-flex; }
+@media (max-width: 749px) {
+  .pdp-sticky {
+    display: flex; align-items: center; gap: 12px;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    background: #fff; border-top: 1.5px solid var(--color-line);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    box-shadow: 0 -6px 20px rgba(61, 34, 9, .12);
+    transform: translateY(120%); transition: transform 280ms cubic-bezier(.4, 0, .2, 1);
+  }
+  .pdp-sticky.is-visible { transform: translateY(0); }
+  .pdp-sticky__info { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
+  .pdp-sticky__name { font-family: var(--font-body); font-size: .76rem; font-weight: 700; color: var(--color-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 36vw; }
+  .pdp-sticky__price { font-family: var(--font-heading); font-size: 1.15rem; color: var(--pac); }
+  .pdp-sticky__btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 18px; background: var(--pac); color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; cursor: pointer; }
+  .pdp-sticky__btn:disabled { background: var(--color-muted); }
+  .pdp-sticky__paw .lucide { width: 17px; height: 17px; }
+}
+@media (prefers-reduced-motion: reduce) { .pdp-sticky { transition: none; } }
 
 /* ── Tablet/Desktop ───────────────────────────────────── */
 @media (min-width: 750px) {
@@ -310,10 +364,14 @@
     var hidden = form.querySelector('[data-variant-id]');
     var priceEl = document.querySelector('[data-price]');
     var compareEl = document.querySelector('[data-compare]');
+    var stickyPrice = document.querySelector('[data-sticky-price]');
     form.querySelectorAll('input[name="id"][type="radio"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         if (hidden) hidden.value = radio.value;
-        if (priceEl && radio.dataset.variantPrice) priceEl.textContent = radio.dataset.variantPrice;
+        if (radio.dataset.variantPrice) {
+          if (priceEl) priceEl.textContent = radio.dataset.variantPrice;
+          if (stickyPrice) stickyPrice.textContent = radio.dataset.variantPrice;
+        }
         if (compareEl) {
           if (radio.dataset.variantCompare) { compareEl.textContent = radio.dataset.variantCompare; compareEl.hidden = false; }
           else { compareEl.hidden = true; }
@@ -321,6 +379,35 @@
       });
     });
   }
+
+  /* Sticky koopbalk: tonen wanneer hoofd-ATC uit beeld is en niet onderaan de pagina */
+  var sticky = document.querySelector('[data-sticky]');
+  var mainBtn = form ? form.querySelector('.pdp-atc__btn') : null;
+  if (sticky && mainBtn && 'IntersectionObserver' in window) {
+    var atcVisible = true, nearBottom = false;
+    var refresh = function () { sticky.classList.toggle('is-visible', !atcVisible && !nearBottom); };
+    new IntersectionObserver(function (entries) { atcVisible = entries[0].isIntersecting; refresh(); }, { rootMargin: '0px 0px -10% 0px' }).observe(mainBtn);
+    window.addEventListener('scroll', function () {
+      nearBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 90);
+      refresh();
+    }, { passive: true });
+  }
+
+  /* Countdown */
+  document.querySelectorAll('[data-countdown]').forEach(function (el) {
+    var target = new Date(el.getAttribute('data-countdown')).getTime();
+    var out = el.querySelector('[data-countdown-time]');
+    if (isNaN(target) || !out) return;
+    var tick = function () {
+      var diff = target - Date.now();
+      if (diff <= 0) { el.style.display = 'none'; return; }
+      var d = Math.floor(diff / 86400000), h = Math.floor(diff % 86400000 / 3600000),
+          m = Math.floor(diff % 3600000 / 60000), s = Math.floor(diff % 60000 / 1000);
+      out.textContent = (d > 0 ? d + 'd ' : '') + h + 'u ' + m + 'm ' + s + 's';
+    };
+    tick();
+    setInterval(tick, 1000);
+  });
 }());
 {% endjavascript %}
 
@@ -337,6 +424,20 @@
     { "type": "text", "id": "rating", "label": "Beoordeling", "default": "4,9/5" },
     { "type": "text", "id": "review_count", "label": "Aantal reviews", "default": "1.200+ reviews" },
     { "type": "richtext", "id": "intro", "label": "Emotionele omschrijving (laat leeg voor productbeschrijving)", "default": "<p>Iedere maand stellen we met liefde een verrassingsbox samen, boordevol speelplezier en lekkers. Want jouw hond verdient telkens weer een feestje!</p>" },
+    { "type": "header", "content": "Vormgeving & urgentie" },
+    {
+      "type": "select", "id": "accent", "label": "Accentkleur (prijs, knop, selectie)", "default": "green",
+      "options": [
+        { "value": "green", "label": "Groen" },
+        { "value": "pink", "label": "Roze" },
+        { "value": "orange", "label": "Oranje" },
+        { "value": "yellow", "label": "Geel" },
+        { "value": "purple", "label": "Paars" }
+      ]
+    },
+    { "type": "text", "id": "urgency_text", "label": "Urgentie-label (bv. Limited edition · op = op)" },
+    { "type": "text", "id": "countdown_date", "label": "Countdown einddatum", "info": "Formaat YYYY-MM-DD (of YYYY-MM-DDTHH:MM). Leeg = geen countdown." },
+    { "type": "text", "id": "countdown_label", "label": "Countdown label", "default": "Nog te bestellen:" },
     { "type": "header", "content": "Variant-keuze" },
     { "type": "text", "id": "options_title", "label": "Titel boven kaarten", "default": "Kies jouw box" },
     { "type": "header", "content": "Personalisatie" },

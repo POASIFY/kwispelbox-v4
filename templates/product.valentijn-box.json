@@ -1,0 +1,230 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product-kwispelbox",
+      "blocks": {
+        "o1": {
+          "type": "box_option",
+          "settings": {
+            "variant_title": "Mini",
+            "description": "Voor kleinere honden",
+            "item_count": "3–4 verrassingen"
+          }
+        },
+        "o2": {
+          "type": "box_option",
+          "settings": {
+            "variant_title": "Happy",
+            "description": "Onze populairste box",
+            "item_count": "5–6 verrassingen",
+            "badge_text": "Meest gekozen",
+            "badge_color": "pink"
+          }
+        },
+        "o3": {
+          "type": "box_option",
+          "settings": {
+            "variant_title": "Mega",
+            "description": "Voor grote avonturiers",
+            "item_count": "7–8 verrassingen"
+          }
+        },
+        "tb1": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "truck",
+            "color": "green",
+            "text": "Gratis verzending vanaf €75"
+          }
+        },
+        "tb2": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "sparkles",
+            "color": "orange",
+            "text": "Beperkte oplage"
+          }
+        },
+        "tb3": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "shield-check",
+            "color": "green",
+            "text": "Veilig betalen"
+          }
+        },
+        "tb4": {
+          "type": "trust_badge",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "text": "Met liefde samengesteld"
+          }
+        }
+      },
+      "block_order": [
+        "o1",
+        "o2",
+        "o3",
+        "tb1",
+        "tb2",
+        "tb3",
+        "tb4"
+      ],
+      "settings": {
+        "badge_primary": "Valentijn",
+        "badge_secondary": "Beperkt",
+        "eyebrow": "Valentijnseditie",
+        "intro": "<p>Voor jouw allerbeste vriend! Een box boordevol liefde, knuffels en hartverwarmende verrassingen voor de liefste hond.</p>",
+        "accent": "pink",
+        "urgency_text": "Vier de liefde · beperkte oplage",
+        "options_title": "Kies jouw maat",
+        "atc_label": "Verwen mijn allerbeste vriend",
+        "atc_summary": "Jouw hond ontvangt een unieke special edition vol verrassingen"
+      }
+    },
+    "contents": {
+      "type": "box-contents",
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {
+            "icon": "bone",
+            "color": "green",
+            "title": "Themaspeeltjes",
+            "text": "Speeltjes in het thema van deze editie."
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "icon": "leaf",
+            "color": "orange",
+            "title": "Gezonde snacks",
+            "text": "Natuurlijke, smakelijke beloningen."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "icon": "sparkles",
+            "color": "pink",
+            "title": "Thema-verrassing",
+            "text": "Een unieke verrassing passend bij het seizoen."
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "icon": "gift",
+            "color": "yellow",
+            "title": "Extra cadeautje",
+            "text": "Een klein extraatje, alleen in deze editie."
+          }
+        },
+        "ct1": {
+          "type": "trust",
+          "settings": {
+            "icon": "sparkles",
+            "color": "orange",
+            "title": "Limited edition · op = op"
+          }
+        },
+        "ct2": {
+          "type": "trust",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "Meer dan 1.200 blije honden"
+          }
+        },
+        "ct3": {
+          "type": "trust",
+          "settings": {
+            "icon": "truck",
+            "color": "green",
+            "title": "Voor 23:59 besteld, morgen in huis"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "ct1",
+        "ct2",
+        "ct3"
+      ],
+      "settings": {
+        "heading": "Wat zit er in de Valentijn Box?",
+        "intro": "Iedere editie is uniek en gevuld met thema-verrassingen, speelgoed en lekkers."
+      }
+    },
+    "faq": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Hoe lang is deze editie beschikbaar?",
+            "answer": "Special editions zijn beperkt beschikbaar — op = op! Bestel op tijd om er zeker van te zijn."
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan ik kiezen welke maat box ik krijg?",
+            "answer": "Ja! Kies bovenaan voor Mini, Happy of Mega zodat de box past bij jouw hond."
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Houden jullie rekening met allergieën?",
+            "answer": "Zeker! Vul de allergieën in bij het personaliseren en we stellen de box veilig samen."
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan ik de box cadeau geven?",
+            "answer": "Absoluut — voeg een persoonlijk bericht toe, perfect als cadeau voor een hondenliefhebber."
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "title": "Veelgestelde vragen"
+      }
+    },
+    "cta": {
+      "type": "product-cta",
+      "settings": {
+        "title": "Vier de liefde met jouw hond",
+        "text": "Een liefdevolle verrassing voor jouw trouwe vriend. Beperkt beschikbaar!",
+        "button_label": "Bestel deze editie"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "contents",
+    "faq",
+    "cta"
+  ]
+}
