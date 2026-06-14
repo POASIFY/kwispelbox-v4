@@ -81,7 +81,10 @@
         "tb4"
       ],
       "settings": {
-        "show_subscription": true
+        "show_subscription": true,
+        "intro": "<p>Stel je voor: de bel gaat en je hond rent al naar de deur. Elke Kwispelbox is een cadeautje dat met liefde voor jouw beste vriend is uitgezocht — boordevol speelplezier, knuffels en lekkers. Dat moment vlak voor het uitpakken? Daar doen we het voor.</p>",
+        "atc_summary": "Jouw hond krijgt een cadeautje dat met liefde is ingepakt",
+        "options_title": "Kies het cadeautje"
       }
     },
     "contents": {
@@ -166,7 +169,10 @@
         "ct3",
         "ct4"
       ],
-      "settings": {}
+      "settings": {
+        "heading": "Een kijkje in het cadeautje",
+        "intro": "Elke box is een cadeautje om samen uit te pakken — vol thema-verrassingen, speelgoed en lekkers."
+      }
     },
     "how": {
       "type": "product-how-it-works",
@@ -467,7 +473,11 @@
     },
     "cta": {
       "type": "product-cta",
-      "settings": {}
+      "settings": {
+        "title": "Klaar om jouw hond te verrassen?",
+        "text": "Geef je beste vriend elke maand het moment waar hij niet meer op kan wachten.",
+        "button_label": "Verras je hond"
+      }
     }
   },
   "order": [

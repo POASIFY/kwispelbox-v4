@@ -12,27 +12,165 @@
     "main": {
       "type": "kwispelclub-page",
       "blocks": {
-        "b1": { "type": "benefit", "settings": { "icon": "sparkles", "color": "pink", "title": "Exclusieve acties & verrassingen", "text": "Profiteer van ledenacties en leuke verrassingen het hele jaar door." } },
-        "b2": { "type": "benefit", "settings": { "icon": "coins", "color": "yellow", "title": "Spaar Kwispels", "text": "Verzamel Kwispels en wissel ze in voor leuke beloningen." } },
-        "b3": { "type": "benefit", "settings": { "icon": "camera", "color": "orange", "title": "Hond van de maand", "text": "Stuur jouw foto in en maak kans op de spotlight." } },
-        "b4": { "type": "benefit", "settings": { "icon": "crown", "color": "green", "title": "Ledenvoordelen", "text": "Voorrang op special editions en verrassingscadeautjes." } },
-        "s1": { "type": "step", "settings": { "icon": "user-round", "color": "green", "title": "Word gratis lid", "text": "Meld je in een paar seconden gratis aan." } },
-        "s2": { "type": "step", "settings": { "icon": "coins", "color": "yellow", "title": "Verzamel Kwispels", "text": "Spaar bij aankopen, reviews en acties." } },
-        "s3": { "type": "step", "settings": { "icon": "gift", "color": "orange", "title": "Wissel in voor beloningen", "text": "Ruil je Kwispels in voor leuke cadeautjes." } },
-        "s4": { "type": "step", "settings": { "icon": "sparkles", "color": "pink", "title": "Ontvang exclusieve acties", "text": "Leden krijgen toegang tot speciale acties en edities." } },
-        "s5": { "type": "step", "settings": { "icon": "heart", "color": "pink", "title": "Word deel van de familie", "text": "Jouw hond hoort helemaal bij de Kwispelbox familie!" } },
-        "t1": { "type": "trust", "settings": { "icon": "paw", "color": "green", "title": "1.200+ blije honden", "text": "Een groeiende community" } },
-        "t2": { "type": "trust", "settings": { "icon": "star", "color": "yellow", "title": "4,9/5", "text": "Uitstekend beoordeeld" } },
-        "t3": { "type": "trust", "settings": { "icon": "heart", "color": "pink", "title": "Met liefde samengesteld", "text": "Iedere box met zorg" } },
-        "t4": { "type": "trust", "settings": { "icon": "shield-check", "color": "green", "title": "Veilig en betrouwbaar", "text": "Veilig betalen & lid worden" } },
-        "m1": { "type": "member", "settings": {} },
-        "m2": { "type": "member", "settings": {} },
-        "m3": { "type": "member", "settings": {} },
-        "m4": { "type": "member", "settings": {} }
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "sparkles",
+            "color": "pink",
+            "title": "Exclusieve acties & verrassingen",
+            "text": "Profiteer van ledenacties en leuke verrassingen het hele jaar door."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "coins",
+            "color": "yellow",
+            "title": "Spaar Kwispels",
+            "text": "Verzamel Kwispels en wissel ze in voor leuke beloningen."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "camera",
+            "color": "orange",
+            "title": "Hond van de maand",
+            "text": "Stuur jouw foto in en maak kans op de spotlight."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "crown",
+            "color": "green",
+            "title": "Ledenvoordelen",
+            "text": "Voorrang op special editions en verrassingscadeautjes."
+          }
+        },
+        "s1": {
+          "type": "step",
+          "settings": {
+            "icon": "user-round",
+            "color": "green",
+            "title": "Word gratis lid",
+            "text": "Meld je in een paar seconden gratis aan."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "icon": "coins",
+            "color": "yellow",
+            "title": "Verzamel Kwispels",
+            "text": "Spaar bij aankopen, reviews en acties."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "icon": "gift",
+            "color": "orange",
+            "title": "Wissel in voor beloningen",
+            "text": "Ruil je Kwispels in voor leuke cadeautjes."
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "icon": "sparkles",
+            "color": "pink",
+            "title": "Ontvang exclusieve acties",
+            "text": "Leden krijgen toegang tot speciale acties en edities."
+          }
+        },
+        "s5": {
+          "type": "step",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "Word deel van de familie",
+            "text": "Jouw hond hoort helemaal bij de Kwispelbox familie!"
+          }
+        },
+        "t1": {
+          "type": "trust",
+          "settings": {
+            "icon": "paw",
+            "color": "green",
+            "title": "1.200+ blije honden",
+            "text": "Een groeiende community"
+          }
+        },
+        "t2": {
+          "type": "trust",
+          "settings": {
+            "icon": "star",
+            "color": "yellow",
+            "title": "4,9/5",
+            "text": "Uitstekend beoordeeld"
+          }
+        },
+        "t3": {
+          "type": "trust",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "Met liefde samengesteld",
+            "text": "Iedere box met zorg"
+          }
+        },
+        "t4": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield-check",
+            "color": "green",
+            "title": "Veilig en betrouwbaar",
+            "text": "Veilig betalen & lid worden"
+          }
+        },
+        "m1": {
+          "type": "member",
+          "settings": {}
+        },
+        "m2": {
+          "type": "member",
+          "settings": {}
+        },
+        "m3": {
+          "type": "member",
+          "settings": {}
+        },
+        "m4": {
+          "type": "member",
+          "settings": {}
+        }
       },
-      "block_order": ["b1", "b2", "b3", "b4", "s1", "s2", "s3", "s4", "s5", "t1", "t2", "t3", "t4", "m1", "m2", "m3", "m4"],
-      "settings": {}
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s5",
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ],
+      "settings": {
+        "hero_text": "Als lid ontvang je exclusieve voordelen, verrassingen en leuke momenten voor jouw hond. Want samen elke maand uitpakken is het leukst — helemaal gratis."
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

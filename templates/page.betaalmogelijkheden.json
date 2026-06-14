@@ -12,22 +12,113 @@
     "main": {
       "type": "payment-page",
       "blocks": {
-        "p1": { "type": "payment", "settings": { "name": "iDEAL", "description": "Direct betalen via je eigen bank" } },
-        "p2": { "type": "payment", "settings": { "name": "Klarna", "description": "Achteraf betalen, makkelijk en flexibel" } },
-        "p3": { "type": "payment", "settings": { "name": "Mastercard", "description": "Veilig betalen met creditcard" } },
-        "p4": { "type": "payment", "settings": { "name": "Visa", "description": "Veilig betalen met creditcard" } },
-        "p5": { "type": "payment", "settings": { "name": "PayPal", "description": "Betaal snel met je PayPal-account" } },
-        "p6": { "type": "payment", "settings": { "name": "Apple Pay", "description": "Met één tik via je Apple-apparaat" } },
-        "p7": { "type": "payment", "settings": { "name": "Google Pay", "description": "Snel betalen met Google Pay" } },
-        "p8": { "type": "payment", "settings": { "name": "Bancontact", "description": "De populairste betaalmethode in België" } },
-        "f1": { "type": "faq", "settings": { "question": "Is betalen bij Kwispelbox veilig?", "answer": "Zeker! Al onze betalingen verlopen via beveiligde, erkende betaalproviders met SSL-versleuteling. Je gegevens zijn altijd goed beschermd." } },
-        "f2": { "type": "faq", "settings": { "question": "Wanneer wordt mijn betaling afgeschreven?", "answer": "Bij directe betaalmethoden zoals iDEAL wordt het bedrag meteen afgeschreven. Kies je voor Klarna, dan betaal je pas later." } },
-        "f3": { "type": "faq", "settings": { "question": "Kan ik achteraf betalen?", "answer": "Ja! Met Klarna betaal je veilig achteraf, zodat je rustig je box kunt ontvangen voordat je betaalt." } },
-        "f4": { "type": "faq", "settings": { "question": "Welke betaalmethoden zijn beschikbaar in België?", "answer": "In België kun je onder andere betalen met Bancontact, creditcard, PayPal en Klarna." } }
+        "p1": {
+          "type": "payment",
+          "settings": {
+            "name": "iDEAL",
+            "description": "Direct betalen via je eigen bank"
+          }
+        },
+        "p2": {
+          "type": "payment",
+          "settings": {
+            "name": "Klarna",
+            "description": "Achteraf betalen, makkelijk en flexibel"
+          }
+        },
+        "p3": {
+          "type": "payment",
+          "settings": {
+            "name": "Mastercard",
+            "description": "Veilig betalen met creditcard"
+          }
+        },
+        "p4": {
+          "type": "payment",
+          "settings": {
+            "name": "Visa",
+            "description": "Veilig betalen met creditcard"
+          }
+        },
+        "p5": {
+          "type": "payment",
+          "settings": {
+            "name": "PayPal",
+            "description": "Betaal snel met je PayPal-account"
+          }
+        },
+        "p6": {
+          "type": "payment",
+          "settings": {
+            "name": "Apple Pay",
+            "description": "Met één tik via je Apple-apparaat"
+          }
+        },
+        "p7": {
+          "type": "payment",
+          "settings": {
+            "name": "Google Pay",
+            "description": "Snel betalen met Google Pay"
+          }
+        },
+        "p8": {
+          "type": "payment",
+          "settings": {
+            "name": "Bancontact",
+            "description": "De populairste betaalmethode in België"
+          }
+        },
+        "f1": {
+          "type": "faq",
+          "settings": {
+            "question": "Is betalen bij Kwispelbox veilig?",
+            "answer": "Zeker! Al onze betalingen verlopen via beveiligde, erkende betaalproviders met SSL-versleuteling. Je gegevens zijn altijd goed beschermd."
+          }
+        },
+        "f2": {
+          "type": "faq",
+          "settings": {
+            "question": "Wanneer wordt mijn betaling afgeschreven?",
+            "answer": "Bij directe betaalmethoden zoals iDEAL wordt het bedrag meteen afgeschreven. Kies je voor Klarna, dan betaal je pas later."
+          }
+        },
+        "f3": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan ik achteraf betalen?",
+            "answer": "Ja! Met Klarna betaal je veilig achteraf, zodat je rustig je box kunt ontvangen voordat je betaalt."
+          }
+        },
+        "f4": {
+          "type": "faq",
+          "settings": {
+            "question": "Welke betaalmethoden zijn beschikbaar in België?",
+            "answer": "In België kun je onder andere betalen met Bancontact, creditcard, PayPal en Klarna."
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "f1", "f2", "f3", "f4"],
-      "settings": {}
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p7",
+        "p8",
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "settings": {
+        "hero_intro": "Kies zelf hoe je betaalt — snel, veilig en zonder gedoe. Zodat jij je vooral kunt verheugen op het moment dat je hond zijn cadeautje uitpakt.",
+        "cta_title": "Klaar om jouw hond te verrassen?",
+        "cta_button_label": "Verras je hond"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
