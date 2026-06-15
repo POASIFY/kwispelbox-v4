@@ -1,66 +1,88 @@
-{% comment %}
-  This section is used in the search template to render search results for
-  products, articles, and pages.
+{%- comment -%}
+  sections/search.liquid — Kwispelbox KB-v4
+  Mobiel-veilige, licht gebrande zoekpagina.
+{%- endcomment -%}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/search
-{% endcomment %}
+<div class="kbsearch full-width">
+  <div class="kbsearch__inner">
+    <header class="kbsearch__head">
+      <p class="kbsearch__eyebrow">Op zoek naar iets leuks?</p>
+      <h1 class="kbsearch__title">{{ 'search.title' | t }}</h1>
+    </header>
 
-<h1>{{ 'search.title' | t }}</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" class="kbsearch__form">
+      <input type="search" name="q" value="{{ search.terms | escape }}"
+        placeholder="Zoek naar speeltjes, boxen of verrassingen…" class="kbsearch__input">
+      <button type="submit" class="kbsearch__btn">{{ 'search.submit' | t }}</button>
+    </form>
 
-<form action="{{ routes.search_url }}" method="get" role="search">
-  <input
-    type="search"
-    size="50"
-    name="q"
-    value="{{ search.terms | escape }}"
-    placeholder="{{ 'search.placeholder' | t }}"
-  >
-  <button type="submit">{{ 'search.submit' | t }}</button>
-</form>
+    {%- if search.performed -%}
+      {%- if search.results_count == 0 -%}
+        <p class="kbsearch__empty">{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+      {%- else -%}
+        <p class="kbsearch__count">{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+        {%- paginate search.results by 24 -%}
+          <ul class="kbsearch__grid" role="list">
+            {%- for result in search.results -%}
+              {%- assign featured_image = result.featured_image | default: result.image -%}
+              <li class="kbsearch__card">
+                <a href="{{ result.url }}" class="kbsearch__media">
+                  {%- if featured_image -%}
+                    <img src="{{ featured_image | image_url: width: 400 }}" alt="{{ featured_image.alt | escape }}" width="400" height="400" loading="lazy">
+                  {%- else -%}
+                    <span class="kbsearch__ph">{%- render 'lucide', icon: 'paw' -%}</span>
+                  {%- endif -%}
+                </a>
+                <div class="kbsearch__info">
+                  <a href="{{ result.url }}" class="kbsearch__name">{{ result.title }}</a>
+                  {%- if result.price -%}<span class="kbsearch__price">{{ result.price | money }}</span>{%- endif -%}
+                </div>
+              </li>
+            {%- endfor -%}
+          </ul>
+          {%- if paginate.pages > 1 -%}
+            <nav class="kbsearch__pag" role="navigation">{{ paginate | default_pagination }}</nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
 
-{% if search.performed %}
-  {% if search.results_count == 0 %}
-    <p>{{ 'search.no_results_html' | t: terms: search.terms }}</p>
-  {% else %}
-    <p>{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
-
-    <div class="search-results">
-      {% paginate search.results by 20 %}
-        {% # Search result items may be an article, a page, or a product. %}
-        {% for result in search.results %}
-          <div class="search-result">
-            {% assign featured_image = result.featured_image | default: result.image %}
-            {% if featured_image %}
-              {% render 'image', class: 'search-result__image', image: featured_image, url: result.url, width: 400 %}
-            {% endif %}
-            <div class="search-result__content">
-              <p>
-                {{ result.title | link_to: result.url }}
-                {% if result.price %}
-                  {{ result.price | money_with_currency }}
-                {% endif %}
-              </p>
-            </div>
-          </div>
-        {% endfor %}
-
-        {{ paginate | default_pagination }}
-      {% endpaginate %}
-    </div>
-  {% endif %}
-{% endif %}
-
-{% stylesheet %}
-  .search-results {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-  .search-results .prev,
-  .search-results .page,
-  .search-results .next {
-    grid-column: 1 / -1;
-  }
-{% endstylesheet %}
+<style>
+.kbsearch { background: var(--color-cream); padding: 40px 0 72px; min-height: 50vh; }
+.kbsearch__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.kbsearch__head { text-align: center; margin-bottom: 22px; }
+.kbsearch__eyebrow { font-family: var(--font-body); font-size: .9rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-green); margin: 0 0 8px; }
+.kbsearch__title { font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 2.8rem); color: var(--color-ink); margin: 0; }
+.kbsearch__form { display: flex; gap: 10px; max-width: 540px; margin: 0 auto 36px; }
+.kbsearch__input { flex: 1; min-width: 0; box-sizing: border-box; height: 52px; padding: 0 20px; border: 2px solid var(--color-line); border-radius: var(--radius-pill); background: #fff; font-family: var(--font-body); font-size: 1rem; color: var(--color-ink); }
+.kbsearch__input:focus { outline: none; border-color: var(--color-green); }
+.kbsearch__btn { flex-shrink: 0; padding: 0 26px; border: none; border-radius: var(--radius-pill); background: var(--color-green); color: #fff; font-family: var(--font-heading); font-size: 1rem; cursor: pointer; transition: background 160ms; }
+.kbsearch__btn:hover { background: #5a9a3b; }
+.kbsearch__count { font-family: var(--font-body); color: var(--color-body); margin: 0 0 18px; }
+.kbsearch__empty { font-family: var(--font-body); color: var(--color-body); text-align: center; padding: 30px 0; }
+.kbsearch__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 20px; }
+.kbsearch__card { display: flex; flex-direction: column; min-width: 0; background: #fff; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,.05); transition: transform 160ms, box-shadow 160ms; }
+.kbsearch__card:hover { transform: translateY(-4px); box-shadow: 0 20px 44px rgba(0,0,0,.09); }
+.kbsearch__media { display: block; aspect-ratio: 1; background: var(--color-cream); }
+.kbsearch__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.kbsearch__ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: var(--color-green); }
+.kbsearch__ph .lucide { width: 44px; height: 44px; }
+.kbsearch__info { display: flex; flex-direction: column; gap: 6px; padding: 16px; }
+.kbsearch__name { font-family: var(--font-heading); font-size: 1.05rem; line-height: 1.2; color: var(--color-ink); text-decoration: none; overflow-wrap: anywhere; }
+.kbsearch__name:hover { color: var(--color-green); }
+.kbsearch__price { font-family: var(--font-heading); font-size: 1rem; color: var(--color-green); }
+.kbsearch__pag { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 44px; font-family: var(--font-body); font-weight: 700; }
+.kbsearch__pag a, .kbsearch__pag span { color: var(--color-ink); text-decoration: none; padding: 6px 12px; border-radius: var(--radius-pill); }
+.kbsearch__pag a:hover { background: #fff; color: var(--color-green); }
+@media (max-width: 749px) {
+  .kbsearch__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+  .kbsearch__btn { padding: 0 18px; }
+  .kbsearch__info { padding: 12px; }
+  .kbsearch__name { font-size: .95rem; }
+}
+</style>
 
 {% schema %}
 {
