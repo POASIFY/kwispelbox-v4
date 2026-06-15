@@ -1,10 +1,18 @@
 {%- comment -%}
   sections/cart.liquid — Kwispelbox KB-v4
   Merkgerichte winkelwagen: de cadeautjes voor je hond, klaar om in te pakken.
-  Behoudt volledige Shopify cart-functionaliteit (updates[], remove, checkout).
+  Behoudt volledige Shopify cart-functionaliteit + AJAX steppers/add (Cart API).
 {%- endcomment -%}
 
+{%- assign threshold = section.settings.free_shipping_threshold | times: 100 -%}
+
 <div class="kbcart full-width">
+  {%- if section.settings.show_decorations -%}
+    <span class="kbcart__bg kbcart__bg--paw1" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+    <span class="kbcart__bg kbcart__bg--paw2" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+    <span class="kbcart__bg kbcart__bg--paw3" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+  {%- endif -%}
+
   <div class="kbcart__inner">
 
     {%- if cart.item_count == 0 -%}
@@ -19,294 +27,491 @@
       </div>
 
     {%- else -%}
-      {%- comment -%} ── Gevulde winkelwagen ────────────────────── {%- endcomment -%}
-      {%- comment -%} Inpak-product op handle ophalen (geen hardcoded ID) {%- endcomment -%}
+      {%- comment -%} ── Inpak-product op handle (geen hardcoded ID) ─ {%- endcomment -%}
       {%- assign wrap = all_products[section.settings.giftwrap_handle] -%}
       {%- assign wrap_variant = wrap.selected_or_first_available_variant -%}
       {%- assign wrap_variant_id = wrap_variant.id -%}
       {%- assign wrap_in_cart = 0 -%}
+      {%- assign wrap_line = 0 -%}
       {%- for item in cart.items -%}
-        {%- if item.variant.id == wrap_variant_id -%}{%- assign wrap_in_cart = item.quantity -%}{%- endif -%}
+        {%- if item.variant.id == wrap_variant_id -%}
+          {%- assign wrap_in_cart = item.quantity -%}
+          {%- assign wrap_line = forloop.index -%}
+        {%- endif -%}
       {%- endfor -%}
-      {%- assign gift_count = cart.item_count | minus: wrap_in_cart -%}
 
       <header class="kbcart__head">
-        {%- if section.settings.eyebrow != blank -%}
-          <p class="kbcart__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- if section.settings.dog_image != blank -%}
+          <img class="kbcart__dog" src="{{ section.settings.dog_image | image_url: width: 600 }}"
+            srcset="{{ section.settings.dog_image | image_url: width: 300 }} 300w, {{ section.settings.dog_image | image_url: width: 600 }} 600w"
+            sizes="320px" alt="" width="320" height="240" loading="lazy">
         {%- endif -%}
-        <h1 class="kbcart__title">{{ section.settings.title | default: 'Klaar om in te pakken' }}</h1>
+        <h1 class="kbcart__title">{{ section.settings.title | default: 'Jouw winkelwagen' }}<span class="kbcart__title-heart" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span></h1>
         <p class="kbcart__sub">
-          {%- if gift_count == 1 -%}
-            1 cadeautje wacht op jouw hond.
-          {%- else -%}
-            {{ gift_count }} cadeautjes wachten op jouw hond.
-          {%- endif -%}
+          {{ section.settings.eyebrow | default: 'Bijna bij je hond' }}
+          <span aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
         </p>
       </header>
 
-      {%- comment -%} ── Gratis-verzending voortgang ─────────────── {%- endcomment -%}
-      {%- if section.settings.show_shipping_bar -%}
-        {%- assign threshold = section.settings.free_shipping_threshold | times: 100 -%}
-        {%- if threshold > 0 -%}
-          <div class="kbcart__ship">
-            {%- if cart.total_price >= threshold -%}
-              <p class="kbcart__ship-msg kbcart__ship-msg--done">
-                <span aria-hidden="true">{%- render 'lucide', icon: 'truck' -%}</span>
-                Hoera! Je krijgt <strong>gratis verzending</strong>.
-              </p>
-              {%- assign ship_pct = 100 -%}
-            {%- else -%}
-              {%- assign remaining = threshold | minus: cart.total_price -%}
-              <p class="kbcart__ship-msg">
-                <span aria-hidden="true">{%- render 'lucide', icon: 'truck' -%}</span>
-                Nog <strong>{{ remaining | money }}</strong> tot gratis verzending.
-              </p>
-              {%- assign ship_pct = cart.total_price | times: 100 | divided_by: threshold -%}
+      <div class="kbcart__grid">
+        {%- comment -%} ── Linkerkolom ───────────────────────────── {%- endcomment -%}
+        <div class="kbcart__main">
+          <div class="kbcart__card">
+
+            {%- comment -%} Gratis-verzending voortgang {%- endcomment -%}
+            {%- if section.settings.show_shipping_bar and threshold > 0 -%}
+              <div class="kbcart__ship">
+                <div class="kbcart__ship-row">
+                  <span class="kbcart__ship-icon" aria-hidden="true">{%- render 'lucide', icon: 'truck' -%}</span>
+                  {%- if cart.total_price >= threshold -%}
+                    <p class="kbcart__ship-msg">Hoera! Je krijgt <strong>gratis verzending</strong>.</p>
+                    {%- assign ship_pct = 100 -%}
+                  {%- else -%}
+                    {%- assign remaining = threshold | minus: cart.total_price -%}
+                    <p class="kbcart__ship-msg">Nog <strong>{{ remaining | money }}</strong> tot gratis verzending.</p>
+                    {%- assign ship_pct = cart.total_price | times: 100 | divided_by: threshold -%}
+                  {%- endif -%}
+                  <span class="kbcart__ship-gift" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+                </div>
+                <div class="kbcart__ship-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ ship_pct }}">
+                  <span class="kbcart__ship-fill" style="width: {{ ship_pct }}%;"></span>
+                </div>
+              </div>
             {%- endif -%}
-            <div class="kbcart__ship-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ ship_pct }}">
-              <span class="kbcart__ship-fill" style="width: {{ ship_pct }}%;"></span>
-            </div>
-          </div>
-        {%- endif -%}
-      {%- endif -%}
 
-      <form action="{{ routes.cart_url }}" method="post" novalidate class="kbcart__form">
-        <ul class="kbcart__items" role="list">
-          {%- for item in cart.items -%}
-            {%- if item.variant.id == wrap_variant_id -%}{%- continue -%}{%- endif -%}
-            <li class="kbcart__item" {{ item.shopify_attributes }}>
-              <a href="{{ item.url }}" class="kbcart__item-media" aria-hidden="true" tabindex="-1">
-                {%- if item.image -%}
-                  <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | escape }}" width="90" height="90" loading="lazy">
-                {%- else -%}
-                  <span class="kbcart__item-ph">{%- render 'lucide', icon: 'package' -%}</span>
-                {%- endif -%}
-              </a>
-
-              <div class="kbcart__item-body">
-                <a href="{{ item.url }}" class="kbcart__item-title">{{ item.product.title }}</a>
-                {%- unless item.variant.title contains 'Default' -%}
-                  <p class="kbcart__item-variant">{{ item.variant.title }}</p>
-                {%- endunless -%}
-
-                {%- comment -%} Personalisatie (hondennaam, etc.) {%- endcomment -%}
-                {%- capture prop_items -%}
-                  {%- for prop in item.properties -%}
-                    {%- assign first_char = prop.first | slice: 0 -%}
-                    {%- if prop.last != blank and first_char != '_' -%}
-                      <li><span>{{ prop.first }}:</span> {{ prop.last }}</li>
+            {%- comment -%} Regelitems {%- endcomment -%}
+            <ul class="kbcart__items" role="list">
+              {%- for item in cart.items -%}
+                {%- if item.variant.id == wrap_variant_id -%}{%- continue -%}{%- endif -%}
+                <li class="kbcart__item" {{ item.shopify_attributes }}>
+                  <a href="{{ item.url }}" class="kbcart__item-media" tabindex="-1" aria-hidden="true">
+                    {%- if item.image -%}
+                      <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.image.alt | escape }}" width="96" height="96" loading="lazy">
+                    {%- else -%}
+                      <span class="kbcart__item-ph">{%- render 'lucide', icon: 'package' -%}</span>
                     {%- endif -%}
-                  {%- endfor -%}
-                {%- endcapture -%}
-                {%- if prop_items != blank -%}
-                  <ul class="kbcart__item-props" role="list">{{ prop_items }}</ul>
+                  </a>
+
+                  <div class="kbcart__item-body">
+                    <a href="{{ item.url }}" class="kbcart__item-title">{{ item.product.title }}</a>
+                    {%- unless item.variant.title contains 'Default' -%}
+                      <p class="kbcart__item-variant">{{ item.variant.title }}</p>
+                    {%- endunless -%}
+
+                    {%- capture prop_items -%}
+                      {%- for prop in item.properties -%}
+                        {%- assign first_char = prop.first | slice: 0 -%}
+                        {%- if prop.last != blank and first_char != '_' -%}
+                          <li><span>{{ prop.first }}:</span> {{ prop.last }}</li>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    {%- endcapture -%}
+                    {%- if prop_items != blank -%}
+                      <ul class="kbcart__item-props" role="list">{{ prop_items }}</ul>
+                    {%- endif -%}
+
+                    <a href="{{ item.url_to_remove }}" class="kbcart__item-remove">
+                      <span aria-hidden="true">{%- render 'lucide', icon: 'pencil' -%}</span>Verwijderen
+                    </a>
+                  </div>
+
+                  <div class="kbcart__item-controls">
+                    <div class="kbcart__step">
+                      <button type="button" class="kbcart__step-btn" data-cart-step data-line="{{ forloop.index }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="Eén minder">−</button>
+                      <span class="kbcart__step-val">{{ item.quantity }}</span>
+                      <button type="button" class="kbcart__step-btn" data-cart-step data-line="{{ forloop.index }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="Eén meer">+</button>
+                    </div>
+                    <p class="kbcart__item-price">{{ item.final_line_price | money }}</p>
+                  </div>
+                </li>
+              {%- endfor -%}
+            </ul>
+
+            {%- comment -%} Inpak-upsell (roze gestippeld) {%- endcomment -%}
+            {%- if wrap != blank and wrap_variant != blank -%}
+              <div class="kbcart__wrap{% if wrap_in_cart > 0 %} is-active{% endif %}">
+                <span class="kbcart__wrap-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+                <div class="kbcart__wrap-text">
+                  <strong>{{ section.settings.giftwrap_title | default: 'Cadeautjes inpakken' }}</strong>
+                  <span>{{ section.settings.giftwrap_text | default: 'Wij pakken alles in vrolijk pakpapier — zodat je hond het écht mag uitpakken.' }}</span>
+                </div>
+                {%- if wrap_in_cart > 0 -%}
+                  <div class="kbcart__wrap-controls">
+                    <div class="kbcart__step">
+                      <button type="button" class="kbcart__step-btn" data-cart-step data-line="{{ wrap_line }}" data-qty="{{ wrap_in_cart | minus: 1 }}" aria-label="Eén minder">−</button>
+                      <span class="kbcart__step-val">{{ wrap_in_cart }}</span>
+                      <button type="button" class="kbcart__step-btn" data-cart-step data-line="{{ wrap_line }}" data-qty="{{ wrap_in_cart | plus: 1 }}" aria-label="Eén meer">+</button>
+                    </div>
+                    <p class="kbcart__item-price">{{ wrap_variant.price | money }}</p>
+                  </div>
+                {%- else -%}
+                  <button type="button" class="kbcart__wrap-add" data-cart-add="{{ wrap_variant_id }}">
+                    Toevoegen<span class="kbcart__wrap-add-price">{{ wrap_variant.price | money }}</span>
+                  </button>
                 {%- endif -%}
-
-                <a href="{{ item.url_to_remove }}" class="kbcart__item-remove">{{ 'cart.remove' | t | default: 'Verwijderen' }}</a>
               </div>
+            {%- endif -%}
 
-              <div class="kbcart__item-controls">
-                <label class="kbcart__qty">
-                  <span class="visually-hidden">Aantal voor {{ item.product.title | escape }}</span>
-                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric" class="kbcart__qty-input">
-                </label>
-                <p class="kbcart__item-price">{{ item.final_line_price | money }}</p>
+            {%- comment -%} Promo-banner {%- endcomment -%}
+            {%- if section.settings.promo_show -%}
+              <div class="kbcart__promo">
+                <span class="kbcart__promo-icon" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+                <div class="kbcart__promo-text">
+                  <strong>{{ section.settings.promo_title | default: 'Vergeet je hond niet te verrassen?' }}</strong>
+                  <span>{{ section.settings.promo_text | default: 'Bekijk onze Special Editions voor elke gelegenheid.' }}</span>
+                </div>
+                {%- if section.settings.promo_button_label != blank -%}
+                  <a href="{{ section.settings.promo_button_url | default: '#' }}" class="kbcart__promo-btn">{{ section.settings.promo_button_label }}<span aria-hidden="true">›</span></a>
+                {%- endif -%}
               </div>
-            </li>
-          {%- endfor -%}
-        </ul>
+            {%- endif -%}
 
-        {%- comment -%} ── Inpak-upsell (per bestelling) ───────────── {%- endcomment -%}
-        {%- if wrap != blank and wrap_variant != blank -%}
-          <div class="kbcart__wrap">
-            <label class="kbcart__wrap-label" for="kbcart-giftwrap">
-              <input type="checkbox" class="kbcart__wrap-toggle" id="kbcart-giftwrap" data-variant-id="{{ wrap_variant_id }}"{% if wrap_in_cart > 0 %} checked{% endif %}>
-              <span class="kbcart__wrap-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
-              <span class="kbcart__wrap-text">
-                <strong>{{ section.settings.giftwrap_title | default: 'Pak mijn cadeautjes in' }}</strong>
-                <span>{{ section.settings.giftwrap_text | default: 'Wij pakken alles in vrolijk pakpapier — zodat je hond het écht mag uitpakken.' }}</span>
-              </span>
-              <span class="kbcart__wrap-price">+ {{ wrap_variant.price | money }}</span>
-            </label>
           </div>
-        {%- endif -%}
 
-        <div class="kbcart__footer">
-          <button type="submit" name="update" class="kbcart__update">{%- render 'lucide', icon: 'refresh' -%}Aantallen bijwerken</button>
+          {%- comment -%} Maak de verrassing compleet (upsell uit collectie) {%- endcomment -%}
+          {%- assign upsell = collections[section.settings.upsell_collection] -%}
+          {%- if upsell != blank and upsell.products.size > 0 -%}
+            {%- assign upsell_max = section.settings.upsell_count | default: 4 -%}
+            <div class="kbcart__cross">
+              <h2 class="kbcart__cross-title">{{ section.settings.upsell_heading | default: 'Maak de verrassing compleet' }}<span class="kbcart__cross-scribble" aria-hidden="true"><svg viewBox="0 0 60 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 11c6-9 10 6 16-1s10 6 16-1 10 5 22-2"/></svg></span></h2>
+              <ul class="kbcart__cross-grid" role="list">
+                {%- for product in upsell.products limit: upsell_max -%}
+                  {%- assign pv = product.selected_or_first_available_variant -%}
+                  <li class="kbcart__cross-card">
+                    <a href="{{ product.url }}" class="kbcart__cross-media" tabindex="-1" aria-hidden="true">
+                      {%- if product.featured_image -%}
+                        <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.featured_image.alt | escape }}" width="72" height="72" loading="lazy">
+                      {%- else -%}
+                        <span class="kbcart__item-ph">{%- render 'lucide', icon: 'bone' -%}</span>
+                      {%- endif -%}
+                    </a>
+                    <div class="kbcart__cross-info">
+                      <a href="{{ product.url }}" class="kbcart__cross-name">{{ product.title }}</a>
+                      {%- if product.description != blank -%}
+                        <p class="kbcart__cross-desc">{{ product.description | strip_html | truncatewords: 6 }}</p>
+                      {%- endif -%}
+                      <div class="kbcart__cross-foot">
+                        <span class="kbcart__cross-price">{{ product.price | money }}</span>
+                        {%- if pv != blank -%}
+                          <button type="button" class="kbcart__cross-add" data-cart-add="{{ pv.id }}" aria-label="{{ product.title | escape }} toevoegen">+</button>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        </div>
 
-          <div class="kbcart__summary">
-            <div class="kbcart__totals">
+        {%- comment -%} ── Rechterkolom: samenvatting ────────────── {%- endcomment -%}
+        <aside class="kbcart__summary">
+          <div class="kbcart__joy">
+            <span class="kbcart__joy-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+            <div class="kbcart__joy-text">
+              <strong>{{ section.settings.summary_box_title | default: 'Jouw hond wordt blij!' }}</strong>
+              <span>{{ section.settings.summary_box_text | default: 'We maken er iets bijzonders van.' }}</span>
+            </div>
+            <span class="kbcart__joy-heart" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+          </div>
+
+          <div class="kbcart__lines">
+            <div class="kbcart__line">
               <span>Subtotaal</span>
               <strong>{{ cart.total_price | money }}</strong>
             </div>
-            <p class="kbcart__note">Verzending en kortingen worden bij de kassa berekend.</p>
-            <button type="submit" name="checkout" class="kbcart__btn kbcart__btn--primary kbcart__checkout">
-              Afrekenen<span aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
-            </button>
-            <a href="{{ routes.all_products_collection_url }}" class="kbcart__continue">Verder snuffelen</a>
-            <ul class="kbcart__reassure" role="list">
-              <li><span aria-hidden="true">{%- render 'lucide', icon: 'lock' -%}</span> Veilig betalen</li>
-              <li><span aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span> Met liefde ingepakt</li>
-            </ul>
+            {%- if threshold > 0 -%}
+              <div class="kbcart__line">
+                <span>Verzending</span>
+                {%- if cart.total_price >= threshold -%}
+                  <span class="kbcart__line-free">Gratis</span>
+                {%- else -%}
+                  <span class="kbcart__line-free">Gratis vanaf {{ threshold | money }}</span>
+                {%- endif -%}
+              </div>
+              {%- if cart.total_price < threshold -%}
+                <p class="kbcart__line-note">Nog {{ remaining | money }} voor gratis verzending</p>
+              {%- endif -%}
+            {%- endif -%}
           </div>
-        </div>
-      </form>
+
+          <div class="kbcart__total">
+            <span>Totaal</span>
+            <strong>{{ cart.total_price | money }}</strong>
+          </div>
+          <p class="kbcart__total-tax">Inclusief btw</p>
+
+          <form action="{{ routes.cart_url }}" method="post" novalidate>
+            <button type="submit" name="checkout" class="kbcart__btn kbcart__btn--primary kbcart__checkout">
+              <span class="kbcart__checkout-lock" aria-hidden="true">{%- render 'lucide', icon: 'lock' -%}</span>Afrekenen
+              <span class="kbcart__checkout-paw" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+            </button>
+          </form>
+
+          {%- if shop.enabled_payment_types.size > 0 -%}
+            <p class="kbcart__pay-label">Of betaal met</p>
+            <div class="kbcart__pay">
+              {%- for type in shop.enabled_payment_types -%}
+                {{ type | payment_type_svg_tag: class: 'kbcart__pay-icon' }}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          <ul class="kbcart__reassure" role="list">
+            <li><span aria-hidden="true">{%- render 'lucide', icon: 'lock' -%}</span> Veilig betalen</li>
+            <li><span aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span> Met liefde ingepakt</li>
+            <li><span aria-hidden="true">{%- render 'lucide', icon: 'refresh' -%}</span> Niet goed? Geld terug</li>
+          </ul>
+
+          <details class="kbcart__disc">
+            <summary>Heb je een kortingscode?</summary>
+            <form id="kbcart-discount-form" class="kbcart__disc-form">
+              <input type="text" id="kbcart-discount-input" placeholder="Vul je code in" autocomplete="off">
+              <button type="submit">Toepassen</button>
+            </form>
+          </details>
+        </aside>
+      </div>
     {%- endif -%}
 
   </div>
+
+  {%- comment -%} ── Onderste trust-balk ───────────────────────── {%- endcomment -%}
+  {%- assign trust_blocks = section.blocks | where: 'type', 'trust' -%}
+  {%- if trust_blocks.size > 0 -%}
+    <div class="kbcart__trust">
+      <ul class="kbcart__trust-list" role="list">
+        {%- for block in trust_blocks -%}
+          <li class="kbcart__trust-item" {{ block.shopify_attributes }}>
+            <span class="kbcart__trust-icon kbcart__trust-icon--{{ block.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
+            <span class="kbcart__trust-text">
+              <strong>{{ block.settings.title }}</strong>
+              {%- if block.settings.subtitle != blank -%}<span>{{ block.settings.subtitle }}</span>{%- endif -%}
+            </span>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
 </div>
 
 <script>
   (function () {
-    var toggle = document.getElementById('kbcart-giftwrap');
-    if (!toggle) return;
-    toggle.addEventListener('change', function () {
-      toggle.disabled = true;
-      var id = toggle.getAttribute('data-variant-id');
-      var request;
-      if (toggle.checked) {
-        request = fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ items: [{ id: id, quantity: 1 }] })
-        });
-      } else {
-        request = fetch('/cart/change.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: id, quantity: 0 })
-        });
+    function post(url, body, el) {
+      if (el) el.style.pointerEvents = 'none';
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+        .then(function () { window.location.reload(); })
+        .catch(function () { if (el) el.style.pointerEvents = ''; });
+    }
+    document.addEventListener('click', function (e) {
+      var step = e.target.closest('[data-cart-step]');
+      if (step) {
+        e.preventDefault();
+        post('/cart/change.js', { line: parseInt(step.getAttribute('data-line'), 10), quantity: parseInt(step.getAttribute('data-qty'), 10) }, step);
+        return;
       }
-      request.then(function () { window.location.reload(); }).catch(function () { toggle.disabled = false; });
+      var add = e.target.closest('[data-cart-add]');
+      if (add) {
+        e.preventDefault();
+        post('/cart/add.js', { items: [{ id: add.getAttribute('data-cart-add'), quantity: 1 }] }, add);
+      }
     });
+    var dform = document.getElementById('kbcart-discount-form');
+    if (dform) {
+      dform.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var code = document.getElementById('kbcart-discount-input').value.trim();
+        if (code) window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
+      });
+    }
   })();
 </script>
 
 {% stylesheet %}
-.kbcart { background: var(--color-cream); padding: 48px 0 80px; }
-.kbcart__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.kbcart { position: relative; background: var(--color-cream); padding: 40px 0 0; overflow: hidden; }
+.kbcart__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
 
-/* ── Lege staat ─────────────────────────────────────── */
-.kbcart__empty { max-width: 480px; margin: 24px auto; text-align: center; }
-.kbcart__empty-icon {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 88px; height: 88px; border-radius: 50%;
-  background: var(--color-pink); color: #fff; margin-bottom: 22px;
-  box-shadow: 0 14px 30px rgba(0, 0, 0, .08);
-}
+/* Achtergrond-decoratie */
+.kbcart__bg { position: absolute; z-index: 0; color: var(--color-ink); opacity: .05; pointer-events: none; }
+.kbcart__bg .lucide { width: 100%; height: 100%; }
+.kbcart__bg--paw1 { width: 70px; height: 70px; top: 120px; left: 2%; transform: rotate(-18deg); }
+.kbcart__bg--paw2 { width: 90px; height: 90px; top: 40%; right: 3%; transform: rotate(14deg); }
+.kbcart__bg--paw3 { width: 60px; height: 60px; bottom: 12%; left: 6%; transform: rotate(8deg); }
+
+/* Lege staat */
+.kbcart__empty { max-width: 480px; margin: 24px auto 64px; text-align: center; }
+.kbcart__empty-icon { display: inline-flex; align-items: center; justify-content: center; width: 88px; height: 88px; border-radius: 50%; background: var(--color-pink); color: #fff; margin-bottom: 22px; box-shadow: 0 14px 30px rgba(0,0,0,.08); }
 .kbcart__empty-icon .lucide { width: 42px; height: 42px; }
 .kbcart__empty-title { font-family: var(--font-heading); font-size: clamp(1.6rem, 5vw, 2.2rem); color: var(--color-ink); margin: 0 0 12px; }
 .kbcart__empty-text { font-family: var(--font-body); font-size: 1.05rem; line-height: 1.6; color: var(--color-body); margin: 0 0 28px; }
 
-/* ── Kop ────────────────────────────────────────────── */
-.kbcart__head { margin-bottom: 24px; }
-.kbcart__eyebrow { font-family: var(--font-body); font-size: .9rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-green); margin: 0 0 8px; }
-.kbcart__title { font-family: var(--font-heading); font-size: clamp(1.8rem, 5vw, 2.6rem); color: var(--color-ink); line-height: 1.1; margin: 0 0 6px; }
-.kbcart__sub { font-family: var(--font-body); font-size: 1.05rem; color: var(--color-body); margin: 0; }
+/* Kop */
+.kbcart__head { position: relative; margin-bottom: 22px; }
+.kbcart__dog { position: absolute; right: 4%; bottom: -8px; width: clamp(180px, 26vw, 320px); height: auto; object-fit: contain; pointer-events: none; z-index: 2; }
+.kbcart__title { display: inline-flex; align-items: center; gap: 14px; font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 3rem); color: var(--color-ink); line-height: 1.05; margin: 0; }
+.kbcart__title-heart { color: var(--color-green); }
+.kbcart__title-heart .lucide { width: clamp(24px, 4vw, 38px); height: clamp(24px, 4vw, 38px); fill: currentColor; }
+.kbcart__sub { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; color: var(--color-body); margin: 6px 0 0; }
+.kbcart__sub .lucide { width: 18px; height: 18px; color: var(--color-pink); fill: currentColor; }
 
-/* ── Gratis verzending ──────────────────────────────── */
-.kbcart__ship { background: #fff; border-radius: var(--radius-md); padding: 16px 20px; margin-bottom: 24px; }
-.kbcart__ship-msg { display: flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .98rem; color: var(--color-body); margin: 0 0 10px; }
+/* Layout */
+.kbcart__grid { display: grid; gap: 24px; padding-bottom: 56px; }
+.kbcart__main { min-width: 0; display: grid; gap: 28px; }
+.kbcart__card { background: #fff; border-radius: var(--radius-lg); padding: 22px; box-shadow: 0 16px 40px rgba(0,0,0,.04); }
+
+/* Gratis verzending */
+.kbcart__ship { padding-bottom: 18px; margin-bottom: 6px; border-bottom: 1px solid var(--color-line); }
+.kbcart__ship-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.kbcart__ship-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); flex-shrink: 0; }
+.kbcart__ship-icon .lucide { width: 20px; height: 20px; }
+.kbcart__ship-msg { flex: 1; font-family: var(--font-body); font-size: 1.02rem; color: var(--color-body); margin: 0; }
 .kbcart__ship-msg strong { color: var(--color-ink); }
-.kbcart__ship-msg .lucide { width: 20px; height: 20px; color: var(--color-green); flex-shrink: 0; }
-.kbcart__ship-msg--done .lucide { color: var(--color-green); }
-.kbcart__ship-track { height: 8px; border-radius: var(--radius-pill); background: var(--color-line); overflow: hidden; }
+.kbcart__ship-gift { color: var(--color-pink); flex-shrink: 0; }
+.kbcart__ship-gift .lucide { width: 30px; height: 30px; }
+.kbcart__ship-track { height: 10px; border-radius: var(--radius-pill); background: var(--color-line); overflow: hidden; }
 .kbcart__ship-fill { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--color-green); transition: width 300ms ease; }
 
-/* ── Lijst + layout ─────────────────────────────────── */
-.kbcart__form { display: grid; gap: 28px; }
-.kbcart__items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
-.kbcart__item {
-  display: grid;
-  grid-template-columns: 90px 1fr auto;
-  gap: 16px;
-  align-items: start;
-  background: #fff;
-  border-radius: var(--radius-md);
-  padding: 16px;
-}
-.kbcart__item-media { display: block; width: 90px; height: 90px; border-radius: var(--radius-sm); overflow: hidden; background: var(--color-cream); }
+/* Regelitems */
+.kbcart__items { list-style: none; margin: 0; padding: 0; }
+.kbcart__item { display: grid; grid-template-columns: 96px 1fr auto; gap: 16px; align-items: start; padding: 20px 0; border-bottom: 1px solid var(--color-line); }
+.kbcart__item-media { display: block; width: 96px; height: 96px; border-radius: var(--radius-md); overflow: hidden; background: var(--color-cream); }
 .kbcart__item-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .kbcart__item-ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: var(--color-muted); }
 .kbcart__item-ph .lucide { width: 34px; height: 34px; }
-
 .kbcart__item-body { min-width: 0; }
-.kbcart__item-title { font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); text-decoration: none; line-height: 1.2; }
+.kbcart__item-title { font-family: var(--font-heading); font-size: 1.18rem; color: var(--color-ink); text-decoration: none; line-height: 1.2; }
 .kbcart__item-title:hover { color: var(--color-green); }
-.kbcart__item-variant { font-family: var(--font-body); font-size: .9rem; color: var(--color-muted); margin: 4px 0 0; }
+.kbcart__item-variant { font-family: var(--font-body); font-size: .92rem; color: var(--color-muted); margin: 4px 0 0; }
 .kbcart__item-props { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
 .kbcart__item-props li { font-family: var(--font-body); font-size: .85rem; color: var(--color-body); }
 .kbcart__item-props span { font-weight: 700; color: var(--color-ink); }
-.kbcart__item-remove { display: inline-block; margin-top: 10px; font-family: var(--font-body); font-size: .85rem; color: var(--color-muted); text-decoration: underline; text-underline-offset: 2px; }
+.kbcart__item-remove { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-family: var(--font-body); font-size: .88rem; color: var(--color-muted); text-decoration: none; }
+.kbcart__item-remove .lucide { width: 15px; height: 15px; }
 .kbcart__item-remove:hover { color: var(--color-pink); }
-
 .kbcart__item-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
-.kbcart__qty-input {
-  width: 64px; padding: 9px 8px; text-align: center;
-  font-family: var(--font-body); font-size: 1rem; font-weight: 700; color: var(--color-ink);
-  border: 2px solid var(--color-line); border-radius: var(--radius-sm); background: #fff;
-}
-.kbcart__qty-input:focus { outline: none; border-color: var(--color-green); }
-.kbcart__item-price { font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); margin: 0; }
+.kbcart__item-price { font-family: var(--font-heading); font-size: 1.18rem; color: var(--color-ink); margin: 0; }
 
-/* ── Footer / samenvatting ──────────────────────────── */
-.kbcart__footer { display: grid; gap: 20px; }
-.kbcart__update {
-  justify-self: start; display: inline-flex; align-items: center; gap: 8px;
-  background: none; border: none; cursor: pointer; padding: 4px 0;
-  font-family: var(--font-body); font-size: .92rem; font-weight: 700; color: var(--color-body);
-}
-.kbcart__update:hover { color: var(--color-green); }
-.kbcart__update .lucide { width: 16px; height: 16px; }
+/* Stepper */
+.kbcart__step { display: inline-flex; align-items: center; gap: 4px; background: #fff; border: 2px solid var(--color-line); border-radius: var(--radius-pill); padding: 4px; }
+.kbcart__step-btn { width: 30px; height: 30px; border: none; border-radius: 50%; background: var(--color-cream); color: var(--color-ink); font-size: 1.2rem; line-height: 1; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: background 140ms, color 140ms; }
+.kbcart__step-btn:hover { background: var(--color-green); color: #fff; }
+.kbcart__step-val { min-width: 26px; text-align: center; font-family: var(--font-body); font-weight: 800; color: var(--color-ink); }
 
-.kbcart__summary { background: #fff; border-radius: var(--radius-lg); padding: 24px; }
-.kbcart__totals { display: flex; align-items: baseline; justify-content: space-between; padding-bottom: 14px; border-bottom: 1px solid var(--color-line); }
-.kbcart__totals span { font-family: var(--font-body); font-size: 1.05rem; color: var(--color-body); }
-.kbcart__totals strong { font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-ink); }
-.kbcart__note { font-family: var(--font-body); font-size: .85rem; color: var(--color-muted); margin: 12px 0 18px; }
+/* Inpak-regelitem */
+.kbcart__wrap { display: flex; align-items: center; gap: 14px; margin-top: 20px; padding: 16px 18px; border: 2px dashed var(--color-pink); border-radius: var(--radius-md); background: #fff7fb; }
+.kbcart__wrap-icon { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: var(--color-pink); color: #fff; flex-shrink: 0; }
+.kbcart__wrap-icon .lucide { width: 22px; height: 22px; }
+.kbcart__wrap-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.kbcart__wrap-text strong { font-family: var(--font-heading); font-size: 1.08rem; color: var(--color-ink); }
+.kbcart__wrap-text span { font-family: var(--font-body); font-size: .88rem; line-height: 1.45; color: var(--color-body); }
+.kbcart__wrap-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.kbcart__wrap-add { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border: none; border-radius: var(--radius-pill); background: var(--color-pink); color: #fff; font-family: var(--font-heading); font-size: .98rem; cursor: pointer; transition: transform 140ms, box-shadow 140ms; }
+.kbcart__wrap-add:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+.kbcart__wrap-add-price { font-family: var(--font-body); font-weight: 700; opacity: .9; }
 
-.kbcart__btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
-  padding: 16px 30px; border-radius: var(--radius-pill);
-  font-family: var(--font-heading); font-size: 1.1rem; text-decoration: none; cursor: pointer; border: none;
-  transition: background 160ms, transform 160ms, box-shadow 160ms;
-}
+/* Promo-banner */
+.kbcart__promo { display: flex; align-items: center; gap: 14px; margin-top: 20px; padding: 16px 18px; border-radius: var(--radius-md); background: #fbeede; }
+.kbcart__promo-icon { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: #fff; color: var(--color-pink); flex-shrink: 0; }
+.kbcart__promo-icon .lucide { width: 20px; height: 20px; fill: currentColor; }
+.kbcart__promo-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.kbcart__promo-text strong { font-family: var(--font-heading); font-size: 1.02rem; color: var(--color-ink); }
+.kbcart__promo-text span { font-family: var(--font-body); font-size: .9rem; color: var(--color-body); }
+.kbcart__promo-btn { display: inline-flex; align-items: center; gap: 6px; padding: 11px 18px; border-radius: var(--radius-pill); background: #fff; color: var(--color-ink); font-family: var(--font-body); font-weight: 800; font-size: .9rem; text-decoration: none; white-space: nowrap; transition: color 140ms, transform 140ms; }
+.kbcart__promo-btn:hover { color: var(--color-green); transform: translateY(-2px); }
+
+/* Maak de verrassing compleet */
+.kbcart__cross-title { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-ink); margin: 0 0 16px; }
+.kbcart__cross-scribble { color: var(--color-green); width: 46px; }
+.kbcart__cross-scribble svg { display: block; width: 100%; }
+.kbcart__cross-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.kbcart__cross-card { display: flex; gap: 12px; background: #fff; border-radius: var(--radius-md); padding: 14px; box-shadow: 0 10px 28px rgba(0,0,0,.04); }
+.kbcart__cross-media { display: block; width: 72px; height: 72px; border-radius: var(--radius-sm); overflow: hidden; background: var(--color-cream); flex-shrink: 0; }
+.kbcart__cross-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.kbcart__cross-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.kbcart__cross-name { font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); text-decoration: none; line-height: 1.2; }
+.kbcart__cross-name:hover { color: var(--color-green); }
+.kbcart__cross-desc { font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); margin: 3px 0 0; }
+.kbcart__cross-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 8px; }
+.kbcart__cross-price { font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); }
+.kbcart__cross-add { width: 34px; height: 34px; border: none; border-radius: 50%; background: var(--color-green); color: #fff; font-size: 1.3rem; line-height: 1; cursor: pointer; flex-shrink: 0; transition: background 140ms, transform 140ms; }
+.kbcart__cross-add:hover { background: #5a9a3b; transform: translateY(-2px); }
+
+/* Samenvatting */
+.kbcart__summary { background: #fff; border-radius: var(--radius-lg); padding: 24px; box-shadow: 0 16px 40px rgba(0,0,0,.05); align-self: start; }
+.kbcart__joy { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: var(--radius-md); background: #fbe4ee; margin-bottom: 20px; }
+.kbcart__joy-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--color-pink); color: #fff; flex-shrink: 0; }
+.kbcart__joy-icon .lucide { width: 20px; height: 20px; }
+.kbcart__joy-text { flex: 1; min-width: 0; }
+.kbcart__joy-text strong { display: block; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); }
+.kbcart__joy-text span { font-family: var(--font-body); font-size: .88rem; color: var(--color-body); }
+.kbcart__joy-heart { color: var(--color-pink); flex-shrink: 0; }
+.kbcart__joy-heart .lucide { width: 20px; height: 20px; fill: currentColor; }
+.kbcart__lines { display: flex; flex-direction: column; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid var(--color-line); }
+.kbcart__line { display: flex; align-items: baseline; justify-content: space-between; font-family: var(--font-body); }
+.kbcart__line span { font-size: 1rem; color: var(--color-body); }
+.kbcart__line strong { font-size: 1rem; color: var(--color-ink); }
+.kbcart__line-free { color: var(--color-green); font-weight: 700; }
+.kbcart__line-note { font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); margin: -4px 0 0; }
+.kbcart__total { display: flex; align-items: baseline; justify-content: space-between; margin-top: 16px; }
+.kbcart__total span { font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-ink); }
+.kbcart__total strong { font-family: var(--font-heading); font-size: 1.8rem; color: var(--color-ink); }
+.kbcart__total-tax { font-family: var(--font-body); font-size: .8rem; color: var(--color-muted); margin: 2px 0 18px; }
+
+.kbcart__btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 16px 30px; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.1rem; text-decoration: none; cursor: pointer; border: none; transition: background 160ms, transform 160ms, box-shadow 160ms; }
 .kbcart__btn span { display: inline-flex; }
 .kbcart__btn svg, .kbcart__btn .lucide { width: 18px; height: 18px; }
 .kbcart__btn--primary { background: var(--color-green); color: #fff; }
-.kbcart__btn--primary:hover { background: #5a9a3b; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(102, 170, 68, .3); }
-.kbcart__checkout { width: 100%; }
-.kbcart__continue { display: block; text-align: center; margin-top: 14px; font-family: var(--font-body); font-size: .95rem; font-weight: 700; color: var(--color-body); text-decoration: none; }
-.kbcart__continue:hover { color: var(--color-green); }
-.kbcart__reassure { list-style: none; margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid var(--color-line); display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; }
-.kbcart__reassure li { display: flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: .85rem; font-weight: 600; color: var(--color-body); }
-.kbcart__reassure .lucide { width: 16px; height: 16px; color: var(--color-green); }
+.kbcart__btn--primary:hover { background: #5a9a3b; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(102,170,68,.3); }
+.kbcart__checkout { width: 100%; position: relative; }
+.kbcart__checkout-paw { opacity: .55; }
 
-/* ── Inpak-upsell ───────────────────────────────────── */
-.kbcart__wrap-label { display: flex; align-items: center; gap: 14px; background: #fff; border: 2px dashed var(--color-pink); border-radius: var(--radius-md); padding: 16px 18px; cursor: pointer; transition: background 160ms, border-color 160ms; }
-.kbcart__wrap-label:hover { background: #fff7fb; }
-.kbcart__wrap-toggle { width: 22px; height: 22px; accent-color: var(--color-pink); flex-shrink: 0; cursor: pointer; }
-.kbcart__wrap-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--color-pink); color: #fff; flex-shrink: 0; }
-.kbcart__wrap-icon .lucide { width: 22px; height: 22px; }
-.kbcart__wrap-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
-.kbcart__wrap-text strong { font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); }
-.kbcart__wrap-text span { font-family: var(--font-body); font-size: .88rem; line-height: 1.45; color: var(--color-body); }
-.kbcart__wrap-price { font-family: var(--font-heading); font-size: 1rem; color: var(--color-pink); flex-shrink: 0; }
+.kbcart__pay-label { text-align: center; font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); margin: 18px 0 10px; }
+.kbcart__pay { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.kbcart__pay-icon { width: 40px; height: 26px; }
+.kbcart__reassure { list-style: none; margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid var(--color-line); display: flex; flex-direction: column; gap: 10px; }
+.kbcart__reassure li { display: flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: .88rem; font-weight: 600; color: var(--color-body); }
+.kbcart__reassure .lucide { width: 17px; height: 17px; color: var(--color-green); }
 
-.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.kbcart__disc { margin-top: 16px; border-top: 1px solid var(--color-line); padding-top: 14px; }
+.kbcart__disc summary { font-family: var(--font-body); font-weight: 700; color: var(--color-body); cursor: pointer; list-style: none; }
+.kbcart__disc summary::-webkit-details-marker { display: none; }
+.kbcart__disc-form { display: flex; gap: 8px; margin-top: 12px; }
+.kbcart__disc-form input { flex: 1; min-width: 0; padding: 11px 12px; border: 2px solid var(--color-line); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: .95rem; }
+.kbcart__disc-form input:focus { outline: none; border-color: var(--color-green); }
+.kbcart__disc-form button { padding: 11px 18px; border: none; border-radius: var(--radius-sm); background: var(--color-ink); color: #fff; font-family: var(--font-body); font-weight: 700; cursor: pointer; }
 
-/* ── Desktop ────────────────────────────────────────── */
+/* Onderste trust-balk */
+.kbcart__trust { position: relative; z-index: 1; border-top: 1px solid var(--color-line); margin-top: 8px; }
+.kbcart__trust-list { list-style: none; margin: 0 auto; padding: 22px var(--page-margin); max-width: var(--page-width); display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.kbcart__trust-item { display: flex; align-items: center; gap: 12px; }
+.kbcart__trust-icon { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0; }
+.kbcart__trust-icon .lucide { width: 22px; height: 22px; }
+.kbcart__trust-icon--green { background: #e8f5e2; color: var(--color-green); }
+.kbcart__trust-icon--pink { background: #fbe4ee; color: var(--color-pink); }
+.kbcart__trust-icon--orange { background: #fbeede; color: var(--color-orange); }
+.kbcart__trust-icon--yellow { background: #fff6da; color: #d9a400; }
+.kbcart__trust-text { display: flex; flex-direction: column; }
+.kbcart__trust-text strong { font-family: var(--font-body); font-size: .92rem; font-weight: 800; color: var(--color-ink); line-height: 1.3; }
+.kbcart__trust-text span { font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); }
+
+/* Desktop */
 @media (min-width: 990px) {
-  .kbcart__form { grid-template-columns: 1fr 360px; align-items: start; }
-  .kbcart__items { grid-column: 1; }
-  .kbcart__wrap { grid-column: 1; }
-  .kbcart__footer { grid-column: 2; grid-row: 1 / span 2; position: sticky; top: 24px; }
+  .kbcart__grid { grid-template-columns: 1fr 380px; align-items: start; }
+  .kbcart__summary { position: sticky; top: 24px; }
+}
+@media (min-width: 750px) {
+  .kbcart__cross-grid { grid-template-columns: repeat(4, 1fr); }
+  .kbcart__cross-card { flex-direction: column; }
+  .kbcart__cross-media { width: 100%; height: 110px; }
 }
 
+/* Mobiel */
 @media (max-width: 749px) {
+  .kbcart__dog { width: 130px; right: 0; opacity: .9; }
   .kbcart__item { grid-template-columns: 72px 1fr; }
   .kbcart__item-media { width: 72px; height: 72px; }
-  .kbcart__item-controls { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; padding-top: 4px; border-top: 1px solid var(--color-line); }
+  .kbcart__item-controls { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; padding-top: 12px; }
+  .kbcart__trust-list { grid-template-columns: repeat(2, 1fr); gap: 14px; }
 }
 {% endstylesheet %}
 
@@ -315,21 +520,78 @@
   "name": "Winkelwagen",
   "tag": "section",
   "settings": [
-    { "type": "header", "content": "Kop (gevulde winkelwagen)" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Bijna bij je hond" },
-    { "type": "text", "id": "title", "label": "Titel", "default": "Klaar om in te pakken" },
+    { "type": "header", "content": "Kop" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Jouw winkelwagen" },
+    { "type": "text", "id": "eyebrow", "label": "Subtitel", "default": "Bijna bij je hond" },
+    { "type": "image_picker", "id": "dog_image", "label": "Hond-afbeelding (PNG transparant, gluurt over de kaart)" },
+    { "type": "checkbox", "id": "show_decorations", "label": "Pootjes-decoratie tonen", "default": true },
     { "type": "header", "content": "Gratis verzending" },
     { "type": "checkbox", "id": "show_shipping_bar", "label": "Voortgangsbalk tonen", "default": true },
     { "type": "number", "id": "free_shipping_threshold", "label": "Drempel gratis verzending (in €)", "default": 75 },
     { "type": "header", "content": "Inpak-upsell" },
-    { "type": "text", "id": "giftwrap_handle", "label": "Product-handle inpakken", "default": "inpakken", "info": "De toggle verschijnt alleen als dit product bestaat." },
-    { "type": "text", "id": "giftwrap_title", "label": "Titel", "default": "Pak mijn cadeautjes in" },
+    { "type": "text", "id": "giftwrap_handle", "label": "Product-handle inpakken", "default": "inpakken", "info": "Verschijnt alleen als dit product bestaat en koopbaar is." },
+    { "type": "text", "id": "giftwrap_title", "label": "Titel", "default": "Cadeautjes inpakken" },
     { "type": "textarea", "id": "giftwrap_text", "label": "Tekst", "default": "Wij pakken alles in vrolijk pakpapier — zodat je hond het écht mag uitpakken." },
+    { "type": "header", "content": "Promo-banner" },
+    { "type": "checkbox", "id": "promo_show", "label": "Banner tonen", "default": true },
+    { "type": "text", "id": "promo_title", "label": "Titel", "default": "Vergeet je hond niet te verrassen?" },
+    { "type": "text", "id": "promo_text", "label": "Tekst", "default": "Bekijk onze Special Editions voor elke gelegenheid." },
+    { "type": "text", "id": "promo_button_label", "label": "Knoptekst", "default": "Bekijk Special Editions" },
+    { "type": "url", "id": "promo_button_url", "label": "Knop link" },
+    { "type": "header", "content": "Maak de verrassing compleet" },
+    { "type": "text", "id": "upsell_heading", "label": "Titel", "default": "Maak de verrassing compleet" },
+    { "type": "collection", "id": "upsell_collection", "label": "Collectie met upsell-producten" },
+    { "type": "range", "id": "upsell_count", "min": 2, "max": 4, "step": 1, "label": "Aantal producten", "default": 4 },
+    { "type": "header", "content": "Samenvatting" },
+    { "type": "text", "id": "summary_box_title", "label": "Titel roze blok", "default": "Jouw hond wordt blij!" },
+    { "type": "text", "id": "summary_box_text", "label": "Tekst roze blok", "default": "We maken er iets bijzonders van." },
     { "type": "header", "content": "Lege winkelwagen" },
     { "type": "text", "id": "empty_title", "label": "Titel", "default": "Nog geen cadeautjes ingepakt" },
     { "type": "textarea", "id": "empty_text", "label": "Tekst", "default": "Je winkelwagen wacht op iets moois. Kies een box en verras je hond met het moment waar hij niet meer op kan wachten." },
     { "type": "text", "id": "empty_button_label", "label": "Knoptekst", "default": "Verras je hond" },
     { "type": "url", "id": "empty_button_url", "label": "Knop link (leeg = alle producten)" }
+  ],
+  "blocks": [
+    {
+      "type": "trust",
+      "name": "Trust-item (onderbalk)",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titel", "default": "Meer dan 1.200" },
+        { "type": "text", "id": "subtitle", "label": "Subtitel", "default": "blije honden" },
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "paw",
+          "options": [
+            { "value": "paw", "label": "Poot" },
+            { "value": "star", "label": "Ster" },
+            { "value": "heart", "label": "Hart" },
+            { "value": "gift", "label": "Cadeau" },
+            { "value": "shield-check", "label": "Schild" },
+            { "value": "truck", "label": "Vrachtwagen" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Kleur", "default": "green",
+          "options": [
+            { "value": "green", "label": "Groen" },
+            { "value": "pink", "label": "Roze" },
+            { "value": "orange", "label": "Oranje" },
+            { "value": "yellow", "label": "Geel" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Winkelwagen",
+      "blocks": [
+        { "type": "trust", "settings": { "title": "Meer dan 1.200", "subtitle": "blije honden", "icon": "paw", "color": "green" } },
+        { "type": "trust", "settings": { "title": "4,9/5", "subtitle": "uitstekend beoordeeld", "icon": "star", "color": "yellow" } },
+        { "type": "trust", "settings": { "title": "Met liefde", "subtitle": "samengesteld", "icon": "heart", "color": "pink" } },
+        { "type": "trust", "settings": { "title": "Veilig & betrouwbaar", "subtitle": "100% tevredenheidsgarantie", "icon": "shield-check", "color": "green" } }
+      ]
+    }
   ]
 }
 {% endschema %}

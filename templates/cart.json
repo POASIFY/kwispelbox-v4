@@ -11,6 +11,13 @@
   "sections": {
     "main": {
       "type": "cart",
+      "blocks": {
+        "trust-1": { "type": "trust", "settings": { "title": "Meer dan 1.200", "subtitle": "blije honden", "icon": "paw", "color": "green" } },
+        "trust-2": { "type": "trust", "settings": { "title": "4,9/5", "subtitle": "uitstekend beoordeeld", "icon": "star", "color": "yellow" } },
+        "trust-3": { "type": "trust", "settings": { "title": "Met liefde", "subtitle": "samengesteld", "icon": "heart", "color": "pink" } },
+        "trust-4": { "type": "trust", "settings": { "title": "Veilig & betrouwbaar", "subtitle": "100% tevredenheidsgarantie", "icon": "shield-check", "color": "green" } }
+      },
+      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
       "settings": {}
     }
   },
