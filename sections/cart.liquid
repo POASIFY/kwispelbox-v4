@@ -347,7 +347,7 @@
   })();
 </script>
 
-{% stylesheet %}
+<style>
 .kbcart { position: relative; background: var(--color-cream); padding: 40px 0 0; overflow: hidden; }
 .kbcart__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
 
@@ -448,8 +448,8 @@
 .kbcart__cross-scribble { color: var(--color-green); width: 46px; }
 .kbcart__cross-scribble svg { display: block; width: 100%; }
 .kbcart__cross-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.kbcart__cross-card { display: flex; min-width: 0; gap: 12px; background: #fff; border-radius: var(--radius-md); padding: 14px; box-shadow: 0 10px 28px rgba(0,0,0,.04); }
-.kbcart__cross-media { display: block; width: 72px; height: 72px; border-radius: var(--radius-sm); overflow: hidden; background: var(--color-cream); flex-shrink: 0; }
+.kbcart__cross-card { display: flex; flex-direction: column; min-width: 0; gap: 10px; background: #fff; border-radius: var(--radius-md); padding: 12px; box-shadow: 0 10px 28px rgba(0,0,0,.04); }
+.kbcart__cross-media { display: block; width: 100%; height: 96px; border-radius: var(--radius-sm); overflow: hidden; background: var(--color-cream); flex-shrink: 0; }
 .kbcart__cross-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .kbcart__cross-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
 .kbcart__cross-name { font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); text-decoration: none; line-height: 1.2; overflow-wrap: anywhere; }
@@ -528,31 +528,45 @@
 }
 @media (min-width: 750px) {
   .kbcart__cross-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .kbcart__cross-card { flex-direction: column; }
-  .kbcart__cross-media { width: 100%; height: 110px; }
+  .kbcart__cross-media { height: 110px; }
 }
 
 /* Mobiel */
 @media (max-width: 749px) {
-  .kbcart { padding-top: 28px; }
-  .kbcart__dog { width: 118px; right: 0; opacity: .9; }
+  .kbcart { padding-top: 24px; }
+  .kbcart__inner { overflow-x: clip; }
+  .kbcart__title { font-size: clamp(1.7rem, 8vw, 2.2rem); }
+  .kbcart__sub { font-size: 1rem; }
+  .kbcart__dog { width: 110px; right: 0; opacity: .9; }
   .kbcart__card { padding: 16px; }
-  .kbcart__item { grid-template-columns: 84px minmax(0, 1fr); gap: 14px; padding: 16px 0; }
-  .kbcart__item-media { width: 84px; height: 84px; }
-  .kbcart__item-title { font-size: 1.05rem; }
-  .kbcart__item-price--inline { display: block; margin-top: 8px; font-size: 1.15rem; }
+
+  /* Regelitem: foto + body, stepper-rij eronder */
+  .kbcart__item { grid-template-columns: 72px minmax(0, 1fr); gap: 14px; padding: 16px 0; }
+  .kbcart__item-media { width: 72px; height: 72px; }
+  .kbcart__item-title { font-size: 1.02rem; }
+  .kbcart__item-price--inline { display: block; margin-top: 6px; font-size: 1.1rem; }
   .kbcart__item-remove { margin-top: 8px; }
-  .kbcart__item-controls { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: flex-start; gap: 14px; padding-top: 12px; }
+  .kbcart__item-controls { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: flex-start; gap: 16px; padding-top: 14px; }
   .kbcart__item-controls .kbcart__item-price { display: none; }
-  .kbcart__cross-card { padding: 10px; gap: 10px; }
-  .kbcart__cross-media { width: 60px; height: 60px; }
-  .kbcart__cross-name { font-size: .92rem; }
-  .kbcart__cross-desc { display: none; }
-  .kbcart__cross-foot { padding-top: 6px; }
+
+  /* Inpak-rij: knop op eigen volle regel (geen woord-per-regel) */
   .kbcart__wrap { flex-wrap: wrap; }
-  .kbcart__wrap-add, .kbcart__wrap-controls { margin-left: 60px; }
+  .kbcart__wrap-text { flex: 1 1 0; }
+  .kbcart__wrap-add, .kbcart__wrap-controls { flex: 1 0 100%; width: 100%; margin-left: 0; }
+  .kbcart__wrap-add { justify-content: center; }
+  .kbcart__wrap-controls { flex-direction: row; align-items: center; justify-content: space-between; }
+
+  /* Upsell: 2 verticale kaartjes, naam heeft volle breedte */
+  .kbcart__cross-media { height: 88px; }
+  .kbcart__cross-name { font-size: .9rem; }
+  .kbcart__cross-desc { display: none; }
+
+  /* Samenvatting */
   .kbcart__summary { padding: 20px; }
-  .kbcart__trust-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 12px; padding-bottom: 96px; }
+
+  /* Onderste trust-balk: ruimte vrijhouden voor plakbalk */
+  .kbcart__trust-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; padding-bottom: 104px; }
+  .kbcart__trust-text strong { font-size: .85rem; }
 
   /* Plakkende checkout-balk */
   .kbcart__stickybar {
@@ -566,7 +580,7 @@
   .kbcart__stickybar-total strong { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-ink); }
   .kbcart__stickybar .kbcart__btn { flex: 1; padding: 14px 20px; }
 }
-{% endstylesheet %}
+</style>
 
 {% schema %}
 {
