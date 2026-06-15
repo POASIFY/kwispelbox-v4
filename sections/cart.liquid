@@ -375,8 +375,8 @@
 .kbcart__sub .lucide { width: 18px; height: 18px; color: var(--color-pink); fill: currentColor; }
 
 /* Layout */
-.kbcart__grid { display: grid; gap: 24px; padding-bottom: 56px; }
-.kbcart__main { min-width: 0; display: grid; gap: 28px; }
+.kbcart__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; padding-bottom: 56px; }
+.kbcart__main { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 .kbcart__card { background: #fff; border-radius: var(--radius-lg); padding: 22px; box-shadow: 0 16px 40px rgba(0,0,0,.04); }
 
 /* Gratis verzending */
@@ -523,7 +523,7 @@
 
 /* Desktop */
 @media (min-width: 990px) {
-  .kbcart__grid { grid-template-columns: 1fr 380px; align-items: start; }
+  .kbcart__grid { grid-template-columns: minmax(0, 1fr) 380px; align-items: start; }
   .kbcart__summary { position: sticky; top: 24px; }
 }
 @media (min-width: 750px) {
