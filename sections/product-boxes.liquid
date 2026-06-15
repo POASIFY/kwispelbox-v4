@@ -466,21 +466,18 @@
   .kbx { padding: 56px 0; }
   .kbx__head { margin-bottom: 40px; }
 
+  /* Horizontale snap-slider met peek (best practice voor homogene rij) */
   .kbx__grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    max-width: 440px;
-    margin: 0 auto;
+    display: flex; flex-wrap: nowrap; overflow-x: auto;
+    gap: 14px; max-width: none; margin: 0;
+    padding: 4px 2px 16px;
+    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
   }
+  .kbx__grid::-webkit-scrollbar { display: none; }
+  .kbx-card--featured { order: -1; margin-block: 0; }
 
-  /* De populairste box als eerste én geaccentueerd tonen */
-  .kbx-card--featured {
-    order: -1;
-    margin-block: 0;
-  }
-
-  /* Compacte horizontale kaart: foto links, content rechts */
-  .kbx-card { display: grid; grid-template-columns: 40% 1fr; gap: 14px; align-items: center; padding: 12px; text-align: left; }
+  /* Compacte kaart als slide: foto links, content rechts */
+  .kbx-card { flex: 0 0 84%; scroll-snap-align: center; display: grid; grid-template-columns: 40% 1fr; gap: 14px; align-items: center; padding: 12px; text-align: left; }
   .kbx-card__media { margin-bottom: 0; }
   .kbx-card__img, .kbx-card__img--placeholder { height: 132px; }
   .kbx-card__body { padding: 0; display: flex; flex-direction: column; gap: 4px; }
@@ -500,7 +497,8 @@
   .kbx__deco-item--1, .kbx__deco-item--4 { display: none; }
 
   .kbx-trust { margin-top: 36px; padding: 24px 18px; border-radius: var(--radius-md); }
-  .kbx-trust__list { grid-template-columns: 1fr; gap: 16px; }
+  .kbx-trust__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
+  .kbx-trust__item { flex-direction: column; text-align: center; gap: 8px; }
   .kbx-trust__title { font-size: 1.2rem; margin-bottom: 20px; }
 }
 
