@@ -1,0 +1,142 @@
+{%- comment -%}
+  sections/newsletter.liquid — Kwispelbox KB-v4
+  Nieuwsbrief-aanmelding: zachte roze band, e-mailformulier + voordelen + hond.
+{%- endcomment -%}
+
+<div class="kbnl full-width">
+  <div class="kbnl__inner">
+    <div class="kbnl__card">
+
+      <div class="kbnl__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="kbnl__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="kbnl__title">{{ section.settings.heading }}
+            {%- if section.settings.heading_highlight != blank %} <span class="kbnl__title-em">{{ section.settings.heading_highlight }}</span>{%- endif -%}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="kbnl__text">{{ section.settings.text }}</p>
+        {%- endif -%}
+
+        {%- form 'customer', class: 'kbnl__form' -%}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          {%- if form.posted_successfully? -%}
+            <p class="kbnl__success">{%- render 'lucide', icon: 'heart' -%} {{ section.settings.success_text | default: 'Hoera! Je staat op de lijst. Houd je inbox in de gaten voor leuke verrassingen.' }}</p>
+          {%- else -%}
+            <div class="kbnl__row">
+              <label class="visually-hidden" for="kbnl-email">E-mailadres</label>
+              <input id="kbnl-email" type="email" name="contact[email]" required placeholder="{{ section.settings.placeholder | default: 'Jouw e-mailadres' }}" class="kbnl__input">
+              <button type="submit" class="kbnl__btn">{{ section.settings.button_label | default: 'Aanmelden' }}<span aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span></button>
+            </div>
+            {%- if form.errors -%}
+              <p class="kbnl__error">{{ form.errors | default_errors }}</p>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+
+        {%- assign benefits = section.blocks | where: 'type', 'benefit' -%}
+        {%- if benefits.size > 0 -%}
+          <ul class="kbnl__benefits" role="list">
+            {%- for block in benefits -%}
+              <li {{ block.shopify_attributes }}><span class="kbnl__check" aria-hidden="true">{%- render 'lucide', icon: 'check' -%}</span>{{ block.settings.text }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <div class="kbnl__media">
+        {%- if section.settings.image != blank -%}
+          <img src="{{ section.settings.image | image_url: width: 700 }}" alt="" width="350" height="350" loading="lazy" class="kbnl__img">
+        {%- else -%}
+          <span class="kbnl__ph">{%- render 'lucide', icon: 'dog' -%}</span>
+        {%- endif -%}
+        <span class="kbnl__deco kbnl__deco--h1" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+        <span class="kbnl__deco kbnl__deco--h2" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.kbnl { background: var(--color-cream); padding: var(--section-pad) 0; }
+.kbnl__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.kbnl__card { position: relative; overflow: hidden; background: #fbe4ee; border-radius: var(--radius-lg); display: grid; grid-template-columns: 1.3fr 1fr; align-items: center; gap: 32px; padding: 48px; }
+
+.kbnl__eyebrow { font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--color-pink); margin: 0 0 8px; }
+.kbnl__title { font-family: var(--font-heading); font-size: var(--fs-h2); color: var(--color-ink); margin: 0 0 12px; line-height: 1.1; }
+.kbnl__title-em { color: var(--color-pink); }
+.kbnl__text { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0 0 22px; max-width: 44ch; }
+
+.kbnl__row { display: flex; gap: 10px; max-width: 480px; }
+.kbnl__input { flex: 1; min-width: 0; box-sizing: border-box; height: 54px; padding: 0 20px; border: 2px solid transparent; border-radius: var(--radius-pill); background: #fff; font-family: var(--font-body); font-size: 1rem; color: var(--color-ink); }
+.kbnl__input:focus { outline: none; border-color: var(--color-pink); }
+.kbnl__btn { flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px; padding: 0 26px; border: none; border-radius: var(--radius-pill); background: var(--color-green); color: #fff; font-family: var(--font-heading); font-size: 1rem; cursor: pointer; transition: background 160ms, transform 160ms; }
+.kbnl__btn .lucide { width: 16px; height: 16px; }
+.kbnl__btn:hover { background: #5a9a3b; transform: translateY(-2px); }
+.kbnl__success { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-body); font-weight: 700; color: var(--color-green); margin: 0; }
+.kbnl__success .lucide { width: 18px; height: 18px; fill: currentColor; color: var(--color-pink); }
+.kbnl__error { font-family: var(--font-body); font-size: .88rem; color: #c0392b; margin: 8px 0 0; }
+
+.kbnl__benefits { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.kbnl__benefits li { display: flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: .9rem; font-weight: 600; color: var(--color-body); }
+.kbnl__check { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--color-green); color: #fff; flex-shrink: 0; }
+.kbnl__check .lucide { width: 13px; height: 13px; }
+
+.kbnl__media { position: relative; align-self: stretch; display: flex; align-items: center; justify-content: center; }
+.kbnl__img { width: 100%; height: auto; max-height: 320px; object-fit: contain; display: block; }
+.kbnl__ph { display: flex; align-items: center; justify-content: center; width: 70%; aspect-ratio: 1; background: #fff; border-radius: 50%; color: var(--color-pink); box-shadow: var(--shadow-card); }
+.kbnl__ph .lucide { width: 44%; height: 44%; }
+.kbnl__deco { position: absolute; pointer-events: none; color: var(--color-pink); }
+.kbnl__deco .lucide { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2.2; }
+.kbnl__deco--h1 { top: 6%; right: 8%; width: 26px; }
+.kbnl__deco--h2 { bottom: 12%; left: 4%; width: 20px; }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+@media (max-width: 749px) {
+  .kbnl__card { grid-template-columns: 1fr; padding: 32px 22px; gap: 8px; text-align: center; }
+  .kbnl__media { order: -1; margin-bottom: 8px; }
+  .kbnl__ph { width: 130px; }
+  .kbnl__img { max-height: 200px; }
+  .kbnl__text { margin-left: auto; margin-right: auto; }
+  .kbnl__row { flex-direction: column; max-width: 100%; }
+  .kbnl__input, .kbnl__btn { width: 100%; }
+  .kbnl__btn { justify-content: center; padding: 14px 26px; }
+  .kbnl__benefits { justify-content: center; }
+  .kbnl__deco--h2 { left: 8%; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Nieuwsbrief",
+  "tag": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Mis niets" },
+    { "type": "text", "id": "heading", "label": "Titel", "default": "Meld je aan &" },
+    { "type": "text", "id": "heading_highlight", "label": "Titel accent (roze)", "default": "blijf op de hoogte" },
+    { "type": "textarea", "id": "text", "label": "Tekst", "default": "Ontvang als eerste leuke acties, nieuwe boxen en inspiratie voor jouw hond." },
+    { "type": "text", "id": "placeholder", "label": "Veld-placeholder", "default": "Jouw e-mailadres" },
+    { "type": "text", "id": "button_label", "label": "Knoptekst", "default": "Aanmelden" },
+    { "type": "textarea", "id": "success_text", "label": "Bedank-tekst", "default": "Hoera! Je staat op de lijst. Houd je inbox in de gaten voor leuke verrassingen." },
+    { "type": "image_picker", "id": "image", "label": "Hond-afbeelding (optioneel)" }
+  ],
+  "blocks": [
+    { "type": "benefit", "name": "Voordeel", "limit": 4, "settings": [ { "type": "text", "id": "text", "label": "Tekst", "default": "Leuke tips & inspiratie" } ] }
+  ],
+  "presets": [
+    {
+      "name": "Nieuwsbrief",
+      "blocks": [
+        { "type": "benefit", "settings": { "text": "Leuke tips & inspiratie" } },
+        { "type": "benefit", "settings": { "text": "Exclusieve acties" } },
+        { "type": "benefit", "settings": { "text": "Altijd als eerste op de hoogte" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
