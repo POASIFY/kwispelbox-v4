@@ -96,14 +96,18 @@
       <!-- Acties rechts (Lucide icon buttons) -->
       <div class="site-header__actions">
         {%- if shop.customer_accounts_enabled -%}
-          <a href="{{ routes.account_url }}" class="site-header__icon-btn" aria-label="Mijn account">
-            <span class="site-header__sr-only">Mijn account</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+          <a href="{{ routes.account_url }}" class="site-header__action">
+            <span class="site-header__action-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
+            <span class="site-header__action-label">Mijn account</span>
           </a>
         {%- endif -%}
-        <a href="{{ routes.cart_url }}" class="site-header__icon-btn site-header__icon-btn--cart"
-           aria-label="Winkelwagen, {{ cart.item_count }} items">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <a href="/pages/verlanglijst" class="site-header__action site-header__action--wish">
+          <span class="site-header__action-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+          <span class="site-header__action-label">Verlanglijst</span>
+        </a>
+        <a href="{{ routes.cart_url }}" class="site-header__cart-pill" aria-label="Winkelwagen, {{ cart.item_count }} items">
+          <span class="site-header__action-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
+          <span class="site-header__action-label">Winkelwagen</span>
           {%- if cart.item_count > 0 -%}
             <span class="site-header__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
           {%- endif -%}
@@ -1246,6 +1250,20 @@
   border-color:var(--color-green);
   transform:translateY(-2px);
   box-shadow:0 10px 22px rgba(61,34,9,.10);
+}
+/* Gelabelde acties + winkelwagen-pill (naar mockup) */
+.site-header__action{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--color-ink);font-family:var(--font-body);font-size:.92rem;font-weight:600;transition:color 160ms;}
+.site-header__action:hover{color:var(--color-green);}
+.site-header__action-icon{display:inline-flex;}
+.site-header__action-icon svg{width:22px;height:22px;}
+.site-header__cart-pill{position:relative;display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border:1.5px solid var(--color-line);border-radius:var(--radius-pill);background:#fff;text-decoration:none;color:var(--color-ink);font-family:var(--font-body);font-weight:700;font-size:.92rem;box-shadow:0 4px 14px rgba(61,34,9,.05);transition:border-color 160ms,box-shadow 160ms,transform 160ms;}
+.site-header__cart-pill:hover{border-color:var(--color-green);transform:translateY(-2px);box-shadow:0 12px 26px rgba(61,34,9,.10);}
+.site-header__cart-pill svg{width:22px;height:22px;}
+.site-header__cart-pill .site-header__cart-count{position:absolute;top:-6px;right:-4px;background:var(--color-pink);color:#fff;font-family:var(--font-body);font-size:.66rem;font-weight:800;min-width:20px;height:20px;padding:0 5px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;border:2px solid #fff;}
+@media(max-width:989px){
+  .site-header__action-label{display:none;}
+  .site-header__action--wish{display:none;}
+  .site-header__cart-pill{padding:0;width:46px;height:46px;justify-content:center;border-radius:50%;}
 }
 .site-header__icon-btn--cart:hover{border-color:var(--color-pink);}
 .site-header__icon-btn svg{width:22px;height:22px;}
