@@ -166,7 +166,32 @@
         "m4"
       ],
       "settings": {
-        "hero_text": "Als lid ontvang je exclusieve voordelen, verrassingen en leuke momenten voor jouw hond. Want samen elke maand uitpakken is het leukst — helemaal gratis."
+        "hero_eyebrow": "Word lid van de",
+        "hero_title": "Kwispelclub",
+        "hero_text": "Als lid ontvang je exclusieve voordelen, verrassingen en leuke momenten voor jouw hond. Want samen elke maand uitpakken is het leukst — helemaal gratis.",
+        "hero_primary_label": "Word gratis lid",
+        "hero_primary_url": "",
+        "hero_secondary_label": "Inloggen",
+        "hero_secondary_url": "",
+        "hero_rating": "4,9/5",
+        "hero_members_text": "Meer dan 1.200 blije clubleden",
+        "hero_image": "shopify://shop_images/ChatGPT_Image_11_jun_2026_20_21_09.png",
+        "show_badge": true,
+        "hero_badge_text": "Welkom Luna! Fijn dat je erbij bent!",
+        "show_decorations": true,
+        "benefits_title": "Dit krijg je als Kwispelclub lid",
+        "spotlight_title": "Maak kans op Kwispelaar van de maand",
+        "spotlight_image": "shopify://shop_images/ChatGPT_Image_11_jun_2026_10_08_40.png",
+        "spotlight_name": "Luna",
+        "spotlight_label": "Kwispelaar van de maand",
+        "spotlight_text": "Elke maand zetten we één bijzondere kwispelaar in de spotlight. Stuur een foto van jouw hond in en maak kans op een plekje hier — plus een leuke verrassing!",
+        "spotlight_cta_label": "Stuur jouw hond in",
+        "spotlight_cta_url": "",
+        "steps_title": "Zo werkt het",
+        "news_title": "Mis geen enkele verrassing!",
+        "news_text": "Als clublid hoor jij als eerste van nieuwe boxen, acties en exclusieve verrassingen. Meld je aan en blijf op de hoogte!",
+        "news_placeholder": "Jouw e-mailadres",
+        "news_button_label": "Aanmelden"
       }
     }
   },

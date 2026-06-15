@@ -12,14 +12,72 @@
     "main": {
       "type": "cart",
       "blocks": {
-        "trust-1": { "type": "trust", "settings": { "title": "Meer dan 1.200", "subtitle": "blije honden", "icon": "paw", "color": "green" } },
-        "trust-2": { "type": "trust", "settings": { "title": "4,9/5", "subtitle": "uitstekend beoordeeld", "icon": "star", "color": "yellow" } },
-        "trust-3": { "type": "trust", "settings": { "title": "Met liefde", "subtitle": "samengesteld", "icon": "heart", "color": "pink" } },
-        "trust-4": { "type": "trust", "settings": { "title": "Veilig & betrouwbaar", "subtitle": "100% tevredenheidsgarantie", "icon": "shield-check", "color": "green" } }
+        "trust-1": {
+          "type": "trust",
+          "settings": {
+            "title": "Meer dan 1.200",
+            "subtitle": "blije honden",
+            "icon": "paw",
+            "color": "green"
+          }
+        },
+        "trust-2": {
+          "type": "trust",
+          "settings": {
+            "title": "4,9/5",
+            "subtitle": "uitstekend beoordeeld",
+            "icon": "star",
+            "color": "yellow"
+          }
+        },
+        "trust-3": {
+          "type": "trust",
+          "settings": {
+            "title": "Met liefde",
+            "subtitle": "samengesteld",
+            "icon": "heart",
+            "color": "pink"
+          }
+        },
+        "trust-4": {
+          "type": "trust",
+          "settings": {
+            "title": "Veilig & betrouwbaar",
+            "subtitle": "100% tevredenheidsgarantie",
+            "icon": "shield-check",
+            "color": "green"
+          }
+        }
       },
-      "block_order": ["trust-1", "trust-2", "trust-3", "trust-4"],
+      "block_order": [
+        "trust-1",
+        "trust-2",
+        "trust-3",
+        "trust-4"
+      ],
       "settings": {
-        "upsell_collection": "maak-er-een-echt-cadeautje-van"
+        "title": "Jouw winkelwagen",
+        "eyebrow": "Bijna bij je hond",
+        "show_decorations": true,
+        "show_shipping_bar": true,
+        "free_shipping_threshold": 75,
+        "giftwrap_handle": "inpakken",
+        "giftwrap_title": "Cadeautjes inpakken",
+        "giftwrap_text": "Wij pakken alles in vrolijk pakpapier — zodat je hond het écht mag uitpakken.",
+        "promo_show": true,
+        "promo_title": "Heb je onze special boxen al gezien?",
+        "promo_text": "Bekijk onze Special Editions voor elke gelegenheid.",
+        "promo_button_label": "Bekijk Special Editions",
+        "promo_button_url": "",
+        "upsell_heading": "Maak de verrassing compleet",
+        "upsell_collection": "maak-er-een-echt-cadeautje-van",
+        "upsell_count": 4,
+        "summary_box_title": "Jouw hond wordt blij!",
+        "summary_box_text": "We maken er iets bijzonders van.",
+        "empty_title": "Nog geen cadeautjes ingepakt",
+        "empty_text": "Je winkelwagen wacht op iets moois. Kies een box en verras je hond met het moment waar hij niet meer op kan wachten.",
+        "empty_button_label": "Verras je hond",
+        "empty_button_url": ""
       }
     }
   },
