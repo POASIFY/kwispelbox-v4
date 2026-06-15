@@ -781,6 +781,21 @@
           </ul>
         </nav>
 
+        {%- if section.settings.nav_chip_title != blank -%}
+          <a href="{{ section.settings.nav_chip_url | default: '/products/kwispelbox' }}" class="site-header__navchip">
+            <span class="site-header__navchip-text">
+              <strong>{{ section.settings.nav_chip_title }}</strong>
+              {%- if section.settings.nav_chip_subtitle != blank -%}<span>{{ section.settings.nav_chip_subtitle }}</span>{%- endif -%}
+            </span>
+            {%- if section.settings.nav_chip_image != blank -%}
+              <img src="{{ section.settings.nav_chip_image | image_url: width: 120 }}" alt="" width="54" height="46" loading="lazy" class="site-header__navchip-img">
+            {%- else -%}
+              <span class="site-header__navchip-ph" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+            {%- endif -%}
+            <span class="site-header__navchip-arrow" aria-hidden="true">›</span>
+          </a>
+        {%- endif -%}
+
       </div>
     </header>
   {%- endif -%}
@@ -1299,9 +1314,20 @@
   padding:6px var(--page-margin) 16px;
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:8px;
+  justify-content:space-between;
+  gap:16px;
 }
+/* Promo-chip rechts in de nav */
+.site-header__navchip{display:inline-flex;align-items:center;gap:12px;background:#ffe0ee;border-radius:var(--radius-pill);padding:6px 14px 6px 18px;text-decoration:none;flex-shrink:0;transition:transform 160ms,box-shadow 160ms;}
+.site-header__navchip:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(212,83,126,.18);}
+.site-header__navchip-text{display:flex;flex-direction:column;line-height:1.15;}
+.site-header__navchip-text strong{font-family:var(--font-heading);font-size:.92rem;color:var(--color-pink);}
+.site-header__navchip-text span{font-family:var(--font-body);font-size:.72rem;color:var(--color-pink);}
+.site-header__navchip-img{width:48px;height:42px;object-fit:cover;border-radius:10px;}
+.site-header__navchip-ph{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:10px;background:#fff;color:var(--color-pink);}
+.site-header__navchip-ph .lucide{width:22px;height:22px;}
+.site-header__navchip-arrow{font-size:1.3rem;color:var(--color-pink);line-height:1;}
+@media(max-width:1100px){.site-header__navchip{display:none;}}
 /* Subtiele decoratieve merkaccenten rond de nav */
 .site-header__nav-deco{position:absolute;inset:0;pointer-events:none;z-index:0;}
 .site-header__nav-deco span{position:absolute;display:block;}
@@ -3043,6 +3069,32 @@
       "id": "account_label",
       "label": "Account label",
       "default": "Mijn account"
+    },
+    {
+      "type": "header",
+      "content": "Nav promo-chip"
+    },
+    {
+      "type": "text",
+      "id": "nav_chip_title",
+      "label": "Chip titel",
+      "default": "Happy Kwispelbox"
+    },
+    {
+      "type": "text",
+      "id": "nav_chip_subtitle",
+      "label": "Chip subtitel",
+      "default": "Meest gekozen!"
+    },
+    {
+      "type": "url",
+      "id": "nav_chip_url",
+      "label": "Chip link"
+    },
+    {
+      "type": "image_picker",
+      "id": "nav_chip_image",
+      "label": "Chip afbeelding (box)"
     },
     {
       "type": "header",
