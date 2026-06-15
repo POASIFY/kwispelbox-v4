@@ -1,57 +1,179 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
+{%- comment -%}
+  sections/footer.liquid — Kwispelbox KB-v4
+  Warme premium footer: golfrand, merkblok + socials, link-kolommen,
+  Kwispelclub-CTA, betaaliconen, signoff. Mobiel + desktop.
+{%- endcomment -%}
+
+<footer class="kbfoot full-width">
+
+  <div class="kbfoot__wave" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 70" preserveAspectRatio="none">
+      <path d="M0,38 C160,12 320,60 540,40 C760,20 900,62 1080,42 C1260,24 1360,48 1440,34 L1440,70 L0,70 Z" fill="#e8f5e2"/>
+    </svg>
   </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
+  <div class="kbfoot__body">
+    <div class="kbfoot__inner">
 
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+      <div class="kbfoot__top">
+
+        {%- comment -%} Merkblok {%- endcomment -%}
+        <div class="kbfoot__brand">
+          <a href="{{ routes.root_url }}" class="kbfoot__logo" aria-label="{{ shop.name }}">
+            {%- if section.settings.logo != blank -%}
+              <img src="{{ section.settings.logo | image_url: width: 360 }}" alt="{{ shop.name | escape }}" width="180" height="auto" loading="lazy" class="kbfoot__logo-img">
+            {%- else -%}
+              <span class="kbfoot__logo-text">{{ shop.name }}</span>
+            {%- endif -%}
+          </a>
+          {%- if section.settings.tagline != blank -%}
+            <p class="kbfoot__tagline">{{ section.settings.tagline }}</p>
+          {%- endif -%}
+
+          {%- assign has_social = false -%}
+          {%- if section.settings.instagram != blank or section.settings.facebook != blank or section.settings.tiktok != blank -%}{%- assign has_social = true -%}{%- endif -%}
+          {%- if has_social -%}
+            <div class="kbfoot__socials">
+              {%- if section.settings.instagram != blank -%}
+                <a href="{{ section.settings.instagram }}" class="kbfoot__social" aria-label="Instagram" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+                </a>
+              {%- endif -%}
+              {%- if section.settings.facebook != blank -%}
+                <a href="{{ section.settings.facebook }}" class="kbfoot__social" aria-label="Facebook" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3l.5-3H14V4.5c0-.8.3-1.5 1.5-1.5H17V.5C16.7.4 15.7.3 14.7.3 12.4.3 11 1.7 11 4.2V6H8v3h3v9h3z"/></svg>
+                </a>
+              {%- endif -%}
+              {%- if section.settings.tiktok != blank -%}
+                <a href="{{ section.settings.tiktok }}" class="kbfoot__social" aria-label="TikTok" target="_blank" rel="noopener">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.1 1.5 3.7 3.5 4v2.6c-1.3.1-2.5-.3-3.5-1V15a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v2.7a2.8 2.8 0 1 0 1.9 2.7V3z"/></svg>
+                </a>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Link-kolommen {%- endcomment -%}
+        <nav class="kbfoot__cols" aria-label="Footer navigatie">
+          {%- for i in (1..3) -%}
+            {%- assign title_key = 'col_' | append: i | append: '_title' -%}
+            {%- assign menu_key = 'col_' | append: i | append: '_menu' -%}
+            {%- assign col_title = section.settings[title_key] -%}
+            {%- assign col_menu = section.settings[menu_key] -%}
+            {%- if col_menu != blank and col_menu.links.size > 0 -%}
+              <div class="kbfoot__col">
+                {%- if col_title != blank -%}<h3 class="kbfoot__col-title">{{ col_title }}</h3>{%- endif -%}
+                <ul class="kbfoot__col-list" role="list">
+                  {%- for link in col_menu.links -%}
+                    <li><a href="{{ link.url }}" class="kbfoot__link">{{ link.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </nav>
+
+        {%- comment -%} Kwispelclub-CTA {%- endcomment -%}
+        {%- if section.settings.club_title != blank -%}
+          <div class="kbfoot__club">
+            <strong class="kbfoot__club-title">{{ section.settings.club_title }}</strong>
+            {%- if section.settings.club_text != blank -%}<p class="kbfoot__club-text">{{ section.settings.club_text }}</p>{%- endif -%}
+            {%- if section.settings.club_cta != blank -%}
+              <a href="{{ section.settings.club_url | default: '/pages/kwispelclub' }}" class="kbfoot__club-btn">{{ section.settings.club_cta }}<span aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span></a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+      </div>
+
+      <div class="kbfoot__bottom">
+        {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
+          <div class="kbfoot__pay">
+            {%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'kbfoot__pay-icon' }}{%- endfor -%}
+          </div>
+        {%- endif -%}
+        <p class="kbfoot__copy">
+          &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}
+          {%- if section.settings.signoff != blank -%}<span class="kbfoot__signoff">{{ section.settings.signoff }}</span>{%- endif -%}
+        </p>
+      </div>
+
+    </div>
   </div>
 </footer>
 
 {% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
-  }
-  footer a {
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  footer .footer__links,
-  footer .footer__payment {
-    display: flex;
-    gap: 1rem;
-  }
+.kbfoot { position: relative; background: var(--color-cream); margin-top: 40px; }
+.kbfoot__wave { line-height: 0; }
+.kbfoot__wave svg { display: block; width: 100%; height: 56px; }
+.kbfoot__body { background: #e8f5e2; }
+.kbfoot__inner { max-width: var(--page-width); margin: 0 auto; padding: 8px var(--page-margin) var(--section-pad-sm); }
+
+.kbfoot__top { display: grid; grid-template-columns: 1.5fr 2fr 1.2fr; gap: 44px; padding: 28px 0 40px; align-items: start; }
+
+.kbfoot__logo { display: inline-flex; text-decoration: none; }
+.kbfoot__logo-img { height: auto; max-height: 56px; width: auto; display: block; }
+.kbfoot__logo-text { font-family: var(--font-heading); font-size: 1.7rem; color: var(--color-ink); }
+.kbfoot__tagline { font-family: var(--font-body); font-size: .95rem; line-height: 1.6; color: var(--color-body); margin: 14px 0 0; max-width: 34ch; }
+.kbfoot__socials { display: flex; gap: 10px; margin-top: 18px; }
+.kbfoot__social { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: #fff; color: var(--color-green); transition: transform 160ms, color 160ms, background 160ms; }
+.kbfoot__social svg { width: 20px; height: 20px; }
+.kbfoot__social:hover { transform: translateY(-2px); background: var(--color-green); color: #fff; }
+
+.kbfoot__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 24px 28px; }
+.kbfoot__col-title { font-family: var(--font-heading); font-size: var(--fs-h3); color: var(--color-ink); margin: 0 0 14px; }
+.kbfoot__col-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.kbfoot__link { font-family: var(--font-body); font-size: .92rem; color: var(--color-body); text-decoration: none; transition: color 140ms; }
+.kbfoot__link:hover { color: var(--color-green); }
+
+.kbfoot__club { background: #fff; border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-card); }
+.kbfoot__club-title { display: block; font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); }
+.kbfoot__club-text { font-family: var(--font-body); font-size: .88rem; line-height: 1.5; color: var(--color-body); margin: 8px 0 14px; }
+.kbfoot__club-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: var(--radius-pill); background: var(--color-green); color: #fff; font-family: var(--font-heading); font-size: .95rem; text-decoration: none; transition: transform 160ms, background 160ms; }
+.kbfoot__club-btn .lucide { width: 16px; height: 16px; }
+.kbfoot__club-btn:hover { transform: translateY(-2px); background: #5a9a3b; }
+
+.kbfoot__bottom { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; padding-top: 22px; border-top: 1px solid rgba(61,34,9,.10); }
+.kbfoot__pay { display: flex; flex-wrap: wrap; gap: 8px; }
+.kbfoot__pay-icon { width: 40px; height: 26px; }
+.kbfoot__copy { font-family: var(--font-body); font-size: .85rem; color: var(--color-muted); margin: 0; display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.kbfoot__signoff { color: var(--color-green); font-weight: 700; }
+
+@media (max-width: 989px) {
+  .kbfoot__top { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 599px) {
+  .kbfoot__bottom { flex-direction: column-reverse; align-items: flex-start; gap: 16px; }
+}
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:general.footer",
+  "name": "Footer",
   "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
-    }
+    { "type": "header", "content": "Merk" },
+    { "type": "image_picker", "id": "logo", "label": "Logo (leeg = winkelnaam)" },
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Elke maand een cadeautje vol speelplezier, snacks en knuffels — met liefde uitgezocht voor jouw beste vriend." },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "facebook", "label": "Facebook URL" },
+    { "type": "url", "id": "tiktok", "label": "TikTok URL" },
+    { "type": "header", "content": "Link-kolom 1" },
+    { "type": "text", "id": "col_1_title", "label": "Titel", "default": "Shop" },
+    { "type": "link_list", "id": "col_1_menu", "label": "Menu" },
+    { "type": "header", "content": "Link-kolom 2" },
+    { "type": "text", "id": "col_2_title", "label": "Titel", "default": "Klantenservice" },
+    { "type": "link_list", "id": "col_2_menu", "label": "Menu" },
+    { "type": "header", "content": "Link-kolom 3" },
+    { "type": "text", "id": "col_3_title", "label": "Titel", "default": "Over Kwispelbox" },
+    { "type": "link_list", "id": "col_3_menu", "label": "Menu" },
+    { "type": "header", "content": "Kwispelclub-blok" },
+    { "type": "text", "id": "club_title", "label": "Titel", "default": "Word lid van de Kwispelclub" },
+    { "type": "textarea", "id": "club_text", "label": "Tekst", "default": "Spaar Kwispels en ontvang leuke beloningen & verrassingen." },
+    { "type": "text", "id": "club_cta", "label": "Knoptekst", "default": "Word gratis lid" },
+    { "type": "url", "id": "club_url", "label": "Knop link" },
+    { "type": "header", "content": "Onderbalk" },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Betaaliconen tonen", "default": true },
+    { "type": "text", "id": "signoff", "label": "Signoff", "default": "Met liefde gemaakt voor blije honden 🐾" }
   ]
 }
 {% endschema %}
