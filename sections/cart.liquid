@@ -170,47 +170,6 @@
 
           </div>
 
-          {%- comment -%} Maak de verrassing compleet (upsell uit collectie) {%- endcomment -%}
-          {%- assign upsell = collections[section.settings.upsell_collection] -%}
-          {%- if upsell != blank and upsell.products.size > 0 -%}
-            {%- assign upsell_max = section.settings.upsell_count | default: 4 -%}
-            <div class="kbcart__cross">
-              <h2 class="kbcart__cross-title">{{ section.settings.upsell_heading | default: 'Maak de verrassing compleet' }}<span class="kbcart__cross-scribble" aria-hidden="true"><svg viewBox="0 0 60 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 11c6-9 10 6 16-1s10 6 16-1 10 5 22-2"/></svg></span></h2>
-              <ul class="kbcart__cross-grid" role="list">
-                {%- assign shown = 0 -%}
-                {%- for product in upsell.products -%}
-                  {%- comment -%} Inpakservice nooit dubbel: heeft al eigen regel {%- endcomment -%}
-                  {%- if product.handle == section.settings.giftwrap_handle -%}{%- continue -%}{%- endif -%}
-                  {%- if shown >= upsell_max -%}{%- break -%}{%- endif -%}
-                  {%- assign shown = shown | plus: 1 -%}
-                  {%- assign pv = product.selected_or_first_available_variant -%}
-                  <li class="kbcart__cross-card{% unless product.available %} is-sold{% endunless %}">
-                    <a href="{{ product.url }}" class="kbcart__cross-media" tabindex="-1" aria-hidden="true">
-                      {%- if product.featured_image -%}
-                        <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.featured_image.alt | escape }}" width="72" height="72" loading="lazy">
-                      {%- else -%}
-                        <span class="kbcart__item-ph">{%- render 'lucide', icon: 'bone' -%}</span>
-                      {%- endif -%}
-                    </a>
-                    <div class="kbcart__cross-info">
-                      <a href="{{ product.url }}" class="kbcart__cross-name">{{ product.title }}</a>
-                      {%- if product.description != blank -%}
-                        <p class="kbcart__cross-desc">{{ product.description | strip_html | truncatewords: 6 }}</p>
-                      {%- endif -%}
-                      <div class="kbcart__cross-foot">
-                        <span class="kbcart__cross-price">{{ product.price | money }}</span>
-                        {%- if product.available and pv != blank -%}
-                          <button type="button" class="kbcart__cross-add" data-cart-add="{{ pv.id }}" aria-label="{{ product.title | escape }} toevoegen">+</button>
-                        {%- else -%}
-                          <span class="kbcart__cross-sold">Uitverkocht</span>
-                        {%- endif -%}
-                      </div>
-                    </div>
-                  </li>
-                {%- endfor -%}
-              </ul>
-            </div>
-          {%- endif -%}
         </div>
 
         {%- comment -%} ── Rechterkolom: samenvatting ────────────── {%- endcomment -%}
@@ -280,6 +239,48 @@
             </form>
           </details>
         </aside>
+
+          {%- comment -%} Maak de verrassing compleet (upsell uit collectie) {%- endcomment -%}
+          {%- assign upsell = collections[section.settings.upsell_collection] -%}
+          {%- if upsell != blank and upsell.products.size > 0 -%}
+            {%- assign upsell_max = section.settings.upsell_count | default: 4 -%}
+            <div class="kbcart__cross">
+              <h2 class="kbcart__cross-title">{{ section.settings.upsell_heading | default: 'Maak de verrassing compleet' }}<span class="kbcart__cross-scribble" aria-hidden="true"><svg viewBox="0 0 60 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 11c6-9 10 6 16-1s10 6 16-1 10 5 22-2"/></svg></span></h2>
+              <ul class="kbcart__cross-grid" role="list">
+                {%- assign shown = 0 -%}
+                {%- for product in upsell.products -%}
+                  {%- comment -%} Inpakservice nooit dubbel: heeft al eigen regel {%- endcomment -%}
+                  {%- if product.handle == section.settings.giftwrap_handle -%}{%- continue -%}{%- endif -%}
+                  {%- if shown >= upsell_max -%}{%- break -%}{%- endif -%}
+                  {%- assign shown = shown | plus: 1 -%}
+                  {%- assign pv = product.selected_or_first_available_variant -%}
+                  <li class="kbcart__cross-card{% unless product.available %} is-sold{% endunless %}">
+                    <a href="{{ product.url }}" class="kbcart__cross-media" tabindex="-1" aria-hidden="true">
+                      {%- if product.featured_image -%}
+                        <img src="{{ product.featured_image | image_url: width: 200 }}" alt="{{ product.featured_image.alt | escape }}" width="72" height="72" loading="lazy">
+                      {%- else -%}
+                        <span class="kbcart__item-ph">{%- render 'lucide', icon: 'bone' -%}</span>
+                      {%- endif -%}
+                    </a>
+                    <div class="kbcart__cross-info">
+                      <a href="{{ product.url }}" class="kbcart__cross-name">{{ product.title }}</a>
+                      {%- if product.description != blank -%}
+                        <p class="kbcart__cross-desc">{{ product.description | strip_html | truncatewords: 6 }}</p>
+                      {%- endif -%}
+                      <div class="kbcart__cross-foot">
+                        <span class="kbcart__cross-price">{{ product.price | money }}</span>
+                        {%- if product.available and pv != blank -%}
+                          <button type="button" class="kbcart__cross-add" data-cart-add="{{ pv.id }}" aria-label="{{ product.title | escape }} toevoegen">+</button>
+                        {%- else -%}
+                          <span class="kbcart__cross-sold">Uitverkocht</span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
       </div>
 
       {%- comment -%} ── Plakkende checkout-balk (mobiel) ────────── {%- endcomment -%}
@@ -555,6 +556,11 @@
   .kbcart__wrap-add, .kbcart__wrap-controls { flex: 1 0 100%; width: 100%; margin-left: 0; }
   .kbcart__wrap-add { justify-content: center; }
   .kbcart__wrap-controls { flex-direction: row; align-items: center; justify-content: space-between; }
+
+  /* Promo-banner: knop op eigen volle regel */
+  .kbcart__promo { flex-wrap: wrap; }
+  .kbcart__promo-text { flex: 1 1 0; }
+  .kbcart__promo-btn { flex: 1 0 100%; justify-content: center; }
 
   /* Upsell: 2 verticale kaartjes, naam heeft volle breedte */
   .kbcart__cross-media { height: 88px; }
