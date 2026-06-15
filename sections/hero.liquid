@@ -80,7 +80,7 @@
   </div>
 </section>
 
-{% stylesheet %}
+<style>
 
 .hero {
   background: var(--color-cream);
@@ -273,25 +273,19 @@
   line-height: 1.3;
 }
 
-/* Mobiel */
+/* Mobiel: tekst en foto netjes gestapeld (geen tekst over de hond) */
 @media (max-width: 749px) {
-  .hero {
-    min-height: 400px;
-    align-items: flex-end;
-  }
-
-  .hero__bg-img { object-position: top center; }
-
-  .hero__inner { padding: 32px var(--page-margin) 48px; }
-
+  .hero { display: flex; flex-direction: column; min-height: 0; align-items: stretch; }
+  .hero__inner { order: 1; padding: 52px var(--page-margin) 32px; }
   .hero__content { max-width: 100%; }
-
-  .hero__title { font-size: 2rem; }
-
+  .hero__title { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+  .hero__text { max-width: 100%; }
+  .hero__bg { order: 2; position: relative; inset: auto; height: 300px; }
+  .hero__bg-img { object-position: center; }
   .hero__badge { display: none; }
 }
 
-{% endstylesheet %}
+</style>
 
 {% schema %}
 {
