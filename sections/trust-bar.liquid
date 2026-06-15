@@ -1,177 +1,58 @@
 {%- comment -%}
   sections/trust-bar.liquid — Kwispelbox KB-v4
-  Groene balk met golvende randen en optionele hond foto
+  Witte trust-kaart met 4 cirkel-iconen (onder de hero), naar mockup.
 {%- endcomment -%}
 
 {%- assign usp_blocks = section.blocks | where: 'type', 'usp' -%}
 
 {%- if usp_blocks.size > 0 -%}
-<div class="trust-bar full-width">
-
-  <div class="trust-bar__wave trust-bar__wave--top" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 32" preserveAspectRatio="none">
-      <path d="M0,16 C180,0 360,32 540,16 C720,0 900,32 1080,16 C1260,0 1380,24 1440,12 L1440,0 L0,0 Z" fill="#fff"/>
-    </svg>
+<div class="kbtrust full-width">
+  <div class="kbtrust__inner">
+    <ul class="kbtrust__list" role="list">
+      {%- for block in usp_blocks -%}
+        <li class="kbtrust__item" {{ block.shopify_attributes }}>
+          <span class="kbtrust__icon kbtrust__icon--{{ block.settings.color | default: 'green' }}" aria-hidden="true">
+            {{- block.settings.icon | inline_asset_content -}}
+          </span>
+          <span class="kbtrust__text">
+            <strong>{{ block.settings.title }}</strong>
+            {%- if block.settings.subtitle != blank -%}<span>{{ block.settings.subtitle }}</span>{%- endif -%}
+          </span>
+        </li>
+      {%- endfor -%}
+    </ul>
   </div>
-
-  <div class="trust-bar__body">
-    <div class="trust-bar__inner">
-      <ul class="trust-bar__list" role="list">
-        {%- for block in usp_blocks -%}
-          <li class="trust-bar__item" {{ block.shopify_attributes }}>
-            <span class="trust-bar__icon-wrap" aria-hidden="true">
-              {{- block.settings.icon | inline_asset_content -}}
-            </span>
-            <span class="trust-bar__text">
-              <strong>{{ block.settings.title }}</strong>
-              {%- if block.settings.subtitle != blank -%}
-                <span>{{ block.settings.subtitle }}</span>
-              {%- endif -%}
-            </span>
-          </li>
-        {%- endfor -%}
-      </ul>
-    </div>
-
-  </div>
-
-  {%- if section.settings.dog_image != blank -%}
-    <div class="trust-bar__dog">
-      <img
-        src="{{ section.settings.dog_image | image_url: width: 300 }}"
-        srcset="{{ section.settings.dog_image | image_url: width: 150 }} 150w, {{ section.settings.dog_image | image_url: width: 300 }} 300w"
-        sizes="160px"
-        alt=""
-        width="160"
-        height="200"
-        loading="lazy">
-    </div>
-  {%- endif -%}
-
-
-
 </div>
 {%- endif -%}
 
 {% stylesheet %}
+.kbtrust { background: var(--color-cream); padding: 0 0 var(--section-pad-sm); }
+.kbtrust__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.kbtrust__list { list-style: none; margin: 0; padding: 18px 8px; display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.kbtrust__item { display: flex; align-items: center; gap: 14px; padding: 8px 22px; min-width: 0; }
+.kbtrust__item + .kbtrust__item { border-left: 1px solid var(--color-line); }
+.kbtrust__icon { display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0; }
+.kbtrust__icon svg { width: 24px; height: 24px; }
+.kbtrust__icon--green { background: #e8f5e2; color: var(--color-green); }
+.kbtrust__icon--orange { background: #fff0e4; color: var(--color-orange); }
+.kbtrust__icon--pink { background: #ffe0ee; color: var(--color-pink); }
+.kbtrust__icon--purple { background: #ede7f7; color: #8b6fc4; }
+.kbtrust__icon--yellow { background: #fff6da; color: #d9a400; }
+.kbtrust__text { display: flex; flex-direction: column; min-width: 0; }
+.kbtrust__text strong { font-family: var(--font-body); font-size: .95rem; font-weight: 800; color: var(--color-ink); line-height: 1.25; }
+.kbtrust__text span { font-family: var(--font-body); font-size: .88rem; color: var(--color-muted); line-height: 1.25; }
 
-.trust-bar {
-  background: var(--color-green);
-  position: relative;
-  z-index: 10;
+@media (max-width: 989px) {
+  .kbtrust__list { grid-template-columns: repeat(2, 1fr); gap: 6px 0; }
+  .kbtrust__item:nth-child(odd) { border-left: none; }
+  .kbtrust__item:nth-child(n+3) { border-top: 1px solid var(--color-line); }
 }
-
-.trust-bar__wave {
-  display: block;
-  line-height: 0;
-  position: relative;
-  z-index: 2;
+@media (max-width: 549px) {
+  .kbtrust__list { grid-template-columns: 1fr; }
+  .kbtrust__item { border-left: none !important; }
+  .kbtrust__item + .kbtrust__item { border-top: 1px solid var(--color-line); }
+  .kbtrust__item:nth-child(n+3) { border-top: 1px solid var(--color-line); }
 }
-
-
-
-.trust-bar__wave svg { display: block; width: 100%; height: 32px; }
-
-.trust-bar__body {
-  z-index: 1;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.trust-bar__inner {
-  flex: 1;
-  max-width: var(--page-width);
-  margin: 0 auto;
-  padding: 8px var(--page-margin);
-}
-
-.trust-bar__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-
-.trust-bar__item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-  padding: 12px 20px;
-  border-right: 1px solid rgba(255,255,255,.25);
-}
-
-.trust-bar__item:last-child { border-right: none; }
-
-.trust-bar__icon-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(255,255,255,.2);
-  flex-shrink: 0;
-}
-
-.trust-bar__icon-wrap svg {
-  width: 20px;
-  height: 20px;
-  color: #fff;
-}
-
-.trust-bar__text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.trust-bar__text strong {
-  font-family: var(--font-body);
-  font-size: .82rem;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.3;
-}
-
-.trust-bar__text span {
-  font-family: var(--font-body);
-  font-size: .75rem;
-  font-weight: 600;
-  color: rgba(255,255,255,.8);
-}
-
-.trust-bar__dog {
-  position: absolute;
-  right: 40px;
-  bottom: 0;
-  width: 160px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.trust-bar__dog img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-  object-position: bottom;
-}
-
-@media (max-width: 749px) {
-  .trust-bar__list { flex-wrap: wrap; }
-  .trust-bar__item {
-    flex: 0 0 50%;
-    border-right: none;
-    border-bottom: 1px solid rgba(255,255,255,.2);
-    padding: 10px 12px;
-  }
-  .trust-bar__item:nth-last-child(-n+2) { border-bottom: none; }
-  .trust-bar__dog { display: none; }
-}
-
 {% endstylesheet %}
 
 {% schema %}
@@ -179,35 +60,30 @@
   "name": "Trust balk",
   "tag": "section",
   "disabled_on": { "groups": ["header", "footer"] },
-  "settings": [
-    {
-      "type": "image_picker",
-      "id": "dog_image",
-      "label": "Hond afbeelding (optioneel, PNG transparant)"
-    }
-  ],
   "blocks": [
     {
       "type": "usp",
       "name": "USP",
-      "limit": 5,
+      "limit": 4,
       "settings": [
         { "type": "text", "id": "title", "label": "Titel", "default": "Gratis verzending" },
-        { "type": "text", "id": "subtitle", "label": "Subtitel", "default": "vanaf \u20ac75" },
+        { "type": "text", "id": "subtitle", "label": "Subtitel", "default": "vanaf €75" },
         {
-          "type": "select",
-          "id": "icon",
-          "label": "Icoon",
-          "default": "icon-truck.svg",
+          "type": "select", "id": "icon", "label": "Icoon", "default": "icon-truck.svg",
           "options": [
             { "value": "icon-truck.svg", "label": "Vrachtwagen" },
-            { "value": "icon-heart.svg", "label": "Hart" },
-            { "value": "icon-shield.svg", "label": "Schild" },
-            { "value": "icon-gift.svg", "label": "Cadeau" },
-            { "value": "icon-star.svg", "label": "Ster" },
-            { "value": "icon-check-circle.svg", "label": "Vinkje" },
             { "value": "icon-paw.svg", "label": "Poot" },
-            { "value": "icon-refresh.svg", "label": "Terugbetaling" }
+            { "value": "icon-gift.svg", "label": "Cadeau" },
+            { "value": "icon-shield.svg", "label": "Schild" },
+            { "value": "icon-heart.svg", "label": "Hart" },
+            { "value": "icon-star.svg", "label": "Ster" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Kleur", "default": "green",
+          "options": [
+            { "value": "green", "label": "Groen" }, { "value": "orange", "label": "Oranje" },
+            { "value": "pink", "label": "Roze" }, { "value": "purple", "label": "Paars" }, { "value": "yellow", "label": "Geel" }
           ]
         }
       ]
@@ -217,10 +93,10 @@
     {
       "name": "Trust balk",
       "blocks": [
-        { "type": "usp", "settings": { "title": "Gratis verzending", "subtitle": "vanaf \u20ac75", "icon": "icon-truck.svg" } },
-        { "type": "usp", "settings": { "title": "Niet goed?", "subtitle": "Geld terug", "icon": "icon-refresh.svg" } },
-        { "type": "usp", "settings": { "title": "100% blije honden", "subtitle": "garantie", "icon": "icon-heart.svg" } },
-        { "type": "usp", "settings": { "title": "Voor 23:59 besteld", "subtitle": "morgen in huis", "icon": "icon-truck.svg" } }
+        { "type": "usp", "settings": { "title": "Gratis verzending", "subtitle": "vanaf €75", "icon": "icon-truck.svg", "color": "green" } },
+        { "type": "usp", "settings": { "title": "Meer dan 1.200", "subtitle": "blije honden", "icon": "icon-paw.svg", "color": "orange" } },
+        { "type": "usp", "settings": { "title": "Elke box voelt als", "subtitle": "een cadeautje", "icon": "icon-gift.svg", "color": "pink" } },
+        { "type": "usp", "settings": { "title": "Veilig & vertrouwd", "subtitle": "betalen", "icon": "icon-shield.svg", "color": "purple" } }
       ]
     }
   ]

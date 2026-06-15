@@ -29,6 +29,17 @@
         "image_priority": true
       }
     },
+    "trust-bar": {
+      "type": "trust-bar",
+      "blocks": {
+        "u1": { "type": "usp", "settings": { "title": "Gratis verzending", "subtitle": "vanaf €75", "icon": "icon-truck.svg", "color": "green" } },
+        "u2": { "type": "usp", "settings": { "title": "Meer dan 1.200", "subtitle": "blije honden", "icon": "icon-paw.svg", "color": "orange" } },
+        "u3": { "type": "usp", "settings": { "title": "Elke box voelt als", "subtitle": "een cadeautje", "icon": "icon-gift.svg", "color": "pink" } },
+        "u4": { "type": "usp", "settings": { "title": "Veilig & vertrouwd", "subtitle": "betalen", "icon": "icon-shield.svg", "color": "purple" } }
+      },
+      "block_order": ["u1", "u2", "u3", "u4"],
+      "settings": {}
+    },
     "product-boxes": {
       "type": "product-boxes",
       "blocks": {
@@ -593,6 +604,7 @@
   },
   "order": [
     "hero",
+    "trust-bar",
     "product-boxes",
     "home-steps",
     "box-contents",
