@@ -614,6 +614,22 @@
         "intro": "Geen gedoe — jij kiest, wij verrassen, je hond geniet. Elke maand opnieuw.",
         "note": "Wij zorgen voor de verrassing, jij voor de blije kwispel."
       }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "text": "Leuke tips & inspiratie" } },
+        "b2": { "type": "benefit", "settings": { "text": "Exclusieve acties" } },
+        "b3": { "type": "benefit", "settings": { "text": "Altijd als eerste op de hoogte" } }
+      },
+      "block_order": ["b1", "b2", "b3"],
+      "settings": {
+        "eyebrow": "Mis niets",
+        "heading": "Meld je aan &",
+        "heading_highlight": "blijf op de hoogte",
+        "text": "Ontvang als eerste leuke acties, nieuwe boxen en inspiratie voor jouw hond.",
+        "button_label": "Aanmelden"
+      }
     }
   },
   "order": [
@@ -625,6 +641,7 @@
     "special-editions",
     "why-kwispelbox",
     "community",
-    "reviews"
+    "reviews",
+    "newsletter"
   ]
 }
