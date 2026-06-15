@@ -1,0 +1,50 @@
+{%- comment -%}
+  snippets/mobile-tabbar.liquid — Kwispelbox KB-v4
+  App-stijl onderbalk, alleen op mobiel. Globaal ingeladen via theme.liquid.
+{%- endcomment -%}
+{%- assign p = request.path -%}
+<nav class="mtab" aria-label="Snelmenu">
+  <a href="{{ routes.root_url }}" class="mtab__item{% if p == '/' %} is-active{% endif %}">
+    <span class="mtab__icon" aria-hidden="true">{%- render 'lucide', icon: 'home' -%}</span>
+    <span class="mtab__label">Home</span>
+  </a>
+  <a href="{{ routes.all_products_collection_url }}" class="mtab__item{% if p contains '/products/' %} is-active{% endif %}">
+    <span class="mtab__icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+    <span class="mtab__label">Boxen</span>
+  </a>
+  <a href="/collections/all" class="mtab__item{% if p contains '/collections' %} is-active{% endif %}">
+    <span class="mtab__icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+    <span class="mtab__label">Shop</span>
+  </a>
+  <a href="/pages/kwispelclub" class="mtab__item{% if p contains 'kwispelclub' %} is-active{% endif %}">
+    <span class="mtab__icon" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+    <span class="mtab__label">Club</span>
+  </a>
+</nav>
+
+<style>
+.mtab { display: none; }
+@media (max-width: 749px) {
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  .mtab {
+    display: flex;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 200;
+    background: #fff;
+    box-shadow: 0 -4px 20px rgba(61, 34, 9, .08);
+    padding: 8px 6px calc(8px + env(safe-area-inset-bottom, 0px));
+  }
+  .mtab__item {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    text-decoration: none;
+    color: var(--color-muted);
+    transition: color 140ms;
+  }
+  .mtab__icon { display: inline-flex; }
+  .mtab__icon .lucide { width: 24px; height: 24px; }
+  .mtab__label { font-family: var(--font-body); font-size: .7rem; font-weight: 700; }
+  .mtab__item.is-active { color: var(--color-pink); }
+  .mtab__item.is-active .lucide { fill: rgba(212, 83, 126, .12); }
+  .mtab__item:active { transform: scale(.94); }
+}
+</style>
