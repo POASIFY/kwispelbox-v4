@@ -146,12 +146,12 @@
   </div>
 </div>
 
-<style>
+{% stylesheet %}
 
 .kbx {
   position: relative;
   background: var(--color-cream);
-  padding: 88px 0;
+  padding: var(--section-pad) 0;
   overflow: hidden;
 }
 
@@ -185,7 +185,7 @@
   border-radius: var(--radius-pill);
   padding: 7px 16px 7px 12px;
   font-family: var(--font-body);
-  font-size: .76rem;
+  font-size: var(--fs-eyebrow);
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: .08em;
@@ -197,7 +197,7 @@
 
 .kbx__title {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-size: var(--fs-h2);
   line-height: 1.1;
   color: var(--color-ink);
   margin: 0;
@@ -206,7 +206,7 @@
 
 .kbx__intro {
   font-family: var(--font-body);
-  font-size: 1.05rem;
+  font-size: var(--fs-lead);
   line-height: 1.65;
   color: var(--color-body);
   margin: 18px auto 0;
@@ -241,7 +241,7 @@
 
 .kbx-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 48px rgba(61, 34, 9, .12);
+  box-shadow: var(--shadow-card-hover);
 }
 
 /* Uitgelichte kaart (Meest gekozen) */
@@ -317,7 +317,7 @@
 
 .kbx-card__title {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: var(--fs-h3);
   color: var(--color-ink);
   line-height: 1.15;
   margin: 0 0 6px;
@@ -409,11 +409,11 @@
   border: 1.5px solid var(--color-line);
   border-radius: var(--radius-lg);
   padding: 36px 32px;
-  box-shadow: 0 12px 40px rgba(61, 34, 9, .06);
+  box-shadow: var(--shadow-card);
 }
 .kbx-trust__title {
   font-family: var(--font-heading);
-  font-size: 1.4rem;
+  font-size: var(--fs-h3);
   color: var(--color-ink);
   text-align: center;
   margin: 0 0 28px;
@@ -463,7 +463,6 @@
 
 /* ── Mobiel: een eigen, zorgvuldig ontworpen ervaring ─── */
 @media (max-width: 749px) {
-  .kbx { padding: 56px 0; }
   .kbx__head { margin-bottom: 40px; }
 
   /* Horizontale snap-slider met peek (best practice voor homogene rij) */
@@ -502,7 +501,7 @@
   .kbx-trust__title { font-size: 1.2rem; margin-bottom: 20px; }
 }
 
-</style>
+{% endstylesheet %}
 
 {% schema %}
 {
