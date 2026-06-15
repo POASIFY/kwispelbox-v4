@@ -1,31 +1,16 @@
 {%- comment -%}
   sections/hero.liquid — Kwispelbox KB-v4
-  Split layout: tekst links, afbeelding rechts
-  LCP-geoptimaliseerd
+  Levendige 2-koloms hero: tekst + hond naast elkaar (ook mobiel),
+  zwevende hartjes/krabbels, groene golf boven, roze golf onder.
 {%- endcomment -%}
 
 <section class="hero full-width">
 
-  <div class="hero__wave" aria-hidden="true">
+  <div class="hero__wave hero__wave--top" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60" preserveAspectRatio="none">
       <path d="M0,15 C180,60 360,0 540,30 C720,60 900,8 1080,38 C1260,60 1380,15 1440,30 L1440,0 L0,0 Z" fill="#66AA44"/>
     </svg>
   </div>
-
-  {%- if section.settings.image != blank -%}
-    <div class="hero__bg">
-      <img
-        src="{{ section.settings.image | image_url: width: 1400 }}"
-        srcset="{{ section.settings.image | image_url: width: 800 }} 800w,
-                {{ section.settings.image | image_url: width: 1400 }} 1400w"
-        sizes="100vw"
-        alt="{{ section.settings.image.alt | default: shop.name | escape }}"
-        width="1400"
-        height="600"
-        {%- if section.settings.image_priority -%}loading="eager" fetchpriority="high"{%- else -%}loading="lazy"{%- endif -%}
-        class="hero__bg-img">
-    </div>
-  {%- endif -%}
 
   <div class="hero__inner">
     <div class="hero__content">
@@ -36,9 +21,9 @@
 
       <h1 class="hero__title">
         {{ section.settings.title }}
-        {%- if section.settings.title_highlight != blank -%}
-          <span class="hero__title-highlight">{{ section.settings.title_highlight }}</span>
-        {%- endif -%}
+        {%- if section.settings.title_highlight != blank %} <span class="hero__hl hero__hl--green">{{ section.settings.title_highlight }}</span>{%- endif -%}
+        {%- if section.settings.title_highlight2 != blank %} <span class="hero__hl hero__hl--pink">{{ section.settings.title_highlight2 }}</span>{%- endif -%}
+        <span class="hero__title-heart" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
       </h1>
 
       {%- if section.settings.text != blank -%}
@@ -49,242 +34,130 @@
         {%- if section.settings.cta_primary_label != blank -%}
           <a href="{{ section.settings.cta_primary_url }}" class="hero__btn hero__btn--primary">
             {{ section.settings.cta_primary_label }}
-            <span class="hero__btn-icon" aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span>
+            <span class="hero__btn-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
           </a>
         {%- endif -%}
         {%- if section.settings.cta_secondary_label != blank -%}
           <a href="{{ section.settings.cta_secondary_url }}" class="hero__btn hero__btn--secondary">
             {{ section.settings.cta_secondary_label }}
-            <span class="hero__btn-icon" aria-hidden="true">{{- 'icon-chevron-down.svg' | inline_asset_content -}}</span>
+            <span class="hero__btn-icon hero__btn-icon--chev" aria-hidden="true">›</span>
           </a>
         {%- endif -%}
       </div>
 
       {%- if section.settings.review_text != blank -%}
-        <div class="hero__reviews">
-          {%- if section.settings.review_avatars != blank -%}
-            <img src="{{ section.settings.review_avatars | image_url: width: 120 }}" alt="" width="60" height="20" loading="lazy" class="hero__review-avatars">
-          {%- endif -%}
-          <span class="hero__review-stars" aria-hidden="true">★★★★★</span>
-          <span class="hero__review-text">{{ section.settings.review_text }}</span>
-        </div>
-      {%- endif -%}
-
-      {%- if section.settings.badge_text != blank -%}
-        <div class="hero__badge">
-          <span class="hero__badge-text">{{ section.settings.badge_text }}</span>
+        <div class="hero__social">
+          <span class="hero__arrow" aria-hidden="true">
+            <svg viewBox="0 0 44 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5c16 2 22 13 17 28"/><path d="M16 31l8 3 2-8"/></svg>
+          </span>
+          <div class="hero__review">
+            <span class="hero__stars" aria-hidden="true">★★★★★</span>
+            <span class="hero__review-text">{{ section.settings.review_text }}</span>
+          </div>
         </div>
       {%- endif -%}
 
     </div>
+
+    <div class="hero__media">
+      {%- if section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 900 }}"
+          srcset="{{ section.settings.image | image_url: width: 500 }} 500w, {{ section.settings.image | image_url: width: 900 }} 900w"
+          sizes="(max-width: 749px) 45vw, 45vw"
+          alt="{{ section.settings.image.alt | default: shop.name | escape }}"
+          width="900" height="800"
+          {%- if section.settings.image_priority -%} loading="eager" fetchpriority="high"{%- else -%} loading="lazy"{%- endif -%}
+          class="hero__img">
+      {%- else -%}
+        <span class="hero__img hero__img--ph">{%- render 'lucide', icon: 'dog' -%}</span>
+      {%- endif -%}
+
+      <span class="hero__deco hero__deco--h1" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+      <span class="hero__deco hero__deco--h2" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+      <span class="hero__deco hero__deco--h3" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+      <span class="hero__deco hero__deco--scribble" aria-hidden="true">
+        <svg viewBox="0 0 40 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M2 13c5-7 8 5 13-1s8 5 13-2"/></svg>
+      </span>
+    </div>
   </div>
+
+  <div class="hero__wave hero__wave--bottom" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 70" preserveAspectRatio="none">
+      <path d="M0,40 C180,10 360,60 540,40 C720,20 900,64 1080,44 C1260,24 1380,52 1440,38 L1440,70 L0,70 Z" fill="#fbe4ee"/>
+    </svg>
+  </div>
+
 </section>
 
 <style>
+.hero { position: relative; background: var(--color-cream); overflow: hidden; margin-top: -1px; }
 
-.hero {
-  background: var(--color-cream);
-  position: relative;
-  overflow: hidden;
-  min-height: 520px;
-  display: flex;
-  align-items: center;
-  z-index: 1;
-  /* Trek de hero 1px omhoog onder de groene trust bar zodat de
-     groene golf naadloos aansluit en er geen witte naad ontstaat */
-  margin-top: -1px;
-}
+.hero__wave { position: absolute; left: 0; right: 0; line-height: 0; pointer-events: none; z-index: 2; }
+.hero__wave svg { display: block; width: 100%; }
+.hero__wave--top { top: 0; }
+.hero__wave--top svg { height: 52px; }
+.hero__wave--bottom { bottom: -1px; }
+.hero__wave--bottom svg { height: 64px; }
 
-.hero__wave {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 3;
-  line-height: 0;
-  pointer-events: none;
-}
+.hero__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 76px var(--page-margin) 84px; display: flex; align-items: center; gap: 24px; }
+.hero__content { flex: 1 1 53%; min-width: 0; }
+.hero__media { flex: 1 1 47%; min-width: 0; position: relative; align-self: stretch; display: flex; align-items: center; justify-content: center; }
 
-.hero__wave svg {
-  display: block;
-  width: 100%;
-  height: 60px;
-}
+.hero__label { display: inline-block; font-family: var(--font-body); font-size: .78rem; font-weight: 800; color: var(--color-green); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
 
-.hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
+.hero__title { font-family: var(--font-heading); font-size: clamp(2rem, 4.4vw, 3.3rem); color: var(--color-ink); line-height: 1.08; margin: 0 0 16px; }
+.hero__hl--green { color: var(--color-green); }
+.hero__hl--pink { color: var(--color-pink); }
+.hero__title-heart { display: inline-flex; color: var(--color-pink); vertical-align: middle; }
+.hero__title-heart .lucide { width: .72em; height: .72em; fill: currentColor; }
 
-.hero__bg-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center right;
-  display: block;
-}
+.hero__text { font-family: var(--font-body); font-size: 1.05rem; color: var(--color-body); line-height: 1.6; margin: 16px 0 26px; max-width: 40ch; }
 
-.hero__inner {
-  position: relative;
-  z-index: 1;
-  max-width: var(--page-width);
-  margin: 0 auto;
-  padding: 64px var(--page-margin);
-  width: 100%;
-}
+.hero__buttons { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hero__btn { display: inline-flex; align-items: center; gap: 9px; padding: 15px 26px; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.05rem; text-decoration: none; transition: transform 160ms, box-shadow 160ms, background 160ms; }
+.hero__btn:hover { transform: translateY(-2px); }
+.hero__btn--primary { background: var(--color-green); color: #fff; }
+.hero__btn--primary:hover { background: #5a9a3b; box-shadow: 0 12px 28px rgba(102,170,68,.3); }
+.hero__btn--secondary { background: #fff; color: var(--color-green); border: 2px solid var(--color-green); }
+.hero__btn--secondary:hover { background: #e8f5e2; }
+.hero__btn-icon { display: inline-flex; }
+.hero__btn-icon .lucide { width: 17px; height: 17px; }
+.hero__btn-icon--chev { font-size: 1.2rem; line-height: 1; }
 
-/* Tekst kolom */
-.hero__content { max-width: 520px; }
-.hero__label {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-size: .78rem;
-  font-weight: 800;
-  color: var(--color-green);
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  margin-bottom: 12px;
-}
+.hero__social { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+.hero__arrow { width: 38px; height: 34px; color: var(--color-green); flex-shrink: 0; transform: rotate(-6deg); }
+.hero__arrow svg { width: 100%; height: 100%; display: block; }
+.hero__review { display: flex; flex-direction: column; gap: 1px; }
+.hero__stars { color: #f5b301; font-size: 1rem; letter-spacing: 1px; }
+.hero__review-text { font-family: var(--font-body); font-size: .82rem; font-weight: 600; color: var(--color-muted); }
 
-.hero__title {
-  font-family: var(--font-heading);
-  font-size: clamp(2rem, 3.5vw, 3rem);
-  color: var(--color-ink);
-  line-height: 1.15;
-  margin: 0 0 8px;
-}
+/* media + foto */
+.hero__img { width: 100%; height: auto; max-height: 480px; object-fit: contain; display: block; }
+.hero__img--ph { aspect-ratio: 1; width: 80%; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-green); box-shadow: 0 20px 50px rgba(0,0,0,.06); }
+.hero__img--ph .lucide { width: 44%; height: 44%; }
 
-.hero__title-highlight {
-  display: block;
-  color: var(--color-pink);
-}
+/* zwevende decoraties */
+.hero__deco { position: absolute; pointer-events: none; z-index: 2; }
+.hero__deco .lucide, .hero__deco svg { width: 100%; height: 100%; display: block; }
+.hero__deco--h1 { top: 4%; right: 6%; width: 28px; color: var(--color-pink); }
+.hero__deco--h2 { top: 26%; left: -4%; width: 20px; color: var(--color-pink); }
+.hero__deco--h3 { bottom: 22%; right: 0; width: 22px; color: var(--color-pink); }
+.hero__deco--h1 .lucide, .hero__deco--h2 .lucide, .hero__deco--h3 .lucide { fill: none; stroke: currentColor; stroke-width: 2.2; }
+.hero__deco--scribble { top: 12%; right: 30%; width: 34px; color: var(--color-green); }
 
-.hero__text {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  color: var(--color-body);
-  line-height: 1.6;
-  margin: 16px 0 28px;
-  max-width: 42ch;
-}
-
-.hero__buttons {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.hero__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 24px;
-  border-radius: var(--radius-pill);
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  text-decoration: none;
-  transition: transform 160ms, box-shadow 160ms;
-}
-
-.hero__btn:hover { transform: translateY(-1px); }
-
-.hero__btn--primary {
-  background: var(--color-pink);
-  color: #fff;
-}
-
-.hero__btn--primary:hover {
-  box-shadow: 0 6px 20px rgba(212,83,126,.35);
-}
-
-.hero__btn--secondary {
-  background: none;
-  color: var(--color-green);
-  border: 2px solid var(--color-green);
-}
-
-.hero__btn--secondary:hover {
-  background: #e8f5e2;
-}
-
-.hero__btn-icon {
-  display: flex;
-  align-items: center;
-}
-
-.hero__btn-icon svg {
-  width: 18px;
-  height: 18px;
-}
-
-.hero__btn--secondary .hero__btn-icon svg {
-  transform: rotate(-90deg);
-}
-
-.hero__reviews {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 24px;
-}
-
-.hero__review-avatars {
-  height: 28px;
-  width: auto;
-  border-radius: var(--radius-pill);
-}
-
-.hero__review-stars {
-  color: var(--color-yellow);
-  font-size: 1rem;
-  letter-spacing: 1px;
-}
-
-.hero__review-text {
-  font-family: var(--font-body);
-  font-size: .8rem;
-  color: var(--color-muted);
-  font-weight: 600;
-}
-
-
-
-.hero__badge {
-  position: absolute;
-  top: 40px;
-  right: var(--page-margin);
-  width: 110px;
-  height: 110px;
-  background: var(--color-pink);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-}
-
-.hero__badge-text {
-  font-family: var(--font-heading);
-  font-size: .75rem;
-  color: #fff;
-  text-align: center;
-  line-height: 1.3;
-}
-
-/* Mobiel: tekst en foto netjes gestapeld (geen tekst over de hond) */
+/* mobiel: blijft naast elkaar, hond peekt groter */
 @media (max-width: 749px) {
-  .hero { display: flex; flex-direction: column; min-height: 0; align-items: stretch; }
-  .hero__inner { order: 1; padding: 52px var(--page-margin) 32px; }
-  .hero__content { max-width: 100%; }
-  .hero__title { font-size: clamp(1.9rem, 8vw, 2.4rem); }
-  .hero__text { max-width: 100%; }
-  .hero__bg { order: 2; position: relative; inset: auto; height: 300px; }
-  .hero__bg-img { object-position: center; }
-  .hero__badge { display: none; }
+  .hero__inner { padding: 58px var(--page-margin) 64px; gap: 6px; }
+  .hero__content { flex: 1 1 60%; }
+  .hero__media { flex: 1 1 40%; }
+  .hero__title { font-size: clamp(1.5rem, 6.6vw, 2.1rem); margin-bottom: 12px; }
+  .hero__text { font-size: .92rem; margin: 12px 0 20px; }
+  .hero__btn { padding: 13px 20px; font-size: .98rem; }
+  .hero__buttons { gap: 9px; }
+  .hero__img { width: 142%; max-width: none; max-height: 360px; object-position: left center; margin-right: -42%; }
+  .hero__deco--h2 { left: 2%; }
 }
-
 </style>
 
 {% schema %}
@@ -293,31 +166,31 @@
   "tag": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
-    { "type": "text", "id": "label", "label": "Label boven titel" },
-    { "type": "textarea", "id": "title", "label": "Titel", "default": "Elke box een nieuwe" },
-    { "type": "text", "id": "title_highlight", "label": "Gemarkeerde tekst (roze)", "default": "verrassing!" },
-    { "type": "textarea", "id": "text", "label": "Tekst", "default": "Met liefde samengesteld voor jouw hond.\nVol plezier, verwennerij en gezonde snacks." },
-    { "type": "text", "id": "cta_primary_label", "label": "Knop 1 tekst", "default": "Ontdek de boxen" },
+    { "type": "text", "id": "label", "label": "Label boven titel", "default": "Voor blije honden" },
+    { "type": "textarea", "id": "title", "label": "Titel", "default": "Een verrassing vol" },
+    { "type": "text", "id": "title_highlight", "label": "Gemarkeerd (groen)", "default": "speelplezier," },
+    { "type": "text", "id": "title_highlight2", "label": "Gemarkeerd 2 (roze)", "default": "lekkers en liefde" },
+    { "type": "textarea", "id": "text", "label": "Tekst", "default": "De leukste verrassingsbox voor jouw hond." },
+    { "type": "text", "id": "cta_primary_label", "label": "Knop 1 tekst", "default": "Ontdek onze boxen" },
     { "type": "url", "id": "cta_primary_url", "label": "Knop 1 link" },
-    { "type": "text", "id": "cta_secondary_label", "label": "Knop 2 tekst", "default": "Hoe het werkt" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Knop 2 tekst", "default": "Zo werkt het" },
     { "type": "url", "id": "cta_secondary_url", "label": "Knop 2 link" },
-    { "type": "text", "id": "review_text", "label": "Review tekst", "default": "4,9/5 uit 1.200+ reviews" },
-    { "type": "image_picker", "id": "review_avatars", "label": "Avatar foto's (optioneel)" },
-    { "type": "image_picker", "id": "image", "label": "Hero afbeelding" },
-    { "type": "checkbox", "id": "image_priority", "label": "Afbeelding met hoge prioriteit laden (boven de vouw)", "default": true },
-    { "type": "text", "id": "badge_text", "label": "Badge tekst (optioneel)", "default": "Elke maand een feestje voor je hond" }
+    { "type": "text", "id": "review_text", "label": "Review tekst", "default": "Al meer dan 1.200 blije honden!" },
+    { "type": "image_picker", "id": "image", "label": "Hero afbeelding (hond + box, bij voorkeur transparant PNG)" },
+    { "type": "checkbox", "id": "image_priority", "label": "Afbeelding met hoge prioriteit laden", "default": true }
   ],
   "presets": [
     {
       "name": "Hero",
       "settings": {
-        "title": "Elke box een nieuwe",
-        "title_highlight": "verrassing!",
-        "text": "Met liefde samengesteld voor jouw hond.\nVol plezier, verwennerij en gezonde snacks.",
-        "cta_primary_label": "Ontdek de boxen",
-        "cta_secondary_label": "Hoe het werkt",
-        "review_text": "4,9/5 uit 1.200+ reviews",
-        "badge_text": "Elke maand een feestje voor je hond \u2665"
+        "label": "Voor blije honden",
+        "title": "Een verrassing vol",
+        "title_highlight": "speelplezier,",
+        "title_highlight2": "lekkers en liefde",
+        "text": "De leukste verrassingsbox voor jouw hond.",
+        "cta_primary_label": "Ontdek onze boxen",
+        "cta_secondary_label": "Zo werkt het",
+        "review_text": "Al meer dan 1.200 blije honden!"
       }
     }
   ]

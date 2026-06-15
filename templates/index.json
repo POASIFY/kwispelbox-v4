@@ -57,17 +57,17 @@
       "type": "hero",
       "settings": {
         "label": "Voor blije honden",
-        "title": "Elke box een nieuwe",
-        "title_highlight": "verrassing!",
-        "text": "Het moment dat je hond zijn staart niet meer stil kan houden — elke maand opnieuw. Een cadeautje vol speelplezier, knuffels en lekkers, met liefde uitgezocht voor jouw beste vriend.",
+        "title": "Een verrassing vol",
+        "title_highlight": "speelplezier,",
+        "title_highlight2": "lekkers en liefde",
+        "text": "De leukste verrassingsbox voor jouw hond — elke maand opnieuw een cadeautje om samen uit te pakken.",
         "cta_primary_label": "Verras je hond",
         "cta_primary_url": "",
         "cta_secondary_label": "Zo werkt het",
         "cta_secondary_url": "",
-        "review_text": "4,9/5 — door 1.200+ kwispelende honden",
+        "review_text": "Al meer dan 1.200 blije honden!",
         "image": "shopify://shop_images/ChatGPT_Image_9_jun_2026_13_10_00.png",
-        "image_priority": true,
-        "badge_text": "Elke maand een feestje voor je hond ♥"
+        "image_priority": true
       }
     },
     "product-boxes": {
