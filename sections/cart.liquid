@@ -20,16 +20,26 @@
 
     {%- else -%}
       {%- comment -%} ── Gevulde winkelwagen ────────────────────── {%- endcomment -%}
+      {%- comment -%} Inpak-product op handle ophalen (geen hardcoded ID) {%- endcomment -%}
+      {%- assign wrap = all_products[section.settings.giftwrap_handle] -%}
+      {%- assign wrap_variant = wrap.selected_or_first_available_variant -%}
+      {%- assign wrap_variant_id = wrap_variant.id -%}
+      {%- assign wrap_in_cart = 0 -%}
+      {%- for item in cart.items -%}
+        {%- if item.variant.id == wrap_variant_id -%}{%- assign wrap_in_cart = item.quantity -%}{%- endif -%}
+      {%- endfor -%}
+      {%- assign gift_count = cart.item_count | minus: wrap_in_cart -%}
+
       <header class="kbcart__head">
         {%- if section.settings.eyebrow != blank -%}
           <p class="kbcart__eyebrow">{{ section.settings.eyebrow }}</p>
         {%- endif -%}
         <h1 class="kbcart__title">{{ section.settings.title | default: 'Klaar om in te pakken' }}</h1>
         <p class="kbcart__sub">
-          {%- if cart.item_count == 1 -%}
+          {%- if gift_count == 1 -%}
             1 cadeautje wacht op jouw hond.
           {%- else -%}
-            {{ cart.item_count }} cadeautjes wachten op jouw hond.
+            {{ gift_count }} cadeautjes wachten op jouw hond.
           {%- endif -%}
         </p>
       </header>
@@ -63,6 +73,7 @@
       <form action="{{ routes.cart_url }}" method="post" novalidate class="kbcart__form">
         <ul class="kbcart__items" role="list">
           {%- for item in cart.items -%}
+            {%- if item.variant.id == wrap_variant_id -%}{%- continue -%}{%- endif -%}
             <li class="kbcart__item" {{ item.shopify_attributes }}>
               <a href="{{ item.url }}" class="kbcart__item-media" aria-hidden="true" tabindex="-1">
                 {%- if item.image -%}
@@ -105,6 +116,21 @@
           {%- endfor -%}
         </ul>
 
+        {%- comment -%} ── Inpak-upsell (per bestelling) ───────────── {%- endcomment -%}
+        {%- if wrap != blank and wrap_variant != blank -%}
+          <div class="kbcart__wrap">
+            <label class="kbcart__wrap-label" for="kbcart-giftwrap">
+              <input type="checkbox" class="kbcart__wrap-toggle" id="kbcart-giftwrap" data-variant-id="{{ wrap_variant_id }}"{% if wrap_in_cart > 0 %} checked{% endif %}>
+              <span class="kbcart__wrap-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+              <span class="kbcart__wrap-text">
+                <strong>{{ section.settings.giftwrap_title | default: 'Pak mijn cadeautjes in' }}</strong>
+                <span>{{ section.settings.giftwrap_text | default: 'Wij pakken alles in vrolijk pakpapier — zodat je hond het écht mag uitpakken.' }}</span>
+              </span>
+              <span class="kbcart__wrap-price">+ {{ wrap_variant.price | money }}</span>
+            </label>
+          </div>
+        {%- endif -%}
+
         <div class="kbcart__footer">
           <button type="submit" name="update" class="kbcart__update">{%- render 'lucide', icon: 'refresh' -%}Aantallen bijwerken</button>
 
@@ -129,6 +155,32 @@
 
   </div>
 </div>
+
+<script>
+  (function () {
+    var toggle = document.getElementById('kbcart-giftwrap');
+    if (!toggle) return;
+    toggle.addEventListener('change', function () {
+      toggle.disabled = true;
+      var id = toggle.getAttribute('data-variant-id');
+      var request;
+      if (toggle.checked) {
+        request = fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: id, quantity: 1 }] })
+        });
+      } else {
+        request = fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: id, quantity: 0 })
+        });
+      }
+      request.then(function () { window.location.reload(); }).catch(function () { toggle.disabled = false; });
+    });
+  })();
+</script>
 
 {% stylesheet %}
 .kbcart { background: var(--color-cream); padding: 48px 0 80px; }
@@ -230,13 +282,25 @@
 .kbcart__reassure li { display: flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: .85rem; font-weight: 600; color: var(--color-body); }
 .kbcart__reassure .lucide { width: 16px; height: 16px; color: var(--color-green); }
 
+/* ── Inpak-upsell ───────────────────────────────────── */
+.kbcart__wrap-label { display: flex; align-items: center; gap: 14px; background: #fff; border: 2px dashed var(--color-pink); border-radius: var(--radius-md); padding: 16px 18px; cursor: pointer; transition: background 160ms, border-color 160ms; }
+.kbcart__wrap-label:hover { background: #fff7fb; }
+.kbcart__wrap-toggle { width: 22px; height: 22px; accent-color: var(--color-pink); flex-shrink: 0; cursor: pointer; }
+.kbcart__wrap-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: var(--color-pink); color: #fff; flex-shrink: 0; }
+.kbcart__wrap-icon .lucide { width: 22px; height: 22px; }
+.kbcart__wrap-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.kbcart__wrap-text strong { font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); }
+.kbcart__wrap-text span { font-family: var(--font-body); font-size: .88rem; line-height: 1.45; color: var(--color-body); }
+.kbcart__wrap-price { font-family: var(--font-heading); font-size: 1rem; color: var(--color-pink); flex-shrink: 0; }
+
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* ── Desktop ────────────────────────────────────────── */
 @media (min-width: 990px) {
   .kbcart__form { grid-template-columns: 1fr 360px; align-items: start; }
   .kbcart__items { grid-column: 1; }
-  .kbcart__footer { grid-column: 2; grid-row: 1; position: sticky; top: 24px; }
+  .kbcart__wrap { grid-column: 1; }
+  .kbcart__footer { grid-column: 2; grid-row: 1 / span 2; position: sticky; top: 24px; }
 }
 
 @media (max-width: 749px) {
@@ -257,6 +321,10 @@
     { "type": "header", "content": "Gratis verzending" },
     { "type": "checkbox", "id": "show_shipping_bar", "label": "Voortgangsbalk tonen", "default": true },
     { "type": "number", "id": "free_shipping_threshold", "label": "Drempel gratis verzending (in €)", "default": 75 },
+    { "type": "header", "content": "Inpak-upsell" },
+    { "type": "text", "id": "giftwrap_handle", "label": "Product-handle inpakken", "default": "inpakken", "info": "De toggle verschijnt alleen als dit product bestaat." },
+    { "type": "text", "id": "giftwrap_title", "label": "Titel", "default": "Pak mijn cadeautjes in" },
+    { "type": "textarea", "id": "giftwrap_text", "label": "Tekst", "default": "Wij pakken alles in vrolijk pakpapier — zodat je hond het écht mag uitpakken." },
     { "type": "header", "content": "Lege winkelwagen" },
     { "type": "text", "id": "empty_title", "label": "Titel", "default": "Nog geen cadeautjes ingepakt" },
     { "type": "textarea", "id": "empty_text", "label": "Tekst", "default": "Je winkelwagen wacht op iets moois. Kies een box en verras je hond met het moment waar hij niet meer op kan wachten." },
