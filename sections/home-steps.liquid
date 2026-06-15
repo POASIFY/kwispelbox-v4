@@ -104,9 +104,17 @@
   .hiw__steps { grid-template-columns: 1fr; gap: 14px; }
   .hiw__steps::before { display: none; }
   /* Compacte horizontale stap-kaart op mobiel */
-  .hiw__step { display: grid; grid-template-columns: 76px 1fr; align-items: center; gap: 16px; text-align: left; background: var(--color-cream); border-radius: var(--radius-md); padding: 14px 16px; }
-  .hiw__badge { margin: 0; }
-  .hiw__step-text { margin: 0; max-width: none; }
+  .hiw__step {
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    grid-template-areas: "badge title" "badge text";
+    column-gap: 16px; row-gap: 4px; align-items: center;
+    text-align: left;
+    background: #fff; border-radius: var(--radius-md); padding: 16px 18px; box-shadow: var(--shadow-card);
+  }
+  .hiw__badge { grid-area: badge; margin: 0; align-self: center; }
+  .hiw__step-title { grid-area: title; align-self: end; margin: 0; }
+  .hiw__step-text { grid-area: text; align-self: start; margin: 0; max-width: none; }
   .hiw__note { margin-top: 28px; }
 }
 {% endstylesheet %}
