@@ -54,6 +54,17 @@
     --radius-md:    16px;
     --radius-lg:    24px;
     --radius-pill:  999px;
+    /* ── Design-systeem: consistent ritme, type-schaal, schaduwen ── */
+    --section-pad:    clamp(52px, 8vw, 96px);   /* verticale sectie-ruimte */
+    --section-pad-sm: clamp(40px, 6vw, 64px);
+    --fs-eyebrow:     .82rem;                    /* type-schaal */
+    --fs-h2:          clamp(1.9rem, 5vw, 2.9rem);
+    --fs-h3:          1.2rem;
+    --fs-lead:        1.08rem;
+    --fs-body:        1.02rem;
+    --shadow-card:       0 14px 36px rgba(61, 34, 9, .06);  /* kaart-diepte */
+    --shadow-card-hover: 0 22px 50px rgba(61, 34, 9, .10);
+    --shadow-pop:        0 12px 30px rgba(61, 34, 9, .14);
     /* Skeleton critical.css verwacht deze vars op de body/inputs/dialogs */
     --color-background:           #fff;
     --color-foreground:           {{ settings.color_body }};
