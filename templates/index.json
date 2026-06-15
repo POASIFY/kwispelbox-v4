@@ -598,14 +598,31 @@
         "badge_text": "Op = op",
         "cta_label": "Bekijk alle edities"
       }
+    },
+    "home-steps": {
+      "type": "home-steps",
+      "blocks": {
+        "s1": { "type": "step", "settings": { "title": "Kies jouw box", "text": "Mini, Happy of Mega — jij kiest wat past bij jouw hond.", "icon": "gift", "color": "green" } },
+        "s2": { "type": "step", "settings": { "title": "Wij stellen 'm samen", "text": "Met de leukste speeltjes, snacks en knuffels, met liefde uitgezocht.", "icon": "sparkles", "color": "pink" } },
+        "s3": { "type": "step", "settings": { "title": "Uitpakken & genieten", "text": "Elke maand een verrassing op de mat. Tijd voor een feestje!", "icon": "heart", "color": "orange" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "eyebrow": "Zo simpel werkt het",
+        "heading": "In 3 stappen naar een",
+        "heading_highlight": "blije hond",
+        "intro": "Geen gedoe — jij kiest, wij verrassen, je hond geniet. Elke maand opnieuw.",
+        "note": "Wij zorgen voor de verrassing, jij voor de blije kwispel."
+      }
     }
   },
   "order": [
     "trust-bar",
     "hero",
     "product-boxes",
-    "special-editions",
+    "home-steps",
     "box-contents",
+    "special-editions",
     "why-kwispelbox",
     "community",
     "reviews"
