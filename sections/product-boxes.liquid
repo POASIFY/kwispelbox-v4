@@ -111,8 +111,8 @@
                 {%- endif -%}
 
                 {%- if block.settings.button_label != blank -%}
-                  <a href="{{ block.settings.button_url | default: '#' }}" class="kbx-card__btn">
-                    {{ block.settings.button_label }}
+                  <a href="{{ block.settings.button_url | default: '#' }}" class="kbx-card__btn" aria-label="{{ block.settings.button_label | escape }} — {{ block.settings.title | escape }}">
+                    <span class="kbx-card__btn-label">{{ block.settings.button_label }}</span>
                     <span class="kbx-card__btn-icon" aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span>
                   </a>
                 {%- endif -%}
@@ -146,7 +146,7 @@
   </div>
 </div>
 
-{% stylesheet %}
+<style>
 
 .kbx {
   position: relative;
@@ -264,7 +264,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--color-green);
+  background: var(--c);
   color: #fff;
   font-family: var(--font-body);
   font-size: .72rem;
@@ -273,7 +273,7 @@
   letter-spacing: .05em;
   padding: 7px 16px;
   border-radius: var(--radius-pill);
-  box-shadow: 0 6px 16px rgba(102, 170, 68, .35);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .14);
   white-space: nowrap;
 }
 .kbx-card__badge-icon { display: inline-flex; }
@@ -479,24 +479,32 @@
     margin-block: 0;
   }
 
-  .kbx-card { padding: 12px; }
-  .kbx-card__img { height: 230px; }
-  .kbx-card__title { font-size: 1.6rem; }
+  /* Compacte horizontale kaart: foto links, content rechts */
+  .kbx-card { display: grid; grid-template-columns: 40% 1fr; gap: 14px; align-items: center; padding: 12px; text-align: left; }
+  .kbx-card__media { margin-bottom: 0; }
+  .kbx-card__img, .kbx-card__img--placeholder { height: 132px; }
+  .kbx-card__body { padding: 0; display: flex; flex-direction: column; gap: 4px; }
+  .kbx-card__benefits { display: none; }
+  .kbx-card__title { font-size: 1.2rem; margin: 0; }
+  .kbx-card__desc { font-size: .85rem; line-height: 1.4; margin: 2px 0 8px; }
+  .kbx-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; }
+  .kbx-card__price { font-size: 1.3rem; color: var(--color-green); margin: 0; }
+  .kbx-card__price-suffix { font-size: .72rem; }
+  .kbx-card__btn { width: 46px; height: 46px; min-width: 46px; padding: 0; border-radius: 50%; background: var(--color-pink); color: #fff; justify-content: center; flex-shrink: 0; }
+  .kbx-card__btn-label { display: none; }
+  .kbx-card__btn-icon svg { width: 20px; height: 20px; }
 
-  /* Decoraties subtieler op klein scherm */
-  .kbx__deco-item--1,
-  .kbx__deco-item--4 { display: none; }
+  /* Badge linksboven over de foto */
+  .kbx-card__badge { top: 8px; left: 8px; transform: none; font-size: .66rem; padding: 5px 11px; }
 
-  .kbx-trust {
-    margin-top: 48px;
-    padding: 28px 20px;
-    border-radius: var(--radius-md);
-  }
-  .kbx-trust__list { grid-template-columns: 1fr; gap: 18px; }
-  .kbx-trust__title { font-size: 1.25rem; margin-bottom: 22px; }
+  .kbx__deco-item--1, .kbx__deco-item--4 { display: none; }
+
+  .kbx-trust { margin-top: 36px; padding: 24px 18px; border-radius: var(--radius-md); }
+  .kbx-trust__list { grid-template-columns: 1fr; gap: 16px; }
+  .kbx-trust__title { font-size: 1.2rem; margin-bottom: 20px; }
 }
 
-{% endstylesheet %}
+</style>
 
 {% schema %}
 {
