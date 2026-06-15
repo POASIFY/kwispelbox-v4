@@ -282,17 +282,6 @@
             </div>
           {%- endif -%}
       </div>
-
-      {%- comment -%} ── Plakkende checkout-balk (mobiel) ────────── {%- endcomment -%}
-      <form action="{{ routes.cart_url }}" method="post" class="kbcart__stickybar" novalidate>
-        <div class="kbcart__stickybar-total">
-          <span>Totaal</span>
-          <strong>{{ cart.total_price | money }}</strong>
-        </div>
-        <button type="submit" name="checkout" class="kbcart__btn kbcart__btn--primary">
-          Afrekenen<span aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
-        </button>
-      </form>
     {%- endif -%}
 
   </div>
@@ -412,9 +401,6 @@
 .kbcart__item-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
 .kbcart__item-price { font-family: var(--font-heading); font-size: 1.18rem; color: var(--color-ink); margin: 0; }
 .kbcart__item-price--inline { display: none; }
-
-/* Plakkende checkout-balk (alleen mobiel) */
-.kbcart__stickybar { display: none; }
 
 /* Stepper */
 .kbcart__step { display: inline-flex; align-items: center; gap: 4px; background: #fff; border: 2px solid var(--color-line); border-radius: var(--radius-pill); padding: 4px; }
@@ -570,21 +556,9 @@
   /* Samenvatting */
   .kbcart__summary { padding: 20px; }
 
-  /* Onderste trust-balk: ruimte vrijhouden voor plakbalk */
-  .kbcart__trust-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; padding-bottom: 104px; }
+  /* Onderste trust-balk */
+  .kbcart__trust-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
   .kbcart__trust-text strong { font-size: .85rem; }
-
-  /* Plakkende checkout-balk */
-  .kbcart__stickybar {
-    display: flex; align-items: center; gap: 14px;
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
-    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
-    background: #fff; box-shadow: 0 -6px 24px rgba(0, 0, 0, .10);
-  }
-  .kbcart__stickybar-total { display: flex; flex-direction: column; line-height: 1.1; flex-shrink: 0; }
-  .kbcart__stickybar-total span { font-family: var(--font-body); font-size: .72rem; color: var(--color-muted); }
-  .kbcart__stickybar-total strong { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-ink); }
-  .kbcart__stickybar .kbcart__btn { flex: 1; padding: 14px 20px; }
 }
 </style>
 
