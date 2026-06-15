@@ -101,11 +101,11 @@
 </section>
 
 {% stylesheet %}
-.hero { position: relative; background: var(--color-cream); overflow: hidden; margin-top: -1px; }
+.hero { position: relative; background: var(--color-cream); overflow: hidden; }
 
 .hero__wave { position: absolute; left: 0; right: 0; line-height: 0; pointer-events: none; z-index: 2; }
 .hero__wave svg { display: block; width: 100%; }
-.hero__wave--top { top: 0; }
+.hero__wave--top { display: none; }
 .hero__wave--top svg { height: 52px; }
 .hero__wave--bottom { bottom: -1px; }
 .hero__wave--bottom svg { height: 64px; }

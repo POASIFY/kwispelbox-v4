@@ -9,50 +9,6 @@
  */
 {
   "sections": {
-    "trust-bar": {
-      "type": "trust-bar",
-      "blocks": {
-        "u1": {
-          "type": "usp",
-          "settings": {
-            "title": "Gratis verzending",
-            "subtitle": "vanaf €75",
-            "icon": "icon-truck.svg"
-          }
-        },
-        "u2": {
-          "type": "usp",
-          "settings": {
-            "title": "Niet goed?",
-            "subtitle": "Geld terug",
-            "icon": "icon-refresh.svg"
-          }
-        },
-        "u3": {
-          "type": "usp",
-          "settings": {
-            "title": "100% blije honden",
-            "subtitle": "garantie",
-            "icon": "icon-heart.svg"
-          }
-        },
-        "u4": {
-          "type": "usp",
-          "settings": {
-            "title": "Voor 23:59 besteld",
-            "subtitle": "morgen in huis",
-            "icon": "icon-truck.svg"
-          }
-        }
-      },
-      "block_order": [
-        "u1",
-        "u2",
-        "u3",
-        "u4"
-      ],
-      "settings": {}
-    },
     "hero": {
       "type": "hero",
       "settings": {
@@ -633,7 +589,6 @@
     }
   },
   "order": [
-    "trust-bar",
     "hero",
     "product-boxes",
     "home-steps",
