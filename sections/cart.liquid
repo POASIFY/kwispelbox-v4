@@ -110,6 +110,8 @@
                       <ul class="kbcart__item-props" role="list">{{ prop_items }}</ul>
                     {%- endif -%}
 
+                    <p class="kbcart__item-price kbcart__item-price--inline">{{ item.final_line_price | money }}</p>
+
                     <a href="{{ item.url_to_remove }}" class="kbcart__item-remove">
                       <span aria-hidden="true">{%- render 'lucide', icon: 'pencil' -%}</span>Verwijderen
                     </a>
@@ -279,6 +281,17 @@
           </details>
         </aside>
       </div>
+
+      {%- comment -%} ── Plakkende checkout-balk (mobiel) ────────── {%- endcomment -%}
+      <form action="{{ routes.cart_url }}" method="post" class="kbcart__stickybar" novalidate>
+        <div class="kbcart__stickybar-total">
+          <span>Totaal</span>
+          <strong>{{ cart.total_price | money }}</strong>
+        </div>
+        <button type="submit" name="checkout" class="kbcart__btn kbcart__btn--primary">
+          Afrekenen<span aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+        </button>
+      </form>
     {%- endif -%}
 
   </div>
@@ -397,6 +410,10 @@
 .kbcart__item-remove:hover { color: var(--color-pink); }
 .kbcart__item-controls { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
 .kbcart__item-price { font-family: var(--font-heading); font-size: 1.18rem; color: var(--color-ink); margin: 0; }
+.kbcart__item-price--inline { display: none; }
+
+/* Plakkende checkout-balk (alleen mobiel) */
+.kbcart__stickybar { display: none; }
 
 /* Stepper */
 .kbcart__step { display: inline-flex; align-items: center; gap: 4px; background: #fff; border: 2px solid var(--color-line); border-radius: var(--radius-pill); padding: 4px; }
@@ -517,11 +534,35 @@
 
 /* Mobiel */
 @media (max-width: 749px) {
-  .kbcart__dog { width: 130px; right: 0; opacity: .9; }
-  .kbcart__item { grid-template-columns: 72px 1fr; }
-  .kbcart__item-media { width: 72px; height: 72px; }
-  .kbcart__item-controls { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; padding-top: 12px; }
-  .kbcart__trust-list { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .kbcart { padding-top: 28px; }
+  .kbcart__dog { width: 118px; right: 0; opacity: .9; }
+  .kbcart__card { padding: 16px; }
+  .kbcart__item { grid-template-columns: 84px 1fr; gap: 14px; padding: 16px 0; }
+  .kbcart__item-media { width: 84px; height: 84px; }
+  .kbcart__item-title { font-size: 1.05rem; }
+  .kbcart__item-price--inline { display: block; margin-top: 8px; font-size: 1.15rem; }
+  .kbcart__item-remove { margin-top: 8px; }
+  .kbcart__item-controls { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: flex-start; gap: 14px; padding-top: 12px; }
+  .kbcart__item-controls .kbcart__item-price { display: none; }
+  .kbcart__cross-card { padding: 10px; gap: 10px; }
+  .kbcart__cross-media { width: 60px; height: 60px; }
+  .kbcart__cross-name { font-size: .92rem; }
+  .kbcart__cross-desc { display: none; }
+  .kbcart__cross-foot { padding-top: 6px; }
+  .kbcart__summary { padding: 20px; }
+  .kbcart__trust-list { grid-template-columns: repeat(2, 1fr); gap: 14px 12px; padding-bottom: 96px; }
+
+  /* Plakkende checkout-balk */
+  .kbcart__stickybar {
+    display: flex; align-items: center; gap: 14px;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    background: #fff; box-shadow: 0 -6px 24px rgba(0, 0, 0, .10);
+  }
+  .kbcart__stickybar-total { display: flex; flex-direction: column; line-height: 1.1; flex-shrink: 0; }
+  .kbcart__stickybar-total span { font-family: var(--font-body); font-size: .72rem; color: var(--color-muted); }
+  .kbcart__stickybar-total strong { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-ink); }
+  .kbcart__stickybar .kbcart__btn { flex: 1; padding: 14px 20px; }
 }
 {% endstylesheet %}
 
