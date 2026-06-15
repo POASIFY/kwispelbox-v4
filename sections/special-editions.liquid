@@ -1,0 +1,114 @@
+{%- comment -%}
+  sections/special-editions.liquid — Kwispelbox KB-v4
+  Horizontale snap-slider met de seizoens-edities (peek + scroll-snap + "Bekijk alles").
+{%- endcomment -%}
+
+{%- assign coll = collections[section.settings.collection] -%}
+
+<div class="kbse full-width">
+  <div class="kbse__inner">
+
+    <div class="kbse__head">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="kbse__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="kbse__title">
+          {{ section.settings.heading }}
+          <span class="kbse__title-heart" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.intro != blank -%}
+        <p class="kbse__intro">{{ section.settings.intro }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if coll != blank and coll.products.size > 0 -%}
+      <ul class="kbse__shelf" role="list">
+        {%- for product in coll.products limit: 12 -%}
+          <li class="kbse__card">
+            <a href="{{ product.url }}" class="kbse__media">
+              {%- if product.featured_image -%}
+                <img src="{{ product.featured_image | image_url: width: 500 }}" alt="{{ product.featured_image.alt | escape }}" width="400" height="400" loading="lazy">
+              {%- else -%}
+                <span class="kbse__ph">{%- render 'lucide', icon: 'gift' -%}</span>
+              {%- endif -%}
+              {%- if section.settings.badge_text != blank -%}
+                <span class="kbse__badge">{{ section.settings.badge_text }}</span>
+              {%- endif -%}
+            </a>
+            <div class="kbse__body">
+              <a href="{{ product.url }}" class="kbse__name">{{ product.title }}</a>
+              <span class="kbse__price">{{ product.price | money }}</span>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ coll.url }}" class="kbse__cta">{{ section.settings.cta_label }}<span aria-hidden="true">›</span></a>
+      {%- endif -%}
+    {%- else -%}
+      <p class="kbse__empty">Koppel een collectie met je special editions in de editor.</p>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+.kbse { background: var(--color-cream); padding: 56px 0; }
+.kbse__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.kbse__head { text-align: center; margin-bottom: 28px; }
+.kbse__eyebrow { font-family: var(--font-body); font-size: .82rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--color-pink); margin: 0 0 8px; }
+.kbse__title { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: clamp(1.7rem, 5vw, 2.6rem); color: var(--color-ink); margin: 0; }
+.kbse__title-heart { color: var(--color-pink); }
+.kbse__title-heart .lucide { width: clamp(20px, 4vw, 30px); height: clamp(20px, 4vw, 30px); fill: currentColor; }
+.kbse__intro { font-family: var(--font-body); color: var(--color-body); line-height: 1.6; margin: 12px auto 0; max-width: 52ch; }
+
+.kbse__shelf {
+  list-style: none; margin: 0; padding: 4px 2px 16px;
+  display: flex; flex-wrap: nowrap; gap: 16px; overflow-x: auto;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.kbse__shelf::-webkit-scrollbar { display: none; }
+.kbse__card { flex: 0 0 240px; scroll-snap-align: start; background: #fff; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 14px 34px rgba(0,0,0,.05); transition: transform 160ms, box-shadow 160ms; }
+.kbse__card:hover { transform: translateY(-4px); box-shadow: 0 22px 48px rgba(0,0,0,.10); }
+.kbse__media { position: relative; display: block; aspect-ratio: 1; background: var(--color-cream); }
+.kbse__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.kbse__ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: var(--color-pink); }
+.kbse__ph .lucide { width: 46px; height: 46px; }
+.kbse__badge { position: absolute; top: 10px; left: 10px; background: var(--color-pink); color: #fff; font-family: var(--font-body); font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; padding: 5px 11px; border-radius: var(--radius-pill); box-shadow: 0 6px 16px rgba(0,0,0,.14); }
+.kbse__body { display: flex; flex-direction: column; gap: 5px; padding: 14px 16px 18px; }
+.kbse__name { font-family: var(--font-heading); font-size: 1.05rem; line-height: 1.2; color: var(--color-ink); text-decoration: none; overflow-wrap: anywhere; }
+.kbse__name:hover { color: var(--color-pink); }
+.kbse__price { font-family: var(--font-heading); font-size: 1rem; color: var(--color-green); }
+
+.kbse__cta { display: inline-flex; align-items: center; gap: 7px; margin: 20px auto 0; padding: 13px 26px; border-radius: var(--radius-pill); background: var(--color-pink); color: #fff; font-family: var(--font-heading); font-size: 1rem; text-decoration: none; transition: transform 160ms, box-shadow 160ms; }
+.kbse__cta span { font-size: 1.2rem; line-height: 1; }
+.kbse__cta:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(212,83,126,.3); }
+.kbse__inner { text-align: center; }
+.kbse__shelf { text-align: left; }
+.kbse__empty { text-align: center; color: var(--color-muted); font-family: var(--font-body); }
+
+@media (max-width: 749px) {
+  .kbse { padding: 44px 0; }
+  .kbse__card { flex: 0 0 68%; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Special Editions slider",
+  "tag": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Beperkte oplage" },
+    { "type": "text", "id": "heading", "label": "Titel", "default": "Special Editions" },
+    { "type": "textarea", "id": "intro", "label": "Introtekst", "default": "Voor elke gelegenheid een verrassing — seizoensboxen met liefde samengesteld. Op = op." },
+    { "type": "collection", "id": "collection", "label": "Collectie met edities" },
+    { "type": "text", "id": "badge_text", "label": "Badge op kaart", "default": "Op = op" },
+    { "type": "text", "id": "cta_label", "label": "Knoptekst", "default": "Bekijk alle edities" }
+  ],
+  "presets": [{ "name": "Special Editions slider" }]
+}
+{% endschema %}

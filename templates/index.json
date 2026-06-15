@@ -587,12 +587,24 @@
         "highlight_word": "Kwispelbox",
         "show_decorations": true
       }
+    },
+    "special-editions": {
+      "type": "special-editions",
+      "settings": {
+        "eyebrow": "Beperkte oplage",
+        "heading": "Special Editions",
+        "intro": "Voor elke gelegenheid een verrassing — seizoensboxen met liefde samengesteld. Op = op.",
+        "collection": "special-editions",
+        "badge_text": "Op = op",
+        "cta_label": "Bekijk alle edities"
+      }
     }
   },
   "order": [
     "trust-bar",
     "hero",
     "product-boxes",
+    "special-editions",
     "box-contents",
     "why-kwispelbox",
     "community",
