@@ -791,45 +791,39 @@
 <!-- ══ MOBIEL DRAWER ════════════════════════════════════ -->
 <div class="header-drawer" id="header-drawer" role="dialog" aria-modal="true" aria-label="Navigatiemenu" aria-hidden="true">
 
-  <!-- Header -->
-  <div class="header-drawer__header">
-    <a href="{{ routes.root_url }}" class="header-drawer__logo" aria-label="{{ shop.name }}">
-      {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 300 }}"
-             alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
-             width="120" height="auto" loading="lazy" class="header-drawer__logo-img">
-      {%- else -%}
-        <span class="header-drawer__logo-text">{{ shop.name }}</span>
-      {%- endif -%}
-    </a>
-    <div class="header-drawer__header-actions">
-      {%- if shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="header-drawer__icon-btn" aria-label="Account">
-          {{- 'icon-account.svg' | inline_asset_content -}}
-        </a>
-      {%- endif -%}
-      <a href="{{ routes.cart_url }}" class="header-drawer__icon-btn header-drawer__cart-btn" aria-label="Winkelwagen">
-        {{- 'icon-cart.svg' | inline_asset_content -}}
-        {%- if cart.item_count > 0 -%}
-          <span class="header-drawer__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
-        {%- endif -%}
-      </a>
-      <button class="header-drawer__close" aria-label="Sluiten" data-drawer-close>
-        {{- 'icon-close.svg' | inline_asset_content -}}
-      </button>
-    </div>
+  <!-- Header: alleen sluiten -->
+  <div class="header-drawer__top">
+    <button class="header-drawer__close" aria-label="Sluiten" data-drawer-close>
+      {{- 'icon-close.svg' | inline_asset_content -}}
+    </button>
   </div>
 
-  <!-- Trust bar -->
-  {%- assign trust_blocks_drawer = section.blocks | where: 'type', 'trust_item' -%}
-  {%- if trust_blocks_drawer.size > 0 -%}
-    <div class="header-drawer__trust">
-      {%- for block in trust_blocks_drawer limit: 3 -%}
-        <div class="header-drawer__trust-item">
-          <span class="header-drawer__trust-icon" aria-hidden="true">{{- block.settings.icon | inline_asset_content -}}</span>
-          <span class="header-drawer__trust-text">{{ block.settings.title }}{%- if block.settings.subtitle != blank -%} {{ block.settings.subtitle }}{%- endif -%}</span>
-        </div>
-      {%- endfor -%}
+  <!-- Merk -->
+  <a href="{{ routes.root_url }}" class="header-drawer__brand" aria-label="{{ shop.name }}">
+    {%- if section.settings.logo != blank -%}
+      <img src="{{ section.settings.logo | image_url: width: 480 }}"
+           alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+           width="240" height="auto" loading="lazy" class="header-drawer__brand-img">
+    {%- else -%}
+      <span class="header-drawer__logo-text">{{ shop.name }}</span>
+    {%- endif -%}
+  </a>
+
+  <!-- Stats-kaart -->
+  {%- if section.settings.drawer_stat_text != blank -%}
+    <div class="header-drawer__stat">
+      <span class="header-drawer__stat-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+      <div class="header-drawer__stat-body">
+        <strong class="header-drawer__stat-title">{{ section.settings.drawer_stat_text }}</strong>
+        {%- if section.settings.drawer_rating != blank -%}
+          <span class="header-drawer__stat-rating">
+            <span class="header-drawer__stat-stars" aria-hidden="true">
+              {%- render 'lucide', icon: 'star' -%}{%- render 'lucide', icon: 'star' -%}{%- render 'lucide', icon: 'star' -%}{%- render 'lucide', icon: 'star' -%}{%- render 'lucide', icon: 'star' -%}
+            </span>
+            <span class="header-drawer__stat-score">{{ section.settings.drawer_rating }}</span>
+          </span>
+        {%- endif -%}
+      </div>
     </div>
   {%- endif -%}
 
@@ -1441,23 +1435,23 @@
 /* ══ MOBIEL DRAWER ══════════════════════════════════════ */
 .header-drawer{position:fixed;top:0;left:0;bottom:0;width:min(390px,100vw);background:#fff;z-index:300;overflow-y:auto;overscroll-behavior:contain;transform:translateX(-100%);transition:transform 280ms cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
 .header-drawer[aria-hidden="false"]{transform:translateX(0);}
-.header-drawer__header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;flex-shrink:0;}
-.header-drawer__logo{display:flex;align-items:center;text-decoration:none;}
-.header-drawer__logo-img{height:48px;width:auto;}
-.header-drawer__logo-text{font-family:var(--font-heading);font-size:1.4rem;color:var(--color-ink);}
-.header-drawer__header-actions{display:flex;align-items:center;gap:4px;}
-.header-drawer__icon-btn{display:flex;align-items:center;justify-content:center;position:relative;background:none;border:none;cursor:pointer;padding:8px;color:var(--color-ink);border-radius:var(--radius-sm);text-decoration:none;}
-.header-drawer__icon-btn svg{width:22px;height:22px;}
-.header-drawer__cart-btn{position:relative;}
-.header-drawer__cart-count{position:absolute;top:-2px;right:-2px;background:var(--color-pink);color:#fff;font-family:var(--font-body);font-size:.6rem;font-weight:800;min-width:18px;height:18px;padding:0 4px;border-radius:999px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
+.header-drawer__top{display:flex;justify-content:flex-end;padding:14px 16px 0;flex-shrink:0;}
 .header-drawer__close{display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;padding:8px;color:var(--color-ink);}
-.header-drawer__close svg{width:22px;height:22px;}
-.header-drawer__trust{display:flex;background:var(--color-cream);padding:12px 20px;gap:0;border-top:1px solid var(--color-line);border-bottom:1px solid var(--color-line);flex-shrink:0;}
-.header-drawer__trust-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;padding:0 4px;}
-.header-drawer__trust-item+.header-drawer__trust-item{border-left:1px solid var(--color-line);}
-.header-drawer__trust-icon{display:flex;align-items:center;justify-content:center;color:var(--color-muted);}
-.header-drawer__trust-icon svg{width:18px;height:18px;}
-.header-drawer__trust-text{font-family:var(--font-body);font-size:.65rem;font-weight:600;color:var(--color-body);line-height:1.3;}
+.header-drawer__close svg{width:24px;height:24px;}
+.header-drawer__brand{display:flex;align-items:center;justify-content:center;text-decoration:none;padding:2px 20px 16px;flex-shrink:0;}
+.header-drawer__brand-img{height:auto;max-height:64px;width:auto;display:block;}
+.header-drawer__logo-text{font-family:var(--font-heading);font-size:1.6rem;color:var(--color-ink);}
+.header-drawer__cart-count{position:absolute;top:-2px;right:-2px;background:var(--color-pink);color:#fff;font-family:var(--font-body);font-size:.6rem;font-weight:800;min-width:18px;height:18px;padding:0 4px;border-radius:999px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
+/* Stats-kaart */
+.header-drawer__stat{display:flex;align-items:center;gap:14px;margin:0 16px 8px;padding:14px 16px;background:#fbe4ee;border-radius:var(--radius-md);flex-shrink:0;}
+.header-drawer__stat-icon{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;background:var(--color-pink);color:#fff;flex-shrink:0;}
+.header-drawer__stat-icon .lucide{width:24px;height:24px;}
+.header-drawer__stat-body{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.header-drawer__stat-title{font-family:var(--font-body);font-size:.95rem;font-weight:800;color:var(--color-ink);line-height:1.25;}
+.header-drawer__stat-rating{display:inline-flex;align-items:center;gap:7px;}
+.header-drawer__stat-stars{display:inline-flex;gap:1px;}
+.header-drawer__stat-stars .lucide{width:15px;height:15px;fill:#f5b301;stroke:#f5b301;}
+.header-drawer__stat-score{font-family:var(--font-body);font-size:.85rem;font-weight:800;color:var(--color-ink);}
 .header-drawer__nav-wrap{flex-shrink:0;}
 .header-drawer__nav{list-style:none;margin:0;padding:8px 0;}
 .header-drawer__nav-item{border-bottom:1px solid var(--color-line);}
@@ -3031,6 +3025,22 @@
       "id": "account_label",
       "label": "Account label",
       "default": "Mijn account"
+    },
+    {
+      "type": "header",
+      "content": "Mobiel drawer stats-kaart"
+    },
+    {
+      "type": "text",
+      "id": "drawer_stat_text",
+      "label": "Stat tekst",
+      "default": "Meer dan 1.200 blije honden"
+    },
+    {
+      "type": "text",
+      "id": "drawer_rating",
+      "label": "Beoordeling (leeg = geen sterren)",
+      "default": "4,9/5"
     },
     {
       "type": "header",
