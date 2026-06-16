@@ -9,8 +9,11 @@
     {{ content_for_header }}
   </head>
   <body>
+    <a class="skip-to-content" href="#main-content">Naar inhoud</a>
     {% sections 'header-group' %}
-    {{ content_for_layout }}
+    <main id="main-content" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
     {% sections 'footer-group' %}
     {%- render 'mobile-tabbar' -%}
   </body>

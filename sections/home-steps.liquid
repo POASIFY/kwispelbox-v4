@@ -52,7 +52,7 @@
 </div>
 
 {% stylesheet %}
-.hiw { background: #fff; padding: var(--section-pad) 0; }
+.hiw { background: transparent; padding: var(--section-pad) 0; }
 .hiw__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
 .hiw__head { text-align: center; margin-bottom: 44px; }
 .hiw__eyebrow { font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--color-green); margin: 0 0 8px; }
@@ -93,7 +93,7 @@
 .hiw__note {
   display: flex; align-items: center; justify-content: center; gap: 10px;
   margin: 44px auto 0; max-width: 560px; padding: 16px 22px;
-  background: var(--color-cream); border-radius: var(--radius-pill);
+  background: #fff; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill); box-shadow: var(--shadow-card);
   font-family: var(--font-body); font-size: .98rem; font-weight: 600; color: var(--color-body); text-align: center;
 }
 .hiw__note-icon { color: var(--color-pink); flex-shrink: 0; display: inline-flex; }
