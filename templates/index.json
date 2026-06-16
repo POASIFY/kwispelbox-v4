@@ -368,6 +368,7 @@
           "type": "special",
           "settings": {
             "featured": true,
+            "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_11_26_00.png",
             "icon": "cake",
             "color": "pink",
             "title": "Verjaardagsbox",
