@@ -586,13 +586,82 @@
     "special-editions": {
       "type": "special-editions",
       "settings": {
-        "eyebrow": "Beperkte oplage",
-        "heading": "Special Editions",
-        "intro": "Voor elke gelegenheid een verrassing — seizoensboxen met liefde samengesteld. Op = op.",
-        "collection": "special-editions",
-        "badge_text": "Op = op",
-        "cta_label": "Bekijk alle edities"
-      }
+        "eyebrow": "Verrassingen voor elk speciaal moment",
+        "heading": "Er is altijd een reden om te",
+        "heading_highlight": "kwispelen",
+        "intro": "Van verjaardagen tot feestdagen. Ontdek onze leukste speciale edities.",
+        "cta_title": "Er komen regelmatig nieuwe special editions uit.",
+        "cta_text": "Blijf ons volgen en mis geen enkele feestelijke verrassing!",
+        "cta_label": "Bekijk alle special editions",
+        "cta_url": "/collections/special-editions",
+        "show_decorations": true
+      },
+      "blocks": {
+        "verjaardag": {
+          "type": "special",
+          "settings": {
+            "featured": true,
+            "icon": "cake",
+            "color": "pink",
+            "title": "Verjaardagsbox",
+            "text": "Maak van de verjaardag van jouw hond een feestje om nooit te vergeten.",
+            "badge": "Meest gekozen",
+            "button_label": "Bekijk verjaardagsbox",
+            "button_url": "/products/verjaardag-box"
+          }
+        },
+        "valentijn": {
+          "type": "special",
+          "settings": {
+            "featured": false,
+            "icon": "heart",
+            "color": "pink",
+            "title": "Valentijnsbox",
+            "button_label": "Bekijk Valentijnsbox",
+            "button_url": "/products/valentijn-box"
+          }
+        },
+        "kerst": {
+          "type": "special",
+          "settings": {
+            "featured": false,
+            "icon": "tree",
+            "color": "green",
+            "title": "Kerstbox",
+            "button_label": "Bekijk Kerstbox",
+            "button_url": "/products/kerst-box"
+          }
+        },
+        "halloween": {
+          "type": "special",
+          "settings": {
+            "featured": false,
+            "icon": "pumpkin",
+            "color": "orange",
+            "title": "Halloweenbox",
+            "button_label": "Bekijk Halloweenbox",
+            "button_url": "/products/halloween-box"
+          }
+        },
+        "zomer": {
+          "type": "special",
+          "settings": {
+            "featured": false,
+            "icon": "sun",
+            "color": "yellow",
+            "title": "Zomerbox",
+            "button_label": "Bekijk Zomerbox",
+            "button_url": "/collections/special-editions"
+          }
+        }
+      },
+      "block_order": [
+        "verjaardag",
+        "valentijn",
+        "kerst",
+        "halloween",
+        "zomer"
+      ]
     },
     "home-steps": {
       "type": "home-steps",
