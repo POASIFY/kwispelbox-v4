@@ -117,7 +117,7 @@
 </section>
 
 {% stylesheet %}
-.hero { position: relative; background: #fcf8f1; overflow: hidden; }
+.hero { position: relative; background: var(--color-cream); overflow: hidden; }
 .hero__hill { display: none; }
 /* Zachte groene gloed laag achter de box (gekoppeld aan de media, dus altijd goed gepositioneerd) */
 .hero__media::before { content: ""; position: absolute; left: 50%; bottom: 1%; transform: translateX(-50%); width: 132%; height: 70%; background: radial-gradient(56% 56% at 50% 66%, #e8f5e2 0%, rgba(232,245,226,0) 72%); z-index: 0; pointer-events: none; }
@@ -191,7 +191,7 @@
 
 /* Mobiel: gelaagd — tekst, dan grote hond+box (overlapt omhoog), dan CTA-stack */
 @media (max-width: 989px) {
-  .hero__inner { grid-template-columns: 1fr; grid-template-areas: "intro" "media" "cta"; column-gap: 0; padding: var(--section-pad-sm) var(--page-margin) var(--section-pad); }
+  .hero__inner { grid-template-columns: 1fr; grid-template-areas: "intro" "media" "cta"; column-gap: 0; padding: var(--section-pad-sm) var(--page-margin) 24px; }
   .hero__intro { position: relative; z-index: 3; }
   .hero__title { font-size: clamp(2rem, 9vw, 2.9rem); }
   .hero__text { max-width: 60%; }
