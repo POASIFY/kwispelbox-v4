@@ -7,6 +7,8 @@
 
 {%- assign opt_blocks   = section.blocks | where: 'type', 'box_option' -%}
 {%- assign badge_blocks = section.blocks | where: 'type', 'trust_badge' -%}
+{%- assign value_blocks = section.blocks | where: 'type', 'value_item' -%}
+{%- assign ugc_blocks   = section.blocks | where: 'type', 'ugc' -%}
 {%- assign current = product.selected_or_first_available_variant -%}
 
 <div class="pdp pdp--{{ section.settings.accent | default: 'green' }} full-width">
@@ -37,6 +39,11 @@
 
           {%- if section.settings.badge_primary != blank -%}<span class="pdp-gallery__badge pdp-gallery__badge--pink">{{ section.settings.badge_primary }}</span>{%- endif -%}
           {%- if section.settings.badge_secondary != blank -%}<span class="pdp-gallery__badge pdp-gallery__badge--green">{{ section.settings.badge_secondary }}</span>{%- endif -%}
+          {%- if product.media.size > 0 -%}
+            <button type="button" class="pdp-gallery__zoom" data-zoom aria-label="Bekijk afbeelding groter">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+            </button>
+          {%- endif -%}
         </div>
 
         {%- if product.media.size > 1 -%}
@@ -51,6 +58,13 @@
         <span class="pdp-gallery__deco pdp-gallery__deco--heart" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
         <span class="pdp-gallery__deco pdp-gallery__deco--paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
         <span class="pdp-gallery__deco pdp-gallery__deco--spark" aria-hidden="true">{%- render 'kb-icon', icon: 'sparkles' -%}</span>
+      </div>
+
+      <div class="pdp-lightbox" data-lightbox hidden>
+        <button type="button" class="pdp-lightbox__close" data-lightbox-close aria-label="Sluiten">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+        <img class="pdp-lightbox__img" data-lightbox-img alt="" width="1200" height="1200">
       </div>
 
       {%- comment -%} ── Productinfo + formulier ──────────── {%- endcomment -%}
@@ -102,6 +116,31 @@
               </li>
             {%- endfor -%}
           </ul>
+        {%- endif -%}
+
+        {%- if section.settings.show_value_stack and value_blocks.size > 0 -%}
+          <div class="pdp-value">
+            <div class="pdp-value__head">
+              <span class="pdp-value__head-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'gift' -%}</span>
+              <strong>{{ section.settings.value_title | default: 'Wat krijgt jouw hond?' }}</strong>
+            </div>
+            <ul class="pdp-value__list" role="list">
+              {%- for block in value_blocks -%}
+                <li {{ block.shopify_attributes }}>
+                  <span class="pdp-value__check" aria-hidden="true">{%- render 'kb-icon', icon: 'check' -%}</span>
+                  <span class="pdp-value__text">{{ block.settings.text }}</span>
+                  {%- if block.settings.worth != blank -%}<span class="pdp-value__worth">{{ block.settings.worth }}</span>{%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+            {%- if section.settings.value_total != blank -%}
+              <div class="pdp-value__total">
+                <span class="pdp-value__total-label">Totale waarde</span>
+                <span class="pdp-value__total-was">{{ section.settings.value_total }}</span>
+                <span class="pdp-value__total-now">jij betaalt {{ current.price | money }}</span>
+              </div>
+            {%- endif -%}
+          </div>
         {%- endif -%}
 
         {%- form 'product', product, id: 'pdp-form', class: 'pdp-form', novalidate: 'novalidate' -%}
@@ -174,6 +213,18 @@
           {%- comment -%} Add to cart {%- endcomment -%}
           <div class="pdp-atc">
             {%- if section.settings.atc_summary != blank -%}<p class="pdp-atc__summary">{{ section.settings.atc_summary }}</p>{%- endif -%}
+            {%- if section.settings.show_guarantee -%}
+              <div class="pdp-guarantee">
+                <span class="pdp-guarantee__seal" aria-hidden="true">
+                  <span class="pdp-guarantee__seal-days">{{ section.settings.guarantee_days | default: '30' }}</span>
+                  <span class="pdp-guarantee__seal-unit">dagen</span>
+                </span>
+                <span class="pdp-guarantee__body">
+                  <strong>{{ section.settings.guarantee_title | default: 'Niet-goed-geld-terug garantie' }}</strong>
+                  {%- if section.settings.guarantee_text != blank -%}<span>{{ section.settings.guarantee_text }}</span>{%- endif -%}
+                </span>
+              </div>
+            {%- endif -%}
             <div class="pdp-atc__row">
               <button type="submit" name="add" class="pdp-atc__btn"{% unless product.available %} disabled{% endunless %}>
                 <span>{% if product.available %}{{ section.settings.atc_label | default: 'In winkelwagen' }}{% else %}Uitverkocht{% endif %}</span>
@@ -194,6 +245,32 @@
         {%- endform -%}
       </div>
     </div>
+
+    {%- if ugc_blocks.size > 0 -%}
+      <div class="pdp-ugc">
+        <div class="pdp-ugc__head">
+          <span class="pdp-ugc__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: 'camera' -%}</span>{{ section.settings.ugc_title | default: 'Blije honden, échte foto’s' }}</span>
+        </div>
+        <div class="pdp-ugc__track">
+          {%- for block in ugc_blocks -%}
+            <figure class="pdp-ugc__card" {{ block.shopify_attributes }}>
+              <div class="pdp-ugc__media">
+                {%- if block.settings.image != blank -%}
+                  <img src="{{ block.settings.image | image_url: width: 480 }}" srcset="{{ block.settings.image | image_url: width: 320 }} 320w, {{ block.settings.image | image_url: width: 480 }} 480w" sizes="240px" alt="{{ block.settings.name | default: 'Blije hond' | escape }}" width="240" height="240" loading="lazy">
+                {%- else -%}
+                  <div class="pdp-ugc__media-ph" aria-hidden="true">{%- render 'kb-icon', icon: 'dog' -%}</div>
+                {%- endif -%}
+                <span class="pdp-ugc__stars" aria-hidden="true">★★★★★</span>
+              </div>
+              <figcaption class="pdp-ugc__body">
+                {%- if block.settings.quote != blank -%}<p class="pdp-ugc__quote">“{{ block.settings.quote }}”</p>{%- endif -%}
+                <span class="pdp-ugc__name">{{ block.settings.name }}{% if block.settings.dog != blank %} <span class="pdp-ugc__dog">&amp; {{ block.settings.dog }}</span>{% endif %}</span>
+              </figcaption>
+            </figure>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
 
     <div class="pdp-sticky" data-sticky>
       <div class="pdp-sticky__info">
@@ -395,6 +472,63 @@
   .pdp-gallery__deco--spark { width: 19px; height: 19px; top: -8px; right: -6px; }
 }
 
+/* ── Rijkere galerij: zoom + lightbox ─────────────────── */
+.pdp-gallery__zoom { position: absolute; right: 14px; bottom: 14px; z-index: 2; width: 42px; height: 42px; border-radius: 50%; border: none; background: rgba(255, 255, 255, .92); color: var(--color-ink); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 14px rgba(61, 34, 9, .18); transition: transform 160ms, background 160ms; }
+.pdp-gallery__zoom:hover { transform: scale(1.08); background: #fff; }
+.pdp-gallery__zoom svg { width: 20px; height: 20px; }
+.pdp-lightbox { position: fixed; inset: 0; z-index: 120; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(43, 26, 8, .82); }
+.pdp-lightbox[hidden] { display: none; }
+.pdp-lightbox__img { max-width: min(92vw, 900px); max-height: 88vh; width: auto; height: auto; border-radius: 18px; box-shadow: 0 24px 60px rgba(0, 0, 0, .4); }
+.pdp-lightbox__close { position: absolute; top: 20px; right: 20px; width: 46px; height: 46px; border-radius: 50%; border: none; background: rgba(255, 255, 255, .16); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 160ms; }
+.pdp-lightbox__close:hover { background: rgba(255, 255, 255, .3); }
+.pdp-lightbox__close svg { width: 24px; height: 24px; }
+
+/* ── Waarde-stack ─────────────────────────────────────── */
+.pdp-value { background: #fff; border: 1.5px solid var(--color-line); border-radius: 22px; padding: 20px 22px; margin: 0 0 24px; }
+.pdp-value__head { display: flex; align-items: center; gap: 11px; margin-bottom: 14px; }
+.pdp-value__head-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: #fff0e4; color: var(--color-orange); flex-shrink: 0; }
+.pdp-value__head-icon svg { width: 20px; height: 20px; }
+.pdp-value__head strong { font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); }
+.pdp-value__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.pdp-value__list li { display: flex; align-items: center; gap: 11px; font-family: var(--font-body); font-size: .92rem; color: var(--color-ink); }
+.pdp-value__check { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--pac-soft); color: var(--pac); flex-shrink: 0; }
+.pdp-value__check svg { width: 13px; height: 13px; }
+.pdp-value__text { flex: 1; }
+.pdp-value__worth { font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-muted); }
+.pdp-value__total { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; padding-top: 15px; border-top: 1px dashed var(--color-line); }
+.pdp-value__total-label { font-family: var(--font-body); font-size: .86rem; font-weight: 700; color: var(--color-ink); }
+.pdp-value__total-was { font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-muted); text-decoration: line-through; }
+.pdp-value__total-now { margin-left: auto; font-family: var(--font-heading); font-size: .92rem; color: var(--pac); background: var(--pac-soft); padding: 6px 13px; border-radius: var(--radius-pill); }
+
+/* ── Garantie-zegel ───────────────────────────────────── */
+.pdp-guarantee { display: flex; align-items: center; gap: 14px; background: #fff; border: 1.5px dashed color-mix(in srgb, var(--pac) 48%, transparent); border-radius: 18px; padding: 12px 16px; margin: 0 0 16px; }
+.pdp-guarantee__seal { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 54px; height: 54px; border-radius: 50%; background: var(--pac); color: #fff; flex-shrink: 0; line-height: 1; box-shadow: 0 6px 14px color-mix(in srgb, var(--pac) 36%, transparent); }
+.pdp-guarantee__seal-days { font-family: var(--font-heading); font-size: 1.3rem; }
+.pdp-guarantee__seal-unit { font-family: var(--font-body); font-size: .56rem; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; }
+.pdp-guarantee__body { display: flex; flex-direction: column; gap: 2px; }
+.pdp-guarantee__body strong { font-family: var(--font-heading); font-size: 1.02rem; color: var(--color-ink); line-height: 1.15; }
+.pdp-guarantee__body span { font-family: var(--font-body); font-size: .82rem; color: var(--color-body); line-height: 1.3; }
+
+/* ── UGC-reviews strook ───────────────────────────────── */
+.pdp-ugc { margin: 10px 0 0; }
+.pdp-ugc__head { margin-bottom: 14px; }
+.pdp-ugc__eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .82rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--color-pink); }
+.pdp-ugc__eyebrow span { display: inline-flex; }
+.pdp-ugc__eyebrow svg { width: 17px; height: 17px; }
+.pdp-ugc__track { display: flex; gap: 16px; overflow-x: auto; padding: 6px 2px 14px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.pdp-ugc__track::-webkit-scrollbar { display: none; }
+.pdp-ugc__card { flex: 0 0 auto; width: 230px; margin: 0; background: #fff; border: 1.5px solid var(--color-line); border-radius: 20px; overflow: hidden; box-shadow: 0 8px 22px rgba(61, 34, 9, .06); scroll-snap-align: start; }
+.pdp-ugc__media { position: relative; aspect-ratio: 1/1; background: #e8f5e2; }
+.pdp-ugc__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pdp-ugc__media-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--color-green); }
+.pdp-ugc__media-ph svg { width: 64px; height: 64px; }
+.pdp-ugc__stars { position: absolute; left: 10px; bottom: 10px; color: var(--color-yellow); font-size: .9rem; letter-spacing: 1px; background: rgba(255, 255, 255, .92); padding: 3px 9px; border-radius: var(--radius-pill); }
+.pdp-ugc__body { padding: 14px 16px 16px; }
+.pdp-ugc__quote { font-family: var(--font-body); font-size: .88rem; line-height: 1.45; color: var(--color-ink); margin: 0 0 8px; }
+.pdp-ugc__name { font-family: var(--font-heading); font-size: .92rem; color: var(--color-ink); }
+.pdp-ugc__dog { color: var(--color-pink); }
+@media (min-width: 990px) { .pdp-ugc { margin-top: 28px; } .pdp-ugc__card { width: 250px; } }
+
 {% endstylesheet %}
 
 {% javascript %}
@@ -409,6 +543,28 @@
         thumbs.forEach(function (x) { x.classList.toggle('is-active', x === t); });
       });
     });
+
+    /* Klik-to-zoom lightbox */
+    var lightbox = gallery.querySelector('[data-lightbox]');
+    var zoomBtn = gallery.querySelector('[data-zoom]');
+    if (lightbox && zoomBtn) {
+      var lbImg = lightbox.querySelector('[data-lightbox-img]');
+      var lbClose = lightbox.querySelector('[data-lightbox-close]');
+      var openLb = function () {
+        var active = gallery.querySelector('[data-gallery-main] .pdp-gallery__slide.is-active img');
+        if (!active) return;
+        lbImg.src = active.currentSrc || active.src;
+        lbImg.alt = active.alt || '';
+        lightbox.hidden = false;
+        document.documentElement.style.overflow = 'hidden';
+        lbClose.focus();
+      };
+      var closeLb = function () { lightbox.hidden = true; document.documentElement.style.overflow = ''; zoomBtn.focus(); };
+      zoomBtn.addEventListener('click', openLb);
+      lbClose.addEventListener('click', closeLb);
+      lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLb(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lightbox.hidden) closeLb(); });
+    }
   });
 
   var form = document.getElementById('pdp-form');
@@ -507,10 +663,39 @@
     { "type": "header", "content": "Add to cart" },
     { "type": "text", "id": "atc_label", "label": "Knoptekst", "default": "Verras mijn hond" },
     { "type": "text", "id": "atc_summary", "label": "Samenvatting boven knop", "default": "Jouw hond ontvangt een verrassingsbox vol speelplezier" },
+    { "type": "header", "content": "Waarde-stack", "info": "Voeg 'Waarde-item' blokken toe voor de lijst." },
+    { "type": "checkbox", "id": "show_value_stack", "label": "Waarde-stack tonen", "default": true },
+    { "type": "text", "id": "value_title", "label": "Titel", "default": "Wat krijgt jouw hond?" },
+    { "type": "text", "id": "value_total", "label": "Totale waarde (doorgestreept)", "default": "€64,95" },
+    { "type": "header", "content": "Garantie-zegel" },
+    { "type": "checkbox", "id": "show_guarantee", "label": "Garantie-zegel tonen", "default": true },
+    { "type": "text", "id": "guarantee_days", "label": "Aantal dagen", "default": "30" },
+    { "type": "text", "id": "guarantee_title", "label": "Titel", "default": "Niet-goed-geld-terug garantie" },
+    { "type": "text", "id": "guarantee_text", "label": "Subtekst", "default": "Is je hond niet door het dolle? Je krijgt je geld terug." },
+    { "type": "header", "content": "Klantfoto's (UGC)", "info": "Voeg 'Klantfoto' blokken toe." },
+    { "type": "text", "id": "ugc_title", "label": "Kopje", "default": "Blije honden, échte foto’s" },
     { "type": "header", "content": "Abonnement" },
     { "type": "checkbox", "id": "show_subscription", "label": "Abonnementswidget tonen", "default": false, "info": "Plaatst de subscriptions app-embed (selling plans) boven de Add-to-Cart." }
   ],
   "blocks": [
+    {
+      "type": "value_item",
+      "name": "Waarde-item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Tekst", "default": "Stevig speeltje" },
+        { "type": "text", "id": "worth", "label": "Waarde (optioneel)", "default": "t.w.v. €14,95" }
+      ]
+    },
+    {
+      "type": "ugc",
+      "name": "Klantfoto",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto van de hond" },
+        { "type": "text", "id": "quote", "label": "Quote", "default": "Mijn hond werd helemaal gek van blijdschap!" },
+        { "type": "text", "id": "name", "label": "Naam baasje", "default": "Sanne" },
+        { "type": "text", "id": "dog", "label": "Naam hond", "default": "Luna" }
+      ]
+    },
     {
       "type": "box_option",
       "name": "Variantkaart",
@@ -571,7 +756,14 @@
         { "type": "trust_badge", "settings": { "icon": "truck", "color": "green", "text": "Gratis verzending vanaf €75" } },
         { "type": "trust_badge", "settings": { "icon": "heart", "color": "pink", "text": "Zorgvuldig samengesteld" } },
         { "type": "trust_badge", "settings": { "icon": "shield-check", "color": "green", "text": "Veilig betalen" } },
-        { "type": "trust_badge", "settings": { "icon": "paw", "color": "orange", "text": "1.200+ blije honden" } }
+        { "type": "trust_badge", "settings": { "icon": "paw", "color": "orange", "text": "1.200+ blije honden" } },
+        { "type": "value_item", "settings": { "text": "Stevige speeltjes om mee te ravotten", "worth": "t.w.v. €19,95" } },
+        { "type": "value_item", "settings": { "text": "Natuurlijke, gezonde snacks", "worth": "t.w.v. €14,95" } },
+        { "type": "value_item", "settings": { "text": "Een knuffel om mee te slapen", "worth": "t.w.v. €16,95" } },
+        { "type": "value_item", "settings": { "text": "Maandelijkse verrassing & verzorgd ingepakt", "worth": "t.w.v. €12,95" } },
+        { "type": "ugc", "settings": { "quote": "Luna wist niet wat ze zag — meteen alles uitgepakt!", "name": "Sanne", "dog": "Luna" } },
+        { "type": "ugc", "settings": { "quote": "Elke maand weer een feestje in huis. Echt een aanrader.", "name": "Mark", "dog": "Boef" } },
+        { "type": "ugc", "settings": { "quote": "De snacks zijn top en de speeltjes super stevig.", "name": "Eva", "dog": "Pim" } }
       ]
     }
   ]
