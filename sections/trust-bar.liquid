@@ -42,16 +42,16 @@
 .kbtrust__text strong { font-family: var(--font-body); font-size: .95rem; font-weight: 800; color: var(--color-ink); line-height: 1.25; }
 .kbtrust__text span { font-family: var(--font-body); font-size: .88rem; color: var(--color-muted); line-height: 1.25; }
 
-@media (max-width: 989px) {
-  .kbtrust__list { grid-template-columns: repeat(2, 1fr); gap: 6px 0; }
-  .kbtrust__item:nth-child(odd) { border-left: none; }
-  .kbtrust__item:nth-child(n+3) { border-top: 1px solid var(--color-line); }
-}
-@media (max-width: 549px) {
-  .kbtrust__list { grid-template-columns: 1fr; }
-  .kbtrust__item { border-left: none !important; }
-  .kbtrust__item + .kbtrust__item { border-top: 1px solid var(--color-line); }
-  .kbtrust__item:nth-child(n+3) { border-top: 1px solid var(--color-line); }
+/* Mobiel: 4 kolommen blijven, icoon boven de tekst (naar mockup) */
+@media (max-width: 749px) {
+  .kbtrust__list { grid-template-columns: repeat(4, 1fr); padding: 16px 2px; }
+  .kbtrust__item { flex-direction: column; align-items: center; text-align: center; gap: 9px; padding: 4px 5px; }
+  .kbtrust__item + .kbtrust__item { border-left: 1px solid var(--color-line); border-top: none; }
+  .kbtrust__icon { width: 40px; height: 40px; }
+  .kbtrust__icon svg { width: 20px; height: 20px; }
+  .kbtrust__text { align-items: center; }
+  .kbtrust__text strong { font-size: .68rem; line-height: 1.2; }
+  .kbtrust__text span { font-size: .66rem; line-height: 1.2; }
 }
 {% endstylesheet %}
 
