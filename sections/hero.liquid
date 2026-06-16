@@ -106,8 +106,10 @@
 </section>
 
 {% stylesheet %}
-.hero { position: relative; background: var(--color-cream); overflow: hidden; }
-.hero__hill { position: absolute; left: 0; right: 0; bottom: 0; height: 42%; background: #e8f5e2; border-radius: 50% 50% 0 0 / 100% 100% 0 0; transform: scaleX(1.4); z-index: 0; }
+.hero { position: relative; background: #fcf8f1; overflow: hidden; }
+.hero__hill { display: none; }
+/* Zachte groene gloed laag achter de box (gekoppeld aan de media, dus altijd goed gepositioneerd) */
+.hero__media::before { content: ""; position: absolute; left: 50%; bottom: 1%; transform: translateX(-50%); width: 132%; height: 70%; background: radial-gradient(56% 56% at 50% 66%, #e8f5e2 0%, rgba(232,245,226,0) 72%); z-index: 0; pointer-events: none; }
 
 .hero__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: var(--section-pad) var(--page-margin); display: grid; grid-template-columns: 1fr 1.05fr; grid-template-areas: "intro media" "cta media"; align-items: start; column-gap: 24px; }
 .hero__intro { grid-area: intro; min-width: 0; }
@@ -186,14 +188,12 @@
   .hero__btn { font-size: 1.05rem; padding: 15px 26px; }
   .hero__circle { top: 30%; left: 36%; width: 104px; height: 104px; }
   .hero__circle-text { font-size: .72rem; }
-  /* Subtiele groene vorm achter de hond i.p.v. groot vlak onderaan */
-  .hero__hill { top: 30%; bottom: auto; height: 38%; border-radius: 50%; transform: scaleX(1.55); background: #eef7e8; }
-  /* Hartjes naar boven/rechts, weg van de subtekst */
+  /* Hartjes rond/boven de kop van de hond (relatief aan de media-afbeelding) */
   .hero__deco--paws { display: none; }
-  .hero__deco--h1 { top: 13%; left: auto; right: 15%; }
-  .hero__deco--h2 { top: 7%; left: auto; right: 6%; }
-  .hero__deco--h3 { top: 43%; right: 5%; bottom: auto; }
-  .hero__deco--spark { top: 9%; right: 25%; }
+  .hero__deco--h1 { top: 2%; left: auto; right: 8%; width: 24px; }
+  .hero__deco--h2 { top: -3%; left: auto; right: 30%; width: 20px; }
+  .hero__deco--h3 { top: 11%; left: auto; right: 0; bottom: auto; width: 22px; }
+  .hero__deco--spark { top: 4%; right: 46%; }
   .hero__avatars-text { font-size: .82rem; }
 }
 {% endstylesheet %}
