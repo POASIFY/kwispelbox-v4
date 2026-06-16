@@ -533,6 +533,7 @@
 
 {% javascript %}
 (function () {
+  function init() {
   document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
     var slides = gallery.querySelectorAll('[data-gallery-main] .pdp-gallery__slide');
     var thumbs = gallery.querySelectorAll('[data-thumb]');
@@ -621,6 +622,8 @@
     tick();
     setInterval(tick, 1000);
   });
+  }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
 }());
 {% endjavascript %}
 
