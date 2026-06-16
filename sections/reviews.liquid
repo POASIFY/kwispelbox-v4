@@ -285,12 +285,13 @@
   /* Trustbar → 2×2 in één witte kaart, stippellijn-dividers */
   .rev-trust { margin-top: 26px; }
   .rev-trust__list { display: grid; grid-template-columns: 1fr 1fr; }
-  .rev-trust__item { border-left: none; padding: 18px 16px; gap: 13px; }
+  .rev-trust__item { border-left: none; padding: 16px 12px; gap: 11px; min-width: 0; }
   .rev-trust__item:nth-child(1), .rev-trust__item:nth-child(2) { border-bottom: 1.5px dashed var(--color-line); }
   .rev-trust__item:nth-child(odd) { border-right: 1.5px dashed var(--color-line); }
-  .rev-trust__icon { width: 48px; height: 48px; }
-  .rev-trust__icon .lucide { width: 23px; height: 23px; }
-  .rev-trust__title { font-size: 1.2rem; }
+  .rev-trust__icon { width: 44px; height: 44px; }
+  .rev-trust__icon .lucide { width: 22px; height: 22px; }
+  .rev-trust__title { font-size: 1.15rem; overflow-wrap: anywhere; }
+  .rev-trust__line, .rev-trust__sub { overflow-wrap: anywhere; }
 }
 
 @media (max-width: 459px) {
