@@ -1,10 +1,7 @@
 {%- comment -%}
   sections/community.liquid — Kwispelbox KB-v4
-  Levendige community-galerij (geen klassieke reviewsectie).
-  - featured  : uitgelichte review als verhaal-middelpunt (limit 1)
-  - photo     : community fotowall met social-tags + badges (onbeperkt)
-  - stat      : community trustbar met statistiek-kaarten
-  Mobiel: intro → featured → fotowall (horizontaal swipebaar) → stats.
+  "Meer dan 1.200 blije honden" — uitgelichte testimonial (foto + quote),
+  fotogrid van honden met naam-pills, en een stats-balk.
 {%- endcomment -%}
 
 {%- assign featured     = section.blocks | where: 'type', 'featured' | first -%}
@@ -15,22 +12,18 @@
 
   {%- if section.settings.show_decorations -%}
     <div class="com__deco" aria-hidden="true">
-      <span class="com__deco com__deco--1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg></span>
-      <span class="com__deco com__deco--2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
-      <span class="com__deco com__deco--3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg></span>
-      <span class="com__deco com__deco--4"><svg viewBox="0 0 48 22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 15C9 6 13 18 19 11M28 11c6 7 10-5 16 2"/></svg></span>
+      <span class="com__deco com__deco--lines"><svg viewBox="0 0 48 26" fill="none" stroke-width="2.6" stroke-linecap="round"><path d="M5 17C10 7 14 20 19 12" stroke="var(--color-green)"/><path d="M3 9c2-3 5-4 8-3" stroke="var(--color-pink)"/><path d="M9 22c1-3 3-5 6-5" stroke="var(--color-yellow)"/></svg></span>
+      <span class="com__deco com__deco--heart"><svg viewBox="0 0 24 24" fill="none" stroke="var(--color-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
+      <span class="com__deco com__deco--paw"><svg viewBox="0 0 24 24" fill="var(--color-pink)"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg></span>
+      <span class="com__deco com__deco--heart2"><svg viewBox="0 0 24 24" fill="none" stroke="var(--color-pink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
     </div>
   {%- endif -%}
 
   <div class="com__inner">
 
-    <!-- ── Kop ─────────────────────────────────────── -->
     <div class="com__head">
       {%- if section.settings.eyebrow != blank -%}
-        <span class="com__eyebrow">
-          <span class="com__eyebrow-icon" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
-          {{ section.settings.eyebrow }}
-        </span>
+        <span class="com__eyebrow"><span class="com__eyebrow-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ section.settings.eyebrow }}</span>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
         <h2 class="com__heading">{{ section.settings.heading }}</h2>
@@ -40,101 +33,49 @@
       {%- endif -%}
     </div>
 
-    <!-- ── Featured review + fotowall ──────────────── -->
     <div class="com__main">
 
       {%- if featured -%}
-        <article class="com__featured com__featured--{{ featured.settings.color }}" {{ featured.shopify_attributes }}>
-          <span class="com__featured-paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
-
-          <div class="com__featured-media">
+        <article class="com__testi" {{ featured.shopify_attributes }}>
+          <div class="com__testi-media">
             {%- if featured.settings.image != blank -%}
-              <img
-                src="{{ featured.settings.image | image_url: width: 900 }}"
-                srcset="{{ featured.settings.image | image_url: width: 600 }} 600w, {{ featured.settings.image | image_url: width: 900 }} 900w"
-                sizes="(max-width: 859px) 92vw, 42vw"
-                alt="{{ featured.settings.image.alt | default: featured.settings.dog_name | escape }}"
-                width="600" height="460" loading="lazy" class="com__featured-img">
+              <img src="{{ featured.settings.image | image_url: width: 800 }}" srcset="{{ featured.settings.image | image_url: width: 500 }} 500w, {{ featured.settings.image | image_url: width: 800 }} 800w" sizes="(max-width:859px) 92vw, 30vw" alt="{{ featured.settings.image.alt | default: featured.settings.dog_name | escape }}" width="600" height="640" loading="lazy" class="com__testi-img">
             {%- else -%}
-              <div class="com__featured-img com__featured-img--placeholder">{%- render 'lucide', icon: 'dog' -%}</div>
+              <div class="com__testi-img com__testi-img--ph">{%- render 'kb-icon', icon: 'paw' -%}</div>
             {%- endif -%}
             {%- if featured.settings.dog_name != blank -%}
-              <span class="com__name-label com__name-label--lg">
-                <span class="com__name-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
-                {{ featured.settings.dog_name }}
-              </span>
+              <span class="com__pill com__pill--lg">{{ featured.settings.dog_name }}<span class="com__pill-heart" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span></span>
             {%- endif -%}
-            <span class="com__featured-heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
           </div>
-
-          <div class="com__featured-body">
-            <span class="com__quote-mark" aria-hidden="true">&ldquo;</span>
-
-            {%- assign rating = featured.settings.rating | default: 5 -%}
-            <span class="com__stars" role="img" aria-label="{{ rating }} van 5 sterren">
-              {%- for i in (1..5) -%}
-                <svg class="com__star{% if i <= rating %} is-on{% endif %}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg>
-              {%- endfor -%}
-            </span>
-
+          <div class="com__testi-body">
+            <span class="com__quote-mark" aria-hidden="true"><svg viewBox="0 0 40 30" fill="currentColor"><path d="M0 17.5C0 9.8 4.6 4 12.2 1l1.6 3.6C9.4 6.6 7 9.6 7 12.6h5.4V30H0V17.5Zm22 0C22 9.8 26.6 4 34.2 1l1.6 3.6C31.4 6.6 29 9.6 29 12.6h5.4V30H22V17.5Z"/></svg></span>
             {%- if featured.settings.quote != blank -%}
               <blockquote class="com__quote">{{ featured.settings.quote }}</blockquote>
             {%- endif -%}
-
-            <div class="com__owner">
-              <span class="com__owner-avatar" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
-              <span class="com__owner-text">
-                <strong>
-                  {%- if featured.settings.owner_name != blank -%}{{ featured.settings.owner_name }}{%- endif -%}
-                  {%- if featured.settings.owner_name != blank and featured.settings.dog_name != blank %} &amp; {% endif -%}
-                  {%- if featured.settings.dog_name != blank -%}{{ featured.settings.dog_name }}{%- endif -%}
-                </strong>
-                {%- if featured.settings.meta != blank -%}<span>{{ featured.settings.meta }}</span>{%- endif -%}
-              </span>
-            </div>
+            {%- assign rating = featured.settings.rating | default: 5 -%}
+            <span class="com__stars" role="img" aria-label="{{ rating }} van 5 sterren">
+              {%- for i in (1..5) -%}<svg class="com__star{% if i <= rating %} is-on{% endif %}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg>{%- endfor -%}
+            </span>
+            <span class="com__author">
+              {%- if featured.settings.owner_name != blank -%}{{ featured.settings.owner_name }}{%- endif -%}
+              {%- if featured.settings.owner_name != blank and featured.settings.dog_name != blank %} &amp; {% endif -%}
+              {%- if featured.settings.dog_name != blank -%}{{ featured.settings.dog_name }}{%- endif -%}
+            </span>
           </div>
         </article>
       {%- endif -%}
 
       {%- if photo_blocks.size > 0 -%}
-        <div class="com__wall">
+        <div class="com__photos">
           {%- for block in photo_blocks -%}
-            {%- assign badge = block.settings.badge -%}
-            <figure class="com__photo" {{ block.shopify_attributes }}>
+            <figure class="com-photo" {{ block.shopify_attributes }}>
               {%- if block.settings.image != blank -%}
-                <img
-                  src="{{ block.settings.image | image_url: width: 500 }}"
-                  srcset="{{ block.settings.image | image_url: width: 300 }} 300w, {{ block.settings.image | image_url: width: 500 }} 500w"
-                  sizes="(max-width: 859px) 46vw, 180px"
-                  alt="{{ block.settings.image.alt | default: block.settings.dog_name | escape }}"
-                  width="240" height="240" loading="lazy" class="com__photo-img">
+                <img src="{{ block.settings.image | image_url: width: 600 }}" srcset="{{ block.settings.image | image_url: width: 360 }} 360w, {{ block.settings.image | image_url: width: 600 }} 600w" sizes="(max-width:859px) 46vw, 22vw" alt="{{ block.settings.image.alt | default: block.settings.dog_name | escape }}" width="360" height="270" loading="lazy" class="com-photo__img">
               {%- else -%}
-                <div class="com__photo-img com__photo-img--placeholder">{%- render 'lucide', icon: 'dog' -%}</div>
+                <div class="com-photo__img com-photo__img--ph">{%- render 'kb-icon', icon: 'paw' -%}</div>
               {%- endif -%}
-
-              {%- if badge != blank and badge != 'none' -%}
-                {%- case badge -%}
-                  {%- when 'Hond van de maand' -%}{%- assign badge_icon = 'star' -%}{%- assign badge_color = 'yellow' -%}
-                  {%- when 'Jarig vandaag' -%}{%- assign badge_icon = 'gift' -%}{%- assign badge_color = 'pink' -%}
-                  {%- when 'Favoriet' -%}{%- assign badge_icon = 'heart' -%}{%- assign badge_color = 'pink' -%}
-                  {%- when 'Eerste box' -%}{%- assign badge_icon = 'sparkles' -%}{%- assign badge_color = 'green' -%}
-                  {%- when 'Kwispelclub' -%}{%- assign badge_icon = 'paw' -%}{%- assign badge_color = 'green' -%}
-                  {%- when 'Special Edition' -%}{%- assign badge_icon = 'sparkles' -%}{%- assign badge_color = 'orange' -%}
-                  {%- when 'Mega Box' -%}{%- assign badge_icon = 'gift' -%}{%- assign badge_color = 'orange' -%}
-                  {%- when 'Mini Box' -%}{%- assign badge_icon = 'gift' -%}{%- assign badge_color = 'yellow' -%}
-                  {%- else -%}{%- assign badge_icon = 'gift' -%}{%- assign badge_color = 'green' -%}
-                {%- endcase -%}
-                <span class="com__photo-badge com__photo-badge--{{ badge_color }}">
-                  <span class="com__photo-badge-icon" aria-hidden="true">{%- render 'lucide', icon: badge_icon -%}</span>
-                  {{ badge }}
-                </span>
-              {%- endif -%}
-
               {%- if block.settings.dog_name != blank -%}
-                <figcaption class="com__name-label">
-                  <span class="com__name-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
-                  {{ block.settings.dog_name }}
-                </figcaption>
+                <figcaption class="com__pill com__pill--photo"><span class="com__pill-heart" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ block.settings.dog_name }}</figcaption>
               {%- endif -%}
             </figure>
           {%- endfor -%}
@@ -143,12 +84,11 @@
 
     </div>
 
-    <!-- ── Community trustbar (stats) ──────────────── -->
     {%- if stat_blocks.size > 0 -%}
       <div class="com__stats">
         {%- for block in stat_blocks -%}
           <div class="com__stat com__stat--{{ block.settings.color }}" {{ block.shopify_attributes }}>
-            <span class="com__stat-icon" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
+            <span class="com__stat-icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
             <div class="com__stat-body">
               <span class="com__stat-value">{{ block.settings.value }}</span>
               {%- if block.settings.label != blank -%}<span class="com__stat-label">{{ block.settings.label }}</span>{%- endif -%}
@@ -162,209 +102,111 @@
 </div>
 
 {% stylesheet %}
+.com { position: relative; background: transparent; padding: var(--section-pad) 0; overflow: hidden; }
+.com__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
 
-.com {
-  position: relative;
-  background: #f1f8ed;
-  padding: var(--section-pad) 0;
-  overflow: hidden;
-}
-.com__inner {
-  position: relative;
-  z-index: 1;
-  max-width: var(--page-width);
-  margin: 0 auto;
-  padding: 0 var(--page-margin);
-}
-
-/* ── Decoraties ──────────────────────────────────────── */
+/* Decoratie */
 .com__deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .com__deco span { position: absolute; display: block; }
 .com__deco span svg { display: block; width: 100%; height: 100%; }
-.com__deco--1 { top: 80px;  left: 3%;  width: 40px; height: 40px; color: var(--color-green);  opacity: .14; transform: rotate(-16deg); }
-.com__deco--2 { top: 130px; right: 4%; width: 30px; height: 30px; color: var(--color-pink);   opacity: .20; transform: rotate(12deg); }
-.com__deco--3 { bottom: 22%; left: 2%; width: 26px; height: 26px; color: var(--color-yellow); opacity: .55; transform: rotate(8deg); }
-.com__deco--4 { bottom: 12%; right: 4%; width: 56px; height: 26px; color: var(--color-orange); opacity: .28; }
+.com__deco--lines { top: 60px; left: 6%; width: 52px; height: 28px; }
+.com__deco--heart { top: 70px; left: 14%; width: 30px; height: 30px; }
+.com__deco--paw { top: 12%; right: 6%; width: 30px; height: 30px; opacity: .5; }
+.com__deco--heart2 { top: 60px; right: 12%; width: 34px; height: 34px; }
 
-/* ── Kop ─────────────────────────────────────────────── */
-.com__head { max-width: 600px; margin: 0 0 44px; }
-.com__eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800;
-  text-transform: uppercase; letter-spacing: .1em; color: var(--color-green); margin-bottom: 14px;
-}
-.com__eyebrow-icon { display: inline-flex; color: var(--color-pink); }
-.com__eyebrow-icon .lucide { width: 16px; height: 16px; }
-.com__heading { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.08; color: var(--color-ink); margin: 0; }
-.com__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.65; color: var(--color-body); margin: 16px 0 0; max-width: 540px; }
+/* Kop */
+.com__head { text-align: center; margin: 0 auto 40px; }
+.com__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--color-pink); margin-bottom: 12px; }
+.com__eyebrow-icon { display: inline-flex; }
+.com__eyebrow-icon svg { width: 16px; height: 16px; }
+.com__heading { font-family: var(--font-heading); font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.05; color: var(--color-ink); margin: 0; }
+.com__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 14px auto 0; max-width: 580px; }
 
-/* ── Main: featured + wall ───────────────────────────── */
-.com__main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  align-items: start;
-}
+/* Main: testimonial + fotogrid */
+.com__main { display: grid; grid-template-columns: 1.5fr 1fr; gap: 22px; align-items: stretch; }
 
-/* ── Uitgelichte review (middelpunt) ─────────────────── */
-.com__featured {
-  --c: var(--color-green); --c-soft: #e8f5e2;
-  position: relative;
-  isolation: isolate;
-  background: #fff;
-  border-radius: var(--radius-lg);
-  display: flex;
-  flex-direction: column;
-  box-shadow: var(--shadow-card);
-}
-.com__featured--green  { --c: var(--color-green);  --c-soft: #e8f5e2; }
-.com__featured--pink   { --c: var(--color-pink);   --c-soft: #ffe0ee; }
-.com__featured--orange { --c: var(--color-orange); --c-soft: #fff0e4; }
-.com__featured--yellow { --c: #d99100;             --c-soft: #fffae0; }
+/* Naam-pill */
+.com__pill { display: inline-flex; align-items: center; gap: 6px; background: #fff; color: var(--color-ink); font-family: var(--font-heading); font-size: .9rem; padding: 7px 14px; border-radius: var(--radius-pill); box-shadow: 0 5px 14px rgba(61,34,9,.14); position: absolute; z-index: 2; }
+.com__pill-heart { display: inline-flex; color: var(--color-pink); }
+.com__pill-heart svg { width: 15px; height: 15px; fill: currentColor; stroke: currentColor; }
+.com__pill--lg { top: 16px; left: 16px; font-size: 1rem; padding: 8px 16px; }
+.com__pill--photo { left: 12px; bottom: 12px; font-size: .82rem; flex-direction: row-reverse; padding: 6px 13px; }
 
-/* Half-transparante pootafdruk die deels buiten de kaart valt */
-.com__featured-paw { position: absolute; z-index: -1; right: -24px; bottom: -22px; width: 110px; height: 110px; color: var(--c); opacity: .13; transform: rotate(-10deg); pointer-events: none; }
-.com__featured-paw svg { display: block; width: 100%; height: 100%; }
-
-.com__featured-media { position: relative; aspect-ratio: 4 / 3; background: var(--c-soft); border-radius: var(--radius-lg) var(--radius-lg) 0 0; overflow: hidden; }
-.com__featured-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.com__featured-img--placeholder { display: flex; align-items: center; justify-content: center; color: var(--c); }
-.com__featured-img--placeholder .lucide { width: 88px; height: 88px; }
-.com__featured-heart { position: absolute; top: 16px; right: 16px; width: 30px; height: 30px; color: #fff; opacity: .9; filter: drop-shadow(0 4px 8px rgba(61,34,9,.25)); transform: rotate(8deg); }
-.com__featured-heart svg { display: block; width: 100%; height: 100%; }
-
-/* Body als persoonlijk verhaal, veel lucht */
-.com__featured-body { position: relative; padding: 38px 40px 40px; display: flex; flex-direction: column; gap: 16px; }
-.com__quote-mark { position: absolute; top: -6px; left: 24px; z-index: 0; font-family: var(--font-heading); font-size: 130px; line-height: 1; color: var(--c); opacity: .12; pointer-events: none; }
-
-.com__stars { position: relative; z-index: 1; display: inline-flex; gap: 4px; }
-.com__star { width: 22px; height: 22px; color: #e6ddca; }
+/* Testimonial-kaart */
+.com__testi { position: relative; background: #fff; border-radius: 24px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: 0 16px 40px rgba(61,34,9,.08); }
+.com__testi-media { position: relative; }
+.com__testi-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.com__testi-img--ph { display: flex; align-items: center; justify-content: center; min-height: 360px; background: linear-gradient(140deg, #fff, #eef7e8); color: var(--color-green); }
+.com__testi-img--ph svg { width: 80px; height: 80px; }
+.com__testi-body { display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 40px 40px; }
+.com__quote-mark { color: var(--color-pink); }
+.com__quote-mark svg { width: 50px; height: 38px; display: block; }
+.com__quote { font-family: var(--font-heading); font-size: clamp(1.2rem, 1.8vw, 1.6rem); line-height: 1.35; color: var(--color-ink); margin: 0; font-weight: 400; }
+.com__stars { display: inline-flex; gap: 5px; }
+.com__star { width: 24px; height: 24px; color: #e6ddca; }
 .com__star.is-on { color: #f4a72c; }
-.com__quote { position: relative; z-index: 1; font-family: var(--font-body); font-size: 1.34rem; line-height: 1.55; color: var(--color-ink); font-weight: 600; margin: 0; }
-.com__owner { position: relative; z-index: 1; display: flex; align-items: center; gap: 13px; margin-top: 6px; }
-.com__owner-avatar { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: var(--c-soft); color: var(--c); flex-shrink: 0; }
-.com__owner-avatar .lucide { width: 22px; height: 22px; }
-.com__owner-text { display: flex; flex-direction: column; line-height: 1.3; }
-.com__owner-text strong { font-family: var(--font-heading); font-size: var(--fs-h3); color: var(--color-ink); }
-.com__owner-text span { font-family: var(--font-body); font-size: .82rem; font-weight: 600; color: var(--color-muted); margin-top: 1px; }
+.com__author { font-family: var(--font-body); font-size: 1rem; font-weight: 700; color: var(--color-body); }
 
-/* ── Social-tag naamlabel ────────────────────────────── */
-.com__name-label {
-  position: absolute; left: 12px; bottom: 12px;
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(255, 255, 255, .94); backdrop-filter: blur(4px);
-  color: var(--color-ink); font-family: var(--font-body); font-size: .76rem; font-weight: 800;
-  padding: 6px 12px 6px 9px; border-radius: var(--radius-pill);
-  box-shadow: 0 4px 12px rgba(61, 34, 9, .12);
-}
-.com__name-label--lg { left: 16px; bottom: 16px; font-size: .86rem; padding: 8px 15px 8px 11px; }
-.com__name-icon { display: inline-flex; color: var(--color-pink); }
-.com__name-icon .lucide { width: 14px; height: 14px; }
+/* Fotogrid 2 × 3 */
+.com__photos { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 14px; }
+.com-photo { position: relative; margin: 0; border-radius: 18px; overflow: hidden; aspect-ratio: 4 / 3; box-shadow: 0 10px 26px rgba(61,34,9,.08); }
+.com-photo__img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 500ms cubic-bezier(.2,.6,.2,1); }
+.com-photo:hover .com-photo__img { transform: scale(1.06); }
+.com-photo__img--ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(140deg, #fff, #fdeaf2); color: var(--color-pink); }
+.com-photo__img--ph svg { width: 40px; height: 40px; }
 
-/* ── Fotowall ────────────────────────────────────────── */
-.com__wall { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.com__photo {
-  position: relative; margin: 0; border-radius: 20px; overflow: hidden;
-  aspect-ratio: 1 / 1; background: #e8f5e2;
-  box-shadow: var(--shadow-card);
-  transition: transform 260ms ease, box-shadow 260ms ease;
-}
-.com__photo:hover { transform: translateY(-4px); box-shadow: var(--shadow-card-hover); }
-.com__photo-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 600ms cubic-bezier(.2,.6,.2,1); }
-.com__photo:hover .com__photo-img { transform: scale(1.07); }
-.com__photo-img--placeholder { display: flex; align-items: center; justify-content: center; color: var(--color-green); }
-.com__photo-img--placeholder .lucide { width: 44px; height: 44px; }
-/* naamtag beweegt subtiel omhoog bij hover */
-.com__photo .com__name-label { transition: transform 300ms ease, box-shadow 300ms ease; }
-.com__photo:hover .com__name-label { transform: translateY(-4px); box-shadow: 0 8px 18px rgba(61, 34, 9, .18); }
+/* Stats-balk */
+.com__stats { margin-top: 26px; background: #fff; border: 1.5px solid var(--color-line); border-radius: 24px; box-shadow: var(--shadow-card); display: grid; grid-template-columns: repeat(4, 1fr); padding: 24px 14px; }
+.com__stat { --c: var(--color-green); --c-soft: #eef7e8; display: flex; align-items: center; gap: 16px; padding: 8px 22px; min-width: 0; }
+.com__stat + .com__stat { border-left: 1.5px dashed var(--color-line); }
+.com__stat--green  { --c: var(--color-green);  --c-soft: #eef7e8; }
+.com__stat--pink   { --c: var(--color-pink);   --c-soft: #fdeaf2; }
+.com__stat--orange { --c: var(--color-orange); --c-soft: #fdf0e2; }
+.com__stat--yellow { --c: #d99100;             --c-soft: #fdf6e0; }
+.com__stat-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 54px; height: 54px; border-radius: 50%; background: var(--c-soft); color: var(--c); }
+.com__stat-icon svg { width: 26px; height: 26px; }
+.com__stat-body { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.com__stat-value { font-family: var(--font-heading); font-size: 1.55rem; color: var(--color-ink); }
+.com__stat-label { font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); margin-top: 2px; }
 
-/* Badge op de foto */
-.com__photo-badge {
-  --bc: var(--color-green); --bc-soft: #e8f5e2;
-  position: absolute; top: 10px; left: 10px;
-  display: inline-flex; align-items: center; gap: 5px;
-  font-family: var(--font-body); font-size: .68rem; font-weight: 800;
-  padding: 5px 10px 5px 8px; border-radius: var(--radius-pill);
-  background: var(--bc); color: #fff;
-  box-shadow: 0 4px 12px rgba(61, 34, 9, .18);
-  transition: transform 300ms ease;
-}
-.com__photo-badge--green  { --bc: var(--color-green); }
-.com__photo-badge--pink   { --bc: var(--color-pink); color: var(--color-ink); }
-.com__photo-badge--orange { --bc: var(--color-orange); }
-.com__photo-badge--yellow { --bc: var(--color-yellow); color: var(--color-ink); }
-.com__photo-badge-icon { display: inline-flex; }
-.com__photo-badge-icon .lucide { width: 12px; height: 12px; }
-.com__photo:hover .com__photo-badge { transform: translateY(-2px) scale(1.05) rotate(-2deg); }
-
-/* ── Community trustbar (stats) ──────────────────────── */
-.com__stats {
-  margin-top: 44px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
-.com__stat {
-  --c: var(--color-green); --c-soft: #e8f5e2;
-  display: flex; align-items: center; gap: 16px;
-  background: #fff; border: 1.5px solid var(--color-line); border-radius: 22px;
-  padding: 22px 24px; box-shadow: var(--shadow-card);
-}
-.com__stat--green  { --c: var(--color-green);  --c-soft: #e8f5e2; }
-.com__stat--pink   { --c: var(--color-pink);   --c-soft: #ffe0ee; }
-.com__stat--orange { --c: var(--color-orange); --c-soft: #fff0e4; }
-.com__stat--yellow { --c: #d99100;             --c-soft: #fffae0; }
-.com__stat-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 52px; height: 52px; border-radius: 16px; background: var(--c-soft); color: var(--c); }
-.com__stat-icon .lucide { width: 26px; height: 26px; }
-.com__stat-body { display: flex; flex-direction: column; line-height: 1.15; }
-.com__stat-value { font-family: var(--font-heading); font-size: 1.7rem; color: var(--color-ink); }
-.com__stat-label { font-family: var(--font-body); font-size: .85rem; color: var(--color-muted); margin-top: 2px; }
-
-/* ── Tablet ──────────────────────────────────────────── */
+/* Tablet */
 @media (max-width: 1100px) and (min-width: 860px) {
-  .com__wall { grid-template-columns: repeat(2, 1fr); }
+  .com__main { grid-template-columns: 1.3fr 1fr; }
+  .com__testi-body { padding: 28px; gap: 14px; }
 }
 
-/* ── Mobiel: social-feed gevoel ──────────────────────── */
+/* Mobiel */
 @media (max-width: 859px) {
-  .com__head { margin-bottom: 32px; }
-  .com__main { grid-template-columns: 1fr; gap: 28px; }
-  .com__featured-body { padding: 30px 26px 30px; }
-  .com__quote-mark { font-size: 100px; }
-  .com__quote { font-size: 1.2rem; }
+  .com__head { margin-bottom: 28px; }
+  .com__main { grid-template-columns: 1fr; gap: 22px; }
+  .com__testi { grid-template-columns: 1fr; }
+  .com__testi-media { aspect-ratio: 16 / 11; }
+  .com__testi-img--ph { min-height: 0; height: 100%; }
+  .com__testi-body { padding: 22px 22px 26px; gap: 14px; }
+  .com__quote { font-size: 1.18rem; }
 
-  /* Fotowall → horizontaal swipebaar */
-  .com__wall {
-    display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 12px;
-    margin: 0 calc(-1 * var(--page-margin)); padding: 4px var(--page-margin) 12px;
-    scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-  }
-  .com__wall::-webkit-scrollbar { display: none; }
-  .com__photo { flex: 0 0 46%; scroll-snap-align: start; }
+  .com__photos { gap: 12px; }
 
-  .com__deco--1, .com__deco--4 { display: none; }
-
-  /* Stats → nette 2-koloms layout */
-  .com__stats { grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 32px; }
-  .com__stat { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px; }
-  .com__stat-value { font-size: 1.45rem; }
+  .com__stats { grid-template-columns: repeat(4, 1fr); padding: 18px 4px; }
+  .com__stat { flex-direction: column; text-align: center; gap: 9px; padding: 4px 6px; }
+  .com__stat + .com__stat { border-left: 1.5px dashed var(--color-line); }
+  .com__stat-icon { width: 46px; height: 46px; }
+  .com__stat-icon svg { width: 22px; height: 22px; }
+  .com__stat-body { align-items: center; }
+  .com__stat-value { font-size: 1.15rem; }
+  .com__stat-label { font-size: .72rem; line-height: 1.2; }
+  .com__deco--paw, .com__deco--lines { display: none; }
 }
 
 @media (max-width: 459px) {
-  .com__photo { flex-basis: 72%; }
-  .com__stats { grid-template-columns: 1fr; }
-  .com__stat { flex-direction: row; }
+  .com__photos { gap: 10px; }
+  .com__stat-value { font-size: 1.02rem; }
 }
 
-/* ── Toegankelijkheid: minder beweging ───────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .com__photo, .com__photo-img, .com__name-label, .com__photo-badge { transition: none; }
-  .com__photo:hover { transform: none; }
-  .com__photo:hover .com__photo-img { transform: none; }
-  .com__photo:hover .com__name-label { transform: none; }
-  .com__photo:hover .com__photo-badge { transform: none; }
+  .com-photo__img { transition: none; }
+  .com-photo:hover .com-photo__img { transform: none; }
 }
-
 {% endstylesheet %}
 
 {% schema %}
@@ -374,8 +216,8 @@
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Een community vol kwispelende staarten" },
-    { "type": "text", "id": "heading", "label": "Headline", "default": "Meer dan 1.200 blije honden." },
-    { "type": "textarea", "id": "intro", "label": "Introtekst", "default": "Elke dag maken we honden en hun baasjes blij met een verrassingsbox vol speelplezier. Word jij ook onderdeel van de Kwispelbox-community?" },
+    { "type": "text", "id": "heading", "label": "Kop", "default": "Meer dan 1.200 blije honden." },
+    { "type": "textarea", "id": "intro", "label": "Subtekst", "default": "Elke dag maken we honden (en hun baasjes) blij met onze verrassingsboxen." },
     { "type": "checkbox", "id": "show_decorations", "label": "Decoratieve merkaccenten tonen", "default": true }
   ],
   "blocks": [
@@ -385,20 +227,10 @@
       "limit": 1,
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Hondenfoto" },
-        { "type": "text", "id": "dog_name", "label": "Naam hond", "default": "Max" },
-        { "type": "textarea", "id": "quote", "label": "Review quote", "default": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest in huis!" },
+        { "type": "text", "id": "dog_name", "label": "Naam hond", "default": "Luna" },
+        { "type": "textarea", "id": "quote", "label": "Review quote", "default": "Ze rent iedere keer naar de deur zodra de Kwispelbox komt. Echt haar favoriete moment van de maand!" },
         { "type": "range", "id": "rating", "label": "Sterren", "min": 1, "max": 5, "step": 1, "default": 5 },
-        { "type": "text", "id": "owner_name", "label": "Naam baasje", "default": "Sanne" },
-        { "type": "text", "id": "meta", "label": "Extra regel (bv. Happy Box fan)", "default": "Happy Box fan · lid sinds 2024" },
-        {
-          "type": "select", "id": "color", "label": "Accentkleur", "default": "green",
-          "options": [
-            { "value": "green", "label": "Groen" },
-            { "value": "pink", "label": "Roze" },
-            { "value": "orange", "label": "Oranje" },
-            { "value": "yellow", "label": "Geel" }
-          ]
-        }
+        { "type": "text", "id": "owner_name", "label": "Naam baasje", "default": "Sanne" }
       ]
     },
     {
@@ -406,22 +238,7 @@
       "name": "Communityfoto",
       "settings": [
         { "type": "image_picker", "id": "image", "label": "Hondenfoto" },
-        { "type": "text", "id": "dog_name", "label": "Naam hond", "default": "Bella" },
-        {
-          "type": "select", "id": "badge", "label": "Badge (optioneel)", "default": "none",
-          "options": [
-            { "value": "none", "label": "Geen badge" },
-            { "value": "Happy Box", "label": "Happy Box" },
-            { "value": "Mega Box", "label": "Mega Box" },
-            { "value": "Mini Box", "label": "Mini Box" },
-            { "value": "Kwispelclub", "label": "Kwispelclub" },
-            { "value": "Favoriet", "label": "Favoriet" },
-            { "value": "Eerste box", "label": "Eerste box" },
-            { "value": "Jarig vandaag", "label": "Jarig vandaag" },
-            { "value": "Hond van de maand", "label": "Hond van de maand" },
-            { "value": "Special Edition", "label": "Special Edition" }
-          ]
-        }
+        { "type": "text", "id": "dog_name", "label": "Naam hond", "default": "Milo" }
       ]
     },
     {
@@ -430,15 +247,16 @@
       "limit": 4,
       "settings": [
         {
-          "type": "select", "id": "icon", "label": "Icoon", "default": "paw",
+          "type": "select", "id": "icon", "label": "Icoon", "default": "users",
           "options": [
-            { "value": "paw", "label": "Poot" },
+            { "value": "users", "label": "Community" },
+            { "value": "camera", "label": "Camera" },
             { "value": "heart", "label": "Hart" },
             { "value": "star", "label": "Ster" },
+            { "value": "chat", "label": "Chat" },
             { "value": "gift", "label": "Cadeau" },
-            { "value": "sparkles", "label": "Sparkles" },
-            { "value": "award", "label": "Award" },
-            { "value": "package", "label": "Pakket" }
+            { "value": "paw", "label": "Poot" },
+            { "value": "sparkles", "label": "Sparkles" }
           ]
         },
         {
@@ -450,8 +268,8 @@
             { "value": "yellow", "label": "Geel" }
           ]
         },
-        { "type": "text", "id": "value", "label": "Cijfer / kernboodschap", "default": "1.200+" },
-        { "type": "text", "id": "label", "label": "Beschrijving", "default": "blije honden" }
+        { "type": "text", "id": "value", "label": "Cijfer / kernwoord", "default": "1.200+" },
+        { "type": "text", "id": "label", "label": "Beschrijving", "default": "Blije honden in onze community" }
       ]
     }
   ],
@@ -459,17 +277,17 @@
     {
       "name": "Hondencommunity",
       "blocks": [
-        { "type": "featured", "settings": { "dog_name": "Max", "quote": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest in huis!", "rating": 5, "owner_name": "Sanne", "meta": "Happy Box fan · lid sinds 2024", "color": "green" } },
-        { "type": "photo", "settings": { "dog_name": "Bella", "badge": "Hond van de maand" } },
-        { "type": "photo", "settings": { "dog_name": "Loki", "badge": "Mega Box" } },
-        { "type": "photo", "settings": { "dog_name": "Noa", "badge": "Favoriet" } },
-        { "type": "photo", "settings": { "dog_name": "Storm", "badge": "Eerste box" } },
-        { "type": "photo", "settings": { "dog_name": "Pip", "badge": "Jarig vandaag" } },
-        { "type": "photo", "settings": { "dog_name": "Bo", "badge": "Kwispelclub" } },
-        { "type": "stat", "settings": { "icon": "paw", "color": "green", "value": "1.200+", "label": "blije honden" } },
-        { "type": "stat", "settings": { "icon": "sparkles", "color": "pink", "value": "Dagelijks", "label": "nieuwe foto's & verhalen" } },
-        { "type": "stat", "settings": { "icon": "heart", "color": "orange", "value": "8.500+", "label": "leden in de community" } },
-        { "type": "stat", "settings": { "icon": "star", "color": "yellow", "value": "4,9/5", "label": "gemiddelde beoordeling" } }
+        { "type": "featured", "settings": { "dog_name": "Luna", "quote": "Ze rent iedere keer naar de deur zodra de Kwispelbox komt. Echt haar favoriete moment van de maand!", "rating": 5, "owner_name": "Sanne" } },
+        { "type": "photo", "settings": { "dog_name": "Milo" } },
+        { "type": "photo", "settings": { "dog_name": "Pip" } },
+        { "type": "photo", "settings": { "dog_name": "Boris" } },
+        { "type": "photo", "settings": { "dog_name": "Nala" } },
+        { "type": "photo", "settings": { "dog_name": "Max" } },
+        { "type": "photo", "settings": { "dog_name": "Charlie" } },
+        { "type": "stat", "settings": { "icon": "users", "color": "green", "value": "1.200+", "label": "Blije honden in onze community" } },
+        { "type": "stat", "settings": { "icon": "camera", "color": "pink", "value": "Dagelijks", "label": "Nieuwe foto's en verhalen" } },
+        { "type": "stat", "settings": { "icon": "heart", "color": "yellow", "value": "Samen", "label": "Eén grote community van hondenliefhebbers" } },
+        { "type": "stat", "settings": { "icon": "star", "color": "yellow", "value": "4,9/5", "label": "Onze hond wordt iedere keer weer blij van zijn box!" } }
       ]
     }
   ]
