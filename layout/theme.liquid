@@ -5,6 +5,11 @@
     {{ 'lilita-one-v17-latin.woff2' | asset_url | preload_tag: as: 'font' }}
     {%- render 'css-variables' -%}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    <script>
+      if (window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('reveal-on');
+      }
+    </script>
     {%- render 'meta-tags' -%}
     {{ content_for_header }}
   </head>
@@ -16,5 +21,6 @@
     </main>
     {% sections 'footer-group' %}
     {%- render 'mobile-tabbar' -%}
+    {%- render 'scroll-reveal' -%}
   </body>
 </html>

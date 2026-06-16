@@ -121,6 +121,17 @@ main:focus {
   outline: none;
 }
 
+/* Scroll-reveal: subtiele fade-up per sectie (alleen als JS de class zet) */
+.reveal-on #main-content > .shopify-section {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.65s cubic-bezier(0.2, 0.6, 0.2, 1), transform 0.65s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.reveal-on #main-content > .shopify-section.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
 /** Section layout utilities */
 
 /**

@@ -1,0 +1,19 @@
+{%- comment -%}
+  snippets/scroll-reveal.liquid — subtiele fade-up per homepage-sectie.
+  De 'reveal-on' class wordt in de <head> gezet (alleen bij motion-OK + IO-support),
+  zodat secties zonder flash starten op opacity:0 en hier worden onthuld.
+{%- endcomment -%}
+<script>
+  (function () {
+    if (!document.documentElement.classList.contains('reveal-on')) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-revealed');
+          io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+    document.querySelectorAll('#main-content > .shopify-section').forEach(function (s) { io.observe(s); });
+  })();
+</script>
