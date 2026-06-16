@@ -58,7 +58,6 @@
               <span class="kbse-card__img kbse-card__img--ph" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
             {%- endif -%}
             <span class="kbse-card__tint" aria-hidden="true"></span>
-            <span class="kbse-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
             <h3 class="kbse-card__title">{{ block.settings.title }}</h3>
             {%- if block.settings.button_label != blank -%}
               <a href="{{ block.settings.button_url | default: '#' }}" class="kbse-card__btn">{{ block.settings.button_label }}<span aria-hidden="true">→</span></a>
@@ -133,10 +132,8 @@
 .kbse-card__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .kbse-card__img--ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(140deg, #fff, var(--tint)); color: var(--c); }
 .kbse-card__img--ph svg { width: 56px; height: 56px; }
-.kbse-card__tint { position: absolute; inset: 0; background: linear-gradient(180deg, var(--tint) 0%, rgba(255,255,255,0) 42%); }
-.kbse-card__icon { position: absolute; top: 13px; left: 13px; z-index: 2; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: var(--c); color: #fff; box-shadow: 0 4px 10px rgba(61,34,9,.18); }
-.kbse-card__icon svg { width: 20px; height: 20px; }
-.kbse-card__title { position: absolute; top: 18px; left: 60px; right: 12px; z-index: 2; font-family: var(--font-heading); font-size: 1.18rem; color: var(--color-ink); line-height: 1.1; margin: 0; }
+.kbse-card__tint { position: absolute; inset: 0; background: linear-gradient(180deg, var(--tint) 0%, rgba(255,255,255,0) 46%); }
+.kbse-card__title { position: absolute; top: 15px; left: 16px; right: 14px; z-index: 2; font-family: var(--font-heading); font-size: 1.2rem; color: var(--color-ink); line-height: 1.1; margin: 0; }
 .kbse-card__btn { position: absolute; left: 13px; bottom: 13px; z-index: 2; display: inline-flex; align-items: center; gap: 7px; padding: 9px 16px; background: var(--c); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: .86rem; text-decoration: none; box-shadow: 0 6px 16px rgba(61,34,9,.18); transition: background 160ms, transform 160ms; }
 .kbse-card__btn:hover { background: var(--c-dark); transform: translateY(-1px); }
 
@@ -167,7 +164,7 @@
   .kbse-feat__btn { left: 16px; bottom: 16px; padding: 11px 20px; font-size: .92rem; }
 
   .kbse-card { aspect-ratio: 1 / 1; }
-  .kbse-card__title { font-size: 1.02rem; left: 56px; top: 16px; }
+  .kbse-card__title { font-size: 1.02rem; left: 14px; top: 14px; }
   .kbse-card__btn { font-size: .76rem; padding: 8px 13px; }
 
   .kbse__cta { flex-direction: column; text-align: center; gap: 14px; padding: 24px 20px; }
