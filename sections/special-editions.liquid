@@ -41,19 +41,14 @@
             {%- else -%}
               <span class="kbse-feat__img kbse-feat__img--ph" aria-hidden="true">{%- render 'kb-icon', icon: 'cake' -%}</span>
             {%- endif -%}
+            <span class="kbse-feat__tint" aria-hidden="true"></span>
             {%- if block.settings.badge != blank -%}
-              <span class="kbse-feat__badge">
-                <svg class="kbse-feat__badge-shape" viewBox="0 0 100 100" aria-hidden="true"><g fill="currentColor"><circle cx="88" cy="50" r="11"/><circle cx="83" cy="69" r="11"/><circle cx="69" cy="83" r="11"/><circle cx="50" cy="88" r="11"/><circle cx="31" cy="83" r="11"/><circle cx="17" cy="69" r="11"/><circle cx="12" cy="50" r="11"/><circle cx="17" cy="31" r="11"/><circle cx="31" cy="17" r="11"/><circle cx="50" cy="12" r="11"/><circle cx="69" cy="17" r="11"/><circle cx="83" cy="31" r="11"/><circle cx="50" cy="50" r="38"/></g></svg>
-                <span class="kbse-feat__badge-text">{{ block.settings.badge }}</span>
-              </span>
+              <span class="kbse-feat__label">{{ block.settings.badge }}</span>
             {%- endif -%}
-            <div class="kbse-feat__panel">
-              <h3 class="kbse-feat__title"><span class="kbse-feat__title-icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>{{ block.settings.title }}</h3>
-              {%- if block.settings.text != blank -%}<p class="kbse-feat__text">{{ block.settings.text }}</p>{%- endif -%}
-              {%- if block.settings.button_label != blank -%}
-                <a href="{{ block.settings.button_url | default: '#' }}" class="kbse-feat__btn">{{ block.settings.button_label }}<span class="kbse-feat__btn-arrow" aria-hidden="true">→</span></a>
-              {%- endif -%}
-            </div>
+            <h3 class="kbse-feat__title">{{ block.settings.title }}</h3>
+            {%- if block.settings.button_label != blank -%}
+              <a href="{{ block.settings.button_url | default: '#' }}" class="kbse-feat__btn">{{ block.settings.button_label }}<span class="kbse-feat__btn-arrow" aria-hidden="true">→</span></a>
+            {%- endif -%}
           </article>
         {%- else -%}
           <article class="kbse-card kbse--{{ accent }}" {{ block.shopify_attributes }}>
@@ -122,20 +117,15 @@
 .kbse__grid { display: grid; grid-template-columns: 1.12fr 1fr 1fr; gap: 20px; }
 .kbse-feat { grid-column: 1; grid-row: 1 / span 2; }
 
-/* Featured */
+/* Featured — zelfde stijl als de thema-kaarten, alleen groter */
 .kbse-feat { position: relative; border-radius: 24px; overflow: hidden; min-height: 460px; box-shadow: 0 18px 44px rgba(61,34,9,.10); }
-.kbse-feat__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left center; }
+.kbse-feat__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .kbse-feat__img--ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(140deg, #fff, var(--tint)); color: var(--c); }
 .kbse-feat__img--ph svg { width: 88px; height: 88px; }
-.kbse-feat__badge { position: absolute; top: 16px; left: 16px; z-index: 2; width: 78px; height: 78px; color: var(--color-pink); display: flex; align-items: center; justify-content: center; filter: drop-shadow(0 6px 14px rgba(61,34,9,.22)); }
-.kbse-feat__badge-shape { position: absolute; inset: 0; width: 100%; height: 100%; }
-.kbse-feat__badge-text { position: relative; font-family: var(--font-heading); font-size: .72rem; line-height: 1.05; color: #fff; text-align: center; max-width: 56px; }
-.kbse-feat__panel { position: absolute; top: 50%; right: 20px; transform: translateY(-50%); width: 48%; max-width: 320px; background: rgba(255,255,255,.93); border-radius: 20px; padding: 24px 26px; box-shadow: 0 12px 30px rgba(61,34,9,.12); }
-.kbse-feat__title { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-ink); line-height: 1.1; margin: 0 0 10px; }
-.kbse-feat__title-icon { display: inline-flex; color: var(--c); }
-.kbse-feat__title-icon svg { width: 26px; height: 26px; }
-.kbse-feat__text { font-family: var(--font-body); font-size: .96rem; line-height: 1.55; color: var(--color-body); margin: 0 0 18px; }
-.kbse-feat__btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; background: var(--c); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; text-decoration: none; transition: background 160ms, transform 160ms; }
+.kbse-feat__tint { position: absolute; inset: 0; background: linear-gradient(180deg, var(--tint) 0%, rgba(255,255,255,0) 34%); }
+.kbse-feat__label { position: absolute; top: 16px; right: 16px; z-index: 2; display: inline-flex; align-items: center; background: var(--c); color: #fff; font-family: var(--font-heading); font-size: .82rem; padding: 7px 16px; border-radius: var(--radius-pill); box-shadow: 0 6px 16px rgba(61,34,9,.18); }
+.kbse-feat__title { position: absolute; top: 15px; left: 20px; right: 150px; z-index: 2; font-family: var(--font-heading); font-size: 1.9rem; color: var(--color-ink); line-height: 1.1; margin: 0; }
+.kbse-feat__btn { position: absolute; left: 20px; bottom: 20px; z-index: 2; display: inline-flex; align-items: center; gap: 9px; padding: 14px 26px; background: var(--c); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.02rem; text-decoration: none; box-shadow: 0 10px 22px rgba(61,34,9,.2); transition: background 160ms, transform 160ms; }
 .kbse-feat__btn:hover { background: var(--c-dark); transform: translateY(-2px); }
 
 /* Thema-kaart */
@@ -170,14 +160,11 @@
 @media (max-width: 859px) {
   .kbse__head { margin-bottom: 28px; }
   .kbse__grid { grid-template-columns: 1fr 1fr; gap: 14px; }
-  .kbse-feat { grid-column: 1 / -1; grid-row: auto; min-height: 0; aspect-ratio: 16 / 10; }
-  .kbse-feat__img { object-position: left center; }
-  .kbse-feat__panel { top: 50%; left: auto; right: 12px; bottom: auto; transform: translateY(-50%); width: 58%; max-width: 300px; background: rgba(255,255,255,.95); padding: 15px 17px; }
-  .kbse-feat__title { font-size: 1.05rem; gap: 8px; margin-bottom: 7px; }
-  .kbse-feat__title-icon svg { width: 21px; height: 21px; }
-  .kbse-feat__text { font-size: .8rem; line-height: 1.4; margin-bottom: 12px; }
-  .kbse-feat__btn { padding: 10px 16px; font-size: .85rem; }
-  .kbse-feat__badge { width: 58px; height: 58px; top: 12px; left: 12px; }
+  .kbse-feat { grid-column: 1 / -1; grid-row: auto; min-height: 0; aspect-ratio: 16 / 9; }
+  .kbse-feat__img { object-position: center; }
+  .kbse-feat__title { font-size: 1.3rem; top: 14px; left: 16px; right: 132px; }
+  .kbse-feat__label { top: 14px; right: 14px; font-size: .72rem; padding: 6px 13px; }
+  .kbse-feat__btn { left: 16px; bottom: 16px; padding: 11px 20px; font-size: .92rem; }
 
   .kbse-card { aspect-ratio: 1 / 1; }
   .kbse-card__title { font-size: 1.02rem; left: 56px; top: 16px; }
@@ -190,8 +177,8 @@
 }
 
 @media (max-width: 480px) {
-  .kbse-feat { aspect-ratio: 3 / 2; }
-  .kbse-feat__panel { width: 62%; }
+  .kbse-feat { aspect-ratio: 16 / 11; }
+  .kbse-feat__title { font-size: 1.15rem; right: 112px; }
 }
 {% endstylesheet %}
 
