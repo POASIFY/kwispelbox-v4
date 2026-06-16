@@ -121,7 +121,7 @@
 .hero__title { font-family: var(--font-heading); font-size: clamp(2.4rem, 4.6vw, 4rem); color: var(--color-ink); line-height: 1.04; margin: 0 0 18px; }
 .hero__hl--green { color: var(--color-green); }
 .hero__hl--pink { color: var(--color-pink); }
-.hero__title-heart { display: inline-flex; color: var(--color-pink); vertical-align: middle; }
+.hero__title-heart { display: inline-flex; color: var(--color-pink); vertical-align: middle; margin-left: .14em; }
 .hero__title-heart .lucide { width: .8em; height: .8em; fill: none; stroke: currentColor; stroke-width: 2.4; }
 
 .hero__text { font-family: var(--font-body); font-size: clamp(1.05rem, 1.4vw, 1.25rem); color: var(--color-body); line-height: 1.5; margin: 0 0 26px; max-width: 26ch; }
@@ -184,10 +184,16 @@
   .hero__img { max-height: 520px; }
   .hero__cta { align-self: stretch; position: relative; z-index: 3; margin-top: -10px; }
   .hero__btn { font-size: 1.05rem; padding: 15px 26px; }
-  .hero__circle { top: 32%; left: 38%; width: 100px; height: 100px; }
+  .hero__circle { top: 30%; left: 36%; width: 104px; height: 104px; }
   .hero__circle-text { font-size: .72rem; }
+  /* Subtiele groene vorm achter de hond i.p.v. groot vlak onderaan */
+  .hero__hill { top: 30%; bottom: auto; height: 38%; border-radius: 50%; transform: scaleX(1.55); background: #eef7e8; }
+  /* Hartjes naar boven/rechts, weg van de subtekst */
   .hero__deco--paws { display: none; }
-  .hero__deco--h1 { left: 4%; }
+  .hero__deco--h1 { top: 13%; left: auto; right: 15%; }
+  .hero__deco--h2 { top: 7%; left: auto; right: 6%; }
+  .hero__deco--h3 { top: 43%; right: 5%; bottom: auto; }
+  .hero__deco--spark { top: 9%; right: 25%; }
   .hero__avatars-text { font-size: .82rem; }
 }
 {% endstylesheet %}
