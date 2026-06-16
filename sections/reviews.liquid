@@ -83,7 +83,7 @@
             </div>
 
             <div class="rev-card__quote">
-              <span class="rev-card__qmark" aria-hidden="true">&ldquo;</span>
+              <span class="rev-card__qmark" aria-hidden="true"><svg viewBox="0 0 40 30" fill="currentColor"><path d="M0 17.5C0 9.8 4.6 4 12.2 1l1.6 3.6C9.4 6.6 7 9.6 7 12.6h5.4V30H0V17.5Zm22 0C22 9.8 26.6 4 34.2 1l1.6 3.6C31.4 6.6 29 9.6 29 12.6h5.4V30H22V17.5Z"/></svg></span>
               {%- if block.settings.review_title != blank -%}<h3 class="rev-card__title">{{ block.settings.review_title }}</h3>{%- endif -%}
               {%- if block.settings.review_text != blank -%}<p class="rev-card__text">{{ block.settings.review_text }}</p>{%- endif -%}
             </div>
@@ -99,6 +99,13 @@
           </article>
         {%- endfor -%}
       </div>
+      {%- if review_blocks.size > 1 -%}
+        <div class="rev__dots" aria-hidden="true">
+          {%- for block in review_blocks -%}
+            <button class="rev__dot{% if forloop.first %} is-active{% endif %}" type="button" data-rev-dot="{{ forloop.index0 }}" aria-label="Review {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     {%- endif -%}
 
     <!-- ── Trustbar ────────────────────────────────── -->
@@ -146,7 +153,7 @@
 .rev__eyebrow-icon .lucide { width: 15px; height: 15px; }
 
 .rev__title-row { display: inline-flex; align-items: center; justify-content: center; gap: 16px; }
-.rev__title { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.04; color: var(--color-ink); margin: 0; }
+.rev__title { font-family: var(--font-heading); font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.04; color: var(--color-ink); margin: 0; }
 .rev__deco-lines { display: inline-flex; width: 34px; height: 28px; flex-shrink: 0; }
 .rev__deco-lines svg { width: 100%; height: 100%; }
 .rev__deco-heart { display: inline-flex; width: 30px; height: 30px; flex-shrink: 0; color: var(--color-pink); opacity: .6; }
@@ -157,6 +164,11 @@
 
 /* ── Reviewkaarten ───────────────────────────────────── */
 .rev__cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; }
+
+/* Slider-dots (alleen mobiel) */
+.rev__dots { display: none; justify-content: center; gap: 8px; margin-top: 16px; }
+.rev__dot { width: 8px; height: 8px; padding: 0; border: none; border-radius: 50%; background: var(--color-line); cursor: pointer; transition: width 200ms, background 200ms; }
+.rev__dot.is-active { width: 22px; border-radius: 4px; background: var(--color-pink); }
 
 .rev-card {
   --ac: var(--color-pink); --ac-soft: #ffe0ee;
@@ -196,7 +208,8 @@
 
 /* Quote */
 .rev-card__quote { position: relative; z-index: 1; }
-.rev-card__qmark { display: block; font-family: var(--font-heading); font-size: 50px; line-height: .6; color: var(--ac); height: 30px; }
+.rev-card__qmark { display: block; color: var(--ac); margin-bottom: 8px; }
+.rev-card__qmark svg { width: 38px; height: 28px; display: block; }
 .rev-card__title { font-family: var(--font-heading); font-size: var(--fs-h3); line-height: 1.2; color: var(--color-ink); margin: 6px 0 8px; }
 .rev-card__text { font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.65; color: var(--color-body); margin: 0; }
 
@@ -225,7 +238,7 @@
 .rev-trust__list { list-style: none; margin: 0; padding: 0; display: flex; align-items: stretch; }
 .rev-trust__item {
   position: relative; flex: 1; display: flex; align-items: center; gap: 16px;
-  padding: 26px 24px; border-left: 1px solid var(--color-line);
+  padding: 26px 24px; border-left: 1.5px dashed var(--color-line);
 }
 .rev-trust__item:first-child { border-left: none; }
 .rev-trust__icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 58px; height: 58px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); }
@@ -267,20 +280,22 @@
   .rev-card { flex: 0 0 86%; scroll-snap-align: center; padding: 26px 24px 24px; }
   .rev-card__avatar { width: 76px; height: 76px; }
   .rev-card__name { font-size: 1.25rem; }
+  .rev__dots { display: flex; }
 
-  /* Trustbar → 2-koloms kaarten */
-  .rev-trust { background: none; border: none; box-shadow: none; border-radius: 0; margin-top: 28px; }
-  .rev-trust__list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .rev-trust__item {
-    border-left: none; background: #fff; border: 1.5px solid var(--color-line);
-    border-radius: 20px; box-shadow: 0 10px 26px rgba(61, 34, 9, .06);
-    padding: 20px; flex-direction: column; align-items: flex-start; gap: 12px;
-  }
+  /* Trustbar → 2×2 in één witte kaart, stippellijn-dividers */
+  .rev-trust { margin-top: 26px; }
+  .rev-trust__list { display: grid; grid-template-columns: 1fr 1fr; }
+  .rev-trust__item { border-left: none; padding: 18px 16px; gap: 13px; }
+  .rev-trust__item:nth-child(1), .rev-trust__item:nth-child(2) { border-bottom: 1.5px dashed var(--color-line); }
+  .rev-trust__item:nth-child(odd) { border-right: 1.5px dashed var(--color-line); }
+  .rev-trust__icon { width: 48px; height: 48px; }
+  .rev-trust__icon .lucide { width: 23px; height: 23px; }
+  .rev-trust__title { font-size: 1.2rem; }
 }
 
 @media (max-width: 459px) {
   .rev-card { flex-basis: 90%; }
-  .rev-trust__list { grid-template-columns: 1fr; }
+  .rev-trust__title { font-size: 1.05rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -288,6 +303,32 @@
 }
 
 {% endstylesheet %}
+
+{% javascript %}
+(function () {
+  var track = document.querySelector('.rev__cards');
+  var dots = document.querySelectorAll('[data-rev-dot]');
+  if (!track || dots.length < 2) return;
+  var cards = track.querySelectorAll('.rev-card');
+  function setActive(i) { for (var n = 0; n < dots.length; n++) dots[n].classList.toggle('is-active', n === i); }
+  var raf;
+  track.addEventListener('scroll', function () {
+    if (raf) return;
+    raf = requestAnimationFrame(function () {
+      raf = null;
+      var idx = Math.round(track.scrollLeft / (track.scrollWidth / cards.length));
+      if (idx < 0) idx = 0;
+      if (idx >= cards.length) idx = cards.length - 1;
+      setActive(idx);
+    });
+  }, { passive: true });
+  dots.forEach(function (d, n) {
+    d.addEventListener('click', function () {
+      cards[n].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    });
+  });
+})();
+{% endjavascript %}
 
 {% schema %}
 {
