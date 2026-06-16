@@ -1,27 +1,37 @@
 {%- comment -%}
   sections/footer.liquid — Kwispelbox KB-v4
-  Warme premium footer: golfrand, merkblok + socials, link-kolommen,
-  Kwispelclub-CTA, betaaliconen, signoff. Mobiel + desktop.
+  Warme donkerbruine footer met USP-band, merkblok + socials, link-kolommen
+  (accordion op mobiel), nieuwsbrief-kaart, betaalrij en onderbalk.
 {%- endcomment -%}
+
+{%- assign usp_blocks = section.blocks | where: 'type', 'usp' -%}
+{%- assign col_blocks = section.blocks | where: 'type', 'menu_col' -%}
 
 <footer class="kbfoot full-width">
 
-  <div class="kbfoot__wave" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 70" preserveAspectRatio="none">
-      <path d="M0,38 C160,12 320,60 540,40 C760,20 900,62 1080,42 C1260,24 1360,48 1440,34 L1440,70 L0,70 Z" fill="#e8f5e2"/>
-    </svg>
-  </div>
+  {%- if usp_blocks.size > 0 -%}
+    <div class="kbfoot__usps" role="list">
+      {%- for block in usp_blocks -%}
+        <div class="kbfoot__usp" role="listitem" {{ block.shopify_attributes }}>
+          <span class="kbfoot__usp-icon kbfoot__usp-icon--{{ block.settings.color }}" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
+          <div class="kbfoot__usp-body">
+            <strong class="kbfoot__usp-title">{{ block.settings.title }}</strong>
+            {%- if block.settings.text != blank -%}<span class="kbfoot__usp-text">{{ block.settings.text }}</span>{%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
 
   <div class="kbfoot__body">
     <div class="kbfoot__inner">
 
-      <div class="kbfoot__top">
+      <div class="kbfoot__main">
 
-        {%- comment -%} Merkblok {%- endcomment -%}
         <div class="kbfoot__brand">
           <a href="{{ routes.root_url }}" class="kbfoot__logo" aria-label="{{ shop.name }}">
             {%- if section.settings.logo != blank -%}
-              <img src="{{ section.settings.logo | image_url: width: 360 }}" alt="{{ shop.name | escape }}" width="180" height="auto" loading="lazy" class="kbfoot__logo-img">
+              <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}" width="200" height="{{ 200 | divided_by: section.settings.logo.aspect_ratio | round }}" loading="lazy" class="kbfoot__logo-img">
             {%- else -%}
               <span class="kbfoot__logo-text">{{ shop.name }}</span>
             {%- endif -%}
@@ -29,73 +39,84 @@
           {%- if section.settings.tagline != blank -%}
             <p class="kbfoot__tagline">{{ section.settings.tagline }}</p>
           {%- endif -%}
-
-          {%- assign has_social = false -%}
-          {%- if section.settings.instagram != blank or section.settings.facebook != blank or section.settings.tiktok != blank -%}{%- assign has_social = true -%}{%- endif -%}
-          {%- if has_social -%}
-            <div class="kbfoot__socials">
-              {%- if section.settings.instagram != blank -%}
-                <a href="{{ section.settings.instagram }}" class="kbfoot__social" aria-label="Instagram" target="_blank" rel="noopener">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-                </a>
-              {%- endif -%}
-              {%- if section.settings.facebook != blank -%}
-                <a href="{{ section.settings.facebook }}" class="kbfoot__social" aria-label="Facebook" target="_blank" rel="noopener">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3l.5-3H14V4.5c0-.8.3-1.5 1.5-1.5H17V.5C16.7.4 15.7.3 14.7.3 12.4.3 11 1.7 11 4.2V6H8v3h3v9h3z"/></svg>
-                </a>
-              {%- endif -%}
-              {%- if section.settings.tiktok != blank -%}
-                <a href="{{ section.settings.tiktok }}" class="kbfoot__social" aria-label="TikTok" target="_blank" rel="noopener">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.1 1.5 3.7 3.5 4v2.6c-1.3.1-2.5-.3-3.5-1V15a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v2.7a2.8 2.8 0 1 0 1.9 2.7V3z"/></svg>
-                </a>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
+          <div class="kbfoot__socials">
+            {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" class="kbfoot__social" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>{%- endif -%}
+            {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" class="kbfoot__social" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.1 1.5 3.7 3.5 4v2.6c-1.3.1-2.5-.3-3.5-1V15a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v2.7a2.8 2.8 0 1 0 1.9 2.7V3z"/></svg></a>{%- endif -%}
+            {%- if section.settings.pinterest != blank -%}<a href="{{ section.settings.pinterest }}" class="kbfoot__social" aria-label="Pinterest" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2.9.5 1.7 1.4 1.7 1.7 0 2.9-2.2 2.9-4.7 0-2-1.3-3.4-3.7-3.4a4.2 4.2 0 0 0-4.4 4.2c0 .8.2 1.4.6 1.8.1.2.2.3.1.5l-.2.9c-.1.3-.2.4-.5.2-1.2-.5-1.8-1.9-1.8-3.5 0-2.6 2.2-5.7 6.5-5.7 3.5 0 5.7 2.5 5.7 5.2 0 3.5-2 6.2-4.9 6.2-1 0-1.9-.5-2.2-1.1l-.6 2.4c-.2.8-.7 1.7-1 2.3A10 10 0 1 0 12 2z"/></svg></a>{%- endif -%}
+            {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" class="kbfoot__social" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3l.5-3H14V4.5c0-.8.3-1.5 1.5-1.5H17V.5C16.7.4 15.7.3 14.7.3 12.4.3 11 1.7 11 4.2V6H8v3h3v9h3z"/></svg></a>{%- endif -%}
+          </div>
         </div>
 
-        {%- comment -%} Link-kolommen {%- endcomment -%}
-        <nav class="kbfoot__cols" aria-label="Footer navigatie">
-          {%- for i in (1..3) -%}
-            {%- assign title_key = 'col_' | append: i | append: '_title' -%}
-            {%- assign menu_key = 'col_' | append: i | append: '_menu' -%}
-            {%- assign col_title = section.settings[title_key] -%}
-            {%- assign col_menu = section.settings[menu_key] -%}
-            {%- if col_menu != blank and col_menu.links.size > 0 -%}
-              <div class="kbfoot__col">
-                {%- if col_title != blank -%}<h3 class="kbfoot__col-title">{{ col_title }}</h3>{%- endif -%}
-                <ul class="kbfoot__col-list" role="list">
-                  {%- for link in col_menu.links -%}
-                    <li><a href="{{ link.url }}" class="kbfoot__link">{{ link.title }}</a></li>
-                  {%- endfor -%}
-                </ul>
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-        </nav>
-
-        {%- comment -%} Kwispelclub-CTA {%- endcomment -%}
-        {%- if section.settings.club_title != blank -%}
-          <div class="kbfoot__club">
-            <strong class="kbfoot__club-title">{{ section.settings.club_title }}</strong>
-            {%- if section.settings.club_text != blank -%}<p class="kbfoot__club-text">{{ section.settings.club_text }}</p>{%- endif -%}
-            {%- if section.settings.club_cta != blank -%}
-              <a href="{{ section.settings.club_url | default: '/pages/kwispelclub' }}" class="kbfoot__club-btn">{{ section.settings.club_cta }}<span aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span></a>
-            {%- endif -%}
-          </div>
+        {%- if col_blocks.size > 0 -%}
+          <nav class="kbfoot__cols" aria-label="Footer navigatie">
+            {%- for block in col_blocks -%}
+              {%- assign col_menu = block.settings.menu -%}
+              <details class="kbfoot__col" {{ block.shopify_attributes }}>
+                <summary class="kbfoot__col-head">
+                  {%- if block.settings.icon != blank -%}<span class="kbfoot__col-icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>{%- endif -%}
+                  <span class="kbfoot__col-title">{{ block.settings.title }}</span>
+                  <span class="kbfoot__col-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                {%- if col_menu != blank and col_menu.links.size > 0 -%}
+                  <ul class="kbfoot__col-list" role="list">
+                    {%- for link in col_menu.links -%}<li><a href="{{ link.url }}" class="kbfoot__link">{{ link.title }}</a></li>{%- endfor -%}
+                  </ul>
+                {%- endif -%}
+              </details>
+            {%- endfor -%}
+          </nav>
         {%- endif -%}
+
+        <div class="kbfoot__news">
+          {%- if section.settings.dog_image != blank -%}
+            <img src="{{ section.settings.dog_image | image_url: width: 600 }}" alt="" width="300" height="240" loading="lazy" class="kbfoot__news-dog">
+          {%- endif -%}
+          <div class="kbfoot__news-card">
+            <strong class="kbfoot__news-title">{{ section.settings.nl_title | default: 'Blijf op de hoogte van' }} <span class="kbfoot__news-em">{{ section.settings.nl_highlight | default: 'nieuwe verrassingen' }}</span></strong>
+            {%- form 'customer', class: 'kbfoot__news-form' -%}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              {%- if form.posted_successfully? -%}
+                <p class="kbfoot__news-ok">Je staat op de lijst! 🐾</p>
+              {%- else -%}
+                <div class="kbfoot__news-field">
+                  <label class="kbfoot__sr" for="kbfoot-email">E-mailadres</label>
+                  <input id="kbfoot-email" type="email" name="contact[email]" required placeholder="{{ section.settings.nl_placeholder | default: 'Vul je e-mailadres in' }}" class="kbfoot__news-input">
+                  <span class="kbfoot__news-mail" aria-hidden="true">{%- render 'kb-icon', icon: 'mail' -%}</span>
+                </div>
+                <button type="submit" class="kbfoot__news-btn">{{ section.settings.nl_button | default: 'Meld je aan' }}<span class="kbfoot__news-arrow" aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span></button>
+              {%- endif -%}
+            {%- endform -%}
+          </div>
+        </div>
 
       </div>
 
-      <div class="kbfoot__bottom">
+      {%- comment -%} Mobiele "volg ons" socials {%- endcomment -%}
+      <div class="kbfoot__follow">
+        {%- if section.settings.follow_text != blank -%}<span class="kbfoot__follow-text">{{ section.settings.follow_text }}</span>{%- endif -%}
+        <div class="kbfoot__socials kbfoot__socials--follow">
+          {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" class="kbfoot__social" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>{%- endif -%}
+          {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" class="kbfoot__social" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.1 1.5 3.7 3.5 4v2.6c-1.3.1-2.5-.3-3.5-1V15a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v2.7a2.8 2.8 0 1 0 1.9 2.7V3z"/></svg></a>{%- endif -%}
+          {%- if section.settings.pinterest != blank -%}<a href="{{ section.settings.pinterest }}" class="kbfoot__social" aria-label="Pinterest" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2.9.5 1.7 1.4 1.7 1.7 0 2.9-2.2 2.9-4.7 0-2-1.3-3.4-3.7-3.4a4.2 4.2 0 0 0-4.4 4.2c0 .8.2 1.4.6 1.8.1.2.2.3.1.5l-.2.9c-.1.3-.2.4-.5.2-1.2-.5-1.8-1.9-1.8-3.5 0-2.6 2.2-5.7 6.5-5.7 3.5 0 5.7 2.5 5.7 5.2 0 3.5-2 6.2-4.9 6.2-1 0-1.9-.5-2.2-1.1l-.6 2.4c-.2.8-.7 1.7-1 2.3A10 10 0 1 0 12 2z"/></svg></a>{%- endif -%}
+          {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" class="kbfoot__social" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3l.5-3H14V4.5c0-.8.3-1.5 1.5-1.5H17V.5C16.7.4 15.7.3 14.7.3 12.4.3 11 1.7 11 4.2V6H8v3h3v9h3z"/></svg></a>{%- endif -%}
+        </div>
+      </div>
+
+      <div class="kbfoot__payrow">
+        <span class="kbfoot__pay-note"><span class="kbfoot__pay-heart" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ section.settings.payment_note | default: 'Veilig en vertrouwd betalen' }}</span>
         {%- if section.settings.show_payment_icons and shop.enabled_payment_types.size > 0 -%}
-          <div class="kbfoot__pay">
-            {%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'kbfoot__pay-icon' }}{%- endfor -%}
-          </div>
+          <div class="kbfoot__pay">{%- for type in shop.enabled_payment_types -%}{{ type | payment_type_svg_tag: class: 'kbfoot__pay-icon' }}{%- endfor -%}</div>
         {%- endif -%}
-        <p class="kbfoot__copy">
-          &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}
-          {%- if section.settings.signoff != blank -%}<span class="kbfoot__signoff">{{ section.settings.signoff }}</span>{%- endif -%}
-        </p>
+        {%- if section.settings.world_note != blank -%}<span class="kbfoot__pay-world">{{ section.settings.world_note }}</span>{%- endif -%}
+      </div>
+
+      <div class="kbfoot__legal">
+        <p class="kbfoot__copy">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}<span class="kbfoot__copy-heart" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span></p>
+        <nav class="kbfoot__legal-links" aria-label="Juridisch">
+          {%- if section.settings.privacy_url != blank -%}<a href="{{ section.settings.privacy_url }}">{{ section.settings.privacy_label | default: 'Privacybeleid' }}</a>{%- endif -%}
+          {%- if section.settings.terms_url != blank -%}<a href="{{ section.settings.terms_url }}">{{ section.settings.terms_label | default: 'Algemene voorwaarden' }}</a>{%- endif -%}
+          {%- if section.settings.cookies_url != blank -%}<a href="{{ section.settings.cookies_url }}">{{ section.settings.cookies_label | default: 'Cookies' }}</a>{%- endif -%}
+        </nav>
       </div>
 
     </div>
@@ -103,77 +124,224 @@
 </footer>
 
 {% stylesheet %}
-.kbfoot { position: relative; background: var(--color-cream); margin-top: 40px; }
-.kbfoot__wave { line-height: 0; }
-.kbfoot__wave svg { display: block; width: 100%; height: 56px; }
-.kbfoot__body { background: #e8f5e2; }
-.kbfoot__inner { max-width: var(--page-width); margin: 0 auto; padding: 8px var(--page-margin) var(--section-pad-sm); }
+.kbfoot { --foot: #3a2a1c; --foot-soft: rgba(243,236,224,.66); position: relative; background: transparent; margin-top: 56px; }
 
-.kbfoot__top { display: grid; grid-template-columns: 1.5fr 2fr 1.2fr; gap: 44px; padding: 28px 0 40px; align-items: start; }
+/* USP-band (op crème, boven de bruine body) */
+.kbfoot__usps { max-width: var(--page-width); margin: 0 auto 26px; padding: 0 var(--page-margin); display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.kbfoot__usp { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.kbfoot__usp + .kbfoot__usp { padding-left: 18px; border-left: 1.5px dashed var(--color-line); }
+.kbfoot__usp-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%; }
+.kbfoot__usp-icon svg { width: 26px; height: 26px; fill: currentColor; stroke: currentColor; }
+.kbfoot__usp-icon--green  { background: #e3f1d9; color: var(--color-green); }
+.kbfoot__usp-icon--pink   { background: #fdeaf2; color: var(--color-pink); }
+.kbfoot__usp-icon--yellow { background: #fbf0d0; color: #d99100; }
+.kbfoot__usp-icon--orange { background: #fdf0e2; color: var(--color-orange); }
+.kbfoot__usp-body { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.kbfoot__usp-title { font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); }
+.kbfoot__usp-text { font-family: var(--font-body); font-size: .85rem; color: var(--color-body); }
 
+/* Bruine body */
+.kbfoot__body { background: var(--foot); border-radius: 44px 44px 0 0; color: var(--foot-soft); }
+.kbfoot__inner { max-width: var(--page-width); margin: 0 auto; padding: 46px var(--page-margin) 0; }
+
+.kbfoot__main { display: grid; grid-template-columns: 1.4fr 2.4fr 1.5fr; gap: 40px; padding-bottom: 36px; align-items: start; }
+
+/* Merk */
 .kbfoot__logo { display: inline-flex; text-decoration: none; }
-.kbfoot__logo-img { height: auto; max-height: 56px; width: auto; display: block; }
-.kbfoot__logo-text { font-family: var(--font-heading); font-size: 1.7rem; color: var(--color-ink); }
-.kbfoot__tagline { font-family: var(--font-body); font-size: .95rem; line-height: 1.6; color: var(--color-body); margin: 14px 0 0; max-width: 34ch; }
-.kbfoot__socials { display: flex; gap: 10px; margin-top: 18px; }
-.kbfoot__social { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: #fff; color: var(--color-green); transition: transform 160ms, color 160ms, background 160ms; }
+.kbfoot__logo-img { height: auto; max-height: 64px; width: auto; display: block; }
+.kbfoot__logo-text { font-family: var(--font-heading); font-size: 1.8rem; color: #fff; }
+.kbfoot__tagline { font-family: var(--font-body); font-size: .92rem; line-height: 1.65; color: var(--foot-soft); margin: 16px 0 0; max-width: 32ch; }
+.kbfoot__socials { display: flex; gap: 11px; margin-top: 20px; }
+.kbfoot__social { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: #f3ece0; color: var(--foot); transition: transform 160ms, background 160ms, color 160ms; }
 .kbfoot__social svg { width: 20px; height: 20px; }
 .kbfoot__social:hover { transform: translateY(-2px); background: var(--color-green); color: #fff; }
 
-.kbfoot__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 24px 28px; }
-.kbfoot__col-title { font-family: var(--font-heading); font-size: var(--fs-h3); color: var(--color-ink); margin: 0 0 14px; }
-.kbfoot__col-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
-.kbfoot__link { font-family: var(--font-body); font-size: .92rem; color: var(--color-body); text-decoration: none; transition: color 140ms; }
-.kbfoot__link:hover { color: var(--color-green); }
+/* Link-kolommen */
+.kbfoot__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px 24px; }
+.kbfoot__col { min-width: 0; }
+.kbfoot__col-head { list-style: none; display: flex; align-items: center; gap: 10px; cursor: default; }
+.kbfoot__col-head::-webkit-details-marker { display: none; }
+.kbfoot__col-icon { display: none; }
+.kbfoot__col-title { font-family: var(--font-heading); font-size: 1.1rem; color: #fff; position: relative; padding-bottom: 10px; }
+.kbfoot__col-title::after { content: ""; position: absolute; left: 0; bottom: 0; width: 26px; height: 2.5px; border-radius: 2px; background: var(--color-pink); }
+.kbfoot__col-chev { display: none; }
+.kbfoot__col-list { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.kbfoot__link { font-family: var(--font-body); font-size: .92rem; color: var(--foot-soft); text-decoration: none; transition: color 140ms; }
+.kbfoot__link:hover { color: #fff; }
 
-.kbfoot__club { background: #fff; border-radius: var(--radius-lg); padding: 22px; box-shadow: var(--shadow-card); }
-.kbfoot__club-title { display: block; font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); }
-.kbfoot__club-text { font-family: var(--font-body); font-size: .88rem; line-height: 1.5; color: var(--color-body); margin: 8px 0 14px; }
-.kbfoot__club-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: var(--radius-pill); background: var(--color-green); color: #fff; font-family: var(--font-heading); font-size: .95rem; text-decoration: none; transition: transform 160ms, background 160ms; }
-.kbfoot__club-btn .lucide { width: 16px; height: 16px; }
-.kbfoot__club-btn:hover { transform: translateY(-2px); background: #5a9a3b; }
+/* Nieuwsbrief-kaart + hond */
+.kbfoot__news { position: relative; }
+.kbfoot__news-dog { display: block; width: 70%; max-width: 240px; height: auto; margin: 0 auto -26px; position: relative; z-index: 1; }
+.kbfoot__news-card { position: relative; background: #e7f1dd; border-radius: 22px; padding: 26px 24px; }
+.kbfoot__news-title { display: block; font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-ink); line-height: 1.2; margin-bottom: 16px; }
+.kbfoot__news-em { color: var(--color-green); }
+.kbfoot__news-field { position: relative; margin-bottom: 12px; }
+.kbfoot__news-input { width: 100%; box-sizing: border-box; height: 52px; padding: 0 46px 0 18px; border: 1.5px solid transparent; border-radius: var(--radius-pill); background: #fff; font-family: var(--font-body); font-size: .95rem; color: var(--color-ink); }
+.kbfoot__news-input:focus { outline: none; border-color: var(--color-green); }
+.kbfoot__news-input::placeholder { color: var(--color-muted); }
+.kbfoot__news-mail { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--color-muted); pointer-events: none; }
+.kbfoot__news-mail svg { width: 19px; height: 19px; display: block; }
+.kbfoot__news-btn { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 52px; border: none; border-radius: var(--radius-pill); background: var(--color-green); color: #fff; font-family: var(--font-heading); font-size: 1.02rem; cursor: pointer; transition: background 160ms, transform 160ms; }
+.kbfoot__news-btn:hover { background: #5a9a3b; transform: translateY(-2px); }
+.kbfoot__news-arrow svg { width: 18px; height: 18px; display: block; }
+.kbfoot__news-ok { font-family: var(--font-body); font-weight: 700; color: var(--color-green); margin: 0; }
 
-.kbfoot__bottom { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; padding-top: 22px; border-top: 1px solid rgba(61,34,9,.10); }
+/* "Volg ons" — alleen mobiel */
+.kbfoot__follow { display: none; }
+.kbfoot__follow-text { font-family: var(--font-heading); font-size: 1rem; color: var(--foot-soft); }
+
+/* Betaalrij */
+.kbfoot__payrow { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; padding: 24px 0; border-top: 1px solid rgba(243,236,224,.12); }
+.kbfoot__pay-note { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .9rem; font-weight: 700; color: var(--foot-soft); }
+.kbfoot__pay-heart { display: inline-flex; color: #f0c14b; }
+.kbfoot__pay-heart svg { width: 17px; height: 17px; fill: currentColor; stroke: currentColor; }
 .kbfoot__pay { display: flex; flex-wrap: wrap; gap: 8px; }
-.kbfoot__pay-icon { width: 40px; height: 26px; }
-.kbfoot__copy { font-family: var(--font-body); font-size: .85rem; color: var(--color-muted); margin: 0; display: inline-flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.kbfoot__signoff { color: var(--color-green); font-weight: 700; }
+.kbfoot__pay-icon { width: 46px; height: 30px; border-radius: 6px; background: #fff; }
+.kbfoot__pay-world { font-family: var(--font-body); font-size: .85rem; color: var(--foot-soft); margin-left: auto; }
 
-@media (max-width: 989px) {
-  .kbfoot__top { grid-template-columns: 1fr; gap: 32px; }
+/* Onderbalk */
+.kbfoot__legal { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 20px 0 28px; border-top: 1px solid rgba(243,236,224,.12); }
+.kbfoot__copy { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .85rem; color: var(--foot-soft); margin: 0; }
+.kbfoot__copy-heart { display: inline-flex; color: var(--color-pink); }
+.kbfoot__copy-heart svg { width: 15px; height: 15px; fill: currentColor; stroke: currentColor; }
+.kbfoot__legal-links { display: inline-flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.kbfoot__legal-links a { font-family: var(--font-body); font-size: .85rem; color: var(--foot-soft); text-decoration: none; transition: color 140ms; }
+.kbfoot__legal-links a:hover { color: #fff; }
+
+.kbfoot__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ── Tablet ──────────────────────────────────────────── */
+@media (max-width: 1100px) and (min-width: 860px) {
+  .kbfoot__main { grid-template-columns: 1fr 1.6fr; }
+  .kbfoot__news { grid-column: 1 / -1; max-width: 420px; }
+  .kbfoot__news-dog { display: none; }
 }
-@media (max-width: 599px) {
-  .kbfoot__bottom { flex-direction: column-reverse; align-items: flex-start; gap: 16px; }
+
+/* ── Mobiel ──────────────────────────────────────────── */
+@media (max-width: 859px) {
+  .kbfoot { margin-top: 40px; }
+  .kbfoot__usps { grid-template-columns: 1fr 1fr; gap: 14px 10px; margin-bottom: 20px; }
+  .kbfoot__usp { flex-direction: column; text-align: center; gap: 8px; }
+  .kbfoot__usp + .kbfoot__usp { padding-left: 0; border-left: none; }
+  .kbfoot__usp-body { align-items: center; }
+
+  .kbfoot__body { border-radius: 32px 32px 0 0; }
+  .kbfoot__inner { padding: 30px var(--page-margin) 0; }
+  .kbfoot__main { grid-template-columns: 1fr; gap: 26px; }
+
+  .kbfoot__brand { text-align: center; }
+  .kbfoot__tagline { margin-left: auto; margin-right: auto; max-width: 40ch; }
+  .kbfoot__brand .kbfoot__socials { display: none; }
+
+  /* Nieuwsbrief bovenaan */
+  .kbfoot__news { order: -1; }
+  .kbfoot__news-dog { display: none; }
+
+  /* Link-kolommen → accordions */
+  .kbfoot__cols { grid-template-columns: 1fr; gap: 0; }
+  .kbfoot__col { border-bottom: 1px solid rgba(243,236,224,.12); }
+  .kbfoot__col-head { cursor: pointer; padding: 16px 0; gap: 14px; }
+  .kbfoot__col-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid rgba(243,236,224,.2); color: #fff; }
+  .kbfoot__col-icon svg { width: 22px; height: 22px; }
+  .kbfoot__col-title { font-size: 1.2rem; padding-bottom: 0; flex: 1; }
+  .kbfoot__col-title::after { display: none; }
+  .kbfoot__col-chev { display: inline-flex; color: var(--color-pink); flex-shrink: 0; transition: transform 200ms; }
+  .kbfoot__col-chev svg { width: 22px; height: 22px; }
+  .kbfoot__col[open] .kbfoot__col-chev { transform: rotate(180deg); }
+  .kbfoot__col-list { margin: 0 0 16px 58px; gap: 12px; }
+
+  .kbfoot__follow { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 30px 0 6px; }
+  .kbfoot__socials--follow { display: flex; }
+
+  .kbfoot__payrow { flex-direction: column; gap: 16px; text-align: center; }
+  .kbfoot__pay { justify-content: center; }
+  .kbfoot__pay-world { margin-left: 0; }
+
+  .kbfoot__legal { flex-direction: column-reverse; align-items: center; text-align: center; gap: 14px; }
+  .kbfoot__legal-links { justify-content: center; }
 }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Footer",
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "USP (bovenbalk)",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Vrachtwagen" },
+            { "value": "star", "label": "Ster" },
+            { "value": "heart", "label": "Hart" },
+            { "value": "shield", "label": "Schild" },
+            { "value": "gift", "label": "Cadeau" },
+            { "value": "paw", "label": "Poot" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Kleur", "default": "green",
+          "options": [
+            { "value": "green", "label": "Groen" },
+            { "value": "pink", "label": "Roze" },
+            { "value": "yellow", "label": "Geel" },
+            { "value": "orange", "label": "Oranje" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Gratis verzending" },
+        { "type": "text", "id": "text", "label": "Tekst", "default": "vanaf €75" }
+      ]
+    },
+    {
+      "type": "menu_col",
+      "name": "Link-kolom",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icoon (mobiel)", "default": "shop",
+          "options": [
+            { "value": "shop", "label": "Tas" },
+            { "value": "star", "label": "Ster" },
+            { "value": "paw", "label": "Poot" },
+            { "value": "heart", "label": "Hart" },
+            { "value": "gift", "label": "Cadeau" },
+            { "value": "bulb", "label": "Lampje" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
   "settings": [
     { "type": "header", "content": "Merk" },
     { "type": "image_picker", "id": "logo", "label": "Logo (leeg = winkelnaam)" },
-    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Elke maand een cadeautje vol speelplezier, snacks en knuffels — met liefde uitgezocht voor jouw beste vriend." },
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Elke Kwispelbox is met liefde samengesteld en voelt als een cadeautje voor je hond. Omdat jouw trouwe vriend alleen het allerbeste verdient." },
     { "type": "url", "id": "instagram", "label": "Instagram URL" },
-    { "type": "url", "id": "facebook", "label": "Facebook URL" },
     { "type": "url", "id": "tiktok", "label": "TikTok URL" },
-    { "type": "header", "content": "Link-kolom 1" },
-    { "type": "text", "id": "col_1_title", "label": "Titel", "default": "Shop" },
-    { "type": "link_list", "id": "col_1_menu", "label": "Menu" },
-    { "type": "header", "content": "Link-kolom 2" },
-    { "type": "text", "id": "col_2_title", "label": "Titel", "default": "Klantenservice" },
-    { "type": "link_list", "id": "col_2_menu", "label": "Menu" },
-    { "type": "header", "content": "Link-kolom 3" },
-    { "type": "text", "id": "col_3_title", "label": "Titel", "default": "Over Kwispelbox" },
-    { "type": "link_list", "id": "col_3_menu", "label": "Menu" },
-    { "type": "header", "content": "Kwispelclub-blok" },
-    { "type": "text", "id": "club_title", "label": "Titel", "default": "Word lid van de Kwispelclub" },
-    { "type": "textarea", "id": "club_text", "label": "Tekst", "default": "Spaar Kwispels en ontvang leuke beloningen & verrassingen." },
-    { "type": "text", "id": "club_cta", "label": "Knoptekst", "default": "Word gratis lid" },
-    { "type": "url", "id": "club_url", "label": "Knop link" },
-    { "type": "header", "content": "Onderbalk" },
+    { "type": "url", "id": "pinterest", "label": "Pinterest URL" },
+    { "type": "url", "id": "facebook", "label": "Facebook URL" },
+    { "type": "text", "id": "follow_text", "label": "Volg-ons tekst (mobiel)", "default": "Volg ons voor kwispelende inspiratie" },
+    { "type": "header", "content": "Nieuwsbrief-kaart" },
+    { "type": "image_picker", "id": "dog_image", "label": "Hond-afbeelding (gluurt over de kaart)" },
+    { "type": "text", "id": "nl_title", "label": "Titel", "default": "Blijf op de hoogte van" },
+    { "type": "text", "id": "nl_highlight", "label": "Accent (groen)", "default": "nieuwe verrassingen" },
+    { "type": "text", "id": "nl_placeholder", "label": "Veld-placeholder", "default": "Vul je e-mailadres in" },
+    { "type": "text", "id": "nl_button", "label": "Knoptekst", "default": "Meld je aan" },
+    { "type": "header", "content": "Betaalrij" },
     { "type": "checkbox", "id": "show_payment_icons", "label": "Betaaliconen tonen", "default": true },
-    { "type": "text", "id": "signoff", "label": "Signoff", "default": "Met liefde gemaakt voor blije honden 🐾" }
+    { "type": "text", "id": "payment_note", "label": "Tekst links", "default": "Veilig en vertrouwd betalen" },
+    { "type": "text", "id": "world_note", "label": "Tekst rechts", "default": "Met liefde voor honden en voor de wereld" },
+    { "type": "header", "content": "Onderbalk" },
+    { "type": "url", "id": "privacy_url", "label": "Privacybeleid link" },
+    { "type": "text", "id": "privacy_label", "label": "Privacybeleid label", "default": "Privacybeleid" },
+    { "type": "url", "id": "terms_url", "label": "Voorwaarden link" },
+    { "type": "text", "id": "terms_label", "label": "Voorwaarden label", "default": "Algemene voorwaarden" },
+    { "type": "url", "id": "cookies_url", "label": "Cookies link" },
+    { "type": "text", "id": "cookies_label", "label": "Cookies label", "default": "Cookies" }
   ]
 }
 {% endschema %}
