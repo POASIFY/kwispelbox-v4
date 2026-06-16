@@ -5,7 +5,6 @@
 {%- endcomment -%}
 
 {%- assign card_blocks  = section.blocks | where: 'type', 'card' -%}
-{%- assign trust_blocks = section.blocks | where: 'type', 'trust' -%}
 
 <div class="kbox full-width">
 
@@ -96,22 +95,6 @@
 
     </div>
 
-    {%- if trust_blocks.size > 0 -%}
-      <div class="kbox__trust">
-        <ul class="kbox__trust-list" role="list">
-          {%- for block in trust_blocks -%}
-            <li class="kbox__trust-item" {{ block.shopify_attributes }}>
-              <span class="kbox__trust-icon kbox__trust-icon--{{ block.settings.color }}" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
-              <span class="kbox__trust-text">
-                <strong>{{ block.settings.title }}</strong>
-                {%- if block.settings.subtitle != blank -%}<span>{{ block.settings.subtitle }}</span>{%- endif -%}
-              </span>
-            </li>
-          {%- endfor -%}
-        </ul>
-      </div>
-    {%- endif -%}
-
   </div>
 </div>
 
@@ -169,22 +152,6 @@
 .kbox-card__title { font-family: var(--font-heading); font-size: 1.08rem; color: var(--color-ink); line-height: 1.15; margin: 2px 0 4px; }
 .kbox-card__text { font-family: var(--font-body); font-size: .9rem; line-height: 1.5; color: var(--color-body); margin: 0; }
 
-/* Trustbalk */
-.kbox__trust { margin-top: 44px; background: #fff; border: 1.5px solid var(--color-line); border-radius: 24px; box-shadow: var(--shadow-card); }
-.kbox__trust-list { list-style: none; margin: 0; padding: 18px 8px; display: grid; grid-template-columns: repeat(4, 1fr); }
-.kbox__trust-item { display: flex; align-items: center; gap: 14px; padding: 8px 22px; min-width: 0; }
-.kbox__trust-item + .kbox__trust-item { border-left: 1px solid var(--color-line); }
-.kbox__trust-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 50px; height: 50px; border-radius: 50%; }
-.kbox__trust-icon svg { width: 24px; height: 24px; }
-.kbox__trust-icon--green  { background: #eef7e8; color: var(--color-green); }
-.kbox__trust-icon--pink   { background: #fdeaf2; color: var(--color-pink); }
-.kbox__trust-icon--orange { background: #fdf0e2; color: var(--color-orange); }
-.kbox__trust-icon--purple { background: #f1ecf9; color: #9579cc; }
-.kbox__trust-icon--yellow { background: #fdf6e0; color: #d99100; }
-.kbox__trust-text { display: flex; flex-direction: column; min-width: 0; }
-.kbox__trust-text strong { font-family: var(--font-body); font-size: .95rem; font-weight: 800; color: var(--color-ink); line-height: 1.25; }
-.kbox__trust-text span { font-family: var(--font-body); font-size: .88rem; color: var(--color-muted); line-height: 1.25; }
-
 /* Tablet */
 @media (max-width: 1100px) and (min-width: 860px) {
   .kbox__stage { gap: 16px; }
@@ -205,17 +172,6 @@
   .kbox-card__title { font-size: 1rem; }
   .kbox-card__text { font-size: .82rem; }
   .kbox__deco--paw1, .kbox__deco--lines { display: none; }
-
-  /* Trustbalk: 4 kolommen, icoon boven */
-  .kbox__trust { margin-top: 30px; }
-  .kbox__trust-list { grid-template-columns: repeat(4, 1fr); padding: 16px 2px; }
-  .kbox__trust-item { flex-direction: column; align-items: center; text-align: center; gap: 9px; padding: 4px 5px; }
-  .kbox__trust-item + .kbox__trust-item { border-left: 1px solid var(--color-line); }
-  .kbox__trust-icon { width: 40px; height: 40px; }
-  .kbox__trust-icon svg { width: 20px; height: 20px; }
-  .kbox__trust-text { align-items: center; }
-  .kbox__trust-text strong { font-size: .68rem; line-height: 1.2; }
-  .kbox__trust-text span { font-size: .66rem; line-height: 1.2; }
 }
 {% endstylesheet %}
 
@@ -272,36 +228,6 @@
         { "type": "text", "id": "title", "label": "Titel", "default": "Speeltjes" },
         { "type": "textarea", "id": "text", "label": "Beschrijving", "default": "Interactieve speeltjes voor urenlang speelplezier." }
       ]
-    },
-    {
-      "type": "trust",
-      "name": "Trust item",
-      "limit": 4,
-      "settings": [
-        {
-          "type": "select", "id": "icon", "label": "Icoon", "default": "truck",
-          "options": [
-            { "value": "truck", "label": "Vrachtwagen" },
-            { "value": "heart", "label": "Hart" },
-            { "value": "gift", "label": "Cadeau" },
-            { "value": "shield", "label": "Schild" },
-            { "value": "paw", "label": "Poot" },
-            { "value": "star", "label": "Ster" }
-          ]
-        },
-        {
-          "type": "select", "id": "color", "label": "Icoon kleur", "default": "green",
-          "options": [
-            { "value": "green", "label": "Groen" },
-            { "value": "pink", "label": "Roze" },
-            { "value": "orange", "label": "Oranje" },
-            { "value": "purple", "label": "Paars" },
-            { "value": "yellow", "label": "Geel" }
-          ]
-        },
-        { "type": "text", "id": "title", "label": "Titel", "default": "Gratis verzending" },
-        { "type": "text", "id": "subtitle", "label": "Subtitel", "default": "vanaf €75" }
-      ]
     }
   ],
   "presets": [
@@ -315,11 +241,7 @@
         { "type": "card", "settings": { "icon": "bone", "color": "orange", "title": "Touw & trekspelletjes", "text": "Voor actieve honden die van uitdaging houden." } },
         { "type": "card", "settings": { "icon": "partyhat", "color": "pink", "title": "Passend thema", "text": "Bijvoorbeeld verjaardag, Pasen, zomer of kerst." } },
         { "type": "card", "settings": { "icon": "gift", "color": "yellow", "title": "Extra verrassing", "text": "Elke box bevat iets onverwachts." } },
-        { "type": "card", "settings": { "icon": "envelope", "color": "green", "title": "Persoonlijk kaartje", "text": "Met een warme boodschap speciaal voor jouw hond." } },
-        { "type": "trust", "settings": { "icon": "truck", "color": "green", "title": "Gratis verzending", "subtitle": "vanaf €75" } },
-        { "type": "trust", "settings": { "icon": "heart", "color": "pink", "title": "Meer dan 1.200", "subtitle": "blije honden" } },
-        { "type": "trust", "settings": { "icon": "gift", "color": "orange", "title": "Elke box voelt als", "subtitle": "een cadeautje" } },
-        { "type": "trust", "settings": { "icon": "shield", "color": "purple", "title": "100% veilig", "subtitle": "betalen" } }
+        { "type": "card", "settings": { "icon": "envelope", "color": "green", "title": "Persoonlijk kaartje", "text": "Met een warme boodschap speciaal voor jouw hond." } }
       ]
     }
   ]

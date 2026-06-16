@@ -5,7 +5,6 @@
 {%- endcomment -%}
 
 {%- assign benefit_blocks = section.blocks | where: 'type', 'benefit' -%}
-{%- assign stat_blocks    = section.blocks | where: 'type', 'stat' -%}
 
 <div class="kbnl full-width">
 
@@ -83,23 +82,6 @@
 
     </div>
 
-    {%- if stat_blocks.size > 0 -%}
-      <div class="kbnl__stats">
-        {%- for block in stat_blocks -%}
-          <div class="kbnl__stat kbnl__stat--{{ block.settings.color }}" {{ block.shopify_attributes }}>
-            <span class="kbnl__stat-icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
-            <div class="kbnl__stat-body">
-              <span class="kbnl__stat-value">{{ block.settings.value }}</span>
-              {%- if block.settings.label != blank -%}<span class="kbnl__stat-label">{{ block.settings.label }}</span>{%- endif -%}
-              {%- if block.settings.show_stars -%}
-                <span class="kbnl__stat-stars" aria-hidden="true">{%- for i in (1..5) -%}<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg>{%- endfor -%}</span>
-              {%- endif -%}
-            </div>
-          </div>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
-
   </div>
 </div>
 
@@ -170,22 +152,6 @@
 .kbnl-benefit__title { font-family: var(--font-heading); font-size: .92rem; color: var(--color-ink); }
 .kbnl-benefit__text { font-family: var(--font-body); font-size: .78rem; color: var(--color-muted); margin-top: 1px; }
 
-/* Trust-balk */
-.kbnl__stats { margin-top: 22px; background: #fff; border: 1.5px solid var(--color-line); border-radius: 24px; box-shadow: var(--shadow-card); display: grid; grid-template-columns: repeat(4, 1fr); padding: 22px 14px; }
-.kbnl__stat { --c: var(--color-green); --c-soft: #eef7e8; display: flex; align-items: center; gap: 16px; padding: 8px 22px; min-width: 0; }
-.kbnl__stat + .kbnl__stat { border-left: 1.5px dashed var(--color-line); }
-.kbnl__stat--green  { --c: var(--color-green);  --c-soft: #eef7e8; }
-.kbnl__stat--pink   { --c: var(--color-pink);   --c-soft: #fdeaf2; }
-.kbnl__stat--orange { --c: var(--color-orange); --c-soft: #fdf0e2; }
-.kbnl__stat--yellow { --c: #d99100;             --c-soft: #fdf6e0; }
-.kbnl__stat-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 54px; height: 54px; border-radius: 50%; background: var(--c-soft); color: var(--c); }
-.kbnl__stat-icon svg { width: 26px; height: 26px; fill: var(--c); stroke: var(--c); }
-.kbnl__stat-body { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
-.kbnl__stat-value { font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-ink); }
-.kbnl__stat-label { font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); }
-.kbnl__stat-stars { display: inline-flex; gap: 2px; margin-top: 3px; color: #f4a72c; }
-.kbnl__stat-stars svg { width: 14px; height: 14px; }
-
 .kbnl__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* Tablet */
@@ -209,14 +175,6 @@
   .kbnl__benefits { grid-template-columns: 1fr 1fr; gap: 10px; }
   .kbnl-benefit { background: rgba(255,255,255,.78); align-items: flex-start; }
   .kbnl-benefit__title { font-size: .9rem; }
-
-  .kbnl__stats { grid-template-columns: repeat(3, 1fr); padding: 18px 4px; }
-  .kbnl__stat:nth-child(n+4) { display: none; }
-  .kbnl__stat { flex-direction: column; text-align: center; gap: 9px; padding: 4px 6px; }
-  .kbnl__stat-icon { width: 46px; height: 46px; }
-  .kbnl__stat-body { align-items: center; }
-  .kbnl__stat-value { font-size: 1.15rem; }
-  .kbnl__stat-label { font-size: .72rem; line-height: 1.2; }
   .kbnl__deco--paw { display: none; }
 }
 
@@ -277,35 +235,6 @@
         { "type": "text", "id": "title", "label": "Titel", "default": "Special Editions" },
         { "type": "text", "id": "text", "label": "Tekst", "default": "Als eerste weten" }
       ]
-    },
-    {
-      "type": "stat",
-      "name": "Trust-item",
-      "limit": 4,
-      "settings": [
-        {
-          "type": "select", "id": "icon", "label": "Icoon", "default": "paw",
-          "options": [
-            { "value": "paw", "label": "Poot" },
-            { "value": "heart", "label": "Hart" },
-            { "value": "gift", "label": "Cadeau" },
-            { "value": "shield", "label": "Schild" },
-            { "value": "star", "label": "Ster" }
-          ]
-        },
-        {
-          "type": "select", "id": "color", "label": "Kleur", "default": "green",
-          "options": [
-            { "value": "green", "label": "Groen" },
-            { "value": "pink", "label": "Roze" },
-            { "value": "orange", "label": "Oranje" },
-            { "value": "yellow", "label": "Geel" }
-          ]
-        },
-        { "type": "text", "id": "value", "label": "Waarde", "default": "1.200+" },
-        { "type": "text", "id": "label", "label": "Beschrijving", "default": "blije honden" },
-        { "type": "checkbox", "id": "show_stars", "label": "Sterren tonen", "default": false }
-      ]
     }
   ],
   "presets": [
@@ -315,11 +244,7 @@
         { "type": "benefit", "settings": { "icon": "sparkles", "color": "green", "title": "Special Editions", "text": "Als eerste weten" } },
         { "type": "benefit", "settings": { "icon": "bulb", "color": "pink", "title": "Kwispeltips", "text": "Handig & inspirerend" } },
         { "type": "benefit", "settings": { "icon": "tag", "color": "orange", "title": "Exclusieve acties", "text": "Alleen voor leden" } },
-        { "type": "benefit", "settings": { "icon": "shield", "color": "green", "title": "Geen spam,", "text": "alleen leuks" } },
-        { "type": "stat", "settings": { "icon": "paw", "color": "green", "value": "1.200+", "label": "blije honden" } },
-        { "type": "stat", "settings": { "icon": "heart", "color": "pink", "value": "4,9/5", "label": "uitstekend beoordeeld", "show_stars": true } },
-        { "type": "stat", "settings": { "icon": "gift", "color": "orange", "value": "Met liefde", "label": "samengesteld voor elke hond" } },
-        { "type": "stat", "settings": { "icon": "shield", "color": "green", "value": "Veilig & betrouwbaar", "label": "Betaal veilig via iDEAL, Klarna of Bancontact." } }
+        { "type": "benefit", "settings": { "icon": "shield", "color": "green", "title": "Geen spam,", "text": "alleen leuks" } }
       ]
     }
   ]

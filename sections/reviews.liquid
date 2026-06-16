@@ -7,7 +7,6 @@
 {%- endcomment -%}
 
 {%- assign review_blocks = section.blocks | where: 'type', 'review' -%}
-{%- assign trust_blocks  = section.blocks | where: 'type', 'trust' -%}
 
 <div class="rev full-width">
   <div class="rev__inner">
@@ -108,31 +107,6 @@
       {%- endif -%}
     {%- endif -%}
 
-    <!-- ── Trustbar ────────────────────────────────── -->
-    {%- if trust_blocks.size > 0 -%}
-      <div class="rev-trust">
-        <ul class="rev-trust__list" role="list">
-          {%- for block in trust_blocks -%}
-            <li class="rev-trust__item" {{ block.shopify_attributes }}>
-              <span class="rev-trust__icon rev-trust__icon--{{ block.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
-              <div class="rev-trust__text">
-                <span class="rev-trust__title">{{ block.settings.title }}</span>
-                {%- if block.settings.text != blank -%}<span class="rev-trust__line">{{ block.settings.text }}</span>{%- endif -%}
-                {%- if block.settings.show_stars -%}
-                  <span class="rev-trust__stars" aria-hidden="true">
-                    {%- for i in (1..5) -%}<svg class="rev-star is-on" viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg>{%- endfor -%}
-                  </span>
-                {%- endif -%}
-                {%- if block.settings.subtext != blank -%}<span class="rev-trust__sub">{{ block.settings.subtext }}</span>{%- endif -%}
-              </div>
-              {%- if block.settings.show_heart -%}
-                <span class="rev-trust__heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
-              {%- endif -%}
-            </li>
-          {%- endfor -%}
-        </ul>
-      </div>
-    {%- endif -%}
 
   </div>
 </div>
@@ -229,40 +203,9 @@
   color: var(--ac); opacity: .07; pointer-events: none;
 }
 
-/* ── Trustbar ────────────────────────────────────────── */
-.rev-trust {
-  margin-top: 28px; background: #fff;
-  border: 1.5px solid var(--color-line); border-radius: 28px;
-  box-shadow: 0 16px 44px rgba(61, 34, 9, .07);
-}
-.rev-trust__list { list-style: none; margin: 0; padding: 0; display: flex; align-items: stretch; }
-.rev-trust__item {
-  position: relative; flex: 1; display: flex; align-items: center; gap: 16px;
-  padding: 26px 24px; border-left: 1.5px dashed var(--color-line);
-}
-.rev-trust__item:first-child { border-left: none; }
-.rev-trust__icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 58px; height: 58px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); }
-.rev-trust__icon .lucide { width: 28px; height: 28px; }
-.rev-trust__icon--green  { background: #e8f5e2; color: var(--color-green); }
-.rev-trust__icon--pink   { background: #ffe0ee; color: var(--color-pink); }
-.rev-trust__icon--orange { background: #fff0e4; color: var(--color-orange); }
-.rev-trust__icon--yellow { background: #fffae0; color: #d99100; }
-.rev-trust__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.rev-trust__title { font-family: var(--font-heading); font-size: 1.45rem; color: var(--color-ink); line-height: 1.1; }
-.rev-trust__line { font-family: var(--font-body); font-size: .85rem; font-weight: 700; color: var(--color-ink); }
-.rev-trust__stars { display: inline-flex; gap: 2px; margin-top: 2px; }
-.rev-trust__stars .rev-star { width: 14px; height: 14px; color: #f4a72c; }
-.rev-trust__sub { font-family: var(--font-body); font-size: .76rem; color: var(--color-muted); }
-.rev-trust__heart { position: absolute; top: 16px; right: 16px; width: 18px; height: 18px; color: var(--color-pink); opacity: .55; }
-.rev-trust__heart svg { width: 100%; height: 100%; }
-
 /* ── Tablet ──────────────────────────────────────────── */
 @media (max-width: 989px) and (min-width: 700px) {
   .rev__cards { grid-template-columns: repeat(2, 1fr); }
-  .rev-trust__list { flex-wrap: wrap; }
-  .rev-trust__item { flex: 0 0 50%; }
-  .rev-trust__item:nth-child(odd) { border-left: none; }
-  .rev-trust__item:nth-child(n+3) { border-top: 1px solid var(--color-line); }
 }
 
 /* ── Mobiel: swipebare reviews + gestapelde trust ────── */
@@ -281,22 +224,10 @@
   .rev-card__avatar { width: 76px; height: 76px; }
   .rev-card__name { font-size: 1.25rem; }
   .rev__dots { display: flex; }
-
-  /* Trustbar → 2×2 in één witte kaart, stippellijn-dividers */
-  .rev-trust { margin-top: 26px; }
-  .rev-trust__list { display: grid; grid-template-columns: 1fr 1fr; }
-  .rev-trust__item { border-left: none; padding: 16px 12px; gap: 11px; min-width: 0; }
-  .rev-trust__item:nth-child(1), .rev-trust__item:nth-child(2) { border-bottom: 1.5px dashed var(--color-line); }
-  .rev-trust__item:nth-child(odd) { border-right: 1.5px dashed var(--color-line); }
-  .rev-trust__icon { width: 44px; height: 44px; }
-  .rev-trust__icon .lucide { width: 22px; height: 22px; }
-  .rev-trust__title { font-size: 1.15rem; overflow-wrap: anywhere; }
-  .rev-trust__line, .rev-trust__sub { overflow-wrap: anywhere; }
 }
 
 @media (max-width: 459px) {
   .rev-card { flex-basis: 90%; }
-  .rev-trust__title { font-size: 1.05rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -375,40 +306,6 @@
           ]
         }
       ]
-    },
-    {
-      "type": "trust",
-      "name": "Trustitem",
-      "limit": 4,
-      "settings": [
-        {
-          "type": "select", "id": "icon", "label": "Icoon", "default": "paw",
-          "options": [
-            { "value": "paw", "label": "Poot" },
-            { "value": "heart", "label": "Hart" },
-            { "value": "gift", "label": "Cadeau" },
-            { "value": "shield-check", "label": "Schild" },
-            { "value": "star", "label": "Ster" },
-            { "value": "award", "label": "Award" },
-            { "value": "truck", "label": "Vrachtwagen" },
-            { "value": "sparkles", "label": "Sparkles" }
-          ]
-        },
-        {
-          "type": "select", "id": "color", "label": "Icoonvlak kleur", "default": "green",
-          "options": [
-            { "value": "green", "label": "Groen" },
-            { "value": "pink", "label": "Roze" },
-            { "value": "orange", "label": "Oranje" },
-            { "value": "yellow", "label": "Geel" }
-          ]
-        },
-        { "type": "text", "id": "title", "label": "Titel / cijfer", "default": "1.200+" },
-        { "type": "text", "id": "text", "label": "Beschrijving", "default": "Blije honden in onze community" },
-        { "type": "checkbox", "id": "show_stars", "label": "Sterren tonen", "default": false },
-        { "type": "text", "id": "subtext", "label": "Extra regel (optioneel)" },
-        { "type": "checkbox", "id": "show_heart", "label": "Roze hartje rechts tonen", "default": false }
-      ]
     }
   ],
   "presets": [
@@ -417,11 +314,7 @@
       "blocks": [
         { "type": "review", "settings": { "dog_name": "Luna", "breed": "Golden Retriever", "badge": "Happy Box", "badge_color": "pink", "rating": 5, "review_title": "Elke maand weer een feestje!", "review_text": "Luna wordt altijd zó enthousiast als de Kwispelbox binnenkomt. De speeltjes zijn stevig en superleuk, en ze is dol op de knuffels. Echt een aanrader!", "verified_text": "Geverifieerde aankoop", "accent": "pink" } },
         { "type": "review", "settings": { "dog_name": "Milo", "breed": "Border Collie", "badge": "Mega Box", "badge_color": "orange", "rating": 5, "review_title": "Kwaliteit waar je blij van wordt", "review_text": "Je merkt dat er echt aandacht is besteed aan de selectie van de producten. Milo speelt overal mee en de box voelt als een cadeau, elke keer weer.", "verified_text": "Geverifieerde aankoop", "accent": "orange" } },
-        { "type": "review", "settings": { "dog_name": "Bobby", "breed": "Cockapoo", "badge": "Mini Box", "badge_color": "green", "rating": 5, "review_title": "Perfect voor onze kleine avonturier", "review_text": "Bobby is kieskeurig, maar alles in de Kwispelbox is een hit! Zelfs de snacks zijn favoriet. Super service en snelle levering ook!", "verified_text": "Geverifieerde aankoop", "accent": "green" } },
-        { "type": "trust", "settings": { "icon": "paw", "color": "green", "title": "1.200+", "text": "Blije honden in onze community" } },
-        { "type": "trust", "settings": { "icon": "heart", "color": "pink", "title": "4,9/5", "text": "Uitstekend beoordeeld", "show_stars": true, "subtext": "op basis van 500+ reviews" } },
-        { "type": "trust", "settings": { "icon": "gift", "color": "yellow", "title": "100%", "text": "Tevredenheidsgarantie", "subtext": "Niet tevreden? Geld terug." } },
-        { "type": "trust", "settings": { "icon": "shield-check", "color": "green", "title": "Veilig & vertrouwd", "text": "Betaal veilig via iDEAL, Klarna of Bancontact.", "show_heart": true } }
+        { "type": "review", "settings": { "dog_name": "Bobby", "breed": "Cockapoo", "badge": "Mini Box", "badge_color": "green", "rating": 5, "review_title": "Perfect voor onze kleine avonturier", "review_text": "Bobby is kieskeurig, maar alles in de Kwispelbox is een hit! Zelfs de snacks zijn favoriet. Super service en snelle levering ook!", "verified_text": "Geverifieerde aankoop", "accent": "green" } }
       ]
     }
   ]
