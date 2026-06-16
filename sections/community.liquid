@@ -187,14 +187,16 @@
 
   .com__photos { gap: 12px; }
 
-  .com__stats { grid-template-columns: repeat(4, 1fr); padding: 18px 4px; }
-  .com__stat { flex-direction: column; text-align: center; gap: 9px; padding: 4px 6px; }
-  .com__stat + .com__stat { border-left: 1.5px dashed var(--color-line); }
+  .com__stats { grid-template-columns: 1fr 1fr; padding: 16px 6px; }
+  .com__stat { flex-direction: column; text-align: center; gap: 9px; padding: 16px 12px; min-width: 0; }
+  .com__stat + .com__stat { border-left: none; }
+  .com__stat:nth-child(1), .com__stat:nth-child(2) { border-bottom: 1.5px dashed var(--color-line); }
+  .com__stat:nth-child(odd) { border-right: 1.5px dashed var(--color-line); }
   .com__stat-icon { width: 46px; height: 46px; }
   .com__stat-icon svg { width: 22px; height: 22px; }
   .com__stat-body { align-items: center; }
-  .com__stat-value { font-size: 1.15rem; }
-  .com__stat-label { font-size: .72rem; line-height: 1.2; }
+  .com__stat-value { font-size: 1.2rem; }
+  .com__stat-label { font-size: .76rem; line-height: 1.25; overflow-wrap: anywhere; }
   .com__deco--paw, .com__deco--lines { display: none; }
 }
 
