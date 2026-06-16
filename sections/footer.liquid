@@ -51,6 +51,7 @@
           <nav class="kbfoot__cols" aria-label="Footer navigatie">
             {%- for block in col_blocks -%}
               {%- assign col_menu = block.settings.menu -%}
+              {%- if col_menu.links == nil and col_menu != blank -%}{%- assign col_menu = linklists[col_menu] -%}{%- endif -%}
               <details class="kbfoot__col" {{ block.shopify_attributes }}>
                 <summary class="kbfoot__col-head">
                   {%- if block.settings.icon != blank -%}<span class="kbfoot__col-icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>{%- endif -%}
