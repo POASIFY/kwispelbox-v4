@@ -2137,7 +2137,7 @@
 
   if (searchInput && searchResults) {
     var debounceTimer = null;
-    function money(c) { return '\u20ac' + (c / 100).toFixed(2).replace('.', ','); }
+    function money(c) { var n = parseFloat(c); return isNaN(n) ? '' : '\u20ac' + n.toFixed(2).replace('.', ','); }
     function renderResults(results, q) {
       if (!results.length) { searchResults.hidden = true; return; }
       var html = results.map(function (i) {
@@ -2150,11 +2150,15 @@
     }
     function fetchSuggestions(q) {
       if (q.length < 2) { searchResults.hidden = true; return; }
-      fetch('/search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=5&resources[fields]=title,handle,image,price')
+      fetch('/search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=5')
         .then(function (r) { return r.json(); })
         .then(function (data) {
           var p = (data.resources && data.resources.results && data.resources.results.products) || [];
-          renderResults(p.map(function (x) { return { title: x.title, url: x.url, image: x.image ? x.image.src : null, price: x.price }; }), q);
+          renderResults(p.map(function (x) {
+            var src = (x.featured_image && x.featured_image.url) || x.image || null;
+            if (src && src.indexOf('width=') === -1) { src += (src.indexOf('?') === -1 ? '?' : '&') + 'width=96'; }
+            return { title: x.title, url: x.url, image: src, price: x.price };
+          }), q);
         }).catch(function () { searchResults.hidden = true; });
     }
     searchInput.addEventListener('input', function () {
