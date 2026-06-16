@@ -179,60 +179,37 @@
         "b1": {
           "type": "benefit",
           "settings": {
-            "icon": "dog",
-            "color": "green",
-            "title": "Meer speelplezier",
-            "text": "Nieuwe verrassingen houden honden nieuwsgierig, actief en blij."
+            "icon": "teddy",
+            "color": "pink",
+            "title": "Altijd iets nieuws om te ontdekken",
+            "text": "Honden houden van afwisseling. Nieuwe geuren, vormen en texturen zorgen voor meer uitdaging."
           }
         },
         "b2": {
           "type": "benefit",
           "settings": {
-            "icon": "award",
-            "color": "orange",
-            "title": "Zorgvuldig geselecteerd",
-            "text": "Alleen veilige, duurzame en kwalitatieve speeltjes waar wij 100% achter staan."
+            "icon": "heart",
+            "color": "green",
+            "title": "Samengesteld met liefde",
+            "text": "Elke box wordt zorgvuldig samengesteld met veilige en kwalitatieve producten."
           }
         },
         "b3": {
           "type": "benefit",
           "settings": {
             "icon": "gift",
-            "color": "pink",
-            "title": "Elke box is uniek",
-            "text": "Geen twee honden zijn hetzelfde. Geen twee boxen dus ook."
+            "color": "yellow",
+            "title": "Een cadeautje voor hond én baasje",
+            "text": "Het uitpakken is minstens zo leuk als de inhoud zelf."
           }
         },
-        "t1": {
-          "type": "trust",
+        "b4": {
+          "type": "benefit",
           "settings": {
-            "icon": "truck",
-            "color": "green",
-            "title": "Gratis verzending vanaf €75"
-          }
-        },
-        "t2": {
-          "type": "trust",
-          "settings": {
-            "icon": "heart",
-            "color": "pink",
-            "title": "Meer dan 1.200 blije honden"
-          }
-        },
-        "t3": {
-          "type": "trust",
-          "settings": {
-            "icon": "gift",
+            "icon": "calendar",
             "color": "orange",
-            "title": "Elke box voelt als een cadeautje"
-          }
-        },
-        "t4": {
-          "type": "trust",
-          "settings": {
-            "icon": "shield-check",
-            "color": "green",
-            "title": "100% veilig betalen"
+            "title": "Afgestemd op het seizoen",
+            "text": "Verjaardag, Pasen, Kerst of gewoon zomaar een leuke verrassing."
           }
         }
       },
@@ -240,20 +217,17 @@
         "b1",
         "b2",
         "b3",
-        "t1",
-        "t2",
-        "t3",
-        "t4"
+        "b4"
       ],
       "settings": {
-        "show_badge": true,
-        "badge_text": "Met liefde gemaakt",
-        "badge_icon": "heart",
-        "badge_color": "pink",
-        "show_decorations": true,
-        "eyebrow": "Waarom honden dol zijn op",
-        "heading": "Kwispelbox",
-        "intro": "Wij geloven dat elke hond het verdient om te spelen, te ontdekken en te genieten. Daarom stellen wij elke box samen met zorg, kwaliteit en een flinke dosis liefde."
+        "heading": "Waarom honden dol zijn op",
+        "heading_highlight": "Kwispelbox",
+        "intro": "Omdat elke box een feestje is voor jouw hond én voor jou.",
+        "show_badge": false,
+        "badge_text": "Geen twee boxen zijn hetzelfde",
+        "cta_label": "Bekijk de boxen",
+        "cta_url": "/collections/boxen",
+        "show_decorations": true
       }
     },
     "box-contents": {
