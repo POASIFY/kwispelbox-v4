@@ -395,6 +395,7 @@
           "type": "special",
           "settings": {
             "featured": false,
+            "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_11_17_39.png",
             "icon": "tree",
             "color": "green",
             "title": "Kerstbox",
