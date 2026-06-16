@@ -30,15 +30,24 @@
     </div>
 
     <div class="hero__media">
-      {%- if section.settings.image != blank -%}
-        <img
-          src="{{ section.settings.image | image_url: width: 1100 }}"
-          srcset="{{ section.settings.image | image_url: width: 700 }} 700w, {{ section.settings.image | image_url: width: 1100 }} 1100w"
-          sizes="(max-width: 989px) 100vw, 52vw"
-          alt="{{ section.settings.image.alt | default: shop.name | escape }}"
-          width="1100" height="1000"
-          {%- if section.settings.image_priority -%} loading="eager" fetchpriority="high"{%- else -%} loading="lazy"{%- endif -%}
-          class="hero__img">
+      {%- if section.settings.image != blank or section.settings.image_mobile != blank -%}
+        {%- assign hero_desktop = section.settings.image | default: section.settings.image_mobile -%}
+        {%- assign hero_mobile = section.settings.image_mobile | default: section.settings.image -%}
+        <picture class="hero__pic">
+          {%- if section.settings.image_mobile != blank -%}
+            <source media="(max-width: 989px)"
+              srcset="{{ hero_mobile | image_url: width: 600 }} 600w, {{ hero_mobile | image_url: width: 900 }} 900w"
+              sizes="100vw">
+          {%- endif -%}
+          <img
+            src="{{ hero_desktop | image_url: width: 1100 }}"
+            srcset="{{ hero_desktop | image_url: width: 700 }} 700w, {{ hero_desktop | image_url: width: 1100 }} 1100w, {{ hero_desktop | image_url: width: 1500 }} 1500w"
+            sizes="(max-width: 989px) 100vw, 52vw"
+            alt="{{ hero_desktop.alt | default: shop.name | escape }}"
+            width="1100" height="1000"
+            {%- if section.settings.image_priority -%} loading="eager" fetchpriority="high"{%- else -%} loading="lazy"{%- endif -%}
+            class="hero__img">
+        </picture>
       {%- else -%}
         <span class="hero__img hero__img--ph">{%- render 'lucide', icon: 'dog' -%}</span>
       {%- endif -%}
@@ -76,6 +85,7 @@
       {%- endif -%}
 
       {%- if section.settings.rating_score != blank -%}
+        <span class="hero__cta-divider" aria-hidden="true"></span>
         <div class="hero__rating">
           <span class="hero__stars" aria-hidden="true">
             {%- for i in (1..5) -%}<span class="hero__star">{%- render 'lucide', icon: 'star' -%}</span>{%- endfor -%}
@@ -85,6 +95,7 @@
       {%- endif -%}
 
       {%- if section.settings.avatars_text != blank -%}
+        <span class="hero__cta-divider" aria-hidden="true"></span>
         <div class="hero__avatars">
           <span class="hero__avatar-imgs" aria-hidden="true">
             {%- for n in (1..3) -%}
@@ -141,14 +152,15 @@
 .hero__note-heart { display: inline-flex; color: var(--color-pink); margin-left: 4px; vertical-align: middle; }
 .hero__note-heart .lucide { width: 14px; height: 14px; fill: currentColor; }
 
-.hero__rating { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+.hero__cta-divider { display: block; height: 1px; background: rgba(61,34,9,.09); margin: 16px 0; max-width: 300px; }
+.hero__rating { display: flex; align-items: center; gap: 12px; margin-top: 0; }
 .hero__stars { display: inline-flex; gap: 3px; }
 .hero__star { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 5px; background: #00b67a; }
 .hero__star .lucide { width: 16px; height: 16px; fill: #fff; stroke: #fff; }
 .hero__rating-text { font-family: var(--font-body); font-size: .92rem; color: var(--color-body); }
 .hero__rating-text strong { color: var(--color-green); }
 
-.hero__avatars { display: inline-flex; align-items: center; gap: 12px; margin-top: 16px; background: #fff; border-radius: var(--radius-pill); padding: 7px 16px 7px 7px; box-shadow: 0 6px 18px rgba(61,34,9,.05); }
+.hero__avatars { display: inline-flex; align-items: center; gap: 12px; margin-top: 0; background: #fff; border-radius: var(--radius-pill); padding: 7px 16px 7px 7px; box-shadow: 0 6px 18px rgba(61,34,9,.05); }
 .hero__avatar-imgs { display: inline-flex; }
 .hero__avatar { width: 38px; height: 38px; border-radius: 50%; border: 2.5px solid #fff; object-fit: cover; background: var(--color-cream); }
 .hero__avatar + .hero__avatar { margin-left: -12px; }
@@ -156,6 +168,7 @@
 .hero__avatar--ph .lucide { width: 20px; height: 20px; }
 .hero__avatars-text { font-family: var(--font-body); font-size: .88rem; color: var(--color-body); max-width: 26ch; line-height: 1.3; }
 
+.hero__pic { display: block; position: relative; z-index: 1; }
 .hero__img { width: 100%; height: auto; max-height: 600px; object-fit: contain; display: block; position: relative; z-index: 1; }
 .hero__img--ph { aspect-ratio: 1; width: 80%; margin: 0 auto; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-green); box-shadow: var(--shadow-card); }
 .hero__img--ph .lucide { width: 44%; height: 44%; }
@@ -182,9 +195,10 @@
   .hero__intro { position: relative; z-index: 3; }
   .hero__title { font-size: clamp(2rem, 9vw, 2.9rem); }
   .hero__text { max-width: 60%; }
-  .hero__media { margin: -70px 0 0; }
-  .hero__img { max-height: 520px; }
-  .hero__cta { align-self: stretch; position: relative; z-index: 3; margin-top: -10px; }
+  .hero__media { margin: -70px 0 -40px; }
+  .hero__img { max-height: 520px; object-position: center bottom; }
+  .hero__cta { align-self: stretch; position: relative; z-index: 3; margin-top: 0; }
+  .hero__cta-divider { max-width: 100%; }
   .hero__btn { font-size: 1.05rem; padding: 15px 26px; }
   .hero__circle { top: 30%; left: 36%; width: 104px; height: 104px; }
   .hero__circle-text { font-size: .72rem; }
@@ -222,7 +236,8 @@
     { "type": "image_picker", "id": "avatar_2", "label": "Avatar 2" },
     { "type": "image_picker", "id": "avatar_3", "label": "Avatar 3" },
     { "type": "header", "content": "Afbeelding" },
-    { "type": "image_picker", "id": "image", "label": "Hero afbeelding (hond + box)" },
+    { "type": "image_picker", "id": "image", "label": "Hero afbeelding — desktop (hond + box)" },
+    { "type": "image_picker", "id": "image_mobile", "label": "Hero afbeelding — mobiel (optioneel)", "info": "Laat leeg om dezelfde afbeelding als desktop te gebruiken." },
     { "type": "text", "id": "circle_text", "label": "Cirkel-badge tekst", "default": "Elke box voelt als een cadeautje" },
     { "type": "checkbox", "id": "image_priority", "label": "Hoge prioriteit laden", "default": true }
   ],
