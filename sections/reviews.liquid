@@ -15,7 +15,7 @@
     <div class="rev__head">
       {%- if section.settings.eyebrow != blank -%}
         <span class="rev__eyebrow">
-          <span class="rev__eyebrow-icon" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+          <span class="rev__eyebrow-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
           {{ section.settings.eyebrow }}
         </span>
       {%- endif -%}
@@ -59,7 +59,7 @@
                        sizes="120px" alt="{{ block.settings.image.alt | default: block.settings.dog_name | escape }}"
                        width="120" height="120" loading="lazy" class="rev-card__avatar-img">
                 {%- else -%}
-                  <div class="rev-card__avatar-img rev-card__avatar-img--placeholder">{%- render 'lucide', icon: 'dog' -%}</div>
+                  <div class="rev-card__avatar-img rev-card__avatar-img--placeholder">{%- render 'kb-icon', icon: 'dog' -%}</div>
                 {%- endif -%}
               </div>
               <div class="rev-card__id">
@@ -89,7 +89,7 @@
 
             {%- if block.settings.verified_text != blank -%}
               <span class="rev-card__verified">
-                <span class="rev-card__verified-icon" aria-hidden="true">{%- render 'lucide', icon: 'check' -%}</span>
+                <span class="rev-card__verified-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'check' -%}</span>
                 {{ block.settings.verified_text }}
               </span>
             {%- endif -%}
@@ -124,7 +124,7 @@
   text-transform: uppercase; letter-spacing: .1em; color: var(--color-pink); margin-bottom: 16px;
 }
 .rev__eyebrow-icon { display: inline-flex; }
-.rev__eyebrow-icon .lucide { width: 15px; height: 15px; }
+.rev__eyebrow-icon svg { width: 15px; height: 15px; }
 
 .rev__title-row { display: inline-flex; align-items: center; justify-content: center; gap: 16px; }
 .rev__title { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.04; color: var(--color-ink); margin: 0; }
@@ -162,7 +162,7 @@
 .rev-card__avatar { flex-shrink: 0; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; box-shadow: 0 6px 16px rgba(61, 34, 9, .14); background: var(--ac-soft); }
 .rev-card__avatar-img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .rev-card__avatar-img--placeholder { display: flex; align-items: center; justify-content: center; color: var(--ac); }
-.rev-card__avatar-img--placeholder .lucide { width: 40px; height: 40px; }
+.rev-card__avatar-img--placeholder svg { width: 40px; height: 40px; }
 .rev-card__id { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; min-width: 0; }
 .rev-card__name { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-heading); font-size: 1.4rem; color: var(--color-ink); line-height: 1; }
 .rev-card__name-heart { display: inline-flex; width: 15px; height: 15px; color: var(--color-pink); flex-shrink: 0; }
@@ -194,7 +194,7 @@
   font-family: var(--font-body); font-size: .8rem; font-weight: 700; color: var(--color-green);
 }
 .rev-card__verified-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); }
-.rev-card__verified-icon .lucide { width: 13px; height: 13px; }
+.rev-card__verified-icon svg { width: 13px; height: 13px; }
 
 /* Watermark sluitquote */
 .rev-card__watermark {

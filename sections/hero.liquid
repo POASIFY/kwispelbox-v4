@@ -11,7 +11,7 @@
     <div class="hero__intro">
       {%- if section.settings.badge_text != blank -%}
         <span class="hero__badge">
-          <span class="hero__badge-icon" aria-hidden="true">{%- render 'lucide', icon: 'star' -%}</span>
+          <span class="hero__badge-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'star' -%}</span>
           {{ section.settings.badge_text }}
         </span>
       {%- endif -%}
@@ -21,7 +21,7 @@
         {%- if section.settings.title_highlight != blank %} <span class="hero__hl hero__hl--green">{{ section.settings.title_highlight }}</span>{%- endif -%}
         {%- if section.settings.title_highlight2 != blank %} <span class="hero__hl hero__hl--pink">{{ section.settings.title_highlight2 }}</span>{%- endif -%}
         {%- if section.settings.title_end != blank %} {{ section.settings.title_end }}{%- endif -%}
-        <span class="hero__title-heart" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+        <span class="hero__title-heart" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
       </h1>
 
       {%- if section.settings.text != blank -%}
@@ -49,21 +49,21 @@
             class="hero__img">
         </picture>
       {%- else -%}
-        <span class="hero__img hero__img--ph">{%- render 'lucide', icon: 'dog' -%}</span>
+        <span class="hero__img hero__img--ph">{%- render 'kb-icon', icon: 'dog' -%}</span>
       {%- endif -%}
 
       {%- if section.settings.circle_text != blank -%}
         <span class="hero__circle" aria-hidden="true">
-          <span class="hero__circle-heart">{%- render 'lucide', icon: 'heart' -%}</span>
+          <span class="hero__circle-heart">{%- render 'kb-icon', icon: 'heart' -%}</span>
           <span class="hero__circle-text">{{ section.settings.circle_text }}</span>
           <span class="hero__circle-arrow"><svg viewBox="0 0 30 36" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4c-8 6-12 16-9 27"/><path d="M4 24l7 8 8-5"/></svg></span>
         </span>
       {%- endif -%}
 
-      <span class="hero__deco hero__deco--h1" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
-      <span class="hero__deco hero__deco--h2" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
-      <span class="hero__deco hero__deco--h3" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
-      <span class="hero__deco hero__deco--paws" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}{%- render 'lucide', icon: 'paw' -%}</span>
+      <span class="hero__deco hero__deco--h1" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
+      <span class="hero__deco hero__deco--h2" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
+      <span class="hero__deco hero__deco--h3" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
+      <span class="hero__deco hero__deco--paws" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}{%- render 'kb-icon', icon: 'paw' -%}</span>
       <span class="hero__deco hero__deco--spark" aria-hidden="true"><svg viewBox="0 0 30 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 14c4-6 8 4 12-2"/><path d="M16 6l3 3"/><path d="M22 4l4 4"/></svg></span>
     </div>
 
@@ -71,7 +71,7 @@
       {%- if section.settings.cta_primary_label != blank -%}
         <a href="{{ section.settings.cta_primary_url }}" class="hero__btn hero__btn--primary">
           {{ section.settings.cta_primary_label }}
-          <span class="hero__btn-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+          <span class="hero__btn-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
         </a>
       {%- endif -%}
 
@@ -80,7 +80,7 @@
           <span class="hero__note-arrow" aria-hidden="true">
             <svg viewBox="0 0 50 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c10-6 22-4 26 8"/><path d="M22 26l8 2 1-8"/></svg>
           </span>
-          <span class="hero__note-text">{{ section.settings.note_text }}<span class="hero__note-heart" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span></span>
+          <span class="hero__note-text">{{ section.settings.note_text }}<span class="hero__note-heart" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span></span>
         </div>
       {%- endif -%}
 
@@ -88,7 +88,7 @@
         <span class="hero__cta-divider" aria-hidden="true"></span>
         <div class="hero__rating">
           <span class="hero__stars" aria-hidden="true">
-            {%- for i in (1..5) -%}<span class="hero__star">{%- render 'lucide', icon: 'star' -%}</span>{%- endfor -%}
+            {%- for i in (1..5) -%}<span class="hero__star">{%- render 'kb-icon', icon: 'star' -%}</span>{%- endfor -%}
           </span>
           <span class="hero__rating-text"><strong>{{ section.settings.rating_score }}</strong> {{ section.settings.rating_text }}</span>
         </div>
@@ -104,7 +104,7 @@
               {%- if aimg != blank -%}
                 <img src="{{ aimg | image_url: width: 80 }}" alt="" width="40" height="40" loading="lazy" class="hero__avatar">
               {%- else -%}
-                <span class="hero__avatar hero__avatar--ph">{%- render 'lucide', icon: 'dog' -%}</span>
+                <span class="hero__avatar hero__avatar--ph">{%- render 'kb-icon', icon: 'dog' -%}</span>
               {%- endif -%}
             {%- endfor -%}
           </span>
@@ -129,13 +129,13 @@
 
 .hero__badge { display: inline-flex; align-items: center; gap: 9px; background: #fff; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill); padding: 8px 16px; font-family: var(--font-body); font-size: .92rem; font-weight: 700; color: var(--color-ink); box-shadow: 0 6px 18px rgba(61,34,9,.05); margin-bottom: 20px; }
 .hero__badge-icon { display: inline-flex; color: var(--color-orange); }
-.hero__badge-icon .lucide { width: 18px; height: 18px; fill: currentColor; }
+.hero__badge-icon svg { width: 18px; height: 18px; fill: currentColor; }
 
 .hero__title { font-family: var(--font-heading); font-size: clamp(2.4rem, 4.6vw, 4rem); color: var(--color-ink); line-height: 1.04; margin: 0 0 18px; }
 .hero__hl--green { color: var(--color-green); }
 .hero__hl--pink { color: var(--color-pink); }
 .hero__title-heart { display: inline-flex; color: var(--color-pink); vertical-align: middle; margin-left: .14em; }
-.hero__title-heart .lucide { width: .8em; height: .8em; fill: none; stroke: currentColor; stroke-width: 2.4; }
+.hero__title-heart svg { width: .8em; height: .8em; fill: none; stroke: currentColor; stroke-width: 2.4; }
 
 .hero__text { font-family: var(--font-body); font-size: clamp(1.05rem, 1.4vw, 1.25rem); color: var(--color-body); line-height: 1.5; margin: 0 0 26px; max-width: 26ch; }
 
@@ -143,20 +143,20 @@
 .hero__btn--primary { background: var(--color-green); color: #fff; box-shadow: 0 12px 28px rgba(102,170,68,.28); }
 .hero__btn--primary:hover { background: #5a9a3b; transform: translateY(-2px); }
 .hero__btn-icon { display: inline-flex; }
-.hero__btn-icon .lucide { width: 18px; height: 18px; }
+.hero__btn-icon svg { width: 18px; height: 18px; }
 
 .hero__note { display: flex; align-items: center; gap: 8px; max-width: 240px; margin-top: 16px; }
 .hero__note-arrow { width: 46px; height: 36px; color: var(--color-green); flex-shrink: 0; }
 .hero__note-arrow svg { width: 100%; height: 100%; }
 .hero__note-text { font-family: var(--font-body); font-size: .92rem; font-weight: 600; color: var(--color-ink); line-height: 1.3; }
 .hero__note-heart { display: inline-flex; color: var(--color-pink); margin-left: 4px; vertical-align: middle; }
-.hero__note-heart .lucide { width: 14px; height: 14px; fill: currentColor; }
+.hero__note-heart svg { width: 14px; height: 14px; fill: currentColor; }
 
 .hero__cta-divider { display: block; height: 1px; background: rgba(61,34,9,.09); margin: 16px 0; max-width: 300px; }
 .hero__rating { display: flex; align-items: center; gap: 12px; margin-top: 0; }
 .hero__stars { display: inline-flex; gap: 3px; }
 .hero__star { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 5px; background: #00b67a; }
-.hero__star .lucide { width: 16px; height: 16px; fill: #fff; stroke: #fff; }
+.hero__star svg { width: 16px; height: 16px; fill: #fff; stroke: #fff; }
 .hero__rating-text { font-family: var(--font-body); font-size: .92rem; color: var(--color-body); }
 .hero__rating-text strong { color: var(--color-green); }
 
@@ -165,27 +165,27 @@
 .hero__avatar { width: 38px; height: 38px; border-radius: 50%; border: 2.5px solid #fff; object-fit: cover; background: var(--color-cream); }
 .hero__avatar + .hero__avatar { margin-left: -12px; }
 .hero__avatar--ph { display: inline-flex; align-items: center; justify-content: center; color: var(--color-green); }
-.hero__avatar--ph .lucide { width: 20px; height: 20px; }
+.hero__avatar--ph svg { width: 20px; height: 20px; }
 .hero__avatars-text { font-family: var(--font-body); font-size: .88rem; color: var(--color-body); max-width: 26ch; line-height: 1.3; }
 
 .hero__pic { display: block; position: relative; z-index: 1; }
 .hero__img { width: 100%; height: auto; max-height: 600px; object-fit: contain; display: block; position: relative; z-index: 1; }
 .hero__img--ph { aspect-ratio: 1; width: 80%; margin: 0 auto; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-green); box-shadow: var(--shadow-card); }
-.hero__img--ph .lucide { width: 44%; height: 44%; }
+.hero__img--ph svg { width: 44%; height: 44%; }
 
 .hero__circle { position: absolute; top: 8%; left: 4%; z-index: 2; width: 118px; height: 118px; border-radius: 50%; background: var(--color-pink); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 12px; box-shadow: 0 14px 30px rgba(212,83,126,.3); }
 .hero__circle-heart { display: inline-flex; color: #fff; }
-.hero__circle-heart .lucide { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; }
+.hero__circle-heart svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.4; }
 .hero__circle-text { font-family: var(--font-heading); font-size: .8rem; line-height: 1.15; color: #fff; text-align: center; }
 .hero__circle-arrow { position: absolute; bottom: -16px; right: -2px; width: 26px; height: 32px; color: var(--color-pink); }
 .hero__circle-arrow svg { width: 100%; height: 100%; }
 
 .hero__deco { position: absolute; pointer-events: none; z-index: 2; }
-.hero__deco .lucide, .hero__deco svg { display: block; width: 100%; height: 100%; }
+.hero__deco svg { display: block; width: 100%; height: 100%; }
 .hero__deco--h1 { top: 2%; left: 30%; width: 30px; color: var(--color-pink); }
 .hero__deco--h2 { top: 12%; left: 16%; width: 22px; color: var(--color-pink); }
 .hero__deco--h3 { bottom: 30%; right: 6%; width: 24px; color: var(--color-pink); }
-.hero__deco--h1 .lucide, .hero__deco--h2 .lucide, .hero__deco--h3 .lucide { fill: none; stroke: currentColor; stroke-width: 2.2; }
+.hero__deco--h1 svg, .hero__deco--h2 svg, .hero__deco--h3 svg { fill: none; stroke: currentColor; stroke-width: 2.2; }
 .hero__deco--paws { top: 4%; right: 2%; width: 64px; height: 32px; color: var(--color-orange); opacity: .35; display: flex; gap: 6px; }
 .hero__deco--spark { top: 16%; right: 16%; width: 34px; height: 26px; color: var(--color-green); }
 
