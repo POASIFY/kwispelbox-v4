@@ -170,13 +170,14 @@
 @media (max-width: 859px) {
   .kbse__head { margin-bottom: 28px; }
   .kbse__grid { grid-template-columns: 1fr 1fr; gap: 14px; }
-  .kbse-feat { grid-column: 1 / -1; grid-row: auto; min-height: 0; aspect-ratio: 3 / 2; }
-  .kbse-feat__img { object-position: right center; }
-  .kbse-feat__panel { top: 16px; left: 16px; right: auto; bottom: 16px; transform: none; width: 56%; display: flex; flex-direction: column; justify-content: center; padding: 18px; }
-  .kbse-feat__title { font-size: 1.25rem; }
-  .kbse-feat__text { font-size: .85rem; margin-bottom: 14px; }
-  .kbse-feat__btn { padding: 11px 18px; font-size: .9rem; }
-  .kbse-feat__badge { width: 64px; height: 64px; }
+  .kbse-feat { grid-column: 1 / -1; grid-row: auto; min-height: 0; aspect-ratio: 16 / 10; }
+  .kbse-feat__img { object-position: left center; }
+  .kbse-feat__panel { top: 50%; left: auto; right: 12px; bottom: auto; transform: translateY(-50%); width: 58%; max-width: 300px; background: rgba(255,255,255,.95); padding: 15px 17px; }
+  .kbse-feat__title { font-size: 1.05rem; gap: 8px; margin-bottom: 7px; }
+  .kbse-feat__title-icon svg { width: 21px; height: 21px; }
+  .kbse-feat__text { font-size: .8rem; line-height: 1.4; margin-bottom: 12px; }
+  .kbse-feat__btn { padding: 10px 16px; font-size: .85rem; }
+  .kbse-feat__badge { width: 58px; height: 58px; top: 12px; left: 12px; }
 
   .kbse-card { aspect-ratio: 1 / 1; }
   .kbse-card__title { font-size: 1.02rem; left: 56px; top: 16px; }
@@ -189,7 +190,8 @@
 }
 
 @media (max-width: 480px) {
-  .kbse-feat__panel { width: 60%; }
+  .kbse-feat { aspect-ratio: 3 / 2; }
+  .kbse-feat__panel { width: 62%; }
 }
 {% endstylesheet %}
 
