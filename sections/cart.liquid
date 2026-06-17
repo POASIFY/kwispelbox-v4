@@ -147,14 +147,12 @@
 
               {%- if gift_in_cart -%}
                 <li class="kbcart__item kbcart__item--gift">
-                  <span class="kbcart__item-media kbcart__gift-media" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
-                  <div class="kbcart__item-body">
+                  <span class="kbcart__gift-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+                  <div class="kbcart__gift-body">
                     <span class="kbcart__item-title">{{ gift.title | replace: ' 🎁', '' }}</span>
                     <p class="kbcart__gift-tag"><span aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span> Cadeautje van ons</p>
                   </div>
-                  <div class="kbcart__item-side">
-                    <span class="kbcart__gift-price"><s>{{ gift.selected_or_first_available_variant.compare_at_price | money }}</s> <strong>Gratis</strong></span>
-                  </div>
+                  <span class="kbcart__gift-price">{%- if gift.selected_or_first_available_variant.compare_at_price > 0 -%}<s>{{ gift.selected_or_first_available_variant.compare_at_price | money }}</s> {%- endif -%}<strong>Gratis</strong></span>
                 </li>
               {%- endif -%}
             </ul>
@@ -435,13 +433,14 @@
 .kbcart__ship-node.is-reached { border-color: var(--color-green); background: #e8f5e2; }
 .kbcart__ship-node.is-reached .lucide { color: var(--color-green); }
 /* Gratis cadeau-regel */
-.kbcart__item--gift { background: linear-gradient(180deg, #fff5f9, #fff); border: 1.5px dashed var(--color-pink); border-radius: 16px; padding: 12px 14px; }
-.kbcart__gift-media { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; background: #ffe9f1; border-radius: 12px; flex-shrink: 0; }
-.kbcart__gift-media .lucide { width: 30px; height: 30px; color: var(--color-pink); }
-.kbcart__gift-tag { display: flex; align-items: center; gap: 5px; font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-pink); margin: 4px 0 0; }
-.kbcart__gift-tag .lucide { width: 14px; height: 14px; }
-.kbcart__item--gift .kbcart__item-side { margin-left: auto; text-align: right; }
-.kbcart__gift-price { font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); white-space: nowrap; }
+.kbcart__item.kbcart__item--gift { display: flex; align-items: center; gap: 14px; background: linear-gradient(180deg, #fff5f9, #fff); border: 1.5px dashed var(--color-pink); border-radius: 16px; padding: 14px 16px; margin-top: 4px; }
+.kbcart__gift-icon { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: var(--color-pink); color: #fff; flex-shrink: 0; }
+.kbcart__gift-icon .lucide { width: 22px; height: 22px; }
+.kbcart__gift-body { flex: 1; min-width: 0; }
+.kbcart__item--gift .kbcart__item-title { font-size: 1.05rem; }
+.kbcart__gift-tag { display: flex; align-items: center; gap: 5px; font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-pink); margin: 2px 0 0; }
+.kbcart__gift-tag .lucide { width: 14px; height: 14px; flex-shrink: 0; }
+.kbcart__gift-price { flex-shrink: 0; font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); white-space: nowrap; }
 .kbcart__gift-price s { color: var(--color-muted); font-family: var(--font-body); font-weight: 400; margin-right: 4px; }
 .kbcart__gift-price strong { color: var(--color-green); }
 
