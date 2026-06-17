@@ -1,0 +1,301 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "boxes": {
+      "type": "product-boxes",
+      "blocks": {
+        "box-mini": {
+          "type": "box",
+          "settings": {
+            "accent": "green",
+            "badge": "Klein maar fijn",
+            "title": "Mini Kwispelbox",
+            "description": "Perfect om kennis te maken of als klein cadeautje.",
+            "benefit_1": "5–7 speeltjes & snacks",
+            "benefit_2": "Geschikt voor kleine honden",
+            "benefit_3": "Met liefde samengesteld",
+            "benefit_4": "",
+            "benefit_5": "",
+            "price": "€39,95",
+            "price_suffix": "",
+            "highlight": false,
+            "button_label": "Bekijk box",
+            "button_url": ""
+          }
+        },
+        "box-happy": {
+          "type": "box",
+          "settings": {
+            "accent": "pink",
+            "badge": "Meest gekozen",
+            "title": "Happy Kwispelbox",
+            "description": "De perfecte mix van speelplezier en verwennerij.",
+            "benefit_1": "7–10 speeltjes & snacks",
+            "benefit_2": "Voor middelgrote honden",
+            "benefit_3": "Wisselende thema's",
+            "benefit_4": "",
+            "benefit_5": "",
+            "price": "€64,95",
+            "price_suffix": "",
+            "highlight": true,
+            "button_label": "Bekijk box",
+            "button_url": ""
+          }
+        },
+        "box-mega": {
+          "type": "box",
+          "settings": {
+            "accent": "orange",
+            "badge": "Extra veel plezier",
+            "title": "Mega Kwispelbox",
+            "description": "Voor honden die graag ontdekken en spelen!",
+            "benefit_1": "10–14 speeltjes & snacks",
+            "benefit_2": "Voor grote honden",
+            "benefit_3": "Extra groot & luxe items",
+            "benefit_4": "",
+            "benefit_5": "",
+            "price": "€89,95",
+            "price_suffix": "",
+            "highlight": false,
+            "button_label": "Bekijk box",
+            "button_url": ""
+          }
+        },
+        "re-gift": {
+          "type": "benefit",
+          "settings": {
+            "title": "Elke box voelt als een cadeautje",
+            "description": "Met zorg samengesteld en feestelijk verpakt.",
+            "icon": "gift",
+            "color": "pink"
+          }
+        },
+        "re-flex": {
+          "type": "benefit",
+          "settings": {
+            "title": "Flexibel en eenvoudig",
+            "description": "Pauzeren, aanpassen of opzeggen wanneer jij wilt.",
+            "icon": "calendar",
+            "color": "green"
+          }
+        },
+        "re-happy": {
+          "type": "benefit",
+          "settings": {
+            "title": "100% Tevredenheid",
+            "description": "Niet tevreden? We maken het samen goed.",
+            "icon": "heart",
+            "color": "purple"
+          }
+        }
+      },
+      "block_order": [
+        "box-mini",
+        "box-happy",
+        "box-mega",
+        "re-gift",
+        "re-flex",
+        "re-happy"
+      ],
+      "settings": {
+        "label": "",
+        "heading": "Kies jouw",
+        "heading_highlight": "Kwispelbox",
+        "intro": "Mini, Happy of Mega — voor elke hond de perfecte verrassingsbox."
+      }
+    },
+    "compare": {
+      "type": "box-compare",
+      "blocks": {
+        "cb1": {
+          "type": "box",
+          "settings": {
+            "name": "Mini",
+            "price": "€34,95",
+            "tagline": "Voor kleinere honden",
+            "accent": "green",
+            "button_label": "Kies Mini",
+            "button_url": "/products/kwispelbox"
+          }
+        },
+        "cb2": {
+          "type": "box",
+          "settings": {
+            "name": "Happy",
+            "price": "€49,95",
+            "tagline": "Onze populairste box",
+            "badge": "Meest gekozen",
+            "highlight": true,
+            "accent": "pink",
+            "button_label": "Kies Happy",
+            "button_url": "/products/kwispelbox"
+          }
+        },
+        "cb3": {
+          "type": "box",
+          "settings": {
+            "name": "Mega",
+            "price": "€64,95",
+            "tagline": "Voor grote avonturiers",
+            "accent": "orange",
+            "button_label": "Kies Mega",
+            "button_url": "/products/kwispelbox"
+          }
+        },
+        "cr1": {
+          "type": "row",
+          "settings": {
+            "label": "Aantal verrassingen",
+            "val_1": "3–4",
+            "val_2": "5–6",
+            "val_3": "7–8"
+          }
+        },
+        "cr2": {
+          "type": "row",
+          "settings": {
+            "label": "Voor welke hond",
+            "val_1": "Klein",
+            "val_2": "Alle maten",
+            "val_3": "Groot"
+          }
+        },
+        "cr3": {
+          "type": "row",
+          "settings": {
+            "label": "Stevige speeltjes",
+            "val_1": "ja",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        },
+        "cr4": {
+          "type": "row",
+          "settings": {
+            "label": "Gezonde snacks",
+            "val_1": "ja",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        },
+        "cr5": {
+          "type": "row",
+          "settings": {
+            "label": "Knuffel om te koesteren",
+            "val_1": "nee",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        },
+        "cr6": {
+          "type": "row",
+          "settings": {
+            "label": "Extra luxe verrassing",
+            "val_1": "nee",
+            "val_2": "nee",
+            "val_3": "ja"
+          }
+        },
+        "cr7": {
+          "type": "row",
+          "settings": {
+            "label": "Persoonlijk samengesteld",
+            "val_1": "ja",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        },
+        "cr8": {
+          "type": "row",
+          "settings": {
+            "label": "Gratis verzending",
+            "val_1": "nee",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        }
+      },
+      "block_order": [
+        "cb1",
+        "cb2",
+        "cb3",
+        "cr1",
+        "cr2",
+        "cr3",
+        "cr4",
+        "cr5",
+        "cr6",
+        "cr7",
+        "cr8"
+      ],
+      "settings": {}
+    },
+    "how": {
+      "type": "product-how-it-works",
+      "blocks": {
+        "h1": {
+          "type": "step",
+          "settings": {
+            "icon": "gift",
+            "title": "Kies jouw box",
+            "text": "Mini, Happy of Mega — kies wat past bij jouw hond."
+          }
+        },
+        "h2": {
+          "type": "step",
+          "settings": {
+            "icon": "dog",
+            "title": "Vertel over je hond",
+            "text": "Naam, formaat en favoriete speeltjes — wij doen de rest."
+          }
+        },
+        "h3": {
+          "type": "step",
+          "settings": {
+            "icon": "sparkles",
+            "title": "Wij stellen de box samen",
+            "text": "Met liefde gevuld met speelgoed, snacks en knuffels."
+          }
+        },
+        "h4": {
+          "type": "step",
+          "settings": {
+            "icon": "truck",
+            "title": "Verrassing bezorgd!",
+            "text": "De box valt op de mat en het feest kan beginnen."
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ],
+      "settings": {
+        "eyebrow": "Zo makkelijk is het",
+        "title": "Hoe werkt het?"
+      }
+    },
+    "cta": {
+      "type": "product-cta",
+      "settings": {
+        "title": "Klaar om jouw hond te verrassen?",
+        "text": "Geef je beste vriend elke maand het moment waar hij niet meer op kan wachten.",
+        "button_label": "Verras je hond",
+        "button_url": "",
+        "show_decorations": true
+      }
+    }
+  },
+  "order": [
+    "boxes",
+    "compare",
+    "how",
+    "cta"
+  ]
+}

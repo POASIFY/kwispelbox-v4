@@ -1,0 +1,183 @@
+{%- comment -%}
+  sections/box-compare.liquid — KB-v4 "Vergelijk de boxen".
+  CSS-grid vergelijktabel: 3 box-kolommen (box-blokken) × kenmerk-rijen (row-blokken).
+  Eigen namespace `bcmp` om class-botsingen te voorkomen.
+{%- endcomment -%}
+
+{%- assign box_blocks = section.blocks | where: 'type', 'box' -%}
+{%- assign row_blocks = section.blocks | where: 'type', 'row' -%}
+
+<div class="bcmp full-width">
+  <div class="bcmp__inner">
+
+    <header class="bcmp__head">
+      {%- if section.settings.eyebrow != blank -%}<span class="bcmp__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.title != blank -%}<h2 class="bcmp__title">{{ section.settings.title }}</h2>{%- endif -%}
+      {%- if section.settings.intro != blank -%}<p class="bcmp__intro">{{ section.settings.intro }}</p>{%- endif -%}
+    </header>
+
+    {%- if box_blocks.size > 0 and row_blocks.size > 0 -%}
+      <div class="bcmp__scroll">
+        <div class="bcmp__table" style="--cols: {{ box_blocks.size }};">
+
+          {%- comment -%} Kop-rij met box-kolommen {%- endcomment -%}
+          <div class="bcmp__cell bcmp__cell--corner" aria-hidden="true"></div>
+          {%- for box in box_blocks -%}
+            <div class="bcmp__col-head bcmp__col-head--{{ box.settings.accent | default: 'green' }}{% if box.settings.highlight %} is-featured{% endif %}" {{ box.shopify_attributes }}>
+              {%- if box.settings.badge != blank -%}<span class="bcmp__col-badge">{{ box.settings.badge }}</span>{%- endif -%}
+              <span class="bcmp__col-name">{{ box.settings.name }}</span>
+              {%- if box.settings.price != blank -%}<span class="bcmp__col-price">{{ box.settings.price }}</span>{%- endif -%}
+              {%- if box.settings.tagline != blank -%}<span class="bcmp__col-tagline">{{ box.settings.tagline }}</span>{%- endif -%}
+            </div>
+          {%- endfor -%}
+
+          {%- comment -%} Kenmerk-rijen {%- endcomment -%}
+          {%- for row in row_blocks -%}
+            <div class="bcmp__cell bcmp__cell--label" {{ row.shopify_attributes }}>{{ row.settings.label }}</div>
+            {%- assign vals = row.settings.val_1 | append: '||' | append: row.settings.val_2 | append: '||' | append: row.settings.val_3 | split: '||' -%}
+            {%- for box in box_blocks -%}
+              {%- assign v = vals[forloop.index0] | default: '' | strip -%}
+              {%- assign vlow = v | downcase -%}
+              <div class="bcmp__cell bcmp__cell--val{% if box.settings.highlight %} is-featured{% endif %}">
+                {%- if vlow == 'ja' or vlow == 'yes' or v == '✓' -%}
+                  <span class="bcmp__check" aria-label="ja"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                {%- elsif vlow == 'nee' or vlow == 'no' or v == '-' or v == '✗' -%}
+                  <span class="bcmp__cross" aria-label="nee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
+                {%- else -%}
+                  <span class="bcmp__valtext">{{ v }}</span>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+
+          {%- comment -%} CTA-rij {%- endcomment -%}
+          <div class="bcmp__cell bcmp__cell--corner" aria-hidden="true"></div>
+          {%- for box in box_blocks -%}
+            <div class="bcmp__cell bcmp__cell--cta{% if box.settings.highlight %} is-featured{% endif %}">
+              <a href="{{ box.settings.button_url | default: '#' }}" class="bcmp__btn bcmp__btn--{{ box.settings.accent | default: 'green' }}{% if box.settings.highlight %} bcmp__btn--solid{% endif %}">{{ box.settings.button_label | default: 'Kies deze box' }}</a>
+            </div>
+          {%- endfor -%}
+
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+.bcmp { background: transparent; padding: var(--section-pad) 0; }
+.bcmp__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.bcmp__head { text-align: center; max-width: 640px; margin: 0 auto 40px; }
+.bcmp__eyebrow { display: inline-block; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--color-green); margin-bottom: 12px; }
+.bcmp__title { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.08; color: var(--color-ink); margin: 0 0 12px; }
+.bcmp__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0 auto; max-width: 54ch; }
+
+.bcmp__scroll { overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.bcmp__scroll::-webkit-scrollbar { display: none; }
+.bcmp__table { display: grid; grid-template-columns: minmax(120px, 1.3fr) repeat(var(--cols), minmax(96px, 1fr)); min-width: 540px; max-width: 880px; margin: 0 auto; column-gap: 0; }
+
+/* Kop-cellen per box */
+.bcmp__col-head { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; padding: 22px 12px 18px; border-top-left-radius: 20px; border-top-right-radius: 20px; }
+.bcmp__col-head--green { background: #eef7e8; }
+.bcmp__col-head--pink { background: #ffe9f1; }
+.bcmp__col-head--orange { background: #fff1e6; }
+.bcmp__col-head.is-featured { box-shadow: 0 -6px 22px rgba(61, 34, 9, .08); }
+.bcmp__col-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-family: var(--font-body); font-size: .64rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #fff; background: var(--color-pink); padding: 4px 11px; border-radius: var(--radius-pill); box-shadow: 0 4px 12px rgba(231, 84, 128, .3); }
+.bcmp__col-name { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-ink); line-height: 1.05; }
+.bcmp__col-price { font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-green); }
+.bcmp__col-head--pink .bcmp__col-price { color: var(--color-pink); }
+.bcmp__col-head--orange .bcmp__col-price { color: var(--color-orange); }
+.bcmp__col-tagline { font-family: var(--font-body); font-size: .76rem; color: var(--color-muted); }
+
+/* Cellen */
+.bcmp__cell { display: flex; align-items: center; justify-content: center; padding: 15px 12px; border-bottom: 1px solid var(--color-line); font-family: var(--font-body); font-size: .9rem; color: var(--color-ink); text-align: center; }
+.bcmp__cell--label { justify-content: flex-start; text-align: left; font-weight: 700; color: var(--color-ink); }
+.bcmp__cell--val.is-featured { background: color-mix(in srgb, var(--color-pink) 7%, transparent); }
+.bcmp__valtext { font-weight: 600; }
+.bcmp__check { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); }
+.bcmp__check svg { width: 15px; height: 15px; }
+.bcmp__cross { display: inline-flex; color: var(--color-line); }
+.bcmp__cross svg { width: 18px; height: 18px; }
+
+/* CTA-rij */
+.bcmp__cell--cta { padding: 20px 12px; border-bottom: none; }
+.bcmp__cell--cta.is-featured { background: color-mix(in srgb, var(--color-pink) 7%, transparent); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+.bcmp__btn { display: inline-flex; align-items: center; justify-content: center; width: 100%; padding: 11px 14px; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: .92rem; text-decoration: none; border: 2px solid var(--color-green); color: var(--color-green); transition: background 160ms, color 160ms, transform 160ms; }
+.bcmp__btn--pink { border-color: var(--color-pink); color: var(--color-pink); }
+.bcmp__btn--orange { border-color: var(--color-orange); color: var(--color-orange); }
+.bcmp__btn:hover { transform: translateY(-2px); }
+.bcmp__btn--solid { background: var(--color-pink); border-color: var(--color-pink); color: #fff; }
+.bcmp__btn--solid:hover { filter: brightness(.95); }
+.bcmp__btn--green:hover { background: var(--color-green); color: #fff; }
+.bcmp__btn--orange:hover { background: var(--color-orange); color: #fff; }
+
+@media (min-width: 750px) {
+  .bcmp__col-name { font-size: 1.5rem; }
+  .bcmp__cell { font-size: .96rem; padding: 17px 16px; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Box vergelijking",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Rustig kiezen" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Vergelijk de boxen" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Mini, Happy of Mega — bekijk rustig wat er per box in zit en kies wat past bij jouw hond." }
+  ],
+  "blocks": [
+    {
+      "type": "box",
+      "name": "Box-kolom",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "name", "label": "Naam", "default": "Happy" },
+        { "type": "text", "id": "price", "label": "Prijs", "default": "€49,95" },
+        { "type": "text", "id": "tagline", "label": "Tagline", "default": "Onze populairste box" },
+        { "type": "text", "id": "badge", "label": "Badge (optioneel)" },
+        { "type": "checkbox", "id": "highlight", "label": "Uitlichten (featured kolom)", "default": false },
+        {
+          "type": "select", "id": "accent", "label": "Kleur", "default": "green",
+          "options": [
+            { "value": "green", "label": "Groen (Mini)" },
+            { "value": "pink", "label": "Roze (Happy)" },
+            { "value": "orange", "label": "Oranje (Mega)" }
+          ]
+        },
+        { "type": "text", "id": "button_label", "label": "Knoptekst", "default": "Kies deze box" },
+        { "type": "url", "id": "button_url", "label": "Knop link (PDP)" }
+      ]
+    },
+    {
+      "type": "row",
+      "name": "Kenmerk-rij",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Kenmerk", "default": "Aantal verrassingen" },
+        { "type": "text", "id": "val_1", "label": "Waarde box 1", "info": "Tekst, of 'ja' / 'nee' voor vinkje/kruisje", "default": "3–4" },
+        { "type": "text", "id": "val_2", "label": "Waarde box 2", "default": "5–6" },
+        { "type": "text", "id": "val_3", "label": "Waarde box 3", "default": "7–8" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Box vergelijking",
+      "blocks": [
+        { "type": "box", "settings": { "name": "Mini", "price": "€34,95", "tagline": "Voor kleinere honden", "accent": "green", "button_label": "Kies Mini" } },
+        { "type": "box", "settings": { "name": "Happy", "price": "€49,95", "tagline": "Onze populairste box", "badge": "Meest gekozen", "highlight": true, "accent": "pink", "button_label": "Kies Happy" } },
+        { "type": "box", "settings": { "name": "Mega", "price": "€64,95", "tagline": "Voor grote avonturiers", "accent": "orange", "button_label": "Kies Mega" } },
+        { "type": "row", "settings": { "label": "Aantal verrassingen", "val_1": "3–4", "val_2": "5–6", "val_3": "7–8" } },
+        { "type": "row", "settings": { "label": "Voor welke hond", "val_1": "Klein", "val_2": "Alle maten", "val_3": "Groot" } },
+        { "type": "row", "settings": { "label": "Stevige speeltjes", "val_1": "ja", "val_2": "ja", "val_3": "ja" } },
+        { "type": "row", "settings": { "label": "Gezonde snacks", "val_1": "ja", "val_2": "ja", "val_3": "ja" } },
+        { "type": "row", "settings": { "label": "Knuffel", "val_1": "nee", "val_2": "ja", "val_3": "ja" } },
+        { "type": "row", "settings": { "label": "Extra luxe verrassing", "val_1": "nee", "val_2": "nee", "val_3": "ja" } },
+        { "type": "row", "settings": { "label": "Persoonlijk samengesteld", "val_1": "ja", "val_2": "ja", "val_3": "ja" } },
+        { "type": "row", "settings": { "label": "Gratis verzending", "val_1": "nee", "val_2": "ja", "val_3": "ja" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
