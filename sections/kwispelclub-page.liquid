@@ -128,8 +128,10 @@
             <li class="kc-step" {{ block.shopify_attributes }}>
               <span class="kc-step__icon kc-step__icon--{{ block.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
               <span class="kc-step__num">{{ forloop.index }}</span>
-              {%- if block.settings.title != blank -%}<strong class="kc-step__title">{{ block.settings.title }}</strong>{%- endif -%}
-              {%- if block.settings.text != blank -%}<span class="kc-step__text">{{ block.settings.text }}</span>{%- endif -%}
+              <div class="kc-step__body">
+                {%- if block.settings.title != blank -%}<strong class="kc-step__title">{{ block.settings.title }}</strong>{%- endif -%}
+                {%- if block.settings.text != blank -%}<span class="kc-step__text">{{ block.settings.text }}</span>{%- endif -%}
+              </div>
             </li>
           {%- endfor -%}
         </ol>
@@ -274,6 +276,7 @@
 .kc-step__icon--yellow { background: #fffae0; color: #d99100; }
 .kc-step__icon .lucide { width: 28px; height: 28px; }
 .kc-step__num { position: absolute; top: -2px; left: 44px; z-index: 2; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--color-ink); color: #fff; font-family: var(--font-heading); font-size: .7rem; }
+.kc-step__body { min-width: 0; }
 .kc-step__title { display: block; font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-ink); line-height: 1.15; margin-top: 4px; }
 .kc-step__text { font-family: var(--font-body); font-size: .86rem; line-height: 1.5; color: var(--color-body); }
 
