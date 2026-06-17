@@ -59,22 +59,30 @@
           <div class="kbcart__card">
 
             {%- comment -%} Gratis-verzending voortgang {%- endcomment -%}
+            {%- comment -%} Beloningsladder: gratis verzending (€75) → gratis mystery verrassing (€89) {%- endcomment -%}
             {%- if section.settings.show_shipping_bar and threshold > 0 -%}
+              {%- assign gift_t = section.settings.gift_threshold | times: 100 -%}
+              {%- assign gift_name = section.settings.gift_label | default: 'mystery verrassing' -%}
+              {%- if gift_t > threshold -%}{%- assign bar_top = gift_t -%}{%- else -%}{%- assign bar_top = threshold -%}{%- endif -%}
+              {%- assign bar_pct = cart.total_price | times: 100 | divided_by: bar_top -%}
+              {%- if bar_pct > 100 -%}{%- assign bar_pct = 100 -%}{%- endif -%}
               <div class="kbcart__ship">
                 <div class="kbcart__ship-row">
-                  <span class="kbcart__ship-icon" aria-hidden="true">{%- render 'lucide', icon: 'truck' -%}</span>
-                  {%- if cart.total_price >= threshold -%}
-                    <p class="kbcart__ship-msg">Hoera! Je krijgt <strong>gratis verzending</strong>.</p>
-                    {%- assign ship_pct = 100 -%}
+                  {%- if gift_t > 0 and cart.total_price >= gift_t -%}
+                    <p class="kbcart__ship-msg"><span class="kbcart__ship-emoji" aria-hidden="true">🎁</span> Je krijgt een <strong>gratis {{ gift_name }}</strong> bij je bestelling!</p>
+                  {%- elsif cart.total_price >= threshold -%}
+                    <p class="kbcart__ship-msg"><span class="kbcart__ship-emoji" aria-hidden="true">🎉</span> Je hebt <strong>gratis verzending</strong>!{% if gift_t > threshold %} Nog <strong>{{ gift_t | minus: cart.total_price | money }}</strong> tot een gratis {{ gift_name }}.{% endif %}</p>
                   {%- else -%}
-                    {%- assign remaining = threshold | minus: cart.total_price -%}
-                    <p class="kbcart__ship-msg">Nog <strong>{{ remaining | money }}</strong> tot gratis verzending.</p>
-                    {%- assign ship_pct = cart.total_price | times: 100 | divided_by: threshold -%}
+                    <p class="kbcart__ship-msg">Nog <strong>{{ threshold | minus: cart.total_price | money }}</strong> tot gratis verzending{% if gift_t > threshold %} · nog <strong>{{ gift_t | minus: cart.total_price | money }}</strong> tot een gratis {{ gift_name }}{% endif %}.</p>
                   {%- endif -%}
-                  <span class="kbcart__ship-gift" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
                 </div>
-                <div class="kbcart__ship-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ ship_pct }}">
-                  <span class="kbcart__ship-fill" style="width: {{ ship_pct }}%;"></span>
+                <div class="kbcart__ship-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ bar_pct }}">
+                  <span class="kbcart__ship-fill" style="width: {{ bar_pct }}%;"></span>
+                  {%- if gift_t > threshold -%}
+                    {%- assign ship_pos = threshold | times: 100 | divided_by: gift_t -%}
+                    <span class="kbcart__ship-node{% if cart.total_price >= threshold %} is-reached{% endif %}" style="left: {{ ship_pos }}%;" title="Gratis verzending vanaf {{ threshold | money_without_trailing_zeros }}"><span aria-hidden="true">🚚</span></span>
+                  {%- endif -%}
+                  <span class="kbcart__ship-node kbcart__ship-node--end{% if cart.total_price >= bar_top %} is-reached{% endif %}" title="Gratis {{ gift_name }} vanaf {{ gift_t | money_without_trailing_zeros }}"><span aria-hidden="true">🎁</span></span>
                 </div>
               </div>
             {%- endif -%}
@@ -370,16 +378,16 @@
 .kbcart__card { background: #fff; border-radius: var(--radius-lg); padding: 22px; box-shadow: 0 16px 40px rgba(0,0,0,.04); }
 
 /* Gratis verzending */
-.kbcart__ship { padding-bottom: 18px; margin-bottom: 6px; border-bottom: 1px solid var(--color-line); }
-.kbcart__ship-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.kbcart__ship-icon { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); flex-shrink: 0; }
-.kbcart__ship-icon .lucide { width: 20px; height: 20px; }
-.kbcart__ship-msg { flex: 1; font-family: var(--font-body); font-size: 1.02rem; color: var(--color-body); margin: 0; }
+.kbcart__ship { padding-bottom: 20px; margin-bottom: 6px; border-bottom: 1px solid var(--color-line); }
+.kbcart__ship-row { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.kbcart__ship-msg { flex: 1; font-family: var(--font-body); font-size: 1rem; color: var(--color-body); margin: 0; line-height: 1.45; }
 .kbcart__ship-msg strong { color: var(--color-ink); }
-.kbcart__ship-gift { color: var(--color-pink); flex-shrink: 0; }
-.kbcart__ship-gift .lucide { width: 30px; height: 30px; }
-.kbcart__ship-track { height: 10px; border-radius: var(--radius-pill); background: var(--color-line); overflow: hidden; }
-.kbcart__ship-fill { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--color-green); transition: width 300ms ease; }
+.kbcart__ship-emoji { font-size: 1.15em; }
+.kbcart__ship-track { position: relative; height: 8px; border-radius: var(--radius-pill); background: var(--color-line); margin: 6px 14px 0; }
+.kbcart__ship-fill { display: block; height: 100%; border-radius: var(--radius-pill); background: linear-gradient(90deg, var(--color-green), var(--color-pink)); transition: width 350ms ease; }
+.kbcart__ship-node { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 2px solid var(--color-line); display: flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; z-index: 1; box-shadow: 0 2px 6px rgba(61, 34, 9, .12); }
+.kbcart__ship-node--end { left: 100%; }
+.kbcart__ship-node.is-reached { border-color: var(--color-green); background: #e8f5e2; }
 
 /* Regelitems */
 .kbcart__items { list-style: none; margin: 0; padding: 0; }
@@ -573,8 +581,10 @@
     { "type": "image_picker", "id": "dog_image", "label": "Hond-afbeelding (PNG transparant, gluurt over de kaart)" },
     { "type": "checkbox", "id": "show_decorations", "label": "Pootjes-decoratie tonen", "default": true },
     { "type": "header", "content": "Gratis verzending" },
-    { "type": "checkbox", "id": "show_shipping_bar", "label": "Voortgangsbalk tonen", "default": true },
+    { "type": "checkbox", "id": "show_shipping_bar", "label": "Beloningsladder tonen", "default": true },
     { "type": "number", "id": "free_shipping_threshold", "label": "Drempel gratis verzending (in €)", "default": 75 },
+    { "type": "number", "id": "gift_threshold", "label": "Drempel gratis cadeau (in €)", "default": 89, "info": "0 = geen tweede drempel." },
+    { "type": "text", "id": "gift_label", "label": "Naam gratis cadeau", "default": "mystery verrassing" },
     { "type": "header", "content": "Inpak-upsell" },
     { "type": "text", "id": "giftwrap_handle", "label": "Product-handle inpakken", "default": "inpakken", "info": "Verschijnt alleen als dit product bestaat en koopbaar is." },
     { "type": "text", "id": "giftwrap_title", "label": "Titel", "default": "Cadeautjes inpakken" },
