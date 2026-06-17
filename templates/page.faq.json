@@ -52,13 +52,6 @@
             "answer": "<p>Ja. We selecteren alleen stevige, geteste speeltjes en natuurlijke, gezonde snacks waar honden dol op zijn.</p>"
           }
         },
-        "q6": {
-          "type": "faq",
-          "settings": {
-            "question": "Hebben jullie ook een abonnement?",
-            "answer": "<p>Je kunt eenmalig bestellen of kiezen voor een voordelig abonnement, zodat je hond nooit een verrassing mist. Je kunt altijd pauzeren of opzeggen.</p>"
-          }
-        },
         "q7": {
           "type": "faq",
           "settings": {
@@ -80,7 +73,6 @@
         "q3",
         "q4",
         "q5",
-        "q6",
         "q7",
         "q8"
       ],
