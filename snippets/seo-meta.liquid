@@ -67,6 +67,12 @@
           assign d = page.content | strip_html | truncate: 155
       endcase
 
+    when 'collection'
+      # utility-collecties niet indexeren (geen SEO-landing); t/d vallen terug op de SEO-metavelden
+      if collection.handle == 'frontpage' or collection.handle == 'maak-er-een-echt-cadeautje-van'
+        assign noindex = true
+      endif
+
     when 'search'
       assign noindex = true
       assign t = 'Zoekresultaten'
