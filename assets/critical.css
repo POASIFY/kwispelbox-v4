@@ -14,8 +14,9 @@ body {
 }
 
 /* Sticky header: het section-group-wrapperelement (directe body-child) moet sticky zijn.
-   position:sticky op de binnenste wrapper plakt anders binnen z'n korte .shopify-section en scrollt mee weg. */
-.shopify-section-group-header-group {
+   Dubbele class (.shopify-section.shopify-section-group-header-group) → hogere specificiteit dan
+   de algemene `.shopify-section { position: relative }` die er verderop staat, anders wint relative. */
+.shopify-section.shopify-section-group-header-group {
   position: sticky;
   top: 0;
   z-index: 100;
