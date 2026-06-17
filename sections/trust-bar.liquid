@@ -44,8 +44,10 @@
 
 /* Mobiel: 3 op een rij (de 4e wrapt netjes gecentreerd), icoon boven de tekst */
 @media (max-width: 749px) {
-  .kbtrust__list { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 0; padding: 18px 6px; }
-  .kbtrust__item { flex: 0 0 33.333%; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 4px 6px; }
+  .kbtrust__list { display: flex; justify-content: center; gap: 0; padding: 18px 4px; }
+  /* exact 3 tonen op mobiel — de 4e USP verbergen (geen losse 4e op een tweede rij) */
+  .kbtrust__item:nth-child(4) { display: none; }
+  .kbtrust__item { flex: 1 1 0; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 4px 6px; }
   .kbtrust__item + .kbtrust__item { border-left: none; }
   .kbtrust__icon { width: 42px; height: 42px; }
   .kbtrust__icon svg { width: 21px; height: 21px; }

@@ -229,7 +229,9 @@
 
   .kbx-card { padding: 14px 14px 18px; }
   .kbx-card__media { margin-bottom: 14px; }
-  .kbx-card__img { height: 220px; }
+  /* afbeelding vult de hele kaartbreedte (geen witruimte rondom) */
+  .kbx-card__img { width: 100%; height: 230px; object-fit: cover; }
+  .kbx-card__stage { display: none; }
   .kbx-card__lines { display: none; }
   .kbx-card__body { padding: 0 4px; }
   .kbx-card__title { font-size: 1.4rem; margin-bottom: 6px; }
