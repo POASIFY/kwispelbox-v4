@@ -16,8 +16,8 @@
           "type": "box_option",
           "settings": {
             "variant_title": "Mini",
-            "description": "Voor kleinere honden",
-            "item_count": "3–4 verrassingen",
+            "description": "Een fijne kennismaking",
+            "item_count": "± 5 verrassingen",
             "badge_text": "",
             "badge_color": "pink"
           }
@@ -26,8 +26,8 @@
           "type": "box_option",
           "settings": {
             "variant_title": "Happy",
-            "description": "Onze populairste box",
-            "item_count": "5–6 verrassingen",
+            "description": "Onze populairste keuze",
+            "item_count": "± 7 verrassingen",
             "badge_text": "Meest gekozen",
             "badge_color": "pink"
           }
@@ -36,8 +36,8 @@
           "type": "box_option",
           "settings": {
             "variant_title": "Mega",
-            "description": "Voor grote avonturiers",
-            "item_count": "7–8 verrassingen",
+            "description": "Maximaal verwennen",
+            "item_count": "± 10 verrassingen",
             "badge_text": "",
             "badge_color": "pink"
           }
