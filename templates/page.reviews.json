@@ -103,9 +103,145 @@
           }
         }
       },
-      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6"],
+      "block_order": [
+        "r1",
+        "r2",
+        "r3",
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "settings": {}
+    },
+    "tmpcompare": {
+      "type": "box-compare",
+      "blocks": {
+        "cb1": {
+          "type": "box",
+          "settings": {
+            "name": "Mini",
+            "price": "€34,95",
+            "tagline": "Voor kleinere honden",
+            "accent": "green",
+            "button_label": "Kies Mini",
+            "button_url": "/products/kwispelbox"
+          }
+        },
+        "cb2": {
+          "type": "box",
+          "settings": {
+            "name": "Happy",
+            "price": "€49,95",
+            "tagline": "Onze populairste box",
+            "badge": "Meest gekozen",
+            "highlight": true,
+            "accent": "pink",
+            "button_label": "Kies Happy",
+            "button_url": "/products/kwispelbox"
+          }
+        },
+        "cb3": {
+          "type": "box",
+          "settings": {
+            "name": "Mega",
+            "price": "€64,95",
+            "tagline": "Voor grote avonturiers",
+            "accent": "orange",
+            "button_label": "Kies Mega",
+            "button_url": "/products/kwispelbox"
+          }
+        },
+        "cr1": {
+          "type": "row",
+          "settings": {
+            "label": "Aantal verrassingen",
+            "val_1": "3–4",
+            "val_2": "5–6",
+            "val_3": "7–8"
+          }
+        },
+        "cr2": {
+          "type": "row",
+          "settings": {
+            "label": "Voor welke hond",
+            "val_1": "Klein",
+            "val_2": "Alle maten",
+            "val_3": "Groot"
+          }
+        },
+        "cr3": {
+          "type": "row",
+          "settings": {
+            "label": "Stevige speeltjes",
+            "val_1": "ja",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        },
+        "cr4": {
+          "type": "row",
+          "settings": {
+            "label": "Gezonde snacks",
+            "val_1": "ja",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        },
+        "cr5": {
+          "type": "row",
+          "settings": {
+            "label": "Knuffel om te koesteren",
+            "val_1": "nee",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        },
+        "cr6": {
+          "type": "row",
+          "settings": {
+            "label": "Extra luxe verrassing",
+            "val_1": "nee",
+            "val_2": "nee",
+            "val_3": "ja"
+          }
+        },
+        "cr7": {
+          "type": "row",
+          "settings": {
+            "label": "Persoonlijk samengesteld",
+            "val_1": "ja",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        },
+        "cr8": {
+          "type": "row",
+          "settings": {
+            "label": "Gratis verzending",
+            "val_1": "nee",
+            "val_2": "ja",
+            "val_3": "ja"
+          }
+        }
+      },
+      "block_order": [
+        "cb1",
+        "cb2",
+        "cb3",
+        "cr1",
+        "cr2",
+        "cr3",
+        "cr4",
+        "cr5",
+        "cr6",
+        "cr7",
+        "cr8"
+      ],
       "settings": {}
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "tmpcompare"
+  ]
 }
