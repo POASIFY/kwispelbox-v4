@@ -804,6 +804,17 @@
             "url": "/pages/contact"
           }
         },
+        "ait7": {
+          "type": "about_item",
+          "settings": {
+            "menu_item_index": 5,
+            "icon": "handshake",
+            "color": "green",
+            "title": "Partner worden",
+            "description": "Werk samen met Kwispelbox en verras jouw klanten.",
+            "url": "/pages/partners"
+          }
+        },
         "aus1": {
           "type": "about_usp",
           "settings": {
@@ -979,6 +990,7 @@
         "ait4",
         "ait5",
         "ait6",
+        "ait7",
         "aus1",
         "aus2",
         "aus3",
