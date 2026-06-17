@@ -570,7 +570,7 @@
             "color": "green",
             "title": "Word gratis lid",
             "description": "Meld je aan in een paar seconden en profiteer direct",
-            "url": "/pages/kwispelclub"
+            "url": "/pages/kwispelclub#word-lid"
           }
         },
         "cit2": {
@@ -581,7 +581,7 @@
             "color": "yellow",
             "title": "Kwispels sparen",
             "description": "Spaar Kwispels bij elke bestelling en wissel ze in voor leuke beloningen",
-            "url": "/pages/kwispelclub"
+            "url": "/pages/kwispelclub#zo-werkt-het"
           }
         },
         "cit3": {
@@ -592,7 +592,7 @@
             "color": "pink",
             "title": "Exclusieve kortingen",
             "description": "Alleen voor leden: speciale acties en kortingen het hele jaar door",
-            "url": "/pages/kwispelclub"
+            "url": "/pages/kwispelclub#voordelen"
           }
         },
         "cit4": {
@@ -603,7 +603,7 @@
             "color": "orange",
             "title": "Hond van de maand",
             "description": "Deel jouw foto en maak kans op een plekje in de spotlight",
-            "url": "/pages/kwispelclub"
+            "url": "/pages/kwispelclub#hond-van-de-maand"
           }
         },
         "cit5": {
@@ -614,7 +614,7 @@
             "color": "purple",
             "title": "Verjaardagsvoordelen",
             "description": "Tijd voor taart! Ontvang een leuke verrassing voor jouw hond",
-            "url": "/pages/kwispelclub"
+            "url": "/pages/kwispelclub#voordelen"
           }
         },
         "cit6": {
@@ -625,7 +625,7 @@
             "color": "green",
             "title": "Clubnieuws & surprises",
             "description": "Als eerste op de hoogte van nieuwe boxen, acties en verrassingen.",
-            "url": "/pages/kwispelclub"
+            "url": "/pages/kwispelclub#clubnieuws"
           }
         },
         "crw1": {

@@ -15,7 +15,7 @@
   <div class="kc__inner">
 
     {%- comment -%} ── HERO ─────────────────────────────── {%- endcomment -%}
-    <section class="kc-hero">
+    <section class="kc-hero kc-anchor" id="word-lid">
       <div class="kc-hero__text">
         {%- if section.settings.hero_eyebrow != blank -%}
           <span class="kc-hero__eyebrow">{{ section.settings.hero_eyebrow }}<span class="kc-hero__eyebrow-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span></span>
@@ -78,7 +78,7 @@
 
     {%- comment -%} ── VOORDELEN ────────────────────────── {%- endcomment -%}
     {%- if benefit_blocks.size > 0 -%}
-      <section class="kc-benefits">
+      <section class="kc-benefits kc-anchor" id="voordelen">
         {%- if section.settings.benefits_title != blank -%}<h2 class="kc-benefits__title">{{ section.settings.benefits_title }}</h2>{%- endif -%}
         <div class="kc-benefits__grid">
           {%- for block in benefit_blocks -%}
@@ -94,7 +94,7 @@
 
     {%- comment -%} ── KWISPELAAR VAN DE MAAND ──────────── {%- endcomment -%}
     {%- if section.settings.spotlight_name != blank or section.settings.spotlight_text != blank -%}
-      <section class="kc-spotlight">
+      <section class="kc-spotlight kc-anchor" id="hond-van-de-maand">
         <span class="kc-deco kc-spotlight__deco--paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
         <span class="kc-deco kc-spotlight__deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
         <div class="kc-spotlight__photo">
@@ -121,7 +121,7 @@
 
     {%- comment -%} ── ZO WERKT HET (tijdlijn) ──────────── {%- endcomment -%}
     {%- if step_blocks.size > 0 -%}
-      <section class="kc-steps">
+      <section class="kc-steps kc-anchor" id="zo-werkt-het">
         {%- if section.settings.steps_title != blank -%}<h2 class="kc-steps__title">{{ section.settings.steps_title }}</h2>{%- endif -%}
         <ol class="kc-steps__list">
           {%- for block in step_blocks -%}
@@ -138,7 +138,7 @@
 
     {%- comment -%} ── NIEUWSBRIEF ──────────────────────── {%- endcomment -%}
     {%- if section.settings.news_title != blank -%}
-      <section class="kc-news">
+      <section class="kc-news kc-anchor" id="clubnieuws">
         <div class="kc-news__illu" aria-hidden="true">
           {%- if section.settings.news_image != blank -%}
             <img src="{{ section.settings.news_image | image_url: width: 320 }}" alt="" width="120" height="120" loading="lazy">
@@ -186,6 +186,8 @@
 
 {% stylesheet %}
 
+/* Anker-secties: offset zodat de sticky header de sectie niet bedekt bij #-links */
+.kc-anchor { scroll-margin-top: clamp(90px, 13vw, 150px); }
 .kc { background: var(--color-cream); padding: 40px 0 72px; }
 .kc__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); display: flex; flex-direction: column; gap: 44px; }
 .kc-deco { position: absolute; pointer-events: none; }

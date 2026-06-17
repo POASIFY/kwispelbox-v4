@@ -17,6 +17,11 @@ html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
   overflow: hidden;
 }
 
+/* Soepel scrollen naar #anker-links (uitgezet bij prefers-reduced-motion, zie hieronder) */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Toegankelijkheid: zichtbare focus voor toetsenbord-gebruikers (WCAG) */
 :where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
   outline: 3px solid var(--color-green, #66aa44);
