@@ -1,0 +1,117 @@
+{%- comment -%}
+  snippets/seo-meta.liquid — KB-v4 per-pagina <title>, meta description en robots.
+  Titels eindigen op " | Kwispelbox.com" (≈50-60 tekens), descriptions ≈150 tekens.
+  Bepaalt ook welke pagina's op noindex staan (dunne/dubbele content + zoekresultaten).
+{%- endcomment -%}
+
+{%- liquid
+  assign t = ''
+  assign d = ''
+  assign noindex = false
+
+  case request.page_type
+    when 'index'
+      assign t = 'De leukste verrassingsbox voor je hond'
+      assign d = 'Elke maand een verrassingsbox vol stevige speeltjes, gezonde snacks en knuffels voor je hond. Met zorg samengesteld en gratis verzonden vanaf €75.'
+
+    when 'product'
+      case product.handle
+        when 'kwispelbox'
+          assign t = 'Kwispelbox – verrassingsbox voor je hond'
+          assign d = 'Kies Mini, Happy of Mega en verras je hond met een box vol stevig speelgoed en gezonde snacks. Voor 16:00 besteld, vandaag verzonden.'
+        when 'verjaardag-box'
+          assign t = 'Verjaardagsbox voor je hond'
+          assign d = 'Vier de verjaardag van je hond met een box vol speeltjes, snacks en een feestelijke verrassing. Maak die ene dag onvergetelijk.'
+        when 'kerst-box'
+          assign t = 'Kerstbox voor je hond'
+          assign d = 'Een feestelijke hondenbox voor onder de boom: speeltjes, snacks en knuffels om samen van de kerst te genieten.'
+        when 'halloween-box'
+          assign t = 'Halloweenbox voor je hond'
+          assign d = 'Spookgezellige speeltjes en snacks voor je hond. Maak Halloween net even leuker met deze speelse themabox.'
+        when 'valentijn-box'
+          assign t = 'Valentijnsbox voor je hond'
+          assign d = 'Laat je hond voelen hoe geliefd hij is met een box vol speeltjes en lekkers. Het cadeau voor je trouwste valentijn.'
+        when 'dierendag-box'
+          assign t = 'Dierendagbox voor je hond'
+          assign d = 'Vier Dierendag op 4 oktober met een box vol speelplezier en snacks. Geef je hond het feestje dat hij verdient.'
+        else
+          assign t = product.title
+          assign d = product.description | strip_html | truncate: 155
+      endcase
+
+    when 'page'
+      case page.handle
+        when 'boxen'
+          assign t = 'Alle Kwispelboxen – Mini, Happy & Mega'
+          assign d = 'Mini, Happy of Mega? Vergelijk onze hondenboxen op inhoud en prijs en kies de verrassingsbox die past bij jouw hond.'
+        when 'special-editions'
+          assign t = 'Special Editions – themaboxen voor honden'
+          assign d = 'Van verjaardag tot kerst: onze Special Edition hondenboxen maken elk bijzonder moment leuker. Bekijk alle themaboxen.'
+        when 'over-ons'
+          assign t = 'Over ons – het verhaal van Kwispelbox'
+          assign d = 'Lees het verhaal achter Kwispelbox: waarom we met liefde elke maand een verrassingsbox samenstellen voor honden.'
+        when 'contact'
+          assign t = 'Contact & klantenservice'
+          assign d = 'Een vraag over je box, bestelling of de Kwispelclub? Neem contact op met ons team. We reageren meestal binnen 1 werkdag.'
+        when 'faq'
+          assign t = 'Veelgestelde vragen'
+          assign d = 'Antwoorden op veelgestelde vragen over de Kwispelbox: bezorging, personaliseren, retour, het abonnement en de Kwispelclub.'
+        when 'reviews'
+          assign t = 'Reviews – 1.200+ blije honden'
+          assign d = 'Lees wat baasjes over Kwispelbox zeggen. Ruim 1.200 blije honden gingen je voor, met een gemiddelde van 4,9 uit 5 sterren.'
+        when 'kwispelclub'
+          assign t = "Kwispelclub – spaar & ontvang extra's"
+          assign d = 'Word gratis lid van de Kwispelclub: spaar Kwispels, ontvang extra verrassingen en doe mee met leuke acties voor je hond.'
+        when 'cadeau'
+          assign t = 'Hondencadeau – het cadeau voor je hond'
+          assign d = 'Op zoek naar een hondencadeau? Verras een hond (of het baasje) met een Kwispelbox vol speeltjes en snacks, mooi ingepakt.'
+        when 'verzendbeleid'
+          assign t = 'Verzending & bezorging'
+          assign d = 'Alles over de bezorging van je Kwispelbox: levertijden, verzendkosten en track & trace. Gratis verzonden vanaf €75.'
+        when 'retourbeleid'
+          assign t = 'Retourneren & geld terug'
+          assign d = 'Niet helemaal blij? Lees hoe je de Kwispelbox binnen 30 dagen retourneert. Niet goed, geld terug — dat beloven we.'
+        when 'betaalmogelijkheden'
+          assign t = 'Betaalmethoden – veilig betalen'
+          assign d = 'Bekijk hoe je veilig betaalt bij Kwispelbox: iDEAL, creditcard en meer. Snel en vertrouwd afrekenen voor je hondenbox.'
+        when 'cookiebeleid'
+          assign t = 'Cookiebeleid'
+          assign d = 'Lees hoe Kwispelbox cookies gebruikt en hoe je je voorkeuren beheert.'
+        when 'verzending-retour'
+          assign noindex = true
+          assign t = page.title
+        when 'hoe-werkt-het'
+          assign noindex = true
+          assign t = 'Hoe werkt het?'
+          assign d = 'Kies je box, vertel iets over je hond, en wij stellen met liefde een verrassing samen. Zo werkt de Kwispelbox.'
+        else
+          assign t = page.title
+          assign d = page.content | strip_html | truncate: 155
+      endcase
+
+    when 'search'
+      assign noindex = true
+      assign t = 'Zoekresultaten'
+
+    when 'collection'
+      assign t = collection.title
+      assign d = collection.description | strip_html | truncate: 155
+
+    when '404'
+      assign noindex = true
+      assign t = 'Pagina niet gevonden'
+  endcase
+
+  if t == blank
+    assign t = page_title | default: shop.name
+  endif
+  if d == blank
+    assign d = page_description | default: shop.description | default: shop.name
+  endif
+-%}
+
+<title>{{ t | strip_html }} | Kwispelbox.com</title>
+<meta name="description" content="{{ d | strip_html | escape }}">
+{%- if noindex -%}
+<meta name="robots" content="noindex,follow">
+{%- endif -%}
