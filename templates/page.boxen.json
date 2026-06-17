@@ -29,7 +29,7 @@
             "benefit_3": "Met liefde samengesteld",
             "benefit_4": "",
             "benefit_5": "",
-            "price": "€39,95",
+            "price": "€44,95",
             "price_suffix": "",
             "highlight": false,
             "button_label": "Bekijk box",
@@ -124,7 +124,7 @@
           "type": "box",
           "settings": {
             "name": "Mini",
-            "price": "€34,95",
+            "price": "€44,95",
             "tagline": "Voor kleinere honden",
             "accent": "green",
             "button_label": "Kies Mini",
@@ -135,7 +135,7 @@
           "type": "box",
           "settings": {
             "name": "Happy",
-            "price": "€49,95",
+            "price": "€64,95",
             "tagline": "Onze populairste box",
             "badge": "Meest gekozen",
             "highlight": true,
@@ -148,7 +148,7 @@
           "type": "box",
           "settings": {
             "name": "Mega",
-            "price": "€64,95",
+            "price": "€89,95",
             "tagline": "Voor grote avonturiers",
             "accent": "orange",
             "button_label": "Kies Mega",
