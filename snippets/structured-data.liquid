@@ -118,13 +118,7 @@
     "availability": {{ avail | json }},
     "itemCondition": "https://schema.org/NewCondition"
   }
-  {%- if settings.seo_show_rating and settings.seo_rating_value != blank -%},
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": {{ settings.seo_rating_value | json }},
-    "reviewCount": {{ settings.seo_rating_count | default: 1 | json }}
-  }
-  {%- endif -%}
 }
+{%- comment -%} aggregateRating/review wordt geleverd door Judge.me (eigen structured data) — niet hier, om dubbele rating te voorkomen. {%- endcomment -%}
 </script>
 {%- endif -%}
