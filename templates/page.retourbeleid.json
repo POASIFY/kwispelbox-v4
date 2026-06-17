@@ -1,0 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "info-page",
+      "blocks": {
+        "l1": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Retourtermijn",
+            "text": "<p>Je hebt 30 dagen vanaf ontvangst om je bestelling te retourneren.</p>"
+          }
+        },
+        "l2": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Voorwaarden",
+            "text": "<p>Producten moeten ongebruikt en in de originele staat zijn. Geopende snacks kunnen om hygiënische redenen niet retour.</p>"
+          }
+        },
+        "l3": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Hoe retourneren",
+            "text": "<p>Mail naar hello@kwispelbox.nl met je bestelnummer. Wij sturen je de retourinstructies.</p>"
+          }
+        },
+        "l4": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Terugbetaling",
+            "text": "<p>Na ontvangst van de retour betalen we binnen 14 dagen het aankoopbedrag terug via dezelfde betaalmethode.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "l2",
+        "l3",
+        "l4"
+      ],
+      "settings": {
+        "eyebrow": "Juridisch",
+        "title": "Retourbeleid",
+        "intro": "Hoe en binnen welke termijn je je bestelling kunt retourneren."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

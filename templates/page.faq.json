@@ -1,0 +1,100 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "product-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "Hoe werkt een Kwispelbox?",
+            "answer": "<p>Je kiest een box (Mini, Happy of Mega), vertelt iets over je hond, en wij stellen met liefde een verrassing samen vol speeltjes, snacks en knuffels.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "Wanneer wordt mijn box bezorgd?",
+            "answer": "<p>Voor 16:00 besteld? Dan gaat je box dezelfde werkdag op de post. Levering duurt daarna meestal 1–2 werkdagen.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan ik de box personaliseren?",
+            "answer": "<p>Zeker! Op de productpagina kun je de naam van je hond, formaat, favoriete speeltjes en allergieën doorgeven, plus een persoonlijk berichtje.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "Wat als een product niet bevalt?",
+            "answer": "<p>Niet blij? Je hebt 30 dagen niet-goed-geld-terug garantie. Neem contact op en we lossen het op.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "Zijn de speeltjes en snacks veilig?",
+            "answer": "<p>Ja. We selecteren alleen stevige, geteste speeltjes en natuurlijke, gezonde snacks waar honden dol op zijn.</p>"
+          }
+        },
+        "q6": {
+          "type": "faq",
+          "settings": {
+            "question": "Hebben jullie ook een abonnement?",
+            "answer": "<p>Je kunt eenmalig bestellen of kiezen voor een voordelig abonnement, zodat je hond nooit een verrassing mist. Je kunt altijd pauzeren of opzeggen.</p>"
+          }
+        },
+        "q7": {
+          "type": "faq",
+          "settings": {
+            "question": "Wat is de Kwispelclub?",
+            "answer": "<p>De Kwispelclub is onze gratis club: spaar Kwispels, ontvang extra verrassingen en doe mee met leuke acties zoals \"Hond van de maand\".</p>"
+          }
+        },
+        "q8": {
+          "type": "faq",
+          "settings": {
+            "question": "Kan ik een box cadeau geven?",
+            "answer": "<p>Absoluut — een Kwispelbox is het perfecte cadeau voor een hond (of hun baasje). Voeg een persoonlijk kaartje toe in de winkelwagen.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7",
+        "q8"
+      ],
+      "settings": {
+        "title": "Veelgestelde vragen",
+        "contact_title": "Geen antwoord gevonden?",
+        "contact_text": "Ons team helpt je graag persoonlijk verder.",
+        "contact_cta_label": "Neem contact op",
+        "contact_cta_url": "/pages/contact",
+        "contact_email": "hello@kwispelbox.nl"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,65 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "contact-page",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "icon": "mail",
+            "color": "green",
+            "title": "Mail ons",
+            "text": "hello@kwispelbox.nl",
+            "link_label": "Stuur een mail",
+            "link_url": "mailto:hello@kwispelbox.nl"
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "icon": "truck",
+            "color": "orange",
+            "title": "Bestelling volgen",
+            "text": "Bekijk waar je verrassing is.",
+            "link_label": "Track & trace",
+            "link_url": "/pages/bestelling-volgen"
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "icon": "bulb",
+            "color": "pink",
+            "title": "Veelgestelde vragen",
+            "text": "Misschien staat je antwoord er al.",
+            "link_label": "Naar de FAQ",
+            "link_url": "/pages/faq"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

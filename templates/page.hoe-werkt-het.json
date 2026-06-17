@@ -1,0 +1,79 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "how": {
+      "type": "product-how-it-works",
+      "blocks": {
+        "h1": {
+          "type": "step",
+          "settings": {
+            "icon": "gift",
+            "title": "Kies jouw box",
+            "text": "Mini, Happy of Mega — kies wat past bij jouw hond."
+          }
+        },
+        "h2": {
+          "type": "step",
+          "settings": {
+            "icon": "dog",
+            "title": "Vertel over je hond",
+            "text": "Naam, formaat en favoriete speeltjes — wij doen de rest."
+          }
+        },
+        "h3": {
+          "type": "step",
+          "settings": {
+            "icon": "sparkles",
+            "title": "Wij stellen de box samen",
+            "text": "Met liefde gevuld met speelgoed, snacks en knuffels."
+          }
+        },
+        "h4": {
+          "type": "step",
+          "settings": {
+            "icon": "truck",
+            "title": "Verrassing bezorgd!",
+            "text": "De box valt op de mat en het feest kan beginnen."
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ],
+      "settings": {
+        "eyebrow": "Zo makkelijk is het",
+        "title": "Hoe werkt het?"
+      }
+    },
+    "cta": {
+      "type": "product-cta",
+      "settings": {
+        "title": "Klaar om jouw hond te verrassen?",
+        "text": "Geef je beste vriend elke maand het moment waar hij niet meer op kan wachten.",
+        "button_label": "Verras je hond",
+        "button_url": "",
+        "show_decorations": true
+      }
+    }
+  },
+  "order": [
+    "how",
+    "cta"
+  ]
+}

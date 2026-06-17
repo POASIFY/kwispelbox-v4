@@ -1,0 +1,135 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "boxes": {
+      "type": "product-boxes",
+      "blocks": {
+        "box-mini": {
+          "type": "box",
+          "settings": {
+            "accent": "green",
+            "badge": "Klein maar fijn",
+            "title": "Mini Kwispelbox",
+            "description": "Perfect om kennis te maken of als klein cadeautje.",
+            "benefit_1": "5–7 speeltjes & snacks",
+            "benefit_2": "Geschikt voor kleine honden",
+            "benefit_3": "Met liefde samengesteld",
+            "benefit_4": "",
+            "benefit_5": "",
+            "price": "€39,95",
+            "price_suffix": "",
+            "highlight": false,
+            "button_label": "Bekijk box",
+            "button_url": ""
+          }
+        },
+        "box-happy": {
+          "type": "box",
+          "settings": {
+            "accent": "pink",
+            "badge": "Meest gekozen",
+            "title": "Happy Kwispelbox",
+            "description": "De perfecte mix van speelplezier en verwennerij.",
+            "benefit_1": "7–10 speeltjes & snacks",
+            "benefit_2": "Voor middelgrote honden",
+            "benefit_3": "Wisselende thema's",
+            "benefit_4": "",
+            "benefit_5": "",
+            "price": "€64,95",
+            "price_suffix": "",
+            "highlight": true,
+            "button_label": "Bekijk box",
+            "button_url": ""
+          }
+        },
+        "box-mega": {
+          "type": "box",
+          "settings": {
+            "accent": "orange",
+            "badge": "Extra veel plezier",
+            "title": "Mega Kwispelbox",
+            "description": "Voor honden die graag ontdekken en spelen!",
+            "benefit_1": "10–14 speeltjes & snacks",
+            "benefit_2": "Voor grote honden",
+            "benefit_3": "Extra groot & luxe items",
+            "benefit_4": "",
+            "benefit_5": "",
+            "price": "€89,95",
+            "price_suffix": "",
+            "highlight": false,
+            "button_label": "Bekijk box",
+            "button_url": ""
+          }
+        },
+        "re-gift": {
+          "type": "benefit",
+          "settings": {
+            "title": "Elke box voelt als een cadeautje",
+            "description": "Met zorg samengesteld en feestelijk verpakt.",
+            "icon": "gift",
+            "color": "pink"
+          }
+        },
+        "re-flex": {
+          "type": "benefit",
+          "settings": {
+            "title": "Flexibel en eenvoudig",
+            "description": "Pauzeren, aanpassen of opzeggen wanneer jij wilt.",
+            "icon": "calendar",
+            "color": "green"
+          }
+        },
+        "re-happy": {
+          "type": "benefit",
+          "settings": {
+            "title": "100% Tevredenheid",
+            "description": "Niet tevreden? We maken het samen goed.",
+            "icon": "heart",
+            "color": "purple"
+          }
+        }
+      },
+      "block_order": [
+        "box-mini",
+        "box-happy",
+        "box-mega",
+        "re-gift",
+        "re-flex",
+        "re-happy"
+      ],
+      "settings": {
+        "label": "",
+        "heading": "Het perfecte",
+        "heading_highlight": "cadeau",
+        "intro": "Verras je hond (of een hond van iemand anders) met een box vol speelplezier, lekkers en liefde."
+      }
+    },
+    "cta": {
+      "type": "product-cta",
+      "settings": {
+        "title": "Geef het cadeau van blijdschap",
+        "text": "Geef je beste vriend elke maand het moment waar hij niet meer op kan wachten.",
+        "button_label": "Verras je hond",
+        "button_url": "",
+        "show_decorations": true
+      }
+    }
+  },
+  "order": [
+    "boxes",
+    "cta"
+  ]
+}

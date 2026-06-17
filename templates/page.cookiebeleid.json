@@ -1,0 +1,60 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "info-page",
+      "blocks": {
+        "l1": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Wat zijn cookies",
+            "text": "<p>Cookies zijn kleine bestandjes die je browser opslaat om de website goed te laten werken en te verbeteren.</p>"
+          }
+        },
+        "l2": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Welke cookies",
+            "text": "<p>We gebruiken functionele cookies (noodzakelijk), analytische cookies (om de site te verbeteren) en — met jouw toestemming — marketingcookies.</p>"
+          }
+        },
+        "l3": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Beheren",
+            "text": "<p>Je kunt je voorkeuren altijd aanpassen via de cookie-instellingen of de cookies wissen in je browser.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "l1",
+        "l2",
+        "l3"
+      ],
+      "settings": {
+        "eyebrow": "Juridisch",
+        "title": "Cookiebeleid",
+        "intro": "Hoe wij cookies gebruiken op deze website."
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

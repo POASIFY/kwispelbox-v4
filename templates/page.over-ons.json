@@ -1,0 +1,69 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "about-page",
+      "blocks": {
+        "v1": {
+          "type": "value",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "Met liefde samengesteld",
+            "text": "Elke box vullen we met zorg, alsof we 'm voor onze eigen hond maken."
+          }
+        },
+        "v2": {
+          "type": "value",
+          "settings": {
+            "icon": "shield",
+            "color": "green",
+            "title": "Veilige kwaliteit",
+            "text": "Alleen stevige, geteste speeltjes en gezonde, natuurlijke snacks."
+          }
+        },
+        "v3": {
+          "type": "value",
+          "settings": {
+            "icon": "paw",
+            "color": "orange",
+            "title": "De hond staat voorop",
+            "text": "Alles draait om die ene blije kwispel als de box opengaat."
+          }
+        },
+        "v4": {
+          "type": "value",
+          "settings": {
+            "icon": "leaf",
+            "color": "green",
+            "title": "Bewuste keuzes",
+            "text": "We kiezen zo duurzaam mogelijk — voor jouw hond én de wereld."
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
