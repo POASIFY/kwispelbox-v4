@@ -1,0 +1,73 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "info-page",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "icon": "chat",
+            "heading": "Een klacht? Laat het ons weten",
+            "text": "<p>Ben je ergens niet tevreden over? Dat horen we graag, want zo kunnen we het oplossen én onszelf verbeteren. We nemen elke klacht serieus.</p>"
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "icon": "mail",
+            "heading": "Hoe dien je een klacht in",
+            "text": "<p>Stuur een bericht via onze <a href=\"/pages/contact\">contactpagina</a> of mail naar hello@kwispelbox.nl. Beschrijf kort wat er speelt en vermeld je bestelnummer.</p>"
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "icon": "check",
+            "heading": "Onze afhandeling",
+            "text": "<p>Je ontvangt binnen 1 werkdag een reactie en we doen ons best je klacht binnen 14 dagen volledig op te lossen.</p>"
+          }
+        },
+        "i4": {
+          "type": "item",
+          "settings": {
+            "icon": "heart",
+            "heading": "Niet goed, geld terug",
+            "text": "<p>Komen we er samen niet uit? Dan geldt onze <a href=\"/pages/retourneren\">niet-goed-geld-terug garantie</a>. Jouw tevredenheid staat voorop.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4"
+      ],
+      "settings": {
+        "eyebrow": "Klantenservice",
+        "title": "Klachten",
+        "intro": "We willen dat jij en je hond blij zijn. Toch iets niet goed? Laat het ons weten.",
+        "cta_title": "Liever direct contact?",
+        "cta_text": "Ons team staat voor je klaar.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

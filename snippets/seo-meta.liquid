@@ -1,7 +1,7 @@
 {%- comment -%}
   snippets/seo-meta.liquid — KB-v4 per-pagina <title>, meta description en robots.
-  Keyt op template.suffix (NIET op handle) zodat de pagina-handle vrij te kiezen is.
-  Titels eindigen op " | Kwispelbox.com" (≈50-60 tekens), descriptions ≈150 tekens.
+  Bron = de SEO-metavelden (page_title/page_description, bewerkbaar in de admin),
+  thema voegt " | Kwispelbox.com" toe. Bepaalt ook welke pagina's op noindex staan.
 {%- endcomment -%}
 
 {%- liquid
@@ -15,60 +15,17 @@
       assign t = 'De leukste verrassingsbox voor je hond'
       assign d = 'Elke maand een verrassingsbox vol stevige speeltjes, gezonde snacks en knuffels voor je hond. Met zorg samengesteld en gratis verzonden vanaf €75.'
 
-    # product & collection: gebruiken de SEO-metavelden (page_title/page_description) via de fallback onderaan
-
     when 'page'
-      case sfx
-        when 'boxen'
-          assign t = 'Alle Kwispelboxen – Mini, Happy & Mega'
-          assign d = 'Mini, Happy of Mega? Vergelijk onze hondenboxen op inhoud en prijs en kies de verrassingsbox die past bij jouw hond.'
-        when 'special-editions'
-          assign t = 'Special Editions – themaboxen voor honden'
-          assign d = 'Van verjaardag tot kerst: onze Special Edition hondenboxen maken elk bijzonder moment leuker. Bekijk alle themaboxen.'
-        when 'over-ons'
-          assign t = 'Over ons – het verhaal van Kwispelbox'
-          assign d = 'Lees het verhaal achter Kwispelbox: waarom we met liefde elke maand een verrassingsbox samenstellen voor honden.'
-        when 'contact'
-          assign t = 'Contact & klantenservice'
-          assign d = 'Een vraag over je box, bestelling of de Kwispelclub? Neem contact op met ons team. We reageren meestal binnen 1 werkdag.'
-        when 'faq'
-          assign t = 'Veelgestelde vragen'
-          assign d = 'Antwoorden op veelgestelde vragen over de Kwispelbox: bezorging, personaliseren, retour, het abonnement en de Kwispelclub.'
-        when 'reviews'
-          assign t = 'Reviews – 1.200+ blije honden'
-          assign d = 'Lees wat baasjes over Kwispelbox zeggen. Ruim 1.200 blije honden gingen je voor, met een gemiddelde van 4,9 uit 5 sterren.'
-        when 'kwispelclub'
-          assign t = "Kwispelclub – spaar & ontvang extra's"
-          assign d = 'Word gratis lid van de Kwispelclub: spaar Kwispels, ontvang extra verrassingen en doe mee met leuke acties voor je hond.'
-        when 'cadeau'
-          assign t = 'Hondencadeau – het cadeau voor je hond'
-          assign d = 'Op zoek naar een hondencadeau? Verras een hond (of het baasje) met een Kwispelbox vol speeltjes en snacks, mooi ingepakt.'
-        when 'verzendbeleid'
-          assign t = 'Verzending & bezorging'
-          assign d = 'Alles over de bezorging van je Kwispelbox: levertijden, verzendkosten en track & trace. Gratis verzonden vanaf €75.'
-        when 'retourbeleid'
-          assign t = 'Retourneren & geld terug'
-          assign d = 'Niet helemaal blij? Lees hoe je de Kwispelbox binnen 30 dagen retourneert. Niet goed, geld terug — dat beloven we.'
-        when 'betaalmogelijkheden'
-          assign t = 'Betaalmethoden – veilig betalen'
-          assign d = 'Bekijk hoe je veilig betaalt bij Kwispelbox: iDEAL, creditcard en meer. Snel en vertrouwd afrekenen voor je hondenbox.'
-        when 'cookiebeleid'
-          assign t = 'Cookiebeleid'
-          assign d = 'Lees hoe Kwispelbox cookies gebruikt en hoe je je voorkeuren beheert.'
-        when 'verzending-retour'
-          assign noindex = true
-          assign t = page.title
-        when 'hoe-werkt-het'
-          assign noindex = true
-          assign t = 'Hoe werkt het?'
-          assign d = 'Kies je box, vertel iets over je hond, en wij stellen met liefde een verrassing samen. Zo werkt de Kwispelbox.'
-        else
-          assign t = page.title
-          assign d = page.content | strip_html | truncate: 155
-      endcase
+      # dunne/dubbele pagina's niet indexeren (canonieke varianten staan elders)
+      if sfx == 'verzendbeleid' or sfx == 'retourbeleid' or sfx == 'verzending-retour'
+        assign noindex = true
+      endif
+      if page.handle == 'vergelijk-de-boxen' or page.handle == 'data-sharing-opt-out'
+        assign noindex = true
+      endif
 
     when 'collection'
-      # utility-collecties niet indexeren (geen SEO-landing); t/d vallen terug op de SEO-metavelden
+      # utility-collecties niet indexeren
       if collection.handle == 'frontpage' or collection.handle == 'maak-er-een-echt-cadeautje-van'
         assign noindex = true
       endif
