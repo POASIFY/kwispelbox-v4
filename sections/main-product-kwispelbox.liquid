@@ -91,19 +91,17 @@
         {%- endif -%}
         <h1 class="pdp-info__title">{{ product.title }}</h1>
 
-        {%- capture reviewrow_inner -%}
-          <span class="pdp-info__stars" aria-hidden="true">★★★★★</span>
-          {%- if section.settings.rating != blank -%}<strong>{{ section.settings.rating }}</strong>{%- endif -%}
-          {%- if section.settings.review_count != blank -%}<span class="pdp-info__reviews">{{ section.settings.review_count }}</span>{%- endif -%}
-        {%- endcapture -%}
-        {%- if section.settings.reviews_url != blank -%}
-          <a class="pdp-info__reviewrow pdp-info__reviewrow--link" href="{{ section.settings.reviews_url }}">
-            {{ reviewrow_inner }}
-            <span class="pdp-info__reviewrow-arrow" aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span>
-            <span class="pdp-info__sr">— lees alle reviews</span>
-          </a>
-        {%- else -%}
-          <div class="pdp-info__reviewrow">{{ reviewrow_inner }}</div>
+        {%- capture reviewrow_inner -%}{%- render 'judgeme-rating', show: 'score', size: 'md' -%}{%- endcapture -%}
+        {%- if reviewrow_inner != blank -%}
+          {%- if section.settings.reviews_url != blank -%}
+            <a class="pdp-info__reviewrow pdp-info__reviewrow--link" href="{{ section.settings.reviews_url }}">
+              {{ reviewrow_inner }}
+              <span class="pdp-info__reviewrow-arrow" aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span>
+              <span class="pdp-info__sr">— lees alle reviews</span>
+            </a>
+          {%- else -%}
+            <div class="pdp-info__reviewrow">{{ reviewrow_inner }}</div>
+          {%- endif -%}
         {%- endif -%}
 
         <div class="pdp-info__price" data-price-wrap>
@@ -822,8 +820,7 @@
     { "type": "text", "id": "badge_secondary", "label": "Badge rechtsboven", "default": "Gratis verzending" },
     { "type": "header", "content": "Productinfo" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Voor blije honden" },
-    { "type": "text", "id": "rating", "label": "Beoordeling", "default": "4,9/5" },
-    { "type": "text", "id": "review_count", "label": "Aantal reviews", "default": "350+ reviews" },
+    { "type": "paragraph", "content": "De beoordeling en het aantal reviews komen automatisch uit Judge.me en verschijnen zodra er echte reviews zijn." },
     { "type": "url", "id": "reviews_url", "label": "Link naar reviews-pagina", "info": "Maakt de sterren/score klikbaar. Kies je reviews-pagina." },
     { "type": "richtext", "id": "intro", "label": "Emotionele omschrijving (laat leeg voor productbeschrijving)", "default": "<p>Met liefde stellen we een verrassingsbox samen, boordevol speelplezier en lekkers. Want jouw hond verdient een feestje!</p>" },
     { "type": "header", "content": "Vormgeving & urgentie" },
@@ -950,7 +947,7 @@
         { "type": "trust_badge", "settings": { "icon": "truck", "color": "green", "text": "Gratis verzending vanaf €75" } },
         { "type": "trust_badge", "settings": { "icon": "heart", "color": "pink", "text": "Zorgvuldig samengesteld" } },
         { "type": "trust_badge", "settings": { "icon": "shield-check", "color": "green", "text": "Veilig betalen" } },
-        { "type": "trust_badge", "settings": { "icon": "paw", "color": "orange", "text": "1.200+ blije honden" } },
+        { "type": "trust_badge", "settings": { "icon": "paw", "color": "orange", "text": "Met liefde samengesteld" } },
         { "type": "value_item", "settings": { "text": "Stevige speeltjes om mee te ravotten", "worth": "t.w.v. €19,95" } },
         { "type": "value_item", "settings": { "text": "Natuurlijke, gezonde snacks", "worth": "t.w.v. €14,95" } },
         { "type": "value_item", "settings": { "text": "Een knuffel om mee te slapen", "worth": "t.w.v. €16,95" } },

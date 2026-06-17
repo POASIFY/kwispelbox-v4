@@ -15,7 +15,7 @@
       "type": "footer",
       "blocks": {
         "usp1": { "type": "usp", "settings": { "icon": "truck", "color": "green", "title": "Gratis verzending", "text": "vanaf €75" } },
-        "usp2": { "type": "usp", "settings": { "icon": "star", "color": "pink", "title": "4,9/5 beoordeeld", "text": "door onze klanten" } },
+        "usp2": { "type": "usp", "settings": { "icon": "heart", "color": "pink", "title": "Met liefde", "text": "samengesteld in Nederland" } },
         "usp3": { "type": "usp", "settings": { "icon": "heart", "color": "yellow", "title": "Met liefde", "text": "samengesteld" } },
         "usp4": { "type": "usp", "settings": { "icon": "shield", "color": "green", "title": "Veilig betalen", "text": "met jouw favoriete betaalmethode" } },
         "col1": { "type": "menu_col", "settings": { "icon": "shop", "title": "Shop", "menu": "main-menu" } },

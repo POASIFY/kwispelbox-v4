@@ -872,14 +872,7 @@
       <span class="header-drawer__stat-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
       <div class="header-drawer__stat-body">
         <strong class="header-drawer__stat-title">{{ section.settings.drawer_stat_text }}</strong>
-        {%- if section.settings.drawer_rating != blank -%}
-          <span class="header-drawer__stat-rating">
-            <span class="header-drawer__stat-stars" aria-hidden="true">
-              {%- render 'lucide', icon: 'star' -%}{%- render 'lucide', icon: 'star' -%}{%- render 'lucide', icon: 'star' -%}{%- render 'lucide', icon: 'star' -%}{%- render 'lucide', icon: 'star' -%}
-            </span>
-            <span class="header-drawer__stat-score">{{ section.settings.drawer_rating }}</span>
-          </span>
-        {%- endif -%}
+        {%- render 'judgeme-rating', show: 'score', size: 'sm' -%}
       </div>
     </div>
   {%- endif -%}
@@ -3264,13 +3257,11 @@
       "type": "text",
       "id": "drawer_stat_text",
       "label": "Stat tekst",
-      "default": "Meer dan 1.200 blije honden"
+      "default": "Met liefde samengesteld in Nederland"
     },
     {
-      "type": "text",
-      "id": "drawer_rating",
-      "label": "Beoordeling (leeg = geen sterren)",
-      "default": "4,9/5"
+      "type": "paragraph",
+      "content": "De beoordeling onder de stat-tekst komt automatisch uit Judge.me en verschijnt zodra er echte reviews zijn."
     },
     {
       "type": "text",
@@ -3466,9 +3457,9 @@
         {
           "type": "trust_item",
           "settings": {
-            "title": "Uitstekend beoordeeld",
-            "subtitle": "4,9/5",
-            "icon": "icon-star.svg"
+            "title": "Met liefde samengesteld",
+            "subtitle": "in Nederland",
+            "icon": "icon-heart.svg"
           }
         }
       ]

@@ -111,14 +111,10 @@
         </div>
       {%- endif -%}
 
-      {%- if section.settings.rating_score != blank -%}
+      {%- capture hero_rating_html -%}{%- render 'judgeme-rating', show: 'full', size: 'md' -%}{%- endcapture -%}
+      {%- if hero_rating_html != blank -%}
         <span class="hero__cta-divider" aria-hidden="true"></span>
-        <div class="hero__rating">
-          <span class="hero__stars" aria-hidden="true">
-            {%- for i in (1..5) -%}<span class="hero__star">{%- render 'kb-icon', icon: 'star' -%}</span>{%- endfor -%}
-          </span>
-          <span class="hero__rating-text"><strong>{{ section.settings.rating_score }}</strong> {{ section.settings.rating_text }}</span>
-        </div>
+        <div class="hero__rating">{{ hero_rating_html }}</div>
       {%- endif -%}
 
       {%- if section.settings.avatars_text != blank -%}
@@ -251,7 +247,7 @@
   "tag": "section",
   "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
-    { "type": "text", "id": "badge_text", "label": "Badge boven titel", "default": "Al meer dan 1.200 blije honden!" },
+    { "type": "text", "id": "badge_text", "label": "Badge boven titel", "default": "Met liefde samengesteld in Nederland" },
     { "type": "textarea", "id": "title", "label": "Titel (ink)", "default": "Een verrassing vol" },
     { "type": "text", "id": "title_highlight", "label": "Accent groen", "default": "speelplezier," },
     { "type": "text", "id": "title_highlight2", "label": "Accent roze", "default": "lekkers" },
@@ -260,11 +256,9 @@
     { "type": "text", "id": "cta_primary_label", "label": "Knoptekst", "default": "Ontdek onze boxen" },
     { "type": "url", "id": "cta_primary_url", "label": "Knop link" },
     { "type": "text", "id": "note_text", "label": "Notitie naast knop", "default": "Elke box met zorg samengesteld" },
-    { "type": "header", "content": "Rating" },
-    { "type": "text", "id": "rating_score", "label": "Score", "default": "4,9/5" },
-    { "type": "text", "id": "rating_text", "label": "Rating tekst", "default": "uit 350+ reviews" },
+    { "type": "header", "content": "Rating", "info": "De beoordeling komt automatisch uit Judge.me en verschijnt zodra er echte reviews zijn." },
     { "type": "header", "content": "Avatars" },
-    { "type": "text", "id": "avatars_text", "label": "Avatar tekst", "default": "Sluit je aan bij 1.200+ blije honden en hun baasjes" },
+    { "type": "text", "id": "avatars_text", "label": "Avatar tekst", "default": "Voor honden, door hondenliefhebbers" },
     { "type": "image_picker", "id": "avatar_1", "label": "Avatar 1" },
     { "type": "image_picker", "id": "avatar_2", "label": "Avatar 2" },
     { "type": "image_picker", "id": "avatar_3", "label": "Avatar 3" },

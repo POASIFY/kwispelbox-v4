@@ -16,32 +16,18 @@
       <h1 class="rvp__title">{{ section.settings.title | default: 'Wat baasjes over Kwispelbox zeggen' }}</h1>
       {%- if section.settings.intro != blank -%}<p class="rvp__intro">{{ section.settings.intro }}</p>{%- endif -%}
 
-      <div class="rvp__summary">
-        <div class="rvp__score">
-          <span class="rvp__score-num">{{ section.settings.rating_score | default: '4,9' }}</span>
-          <span class="rvp__score-meta">
-            <span class="rvp__score-stars" aria-hidden="true">
-              {%- for i in (1..5) -%}<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg>{%- endfor -%}
-            </span>
-            <span class="rvp__score-count">{{ section.settings.review_count | default: '350+ reviews' }}</span>
-          </span>
+      {%- assign jm_count = shop.metafields.judgeme.all_reviews_count | plus: 0 -%}
+      {%- if jm_count > 0 -%}
+        <div class="rvp__summary">
+          {%- render 'judgeme-rating', show: 'full', size: 'lg' -%}
         </div>
-        <div class="rvp__bars">
-          {%- assign star_levels = '5,4,3,2,1' | split: ',' -%}
-          {%- assign pcts = section.settings.bar_5 | append: ',' | append: section.settings.bar_4 | append: ',' | append: section.settings.bar_3 | append: ',' | append: section.settings.bar_2 | append: ',' | append: section.settings.bar_1 | split: ',' -%}
-          {%- for n in star_levels -%}
-            {%- assign pct = pcts[forloop.index0] | default: 0 -%}
-            <div class="rvp__bar-row">
-              <span class="rvp__bar-label">{{ n }}<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg></span>
-              <span class="rvp__bar-track"><span class="rvp__bar-fill" style="width: {{ pct }}%"></span></span>
-              <span class="rvp__bar-pct">{{ pct }}%</span>
-            </div>
-          {%- endfor -%}
-        </div>
-      </div>
+      {%- endif -%}
     </header>
 
-    {%- if review_blocks.size > 0 -%}
+    {%- assign jm_carousel = shop.metafields.judgeme.featured_carousel -%}
+    {%- if jm_count > 0 and jm_carousel != blank -%}
+      <div class="rvp__jm">{{ jm_carousel }}</div>
+    {%- elsif jm_count > 0 and review_blocks.size > 0 -%}
       <div class="rvp__grid">
         {%- for block in review_blocks -%}
           {%- assign rating = block.settings.rating | default: 5 -%}
@@ -79,6 +65,11 @@
           </article>
         {%- endfor -%}
       </div>
+    {%- else -%}
+      <div class="rvp__empty">
+        <span class="rvp__empty-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
+        <p class="rvp__empty-text">{{ section.settings.empty_text | default: 'Onze eerste boxen zijn net onderweg. Wees een van de eersten om een review achter te laten!' }}</p>
+      </div>
     {%- endif -%}
 
     {%- if section.settings.cta_label != blank -%}
@@ -104,7 +95,7 @@
 .rvp__title { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.04; color: var(--color-ink); margin: 0 0 12px; }
 .rvp__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0 auto; max-width: 56ch; }
 
-.rvp__summary { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center; margin-top: 32px; background: #fff; border: 1.5px solid var(--color-line); border-radius: 24px; padding: 26px; box-shadow: 0 12px 30px rgba(61, 34, 9, .06); text-align: left; }
+.rvp__summary { display: flex; justify-content: center; align-items: center; margin-top: 32px; background: #fff; border: 1.5px solid var(--color-line); border-radius: 24px; padding: 22px 26px; box-shadow: 0 12px 30px rgba(61, 34, 9, .06); }
 .rvp__score { display: flex; align-items: center; gap: 16px; justify-content: center; }
 .rvp__score-num { font-family: var(--font-heading); font-size: 3.4rem; line-height: 1; color: var(--color-green); }
 .rvp__score-meta { display: flex; flex-direction: column; gap: 5px; }
@@ -118,6 +109,13 @@
 .rvp__bar-track { height: 9px; border-radius: 9px; background: var(--color-line); overflow: hidden; }
 .rvp__bar-fill { display: block; height: 100%; border-radius: 9px; background: var(--color-green); }
 .rvp__bar-pct { font-family: var(--font-body); font-size: .78rem; font-weight: 700; color: var(--color-muted); text-align: right; }
+
+/* Echte Judge.me carousel + nette lege staat */
+.rvp__jm { margin-top: 8px; }
+.rvp__empty { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; max-width: 460px; margin: 8px auto 0; }
+.rvp__empty-icon { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: #ffe0ee; color: var(--color-pink); }
+.rvp__empty-icon svg { width: 26px; height: 26px; }
+.rvp__empty-text { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0; }
 
 /* Masonry-grid */
 .rvp__grid { columns: 1; column-gap: 22px; }
@@ -178,15 +176,10 @@
     { "type": "header", "content": "Kop" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Geliefd door honden én hun baasjes" },
     { "type": "text", "id": "title", "label": "Titel", "default": "Wat baasjes over Kwispelbox zeggen" },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Ruim 1.200 honden kregen al een verrassingsbox. Dit is wat hun baasjes ervan vinden." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Elke box stellen we met liefde samen. Dit is wat baasjes ervan vinden." },
     { "type": "header", "content": "Samenvatting" },
-    { "type": "text", "id": "rating_score", "label": "Gemiddelde score", "default": "4,9" },
-    { "type": "text", "id": "review_count", "label": "Aantal reviews", "default": "350+ reviews" },
-    { "type": "range", "id": "bar_5", "label": "% 5 sterren", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 92 },
-    { "type": "range", "id": "bar_4", "label": "% 4 sterren", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 6 },
-    { "type": "range", "id": "bar_3", "label": "% 3 sterren", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 1 },
-    { "type": "range", "id": "bar_2", "label": "% 2 sterren", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 1 },
-    { "type": "range", "id": "bar_1", "label": "% 1 ster", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 0 },
+    { "type": "paragraph", "content": "De gemiddelde score en het aantal reviews komen automatisch uit Judge.me. Ze verschijnen zodra er echte reviews zijn." },
+    { "type": "textarea", "id": "empty_text", "label": "Tekst als er nog geen reviews zijn", "default": "Onze eerste boxen zijn net onderweg. Wees een van de eersten om een review achter te laten!" },
     { "type": "header", "content": "Oproep onderaan" },
     { "type": "text", "id": "cta_title", "label": "CTA titel", "default": "Ook jouw hond verdient een feestje" },
     { "type": "text", "id": "cta_text", "label": "CTA tekst", "default": "Geef je beste vriend het moment waar hij niet meer op kan wachten." },

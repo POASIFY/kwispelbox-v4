@@ -45,9 +45,7 @@
             </div>
           {%- endif -%}
           <div class="kc-hero__social-text">
-            {%- if section.settings.hero_rating != blank -%}
-              <span class="kc-hero__rating"><span class="kc-hero__stars" aria-hidden="true">★★★★★</span>{{ section.settings.hero_rating }}</span>
-            {%- endif -%}
+            {%- render 'judgeme-rating', show: 'score', size: 'sm' -%}
             {%- if section.settings.hero_members_text != blank -%}<span class="kc-hero__members">{{ section.settings.hero_members_text }}</span>{%- endif -%}
           </div>
         </div>
@@ -357,8 +355,8 @@
     { "type": "url", "id": "hero_primary_url", "label": "Knop 1 link" },
     { "type": "text", "id": "hero_secondary_label", "label": "Knop 2 (licht)", "default": "Inloggen" },
     { "type": "url", "id": "hero_secondary_url", "label": "Knop 2 link" },
-    { "type": "text", "id": "hero_rating", "label": "Beoordeling", "default": "4,9/5" },
-    { "type": "text", "id": "hero_members_text", "label": "Leden tekst", "default": "Meer dan 1.200 blije clubleden" },
+    { "type": "paragraph", "content": "De beoordeling komt automatisch uit Judge.me en verschijnt zodra er echte reviews zijn." },
+    { "type": "text", "id": "hero_members_text", "label": "Leden tekst", "default": "Word lid van de Kwispelclub" },
     { "type": "image_picker", "id": "hero_image", "label": "Hero afbeelding" },
     { "type": "checkbox", "id": "show_badge", "label": "Welkomstbadge tonen", "default": true },
     { "type": "text", "id": "hero_badge_text", "label": "Welkomstbadge tekst", "default": "Welkom Luna! Fijn dat je erbij bent!" },
@@ -469,7 +467,7 @@
             { "value": "yellow", "label": "Geel" }
           ]
         },
-        { "type": "text", "id": "title", "label": "Titel", "default": "1.200+ blije honden" },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Voor honden, door hondenliefhebbers" },
         { "type": "text", "id": "text", "label": "Tekst", "default": "Een groeiende community" }
       ]
     },
@@ -495,8 +493,8 @@
         { "type": "step", "settings": { "icon": "gift", "color": "orange", "title": "Wissel in voor beloningen", "text": "Ruil je Kwispels in voor leuke cadeautjes." } },
         { "type": "step", "settings": { "icon": "sparkles", "color": "pink", "title": "Ontvang exclusieve acties", "text": "Leden krijgen toegang tot speciale acties." } },
         { "type": "step", "settings": { "icon": "heart", "color": "pink", "title": "Word deel van de familie", "text": "Jouw hond hoort er helemaal bij!" } },
-        { "type": "trust", "settings": { "icon": "paw", "color": "green", "title": "1.200+ blije honden", "text": "Een groeiende community" } },
-        { "type": "trust", "settings": { "icon": "star", "color": "yellow", "title": "4,9/5", "text": "Uitstekend beoordeeld" } },
+        { "type": "trust", "settings": { "icon": "paw", "color": "green", "title": "Voor honden, door hondenliefhebbers", "text": "Een groeiende community" } },
+        { "type": "trust", "settings": { "icon": "heart", "color": "yellow", "title": "Een echt cadeautje", "text": "Iedere box met liefde samengesteld" } },
         { "type": "trust", "settings": { "icon": "heart", "color": "pink", "title": "Met liefde samengesteld", "text": "Iedere box met zorg" } },
         { "type": "trust", "settings": { "icon": "shield-check", "color": "green", "title": "Veilig en betrouwbaar", "text": "Veilig betalen & lid worden" } },
         { "type": "member" },

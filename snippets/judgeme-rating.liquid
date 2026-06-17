@@ -1,0 +1,43 @@
+{%- comment -%}
+  snippets/judgeme-rating.liquid
+  Toont de ECHTE Judge.me winkelbeoordeling, uitgelezen uit de shop-metafields die
+  Judge.me automatisch bijwerkt (shop.metafields.judgeme.all_reviews_rating / _count).
+  Rendert BEWUST niets zolang er 0 reviews zijn → nooit een verzonnen cijfer.
+  Zodra er echte reviews binnenkomen verschijnt het overal vanzelf en groeit het mee.
+
+  Params:
+    show:  'full'  → sterren + 4,7/5 + "5 reviews"  (default)
+           'score' → sterren + 4,7/5
+           'stars' → alleen sterren + 4,7/5 compact
+    size:  'sm' | 'md' (default) | 'lg'
+    class: extra css-class
+{%- endcomment -%}
+{%- assign jm_count = shop.metafields.judgeme.all_reviews_count | plus: 0 -%}
+{%- assign jm_rating_raw = shop.metafields.judgeme.all_reviews_rating | plus: 0.0 -%}
+{%- if jm_count > 0 and jm_rating_raw > 0 -%}
+  {%- assign jm_rating = jm_rating_raw | round: 1 | replace: '.', ',' -%}
+  {%- assign jm_show = show | default: 'full' -%}
+  {%- assign jm_size = size | default: 'md' -%}
+  <span class="jm-rating jm-rating--{{ jm_size }} {{ class }}">
+    <span class="jm-rating__stars" aria-hidden="true">{%- for i in (1..5) -%}{%- render 'lucide', icon: 'star' -%}{%- endfor -%}</span>
+    <span class="jm-rating__score">{{ jm_rating }}<span class="jm-rating__out">/5</span></span>
+    {%- if jm_show == 'full' -%}
+      <span class="jm-rating__count">{{ jm_count }} review{% if jm_count != 1 %}s{% endif %}</span>
+    {%- endif -%}
+    <span class="visually-hidden">Beoordeeld met {{ jm_rating }} uit 5 op basis van {{ jm_count }} reviews</span>
+  </span>
+{%- endif -%}
+
+{% stylesheet %}
+.jm-rating { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); line-height: 1; }
+.jm-rating__stars { display: inline-flex; gap: 1px; }
+.jm-rating__stars .lucide { width: 16px; height: 16px; fill: #f5b301; stroke: #f5b301; }
+.jm-rating__score { font-weight: 800; color: var(--color-ink); }
+.jm-rating__out { font-weight: 600; color: var(--color-muted); }
+.jm-rating__count { color: var(--color-muted); font-weight: 600; }
+.jm-rating--sm .jm-rating__stars .lucide { width: 14px; height: 14px; }
+.jm-rating--sm { gap: 6px; font-size: .85rem; }
+.jm-rating--lg .jm-rating__stars .lucide { width: 20px; height: 20px; }
+.jm-rating--lg { gap: 10px; font-size: 1.05rem; }
+.jm-rating .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+{% endstylesheet %}

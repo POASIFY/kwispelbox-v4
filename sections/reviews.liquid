@@ -44,8 +44,12 @@
       {%- endif -%}
     </div>
 
-    <!-- ── Reviewkaarten ───────────────────────────── -->
-    {%- if review_blocks.size > 0 -%}
+    <!-- ── Reviews: ECHTE Judge.me reviews of nette lege staat ── -->
+    {%- assign jm_count = shop.metafields.judgeme.all_reviews_count | plus: 0 -%}
+    {%- assign jm_carousel = shop.metafields.judgeme.featured_carousel -%}
+    {%- if jm_count > 0 and jm_carousel != blank -%}
+      <div class="rev__jm">{{ jm_carousel }}</div>
+    {%- elsif jm_count > 0 and review_blocks.size > 0 -%}
       <div class="rev__cards">
         {%- for block in review_blocks -%}
           {%- assign rating = block.settings.rating | default: 5 -%}
@@ -105,6 +109,11 @@
           {%- endfor -%}
         </div>
       {%- endif -%}
+    {%- else -%}
+      <div class="rev__empty">
+        <span class="rev__empty-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
+        <p class="rev__empty-text">{{ section.settings.empty_text | default: 'Onze eerste boxen zijn net onderweg. Wees een van de eersten om een review achter te laten!' }}</p>
+      </div>
     {%- endif -%}
 
 
@@ -234,6 +243,13 @@
   .rev__cards { scroll-behavior: auto; }
 }
 
+/* Echte Judge.me carousel + nette lege staat */
+.rev__jm { max-width: 100%; }
+.rev__empty { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; max-width: 460px; margin: 0 auto; }
+.rev__empty-icon { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background: #ffe0ee; color: var(--color-pink); }
+.rev__empty-icon svg { width: 26px; height: 26px; }
+.rev__empty-text { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0; }
+
 {% endstylesheet %}
 
 {% javascript %}
@@ -270,9 +286,11 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Geliefd door honden én hun baasjes" },
     { "type": "text", "id": "title", "label": "Titel", "default": "Wat onze klanten zeggen" },
-    { "type": "textarea", "id": "subtitle", "label": "Subtitel", "default": "Ruim 1.200 honden genieten al van hun Kwispelbox. Lees wat hun baasjes hiervan vinden." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitel", "default": "Elke box stellen we met liefde samen. Lees wat baasjes van hun Kwispelbox vinden." },
     { "type": "text", "id": "highlight_word", "label": "Woord in oranje accent", "default": "Kwispelbox" },
-    { "type": "checkbox", "id": "show_decorations", "label": "Decoratieve accenten bij titel tonen", "default": true }
+    { "type": "textarea", "id": "empty_text", "label": "Tekst als er nog geen reviews zijn", "default": "Onze eerste boxen zijn net onderweg. Wees een van de eersten om een review achter te laten!" },
+    { "type": "checkbox", "id": "show_decorations", "label": "Decoratieve accenten bij titel tonen", "default": true },
+    { "type": "paragraph", "content": "Zodra er echte Judge.me-reviews binnenkomen, verschijnt hier automatisch de recente-reviews carousel. Tot die tijd zie je een nette lege staat — geen verzonnen reviews." }
   ],
   "blocks": [
     {

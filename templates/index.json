@@ -12,7 +12,7 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "badge_text": "Al meer dan 1.200 blije honden!",
+        "badge_text": "Met liefde samengesteld in Nederland",
         "title": "Een verrassing vol",
         "title_highlight": "speelplezier,",
         "title_highlight2": "lekkers",
@@ -21,9 +21,7 @@
         "cta_primary_label": "Verras je hond",
         "cta_primary_url": "/pages/alle-boxen",
         "note_text": "Elke box met zorg samengesteld",
-        "rating_score": "4,9/5",
-        "rating_text": "uit 350+ reviews",
-        "avatars_text": "Sluit je aan bij 1.200+ blije honden en hun baasjes",
+        "avatars_text": "Voor honden, door hondenliefhebbers",
         "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_09_59_01.png",
         "image_mobile": "shopify://shop_images/ChatGPT_Image_16_jun_2026_09_59_01.png",
         "circle_text": "Elke box voelt als een cadeautje",
@@ -45,8 +43,8 @@
         "u2": {
           "type": "usp",
           "settings": {
-            "title": "Meer dan 1.200",
-            "subtitle": "blije honden",
+            "title": "Met liefde",
+            "subtitle": "samengesteld",
             "icon": "icon-paw.svg",
             "color": "orange"
           }
@@ -521,8 +519,8 @@
           "settings": {
             "icon": "users",
             "color": "green",
-            "value": "1.200+",
-            "label": "Blije honden in onze community"
+            "value": "Voor honden,",
+            "label": "door hondenliefhebbers"
           }
         },
         "st2": {
@@ -546,10 +544,10 @@
         "st4": {
           "type": "stat",
           "settings": {
-            "icon": "star",
+            "icon": "heart",
             "color": "yellow",
-            "value": "4,9/5",
-            "label": "Gemiddelde waardering uit 350+ reviews"
+            "value": "Een echt",
+            "label": "cadeautje voor je hond"
           }
         }
       },
@@ -568,7 +566,7 @@
       ],
       "settings": {
         "eyebrow": "Een community vol kwispelende staarten",
-        "heading": "Meer dan 1.200 blije honden.",
+        "heading": "Voor honden, door hondenliefhebbers.",
         "intro": "Elke dag maken we honden (en hun baasjes) blij met onze verrassingsboxen.",
         "show_decorations": true
       }
@@ -627,7 +625,7 @@
       "settings": {
         "eyebrow": "Geliefd door honden én hun baasjes",
         "title": "Wat onze klanten zeggen",
-        "subtitle": "Ruim 1.200 honden genieten al van hun Kwispelbox. Lees wat hun baasjes hiervan vinden.",
+        "subtitle": "Elke box stellen we met liefde samen. Lees wat baasjes van hun Kwispelbox vinden.",
         "highlight_word": "Kwispelbox",
         "show_decorations": true
       }
