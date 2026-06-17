@@ -27,10 +27,10 @@
           </span>
         </div>
         <div class="rvp__bars">
+          {%- assign star_levels = '5,4,3,2,1' | split: ',' -%}
           {%- assign pcts = section.settings.bar_5 | append: ',' | append: section.settings.bar_4 | append: ',' | append: section.settings.bar_3 | append: ',' | append: section.settings.bar_2 | append: ',' | append: section.settings.bar_1 | split: ',' -%}
-          {%- for n in (1..5) reversed -%}
-            {%- assign idx = 5 | minus: n -%}
-            {%- assign pct = pcts[idx] | default: 0 -%}
+          {%- for n in star_levels -%}
+            {%- assign pct = pcts[forloop.index0] | default: 0 -%}
             <div class="rvp__bar-row">
               <span class="rvp__bar-label">{{ n }}<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg></span>
               <span class="rvp__bar-track"><span class="rvp__bar-fill" style="width: {{ pct }}%"></span></span>
