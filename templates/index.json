@@ -331,6 +331,7 @@
           "type": "special",
           "settings": {
             "featured": true,
+            "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_11_26_00.png",
             "icon": "cake",
             "color": "pink",
             "title": "Verjaardagsbox",
@@ -344,6 +345,7 @@
           "type": "special",
           "settings": {
             "featured": false,
+            "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_11_16_02.png",
             "icon": "heart",
             "color": "pink",
             "title": "Valentijnsbox",
@@ -357,6 +359,7 @@
           "type": "special",
           "settings": {
             "featured": false,
+            "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_11_17_39.png",
             "icon": "tree",
             "color": "green",
             "title": "Kerstbox",
@@ -370,6 +373,7 @@
           "type": "special",
           "settings": {
             "featured": false,
+            "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_11_15_01.png",
             "icon": "pumpkin",
             "color": "orange",
             "title": "Halloweenbox",
@@ -383,6 +387,7 @@
           "type": "special",
           "settings": {
             "featured": false,
+            "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_11_20_32.png",
             "icon": "sun",
             "color": "yellow",
             "title": "Zomerbox",
@@ -462,6 +467,7 @@
         "heading": "Waarom honden dol zijn op",
         "heading_highlight": "Kwispelbox",
         "intro": "Omdat elke box een feestje is voor jouw hond én voor jou.",
+        "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_09_59_01.png",
         "show_badge": false,
         "badge_text": "Geen twee boxen zijn hetzelfde",
         "cta_label": "Bekijk de boxen",
@@ -475,6 +481,7 @@
         "feat": {
           "type": "featured",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_17_56_23.png",
             "dog_name": "Luna",
             "quote": "Ze rent iedere keer naar de deur zodra de Kwispelbox komt. Echt haar favoriete moment van de maand!",
             "rating": 5,
@@ -484,24 +491,28 @@
         "ph1": {
           "type": "photo",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_17_56_23.png",
             "dog_name": "Milo"
           }
         },
         "ph2": {
           "type": "photo",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_17_56_23.png",
             "dog_name": "Pip"
           }
         },
         "ph3": {
           "type": "photo",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_17_56_23.png",
             "dog_name": "Boris"
           }
         },
         "ph4": {
           "type": "photo",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_17_56_23.png",
             "dog_name": "Nala"
           }
         },
