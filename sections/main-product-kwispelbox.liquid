@@ -310,7 +310,7 @@
                 <span class="pdp-gift__switch" aria-hidden="true"><span class="pdp-gift__switch-dot"></span></span>
               </label>
               <div class="pdp-gift__fields" data-gift-fields hidden>
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>Voor wie is het?</span><input type="text" name="properties[Cadeau voor]" placeholder="Naam van de ontvanger (of de hond)"></label>
+                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>Aan wie geef je het?</span><input type="text" name="properties[Cadeau voor]" placeholder="Naam van de ontvanger"></label>
                 <label class="pdp-field pdp-field--wide"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'mail' -%}</span>Persoonlijk cadeau-bericht</span><textarea name="properties[Cadeaubericht]" rows="3" placeholder="Een lief berichtje voor bij het cadeau…"></textarea></label>
               </div>
             </div>
@@ -571,6 +571,7 @@
 .pdp-gift.is-on .pdp-gift__switch-dot { transform: translateX(20px); }
 .pdp-gift__toggle input:focus-visible ~ .pdp-gift__switch { outline: 2px solid var(--color-pink); outline-offset: 2px; }
 .pdp-gift__fields { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
+.pdp-gift__fields[hidden] { display: none; }
 .pdp-field textarea { width: 100%; box-sizing: border-box; border: 1.5px solid var(--color-line); border-radius: 14px; padding: 11px 14px; font-family: var(--font-body); font-size: .92rem; line-height: 1.5; color: var(--color-ink); background: var(--color-cream); outline: none; resize: vertical; min-height: 70px; transition: border-color 160ms, background 160ms; }
 .pdp-field textarea:focus { border-color: var(--color-green); background: #fff; }
 
