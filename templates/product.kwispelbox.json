@@ -98,7 +98,7 @@
         "v4": {
           "type": "value_item",
           "settings": {
-            "text": "Maandelijkse verrassing & verzorgd ingepakt",
+            "text": "Een verrassing & verzorgd ingepakt",
             "worth": "t.w.v. €12,95"
           }
         },
@@ -113,7 +113,7 @@
         "u2": {
           "type": "ugc",
           "settings": {
-            "quote": "Elke maand weer een feestje in huis. Echt een aanrader.",
+            "quote": "Wat een feestje in huis. Echt een aanrader.",
             "name": "Mark",
             "dog": "Boef"
           }
@@ -201,7 +201,7 @@
           "settings": {
             "icon": "sparkles",
             "color": "pink",
-            "title": "Maandelijkse verrassing",
+            "title": "Een echte verrassing",
             "text": "Elke box zit vol nieuwe avonturen om te ontdekken."
           }
         },
@@ -286,7 +286,7 @@
           "type": "featured",
           "settings": {
             "dog_name": "Max",
-            "quote": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Elke maand weer feest in huis!",
+            "quote": "Max rent al naar de deur zodra de Kwispelbox bezorgd wordt. Wat een feest in huis!",
             "rating": 5,
             "owner_name": "Sanne"
           }
@@ -450,7 +450,7 @@
       "type": "product-cta",
       "settings": {
         "title": "Klaar om jouw hond te verrassen?",
-        "text": "Geef je beste vriend elke maand het moment waar hij niet meer op kan wachten.",
+        "text": "Geef je beste vriend het moment waar hij niet meer op kan wachten.",
         "button_label": "Verras je hond",
         "button_url": "",
         "show_decorations": true

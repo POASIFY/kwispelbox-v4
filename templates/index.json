@@ -151,9 +151,9 @@
         "re-flex": {
           "type": "benefit",
           "settings": {
-            "title": "Flexibel en eenvoudig",
-            "description": "Pauzeren, aanpassen of opzeggen wanneer jij wilt.",
-            "icon": "calendar",
+            "title": "Voor elke hond iets",
+            "description": "Mini, Happy of Mega — altijd een box die bij jouw hond past.",
+            "icon": "paw",
             "color": "green"
           }
         },
@@ -207,7 +207,7 @@
           "type": "step",
           "settings": {
             "title": "Uitpakken & genieten",
-            "text": "Elke maand een verrassing op de mat. Tijd voor een feestje!",
+            "text": "De verrassing valt op de mat. Tijd voor een feestje!",
             "icon": "heart",
             "color": "orange"
           }
@@ -222,7 +222,7 @@
         "eyebrow": "Zo simpel werkt het",
         "heading": "In 3 stappen naar een",
         "heading_highlight": "blije hond",
-        "intro": "Geen gedoe — jij kiest, wij verrassen, je hond geniet. Elke maand opnieuw.",
+        "intro": "Geen gedoe — jij kiest, wij verrassen, je hond geniet.",
         "note": "Wij zorgen voor de verrassing, jij voor de blije kwispel."
       }
     },
@@ -599,7 +599,7 @@
             "badge_color": "orange",
             "rating": 5,
             "review_title": "Je voelt dat het met zorg is uitgezocht",
-            "review_text": "Milo is een echte bezige hond, maar met de Mega box heeft hij genoeg te doen. Mooi samengesteld en het uitpakken voelt elke keer als een echt cadeautje.",
+            "review_text": "Milo is een echte bezige hond, maar met de Mega box heeft hij genoeg te doen. Mooi samengesteld en het uitpakken voelt echt als een cadeautje.",
             "verified_text": "Geverifieerde aankoop",
             "accent": "orange"
           }
@@ -627,7 +627,7 @@
       "settings": {
         "eyebrow": "Geliefd door honden én hun baasjes",
         "title": "Wat onze klanten zeggen",
-        "subtitle": "Ruim 1.200 honden genieten al elke maand van hun Kwispelbox. Lees wat hun baasjes hiervan vinden.",
+        "subtitle": "Ruim 1.200 honden genieten al van hun Kwispelbox. Lees wat hun baasjes hiervan vinden.",
         "highlight_word": "Kwispelbox",
         "show_decorations": true
       }

@@ -20,7 +20,7 @@
             "menu_item_index": 1,
             "layout_type": "featured",
             "accent_color": "green",
-            "col1_desc": "Onze originele boxen zonder thema. Elke maand een feestje!",
+            "col1_desc": "Onze originele boxen zonder thema. Altijd een feestje!",
             "links_heading": "Zo werkt het",
             "link_list": "menu-verrassingsboxen",
             "view_all_label": "Vergelijk alle boxen",
@@ -841,7 +841,7 @@
             "menu_item_index": 5,
             "icon": "gift",
             "color": "orange",
-            "title": "Elke maand een feestje",
+            "title": "Altijd een feestje",
             "description": "Telkens een nieuwe verrassing om uit te pakken."
           }
         },
