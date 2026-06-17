@@ -42,16 +42,16 @@
 .kbtrust__text strong { font-family: var(--font-body); font-size: .95rem; font-weight: 800; color: var(--color-ink); line-height: 1.25; }
 .kbtrust__text span { font-family: var(--font-body); font-size: .88rem; color: var(--color-muted); line-height: 1.25; }
 
-/* Mobiel: 4 kolommen blijven, icoon boven de tekst (naar mockup) */
+/* Mobiel: 3 op een rij (de 4e wrapt netjes gecentreerd), icoon boven de tekst */
 @media (max-width: 749px) {
-  .kbtrust__list { grid-template-columns: repeat(4, 1fr); padding: 16px 2px; }
-  .kbtrust__item { flex-direction: column; align-items: center; text-align: center; gap: 9px; padding: 4px 5px; }
-  .kbtrust__item + .kbtrust__item { border-left: 1px solid var(--color-line); border-top: none; }
-  .kbtrust__icon { width: 40px; height: 40px; }
-  .kbtrust__icon svg { width: 20px; height: 20px; }
+  .kbtrust__list { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 0; padding: 18px 6px; }
+  .kbtrust__item { flex: 0 0 33.333%; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 4px 6px; }
+  .kbtrust__item + .kbtrust__item { border-left: none; }
+  .kbtrust__icon { width: 42px; height: 42px; }
+  .kbtrust__icon svg { width: 21px; height: 21px; }
   .kbtrust__text { align-items: center; }
-  .kbtrust__text strong { font-size: .68rem; line-height: 1.2; }
-  .kbtrust__text span { font-size: .66rem; line-height: 1.2; }
+  .kbtrust__text strong { font-size: .74rem; line-height: 1.2; }
+  .kbtrust__text span { font-size: .7rem; line-height: 1.2; }
 }
 {% endstylesheet %}
 
