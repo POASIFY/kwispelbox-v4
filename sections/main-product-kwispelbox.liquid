@@ -92,16 +92,18 @@
         <h1 class="pdp-info__title">{{ product.title }}</h1>
 
         {%- capture reviewrow_inner -%}{%- render 'judgeme-rating', show: 'score', size: 'md' -%}{%- endcapture -%}
+        {%- comment -%}
+          Sterren linken bij voorkeur naar de in-page Judge.me-reviewlijst (#judgeme_product_reviews,
+          de vaste id van de Judge.me-widget verderop op deze PDP) i.p.v. een aparte reviews-pagina.
+          Dat houdt bezoekers op de pagina en voorkomt SEO-kannibalisatie. Valt terug op reviews_url.
+        {%- endcomment -%}
+        {%- assign reviewrow_href = '#judgeme_product_reviews' -%}
         {%- if reviewrow_inner != blank -%}
-          {%- if section.settings.reviews_url != blank -%}
-            <a class="pdp-info__reviewrow pdp-info__reviewrow--link" href="{{ section.settings.reviews_url }}">
-              {{ reviewrow_inner }}
-              <span class="pdp-info__reviewrow-arrow" aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span>
-              <span class="pdp-info__sr">— lees alle reviews</span>
-            </a>
-          {%- else -%}
-            <div class="pdp-info__reviewrow">{{ reviewrow_inner }}</div>
-          {%- endif -%}
+          <a class="pdp-info__reviewrow pdp-info__reviewrow--link" href="{{ reviewrow_href }}">
+            {{ reviewrow_inner }}
+            <span class="pdp-info__reviewrow-arrow" aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span>
+            <span class="pdp-info__sr">— lees alle reviews</span>
+          </a>
         {%- endif -%}
 
         <div class="pdp-info__price" data-price-wrap>
@@ -116,9 +118,15 @@
           {%- if section.settings.urgency_text != blank -%}<span class="pdp-info__urgency">{{ section.settings.urgency_text }}</span>{%- endif -%}
         </div>
 
-        {%- if section.settings.delivery_text != blank -%}
-          <p class="pdp-info__delivery"><span class="pdp-info__delivery-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'truck' -%}</span>{{ section.settings.delivery_text }}</p>
-        {%- endif -%}
+        {%- comment -%}
+          Eerlijke live levertijd-countdown tot de dagelijkse cutoff. JS rekent in lokale tijd
+          (cutoff-uur via data-attribuut). Vóór cutoff: aftellen "→ vandaag verzonden".
+          Na cutoff: "Morgen verzonden". Statische delivery_text dient enkel als no-JS fallback.
+        {%- endcomment -%}
+        <p class="pdp-info__delivery" data-ship-countdown data-cutoff-hour="{{ section.settings.shipping_cutoff_hour | default: 16 }}">
+          <span class="pdp-info__delivery-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'truck' -%}</span>
+          <span data-ship-text>{{ section.settings.delivery_text | default: 'Snel in huis 🐾' }}</span>
+        </p>
 
         {%- if section.settings.countdown_date != blank -%}
           <div class="pdp-countdown" data-countdown="{{ section.settings.countdown_date }}">
@@ -176,17 +184,70 @@
         {%- form 'product', product, id: 'pdp-form', class: 'pdp-form', novalidate: 'novalidate' -%}
           <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
 
+          {%- comment -%}
+            Hondennaam als micro-commitment: prominent en altijd zichtbaar, bovenaan de koopflow.
+            De naam wordt live in de ATC-knoptekst geëchood ("Verras Luna"). Property-naam moet exact
+            'properties[Naam hond]' blijven (dezelfde als voorheen in de personalisatie-details).
+          {%- endcomment -%}
+          <label class="pdp-dogname">
+            <span class="pdp-dogname__lbl">{{ section.settings.dogname_label | default: 'Voor wie pakken we in? 🐾' }}</span>
+            <input type="text" name="properties[Naam hond]" placeholder="{{ section.settings.dogname_placeholder | default: 'De naam van je hond' }}" autocomplete="off" data-dog-name>
+          </label>
+
           {%- comment -%} Variant-kaarten {%- endcomment -%}
           {%- if product.variants.size > 1 -%}
             <fieldset class="pdp-options">
               <legend class="pdp-options__legend">{{ section.settings.options_title | default: 'Kies jouw box' }}</legend>
               <div class="pdp-options__grid">
+                {%- comment -%}
+                  Anchoring: hoogste anker eerst. We tonen de kaarten in een expliciete volgorde
+                  (Mega → Happy → Mini = hoogste prijs eerst). De onderliggende product.variants
+                  blijft ongewijzigd; de standaard-selectie blijft de daadwerkelijk geselecteerde
+                  variant (current = Happy, de populaire middelste). Varianten die niet in deze
+                  voorkeurslijst voorkomen, hangen we er achteraan zodat er nooit eentje wegvalt.
+                {%- endcomment -%}
+                {%- assign preferred_order = 'Mega,Happy,Mini' | split: ',' -%}
+                {%- assign ordered_variants = '' -%}
+                {%- for wanted in preferred_order -%}
+                  {%- for variant in product.variants -%}
+                    {%- if variant.title == wanted -%}
+                      {%- assign ordered_variants = ordered_variants | append: variant.id | append: ',' -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                {%- endfor -%}
                 {%- for variant in product.variants -%}
+                  {%- assign vid_token = variant.id | append: ',' -%}
+                  {%- unless ordered_variants contains vid_token -%}
+                    {%- assign ordered_variants = ordered_variants | append: variant.id | append: ',' -%}
+                  {%- endunless -%}
+                {%- endfor -%}
+                {%- assign ordered_ids = ordered_variants | split: ',' -%}
+
+                {%- for vid in ordered_ids -%}
+                  {%- assign variant = nil -%}
+                  {%- for v in product.variants -%}
+                    {%- assign v_id_str = v.id | append: '' -%}
+                    {%- if v_id_str == vid -%}{%- assign variant = v -%}{%- endif -%}
+                  {%- endfor -%}
+                  {%- unless variant -%}{%- continue -%}{%- endunless -%}
                   {%- assign opt = nil -%}
                   {%- for ob in opt_blocks -%}
                     {%- if ob.settings.variant_title != blank and ob.settings.variant_title == variant.title -%}{%- assign opt = ob -%}{%- endif -%}
                   {%- endfor -%}
-                  {%- unless opt -%}{%- assign opt = opt_blocks[forloop.index0] -%}{%- endunless -%}
+                  {%- comment -%}
+                    Waarde-per-verrassing: prijs ÷ aantal verrassingen. Het aantal halen we uit de
+                    box_option item_count (bv. "± 7 verrassingen"); we pakken het eerste getal eruit.
+                  {%- endcomment -%}
+                  {%- assign per_surprise = blank -%}
+                  {%- if opt.settings.item_count != blank -%}
+                    {%- assign count_digits = opt.settings.item_count | replace: '±', '' | replace: 'verrassingen', '' | replace: 'verrassing', '' | strip -%}
+                    {%- assign count_num = count_digits | split: ' ' | first | times: 1 -%}
+                    {%- if count_num > 0 -%}
+                      {%- comment -%} variant.price is in centen; deel als float zodat afronding klopt (Mini 4495/5≈€9). {%- endcomment -%}
+                      {%- assign per_euro = variant.price | divided_by: 100.0 | divided_by: count_num | round -%}
+                      {%- capture per_surprise -%}± €{{ per_euro }} per verrassing{%- endcapture -%}
+                    {%- endif -%}
+                  {%- endif -%}
                   <label class="pdp-opt{% unless variant.available %} pdp-opt--sold{% endunless %}"{% if opt %} {{ opt.shopify_attributes }}{% endif %}>
                     <input type="radio" name="id" value="{{ variant.id }}" data-variant-price="{{ variant.price | money }}" data-variant-price-cents="{{ variant.price }}" data-variant-value="jij betaalt {{ variant.price | money }}" data-variant-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}" data-variant-save="{% if variant.compare_at_price > variant.price %}Bespaar {{ variant.compare_at_price | minus: variant.price | money }}{% endif %}" {% if variant == current %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
                     {%- if opt.settings.badge_text != blank -%}<span class="pdp-opt__badge pdp-opt__badge--{{ opt.settings.badge_color }}">{{ opt.settings.badge_text }}</span>{%- endif -%}
@@ -199,6 +260,7 @@
                     {%- if opt.settings.description != blank -%}<span class="pdp-opt__desc">{{ opt.settings.description }}</span>{%- endif -%}
                     {%- if opt.settings.item_count != blank -%}<span class="pdp-opt__count">{{ opt.settings.item_count }}</span>{%- endif -%}
                     <span class="pdp-opt__price">{{ variant.price | money }}</span>
+                    {%- if per_surprise != blank -%}<span class="pdp-opt__per">{{ per_surprise }}</span>{%- endif -%}
                     <span class="pdp-opt__check" aria-hidden="true">{%- render 'kb-icon', icon: 'check' -%}</span>
                   </label>
                 {%- endfor -%}
@@ -218,14 +280,14 @@
                 <span class="pdp-personalize__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
               </summary>
               <div class="pdp-personalize__grid">
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'dog' -%}</span>Naam hond</span><input type="text" name="properties[Naam hond]" placeholder="Bijv. Luna"></label>
+                {%- comment -%} 'Naam hond' staat nu prominent bovenaan de koopflow (zie .pdp-dogname). {%- endcomment -%}
                 <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>Levensfase</span><select name="properties[Levensfase]"><option value="">Kies…</option><option>Puppy</option><option>Volwassen</option><option>Senior</option></select></label>
                 <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'calendar' -%}</span>Geboortedatum hond</span><input type="date" name="properties[_Geboortedatum]"></label>
                 <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'ruler' -%}</span>Formaat</span>
                   <select name="properties[Formaat]"><option value="">Kies…</option><option>Klein</option><option>Middel</option><option>Groot</option></select>
                 </label>
                 <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'ball' -%}</span>Favoriete speeltjes</span><input type="text" name="properties[Favoriete speeltjes]" placeholder="Bijv. piepers, touwen"></label>
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'leaf' -%}</span>Allergieën</span><input type="text" name="properties[Allergieen]" placeholder="Bijv. graanvrij"></label>
+                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'leaf' -%}</span>Allergieën</span><input type="text" name="properties[Allergieen]" placeholder="Bijv. graanvrij"><span class="pdp-field__help">Wij stellen de box allergievriendelijk samen.</span></label>
                 <label class="pdp-field pdp-field--wide"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'mail' -%}</span>Persoonlijk bericht</span><input type="text" name="properties[Bericht]" placeholder="Een lief berichtje voor in de box"></label>
                 {%- if section.settings.show_photo_upload -%}
                   <label class="pdp-field pdp-field--wide pdp-field--upload"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'upload' -%}</span>Foto van je hond (optioneel)</span><input type="file" name="properties[Foto]" accept="image/*"></label>
@@ -293,6 +355,9 @@
           {%- comment -%} Add to cart {%- endcomment -%}
           <div class="pdp-atc">
             {%- if section.settings.atc_summary != blank -%}<p class="pdp-atc__summary">{{ section.settings.atc_summary }}</p>{%- endif -%}
+            {%- if section.settings.gwp_hint != blank -%}
+              <p class="pdp-atc__gwp"><span class="pdp-atc__gwp-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'gift' -%}</span>{{ section.settings.gwp_hint }}</p>
+            {%- endif -%}
             {%- if section.settings.show_guarantee -%}
               <div class="pdp-guarantee">
                 <span class="pdp-guarantee__seal" aria-hidden="true">
@@ -307,7 +372,7 @@
             {%- endif -%}
             <div class="pdp-atc__row">
               <button type="submit" name="add" class="pdp-atc__btn"{% unless product.available %} disabled{% endunless %}>
-                <span data-atc-label>{% if product.available %}{{ section.settings.atc_label | default: 'In winkelwagen' }}{% else %}Uitverkocht{% endif %}</span>
+                <span data-atc-label{% if product.available %} data-atc-default="{{ section.settings.atc_label | default: 'Verras je hond' | escape }}"{% endif %}>{% if product.available %}{{ section.settings.atc_label | default: 'Verras je hond' }}{% else %}Uitverkocht{% endif %}</span>
                 <span class="pdp-atc__btn-paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
               </button>
             </div>
@@ -359,7 +424,7 @@
         <span class="pdp-sticky__price" data-sticky-price>{{ current.price | money }}</span>
       </div>
       <button type="submit" form="pdp-form" name="add" class="pdp-sticky__btn"{% unless product.available %} disabled{% endunless %}>
-        <span data-atc-label>{% if product.available %}{{ section.settings.atc_label | default: 'In winkelwagen' }}{% else %}Uitverkocht{% endif %}</span>
+        <span data-atc-label{% if product.available %} data-atc-default="{{ section.settings.atc_label | default: 'Verras je hond' | escape }}"{% endif %}>{% if product.available %}{{ section.settings.atc_label | default: 'Verras je hond' }}{% else %}Uitverkocht{% endif %}</span>
         <span class="pdp-sticky__paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
       </button>
     </div>
@@ -429,11 +494,17 @@
 .pdp-info__badge-icon--yellow { background: #fffae0; color: #d99100; }
 .pdp-info__badge-icon svg { width: 16px; height: 16px; }
 
+/* ── Hondennaam (micro-commitment) ────────────────────── */
+.pdp-dogname { display: flex; flex-direction: column; gap: 6px; background: #fff; border: 1.5px solid var(--color-line); border-radius: 16px; padding: 14px 16px; margin: 0 0 18px; }
+.pdp-dogname__lbl { font-family: var(--font-body); font-size: .92rem; font-weight: 800; color: var(--color-ink); }
+.pdp-dogname input { width: 100%; height: 46px; box-sizing: border-box; border: 1.5px solid var(--color-line); border-radius: 14px; padding: 0 14px; font-family: var(--font-body); font-size: .95rem; color: var(--color-ink); background: var(--color-cream); outline: none; transition: border-color 160ms, background 160ms; -webkit-appearance: none; appearance: none; }
+.pdp-dogname input:focus { border-color: var(--color-green); background: #fff; }
+
 /* ── Variant-kaarten ──────────────────────────────────── */
 .pdp-options { border: none; margin: 0 0 24px; padding: 0; }
 .pdp-options__legend { font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); margin-bottom: 12px; padding: 0; }
 .pdp-options__grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-.pdp-opt { position: relative; display: grid; grid-template-columns: 72px 1fr auto; grid-template-areas: "media name price" "media desc price" "media count price"; align-items: center; column-gap: 14px; row-gap: 2px; background: #fff; border: 2px solid var(--color-line); border-radius: 20px; padding: 14px; cursor: pointer; transition: border-color 180ms, box-shadow 180ms, transform 180ms; }
+.pdp-opt { position: relative; display: grid; grid-template-columns: 72px 1fr auto; grid-template-areas: "media name price" "media desc price" "media count per"; align-items: center; column-gap: 14px; row-gap: 2px; background: #fff; border: 2px solid var(--color-line); border-radius: 20px; padding: 14px; cursor: pointer; transition: border-color 180ms, box-shadow 180ms, transform 180ms; }
 .pdp-opt:hover { transform: translateY(-2px); }
 .pdp-opt input { position: absolute; opacity: 0; pointer-events: none; }
 .pdp-opt:has(input:checked) { border-color: var(--pac); box-shadow: 0 10px 28px rgba(61, 34, 9, .14); }
@@ -446,6 +517,7 @@
 .pdp-opt__desc { grid-area: desc; font-family: var(--font-body); font-size: .78rem; color: var(--color-muted); }
 .pdp-opt__count { grid-area: count; font-family: var(--font-body); font-size: .74rem; font-weight: 700; color: var(--color-green); }
 .pdp-opt__price { grid-area: price; font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); white-space: nowrap; }
+.pdp-opt__per { grid-area: per; font-family: var(--font-body); font-size: .72rem; font-weight: 600; color: var(--color-muted); white-space: nowrap; }
 .pdp-opt__badge { position: absolute; top: -10px; left: 16px; z-index: 2; font-family: var(--font-body); font-size: .64rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; padding: 4px 11px; border-radius: var(--radius-pill); color: #fff; }
 .pdp-opt__badge--pink { background: var(--color-pink); }
 .pdp-opt__badge--green { background: var(--color-green); }
@@ -479,6 +551,7 @@
 .pdp-field input:focus, .pdp-field select:focus { border-color: var(--color-green); background-color: #fff; }
 .pdp-field--upload input { height: auto; line-height: 1.4; padding: 12px 14px; background: var(--color-cream); }
 .pdp-field--upload input::-webkit-file-upload-button, .pdp-field--upload input::file-selector-button { margin-right: 10px; padding: 6px 12px; border: none; border-radius: 9px; background: #e8f5e2; color: var(--color-green); font-family: var(--font-body); font-weight: 700; font-size: .8rem; cursor: pointer; }
+.pdp-field__help { font-family: var(--font-body); font-size: .74rem; font-weight: 600; color: var(--color-green); margin-top: 2px; }
 .pdp-personalize__note { display: flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: .78rem; color: var(--color-muted); margin: 14px 0 0; }
 .pdp-personalize__note svg { width: 15px; height: 15px; color: var(--color-orange); flex-shrink: 0; }
 
@@ -528,6 +601,9 @@
 /* ── Add to cart ──────────────────────────────────────── */
 .pdp-atc { background: var(--pac-soft); border: 1.5px solid color-mix(in srgb, var(--pac) 30%, transparent); border-radius: 24px; padding: 22px; }
 .pdp-atc__summary { display: flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); margin: 0 0 16px; }
+.pdp-atc__gwp { display: flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .88rem; font-weight: 700; color: var(--color-ink); margin: 0 0 16px; }
+.pdp-atc__gwp-icon { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #ffe0ee; color: var(--color-pink); flex-shrink: 0; }
+.pdp-atc__gwp-icon svg { width: 16px; height: 16px; }
 .pdp-atc__btn { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 18px 24px; background: var(--pac); color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.2rem; cursor: pointer; transition: filter 160ms, transform 160ms, box-shadow 160ms; }
 .pdp-atc__btn:hover:not(:disabled) { filter: brightness(.93); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(61, 34, 9, .22); }
 .pdp-atc__btn:disabled { background: var(--color-muted); cursor: not-allowed; }
@@ -578,7 +654,7 @@
 @media (min-width: 750px) {
   .pdp-info__badges { grid-template-columns: 1fr 1fr; }
   .pdp-options__grid { grid-template-columns: repeat(3, 1fr); }
-  .pdp-opt { grid-template-columns: 1fr; grid-template-areas: "media" "name" "desc" "count" "price"; justify-items: center; text-align: center; row-gap: 4px; padding: 18px 14px; }
+  .pdp-opt { grid-template-columns: 1fr; grid-template-areas: "media" "name" "desc" "count" "price" "per"; justify-items: center; text-align: center; row-gap: 4px; padding: 18px 14px; }
   .pdp-opt__media { width: 84px; height: 84px; }
   .pdp-opt__badge { left: 50%; transform: translateX(-50%); }
   .pdp-personalize__grid { grid-template-columns: 1fr 1fr; }
@@ -836,6 +912,59 @@
     }, { passive: true });
   }
 
+  /* Naam-echo: typ de hondennaam → ATC-knoppen worden "Verras {naam}".
+     Leeg → terug naar de ingestelde standaardtekst (data-atc-default). */
+  var dogNameInput = document.querySelector('[data-dog-name]');
+  if (dogNameInput) {
+    var labelEls = Array.prototype.slice.call(document.querySelectorAll('[data-atc-label]'));
+    var atcSummaryEl = document.querySelector('.pdp-atc__summary');
+    var atcSummaryDefault = atcSummaryEl ? atcSummaryEl.textContent : '';
+    var syncName = function () {
+      var name = dogNameInput.value.trim();
+      labelEls.forEach(function (el) {
+        /* 'Uitverkocht' nooit overschrijven: alleen labels met een standaard-attribuut. */
+        var def = el.getAttribute('data-atc-default');
+        if (def == null) { return; }
+        el.textContent = name ? ('Verras ' + name) : def;
+      });
+      if (atcSummaryEl) {
+        atcSummaryEl.textContent = name
+          ? (name + ' krijgt een cadeautje dat met liefde is ingepakt')
+          : atcSummaryDefault;
+      }
+    };
+    dogNameInput.addEventListener('input', syncName);
+    syncName();
+  }
+
+  /* Eerlijke live levertijd-countdown tot de dagelijkse cutoff (lokale tijd).
+     Vóór cutoff: "Bestel binnen Xu Ym → vandaag verzonden 🐾" (aftellend).
+     Na cutoff: "Besteld? Morgen verzonden 🐾". Cutoff-uur via data-attribuut. */
+  document.querySelectorAll('[data-ship-countdown]').forEach(function (el) {
+    var out = el.querySelector('[data-ship-text]');
+    if (!out) { return; }
+    var cutoffHour = parseInt(el.getAttribute('data-cutoff-hour'), 10);
+    if (isNaN(cutoffHour)) { cutoffHour = 16; }
+    var shipTimer = null;
+    var renderShip = function () {
+      var now = new Date();
+      var cutoff = new Date(now.getFullYear(), now.getMonth(), now.getDate(), cutoffHour, 0, 0, 0);
+      var diff = cutoff.getTime() - now.getTime();
+      if (diff <= 0) {
+        out.textContent = 'Besteld? Morgen verzonden 🐾';
+        if (shipTimer !== null) { clearInterval(shipTimer); shipTimer = null; }
+        return;
+      }
+      var h = Math.floor(diff / 3600000);
+      var m = Math.floor(diff % 3600000 / 60000);
+      out.textContent = 'Bestel binnen ' + h + 'u ' + m + 'm → vandaag verzonden 🐾';
+    };
+    renderShip();
+    /* Eén keer per minuut volstaat; we tonen geen seconden. */
+    shipTimer = setInterval(renderShip, 60000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) { renderShip(); } });
+  });
+
   /* Countdown — interval wordt opgeruimd bij expiratie, gepauzeerd bij verborgen tab
      of wanneer de teller uit beeld is, om INP/CPU-werk te beperken. */
   document.querySelectorAll('[data-countdown]').forEach(function (el) {
@@ -898,9 +1027,13 @@
       ]
     },
     { "type": "text", "id": "urgency_text", "label": "Urgentie-label (bv. Limited edition · op = op)" },
-    { "type": "text", "id": "delivery_text", "label": "Bezorg-belofte (onder prijs, met truck-icoon)", "default": "Vóór 16:00 besteld? Vandaag verzonden 🐾", "info": "Leeg = verbergen." },
+    { "type": "text", "id": "delivery_text", "label": "Bezorg-belofte fallback (zonder JS)", "default": "Snel in huis 🐾", "info": "Tonen we alleen als JavaScript uitstaat; normaal toont de live levertijd-countdown." },
+    { "type": "range", "id": "shipping_cutoff_hour", "min": 0, "max": 23, "step": 1, "unit": "u", "label": "Verzend-cutoff (uur, lokale tijd)", "default": 16, "info": "Vóór dit uur besteld = vandaag verzonden; daarna morgen. Live aftellend." },
     { "type": "text", "id": "countdown_date", "label": "Countdown einddatum", "info": "Formaat YYYY-MM-DD (of YYYY-MM-DDTHH:MM). Leeg = geen countdown." },
     { "type": "text", "id": "countdown_label", "label": "Countdown label", "default": "Nog te bestellen:" },
+    { "type": "header", "content": "Hondennaam" },
+    { "type": "text", "id": "dogname_label", "label": "Label naam-veld", "default": "Voor wie pakken we in? 🐾" },
+    { "type": "text", "id": "dogname_placeholder", "label": "Placeholder naam-veld", "default": "De naam van je hond" },
     { "type": "header", "content": "Variant-keuze" },
     { "type": "text", "id": "options_title", "label": "Titel boven kaarten", "default": "Kies jouw box" },
     { "type": "header", "content": "Personalisatie" },
@@ -909,10 +1042,11 @@
     { "type": "text", "id": "personalize_title", "label": "Titel", "default": "Vertel iets over je hond" },
     { "type": "text", "id": "personalize_text", "label": "Subtekst", "default": "Zo stellen we de box nóg persoonlijker samen" },
     { "type": "checkbox", "id": "show_photo_upload", "label": "Foto-upload tonen", "default": true },
-    { "type": "text", "id": "personalize_note", "label": "Notitie", "default": "Gepersonaliseerde boxen hebben soms iets meer verwerkingstijd." },
+    { "type": "text", "id": "personalize_note", "label": "Notitie", "default": "Je box wordt met liefde op maat samengesteld." },
     { "type": "header", "content": "Add to cart" },
-    { "type": "text", "id": "atc_label", "label": "Knoptekst", "default": "Verras mijn hond" },
+    { "type": "text", "id": "atc_label", "label": "Knoptekst", "default": "Verras mijn hond", "info": "Vul je een hondennaam in, dan wordt dit live 'Verras {naam}'." },
     { "type": "text", "id": "atc_summary", "label": "Samenvatting boven knop", "default": "Jouw hond ontvangt een verrassingsbox vol speelplezier" },
+    { "type": "text", "id": "gwp_hint", "label": "Gratis-cadeau hint (bij knop)", "default": "Vanaf €89 stoppen we er een gratis verrassing bij 🎁", "info": "Leeg = verbergen." },
     { "type": "header", "content": "Waarde-stack", "info": "Voeg 'Waarde-item' blokken toe voor de lijst." },
     { "type": "checkbox", "id": "show_value_stack", "label": "Waarde-stack tonen", "default": true },
     { "type": "text", "id": "value_title", "label": "Titel", "default": "Wat krijgt jouw hond?" },

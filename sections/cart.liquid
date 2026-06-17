@@ -244,6 +244,15 @@
           </div>
           <p class="kbcart__total-tax">Inclusief btw</p>
 
+          {%- comment -%}
+            Eerlijke live levertijd-countdown — zelfde cutoff-logica als op de PDP.
+            JS rekent in lokale tijd; cutoff-uur via data-attribuut. Geen seconden, 1×/min.
+          {%- endcomment -%}
+          <p class="kbcart__ship-promise" data-ship-countdown data-cutoff-hour="{{ section.settings.shipping_cutoff_hour | default: 16 }}">
+            <span class="kbcart__ship-promise-icon" aria-hidden="true">{%- render 'lucide', icon: 'truck' -%}</span>
+            <span data-ship-text>{{ section.settings.delivery_fallback | default: 'Snel in huis 🐾' }}</span>
+          </p>
+
           <form action="{{ routes.cart_url }}" method="post" novalidate>
             <button type="submit" name="checkout" class="kbcart__btn kbcart__btn--primary kbcart__checkout">
               <span class="kbcart__checkout-lock" aria-hidden="true">{%- render 'lucide', icon: 'lock' -%}</span>Afrekenen
@@ -487,6 +496,36 @@
   })();
 </script>
 
+{%- comment -%}
+  Eerlijke live levertijd-countdown in de winkelwagen. Querye't de DOM bij elke tick,
+  zodat het ook na de innerHTML-swap (cart-mutaties) blijft kloppen — geen herinit nodig.
+{%- endcomment -%}
+<script>
+  (function () {
+    function renderShip() {
+      var el = document.querySelector('.kbcart [data-ship-countdown]');
+      if (!el) { return; }
+      var out = el.querySelector('[data-ship-text]');
+      if (!out) { return; }
+      var cutoffHour = parseInt(el.getAttribute('data-cutoff-hour'), 10);
+      if (isNaN(cutoffHour)) { cutoffHour = 16; }
+      var now = new Date();
+      var cutoff = new Date(now.getFullYear(), now.getMonth(), now.getDate(), cutoffHour, 0, 0, 0);
+      var diff = cutoff.getTime() - now.getTime();
+      if (diff <= 0) {
+        out.textContent = 'Besteld? Morgen verzonden 🐾';
+        return;
+      }
+      var h = Math.floor(diff / 3600000);
+      var m = Math.floor(diff % 3600000 / 60000);
+      out.textContent = 'Bestel binnen ' + h + 'u ' + m + 'm → vandaag verzonden 🐾';
+    }
+    renderShip();
+    setInterval(renderShip, 60000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) { renderShip(); } });
+  })();
+</script>
+
 {% stylesheet %}
 .kbcart { position: relative; background: var(--color-cream); padding: 40px 0 0; overflow: hidden; }
 .kbcart__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
@@ -646,6 +685,9 @@
 .kbcart__btn--primary:hover { background: #5a9a3b; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(102,170,68,.3); }
 .kbcart__checkout { width: 100%; position: relative; }
 .kbcart__checkout-paw { opacity: .55; }
+.kbcart__ship-promise { display: flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .9rem; font-weight: 700; color: var(--color-ink); margin: 0 0 14px; }
+.kbcart__ship-promise-icon { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); flex-shrink: 0; }
+.kbcart__ship-promise-icon .lucide { width: 16px; height: 16px; }
 
 .kbcart__pay-label { text-align: center; font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); margin: 18px 0 10px; }
 .kbcart__pay { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
@@ -768,6 +810,8 @@
     { "type": "header", "content": "Samenvatting" },
     { "type": "text", "id": "summary_box_title", "label": "Titel roze blok", "default": "Jouw hond wordt blij!" },
     { "type": "text", "id": "summary_box_text", "label": "Tekst roze blok", "default": "We maken er iets bijzonders van." },
+    { "type": "range", "id": "shipping_cutoff_hour", "min": 0, "max": 23, "step": 1, "unit": "u", "label": "Verzend-cutoff (uur, lokale tijd)", "default": 16, "info": "Live levertijd-countdown bij de afrekenknop. Houd gelijk aan de PDP-cutoff." },
+    { "type": "text", "id": "delivery_fallback", "label": "Levertijd fallback (zonder JS)", "default": "Snel in huis 🐾" },
     { "type": "header", "content": "Lege winkelwagen" },
     { "type": "text", "id": "empty_title", "label": "Titel", "default": "Nog geen cadeautjes ingepakt" },
     { "type": "textarea", "id": "empty_text", "label": "Tekst", "default": "Je winkelwagen wacht op iets moois. Kies een box en verras je hond met het moment waar hij niet meer op kan wachten." },
