@@ -193,11 +193,19 @@
         "text": "Een liefdevolle verrassing voor jouw trouwe vriend. Beperkt beschikbaar!",
         "button_label": "Geef dit cadeautje"
       }
+    },
+    "jmereviews": {
+      "type": "judgeme-product-reviews",
+      "settings": {
+        "eyebrow": "Geliefd door honden én hun baasjes",
+        "heading": "Wat onze klanten zeggen"
+      }
     }
   },
   "order": [
     "main",
     "contents",
+    "jmereviews",
     "faq",
     "cta"
   ]
