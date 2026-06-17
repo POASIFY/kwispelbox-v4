@@ -96,5 +96,82 @@
         "default": "#EDE2C9"
       }
     ]
+  },
+  {
+    "name": "SEO & Bedrijf",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Gebruikt voor structured data (Organization/WebSite) in de <head>. Vul in voor betere SEO + rich results."
+      },
+      {
+        "type": "image_picker",
+        "id": "seo_logo",
+        "label": "Logo (vierkant, min. 112×112)"
+      },
+      {
+        "type": "text",
+        "id": "seo_legal_name",
+        "label": "Bedrijfsnaam",
+        "info": "Bv. Kwispelbox B.V."
+      },
+      {
+        "type": "textarea",
+        "id": "seo_description",
+        "label": "Korte bedrijfsomschrijving"
+      },
+      {
+        "type": "header",
+        "content": "Social profielen (sameAs)"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "url",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      },
+      {
+        "type": "header",
+        "content": "Reviews (rich snippet)"
+      },
+      {
+        "type": "checkbox",
+        "id": "seo_show_rating",
+        "label": "AggregateRating in productschema tonen",
+        "default": false,
+        "info": "Alleen aanzetten als de score op echte, zichtbare reviews is gebaseerd (Google-richtlijn)."
+      },
+      {
+        "type": "text",
+        "id": "seo_rating_value",
+        "label": "Gemiddelde score",
+        "default": "4.9"
+      },
+      {
+        "type": "text",
+        "id": "seo_rating_count",
+        "label": "Aantal reviews",
+        "default": "1200"
+      }
+    ]
   }
 ]
