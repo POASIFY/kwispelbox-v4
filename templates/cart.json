@@ -30,6 +30,8 @@
         "upsell_count": 4,
         "summary_box_title": "Jouw hond wordt blij!",
         "summary_box_text": "We maken er iets bijzonders van.",
+        "shipping_cutoff_hour": 16,
+        "delivery_fallback": "Snel in huis 🐾",
         "empty_title": "Nog geen cadeautjes ingepakt",
         "empty_text": "Je winkelwagen wacht op iets moois. Kies een box en verras je hond met het moment waar hij niet meer op kan wachten.",
         "empty_button_label": "Verras je hond",

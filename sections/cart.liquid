@@ -253,6 +253,36 @@
             <span data-ship-text>{{ section.settings.delivery_fallback | default: 'Snel in huis 🐾' }}</span>
           </p>
 
+          {%- comment -%}
+            Cadeau-optie op orderniveau (cart attributes, geen line-item properties).
+            Velden vooraf gevuld uit cart.attributes zodat ze blijven staan na een section re-render.
+          {%- endcomment -%}
+          {%- if section.settings.show_gift -%}
+            {%- assign gift_on = false -%}
+            {%- if cart.attributes['Cadeau'] == 'Ja' -%}{%- assign gift_on = true -%}{%- endif -%}
+            <div class="kbcart__gift{% if gift_on %} is-on{% endif %}" data-gift>
+              <label class="kbcart__gift-toggle">
+                <input type="checkbox" data-gift-toggle{% if gift_on %} checked{% endif %}>
+                <span class="kbcart__gift-tog-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
+                <span class="kbcart__gift-tog-head">
+                  <strong>{{ section.settings.gift_title | default: 'Dit is een cadeau 🎁' }}</strong>
+                  {%- if section.settings.gift_text != blank -%}<span>{{ section.settings.gift_text }}</span>{%- endif -%}
+                </span>
+                <span class="kbcart__gift-switch" aria-hidden="true"><span class="kbcart__gift-switch-dot"></span></span>
+              </label>
+              <div class="kbcart__gift-fields" data-gift-fields{% unless gift_on %} hidden{% endunless %}>
+                <label class="kbcart__gift-field">
+                  <span class="kbcart__gift-lbl"><span aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>Aan wie geef je het?</span>
+                  <input type="text" name="attributes[Cadeau voor]" data-gift-recipient placeholder="Naam van de ontvanger" autocomplete="off" value="{{ cart.attributes['Cadeau voor'] | escape }}">
+                </label>
+                <label class="kbcart__gift-field">
+                  <span class="kbcart__gift-lbl"><span aria-hidden="true">{%- render 'lucide', icon: 'mail' -%}</span>Persoonlijk cadeau-bericht</span>
+                  <textarea name="attributes[Cadeaubericht]" data-gift-message rows="3" placeholder="Een lief berichtje voor bij het cadeau…">{{ cart.attributes['Cadeaubericht'] | escape }}</textarea>
+                </label>
+              </div>
+            </div>
+          {%- endif -%}
+
           <form action="{{ routes.cart_url }}" method="post" novalidate>
             <button type="submit" name="checkout" class="kbcart__btn kbcart__btn--primary kbcart__checkout">
               <span class="kbcart__checkout-lock" aria-hidden="true">{%- render 'lucide', icon: 'lock' -%}</span>Afrekenen
@@ -481,6 +511,48 @@
       }
     });
 
+    {%- comment -%}
+      Cadeau-optie op orderniveau: persist via cart attributes. We re-renderen de
+      sectie zodat de waarden (uit cart.attributes) na de swap blijven staan.
+      Gedelegeerde listeners op document overleven de innerHTML-swap.
+    {%- endcomment -%}
+    function saveGift(gift) {
+      var toggle = gift.querySelector('[data-gift-toggle]');
+      var recipient = gift.querySelector('[data-gift-recipient]');
+      var message = gift.querySelector('[data-gift-message]');
+      var on = toggle && toggle.checked;
+      mutate('/cart/update.js', {
+        attributes: {
+          'Cadeau': on ? 'Ja' : '',
+          'Cadeau voor': on && recipient ? recipient.value : '',
+          'Cadeaubericht': on && message ? message.value : ''
+        }
+      });
+    }
+
+    document.addEventListener('change', function (e) {
+      var toggle = e.target.closest('[data-gift-toggle]');
+      if (!toggle || !root.contains(toggle)) { return; }
+      var gift = toggle.closest('[data-gift]');
+      if (!gift) { return; }
+      {%- comment -%} Velden meteen tonen/verbergen vóór de swap voor directe feedback. {%- endcomment -%}
+      var fields = gift.querySelector('[data-gift-fields]');
+      if (fields) { fields.hidden = !toggle.checked; }
+      gift.classList.toggle('is-on', toggle.checked);
+      saveGift(gift);
+    });
+
+    {%- comment -%} Persist recipient/message bij blur (focusout bubbelt, anders dan blur). {%- endcomment -%}
+    document.addEventListener('focusout', function (e) {
+      var field = e.target.closest('[data-gift-recipient], [data-gift-message]');
+      if (!field || !root.contains(field)) { return; }
+      var gift = field.closest('[data-gift]');
+      if (!gift) { return; }
+      var toggle = gift.querySelector('[data-gift-toggle]');
+      if (!toggle || !toggle.checked) { return; }
+      saveGift(gift);
+    });
+
     {%- comment -%} Kortingscode blijft een normale navigatie (geen JSON-endpoint). {%- endcomment -%}
     document.addEventListener('submit', function (e) {
       var dform = e.target.closest('#kbcart-discount-form');
@@ -689,6 +761,32 @@
 .kbcart__ship-promise-icon { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); flex-shrink: 0; }
 .kbcart__ship-promise-icon .lucide { width: 16px; height: 16px; }
 
+/* Cadeau-optie (orderniveau) */
+.kbcart__gift { margin: 0 0 16px; }
+.kbcart__gift-toggle { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1.5px solid var(--color-line); border-radius: var(--radius-md); background: #fff; cursor: pointer; transition: border-color 160ms, background 160ms; }
+.kbcart__gift.is-on .kbcart__gift-toggle { border-color: var(--color-pink); background: #fff7fb; }
+.kbcart__gift-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+.kbcart__gift-tog-icon { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: #fbe4ee; color: var(--color-pink); flex-shrink: 0; }
+.kbcart__gift-tog-icon .lucide { width: 21px; height: 21px; }
+.kbcart__gift-tog-head { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.kbcart__gift-tog-head strong { font-family: var(--font-heading); font-size: 1.02rem; color: var(--color-ink); line-height: 1.2; }
+.kbcart__gift-tog-head span { font-family: var(--font-body); font-size: .84rem; color: var(--color-body); line-height: 1.35; }
+.kbcart__gift-switch { flex-shrink: 0; width: 46px; height: 26px; border-radius: var(--radius-pill); background: var(--color-line); position: relative; transition: background 160ms; }
+.kbcart__gift-switch-dot { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform 180ms; }
+.kbcart__gift.is-on .kbcart__gift-switch { background: var(--color-pink); }
+.kbcart__gift.is-on .kbcart__gift-switch-dot { transform: translateX(20px); }
+.kbcart__gift-toggle input:focus-visible ~ .kbcart__gift-switch { outline: 2px solid var(--color-pink); outline-offset: 2px; }
+.kbcart__gift-fields { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
+.kbcart__gift-fields[hidden] { display: none; }
+.kbcart__gift-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.kbcart__gift-lbl { display: flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-ink); }
+.kbcart__gift-lbl span { display: inline-flex; flex-shrink: 0; color: var(--color-pink); }
+.kbcart__gift-lbl .lucide { width: 15px; height: 15px; }
+.kbcart__gift-field input, .kbcart__gift-field textarea { width: 100%; box-sizing: border-box; border: 1.5px solid var(--color-line); border-radius: var(--radius-sm); padding: 11px 14px; font-family: var(--font-body); font-size: .95rem; color: var(--color-ink); background: var(--color-cream); outline: none; transition: border-color 160ms, background 160ms; -webkit-appearance: none; appearance: none; }
+.kbcart__gift-field input { min-height: 44px; }
+.kbcart__gift-field textarea { line-height: 1.5; resize: vertical; min-height: 70px; }
+.kbcart__gift-field input:focus, .kbcart__gift-field textarea:focus { border-color: var(--color-pink); background: #fff; }
+
 .kbcart__pay-label { text-align: center; font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); margin: 18px 0 10px; }
 .kbcart__pay { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 .kbcart__pay-icon { width: 40px; height: 26px; }
@@ -812,6 +910,10 @@
     { "type": "text", "id": "summary_box_text", "label": "Tekst roze blok", "default": "We maken er iets bijzonders van." },
     { "type": "range", "id": "shipping_cutoff_hour", "min": 0, "max": 23, "step": 1, "unit": "u", "label": "Verzend-cutoff (uur, lokale tijd)", "default": 16, "info": "Live levertijd-countdown bij de afrekenknop. Houd gelijk aan de PDP-cutoff." },
     { "type": "text", "id": "delivery_fallback", "label": "Levertijd fallback (zonder JS)", "default": "Snel in huis 🐾" },
+    { "type": "header", "content": "Cadeau-optie" },
+    { "type": "checkbox", "id": "show_gift", "label": "Cadeau-optie tonen", "default": true, "info": "Toont een 'Dit is een cadeau'-schakelaar met ontvanger + persoonlijk bericht. Wordt op orderniveau opgeslagen (cart-eigenschappen)." },
+    { "type": "text", "id": "gift_title", "label": "Cadeau-kop", "default": "Dit is een cadeau 🎁" },
+    { "type": "textarea", "id": "gift_text", "label": "Cadeau-subtekst", "default": "Voeg een persoonlijk bericht toe — wij pakken het extra feestelijk in." },
     { "type": "header", "content": "Lege winkelwagen" },
     { "type": "text", "id": "empty_title", "label": "Titel", "default": "Nog geen cadeautjes ingepakt" },
     { "type": "textarea", "id": "empty_text", "label": "Tekst", "default": "Je winkelwagen wacht op iets moois. Kies een box en verras je hond met het moment waar hij niet meer op kan wachten." },
