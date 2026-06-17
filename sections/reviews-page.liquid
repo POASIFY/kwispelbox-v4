@@ -28,7 +28,7 @@
         </div>
         <div class="rvp__bars">
           {%- assign pcts = section.settings.bar_5 | append: ',' | append: section.settings.bar_4 | append: ',' | append: section.settings.bar_3 | append: ',' | append: section.settings.bar_2 | append: ',' | append: section.settings.bar_1 | split: ',' -%}
-          {%- for n in (5..1) reversed -%}
+          {%- for n in (1..5) reversed -%}
             {%- assign idx = 5 | minus: n -%}
             {%- assign pct = pcts[idx] | default: 0 -%}
             <div class="rvp__bar-row">
