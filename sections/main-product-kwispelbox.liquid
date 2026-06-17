@@ -235,6 +235,25 @@
             </details>
           {%- endif -%}
 
+          {%- comment -%} Cadeau aan iemand anders {%- endcomment -%}
+          {%- if section.settings.show_gift -%}
+            <div class="pdp-gift" data-gift>
+              <label class="pdp-gift__toggle">
+                <input type="checkbox" name="properties[Cadeau]" value="Ja" data-gift-toggle>
+                <span class="pdp-gift__icon" aria-hidden="true">{%- render 'kb-icon', icon: 'gift' -%}</span>
+                <span class="pdp-gift__head">
+                  <strong>{{ section.settings.gift_title | default: 'Dit is een cadeau 🎁' }}</strong>
+                  {%- if section.settings.gift_text != blank -%}<span>{{ section.settings.gift_text }}</span>{%- endif -%}
+                </span>
+                <span class="pdp-gift__switch" aria-hidden="true"><span class="pdp-gift__switch-dot"></span></span>
+              </label>
+              <div class="pdp-gift__fields" data-gift-fields hidden>
+                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>Voor wie is het?</span><input type="text" name="properties[Cadeau voor]" placeholder="Naam van de ontvanger (of de hond)"></label>
+                <label class="pdp-field pdp-field--wide"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'mail' -%}</span>Persoonlijk cadeau-bericht</span><textarea name="properties[Cadeaubericht]" rows="3" placeholder="Een lief berichtje voor bij het cadeau…"></textarea></label>
+              </div>
+            </div>
+          {%- endif -%}
+
           {%- comment -%} Maak je box compleet — box-builder add-ons {%- endcomment -%}
           {%- if section.settings.show_addons -%}
             {%- assign addon_coll = section.settings.addons_collection -%}
@@ -463,6 +482,25 @@
 .pdp-personalize__note { display: flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: .78rem; color: var(--color-muted); margin: 14px 0 0; }
 .pdp-personalize__note svg { width: 15px; height: 15px; color: var(--color-orange); flex-shrink: 0; }
 
+/* ── Cadeau-toggle ──────────────────────────────────── */
+.pdp-gift { margin: 4px 0 20px; }
+.pdp-gift__toggle { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1.5px solid var(--color-line); border-radius: 16px; background: #fff; cursor: pointer; transition: border-color 160ms, background 160ms; }
+.pdp-gift.is-on .pdp-gift__toggle { border-color: var(--color-pink); background: #fff7fb; }
+.pdp-gift__toggle input { position: absolute; opacity: 0; pointer-events: none; }
+.pdp-gift__icon { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: #ffe9f1; color: var(--color-pink); flex-shrink: 0; }
+.pdp-gift__icon svg { width: 22px; height: 22px; }
+.pdp-gift__head { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.pdp-gift__head strong { font-family: var(--font-body); font-weight: 800; font-size: .98rem; color: var(--color-ink); }
+.pdp-gift__head span { font-family: var(--font-body); font-size: .84rem; color: var(--color-body); line-height: 1.35; }
+.pdp-gift__switch { flex-shrink: 0; width: 46px; height: 26px; border-radius: 999px; background: var(--color-line); position: relative; transition: background 160ms; }
+.pdp-gift__switch-dot { position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform 180ms; }
+.pdp-gift.is-on .pdp-gift__switch { background: var(--color-pink); }
+.pdp-gift.is-on .pdp-gift__switch-dot { transform: translateX(20px); }
+.pdp-gift__toggle input:focus-visible ~ .pdp-gift__switch { outline: 2px solid var(--color-pink); outline-offset: 2px; }
+.pdp-gift__fields { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
+.pdp-field textarea { width: 100%; box-sizing: border-box; border: 1.5px solid var(--color-line); border-radius: 14px; padding: 11px 14px; font-family: var(--font-body); font-size: .92rem; line-height: 1.5; color: var(--color-ink); background: var(--color-cream); outline: none; resize: vertical; min-height: 70px; transition: border-color 160ms, background 160ms; }
+.pdp-field textarea:focus { border-color: var(--color-green); background: #fff; }
+
 /* ── Box-builder add-ons ──────────────────────────────── */
 .pdp-addons { margin: 4px 0 20px; }
 .pdp-addons__head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
@@ -680,6 +718,17 @@
     }
   });
 
+  /* Cadeau-toggle: bericht-velden tonen/verbergen */
+  var giftToggle = document.querySelector('[data-gift-toggle]');
+  var giftFields = document.querySelector('[data-gift-fields]');
+  if (giftToggle && giftFields) {
+    giftToggle.addEventListener('change', function () {
+      giftFields.hidden = !giftToggle.checked;
+      var wrap = giftToggle.closest('[data-gift]');
+      if (wrap) { wrap.classList.toggle('is-on', giftToggle.checked); }
+    });
+  }
+
   var form = document.getElementById('pdp-form');
   if (form) {
     var hidden = form.querySelector('[data-variant-id]');
@@ -875,6 +924,10 @@
     { "type": "text", "id": "guarantee_text", "label": "Subtekst", "default": "Is je hond niet door het dolle? Je krijgt je geld terug." },
     { "type": "header", "content": "Klantfoto's (UGC)", "info": "Voeg 'Klantfoto' blokken toe." },
     { "type": "text", "id": "ugc_title", "label": "Kopje", "default": "Blije honden, échte foto’s" },
+    { "type": "header", "content": "Cadeau aan iemand anders" },
+    { "type": "checkbox", "id": "show_gift", "label": "Cadeau-toggle tonen", "default": true, "info": "Toont een 'Dit is een cadeau'-schakelaar met een persoonlijk cadeau-bericht. De velden komen als orderregel-eigenschappen mee." },
+    { "type": "text", "id": "gift_title", "label": "Cadeau-kop", "default": "Dit is een cadeau 🎁" },
+    { "type": "text", "id": "gift_text", "label": "Cadeau-subtekst", "default": "Ook leuk om te geven aan een mede-hondenliefhebber — voeg een persoonlijk bericht toe." },
     { "type": "header", "content": "Box-builder (extra's)" },
     { "type": "checkbox", "id": "show_addons", "label": "Box-builder tonen", "default": true, "info": "Toont cadeau-extra's die de klant kan aanvinken; ze worden als losse regels aan de winkelwagen toegevoegd." },
     { "type": "text", "id": "addons_title", "label": "Titel", "default": "Maak je box compleet" },
