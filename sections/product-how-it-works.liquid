@@ -17,12 +17,14 @@
               {%- if block.settings.image != blank -%}
                 <img src="{{ block.settings.image | image_url: width: 360 }}" alt="{{ block.settings.title | escape }}" width="180" height="180" loading="lazy">
               {%- else -%}
-                <span class="phow__step-ph" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
+                <span class="phow__step-ph" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
               {%- endif -%}
               <span class="phow__step-num">{{ forloop.index }}</span>
             </div>
-            {%- if block.settings.title != blank -%}<strong class="phow__step-title">{{ block.settings.title }}</strong>{%- endif -%}
-            {%- if block.settings.text != blank -%}<span class="phow__step-text">{{ block.settings.text }}</span>{%- endif -%}
+            <div class="phow__step-body">
+              {%- if block.settings.title != blank -%}<strong class="phow__step-title">{{ block.settings.title }}</strong>{%- endif -%}
+              {%- if block.settings.text != blank -%}<span class="phow__step-text">{{ block.settings.text }}</span>{%- endif -%}
+            </div>
           </li>
         {%- endfor -%}
       </ol>
@@ -36,12 +38,13 @@
 .phow__eyebrow { display: block; text-align: center; font-family: var(--font-body); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--color-pink); margin-bottom: 10px; }
 .phow__title { text-align: center; font-family: var(--font-heading); font-size: clamp(1.7rem, 5vw, 2.6rem); color: var(--color-ink); margin: 0 0 36px; }
 .phow__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 26px; position: relative; }
-.phow__step { position: relative; display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 18px; }
+.phow__step { position: relative; display: grid; grid-template-columns: 92px 1fr; align-items: center; column-gap: 18px; }
+.phow__step-body { min-width: 0; }
 .phow__list::before { content: ""; position: absolute; left: 45px; top: 30px; bottom: 30px; width: 3px; border-radius: 3px; background: repeating-linear-gradient(to bottom, rgba(247,160,72,.45) 0 7px, transparent 7px 15px); }
 .phow__step-media { position: relative; z-index: 1; width: 92px; height: 92px; border-radius: 50%; overflow: hidden; background: #fff; box-shadow: 0 10px 26px rgba(61, 34, 9, .1); display: flex; align-items: center; justify-content: center; }
 .phow__step-media img { width: 100%; height: 100%; object-fit: cover; }
 .phow__step-ph { display: flex; color: var(--color-green); }
-.phow__step-ph .lucide { width: 38px; height: 38px; }
+.phow__step-ph svg { width: 38px; height: 38px; }
 .phow__step-num { position: absolute; top: -2px; right: -2px; z-index: 2; display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: var(--color-pink); color: #fff; font-family: var(--font-heading); font-size: .85rem; border: 2.5px solid var(--color-cream); }
 .phow__step-title { display: block; font-family: var(--font-heading); font-size: 1.2rem; color: var(--color-ink); line-height: 1.15; margin-bottom: 4px; }
 .phow__step-text { font-family: var(--font-body); font-size: .9rem; line-height: 1.5; color: var(--color-body); }
