@@ -160,10 +160,16 @@
               {%- endfor -%}
             </ul>
             {%- if section.settings.value_total != blank -%}
-              <div class="pdp-value__total">
+              {%- comment -%}
+                Totale waarde is ingesteld voor de standaard-box. Schaal 'm mee met de
+                gekozen variant zodat de waardepropositie per maat klopt (data-value-base
+                = ingestelde waarde, data-price-base = prijs van de standaard-variant).
+              {%- endcomment -%}
+              {%- assign value_base_clean = section.settings.value_total | replace: '€', '' | replace: '.', '' | replace: ',', '.' | times: 1.0 -%}
+              <div class="pdp-value__total" data-value-total data-value-base="{{ value_base_clean }}" data-price-base="{{ current.price }}">
                 <span class="pdp-value__total-label">Totale waarde</span>
-                <span class="pdp-value__total-was">{{ section.settings.value_total }}</span>
-                <span class="pdp-value__total-now">jij betaalt {{ current.price | money }}</span>
+                <span class="pdp-value__total-was" data-value-was>{{ section.settings.value_total }}</span>
+                <span class="pdp-value__total-now" data-value-now>jij betaalt {{ current.price | money }}</span>
               </div>
             {%- endif -%}
           </div>
@@ -184,7 +190,7 @@
                   {%- endfor -%}
                   {%- unless opt -%}{%- assign opt = opt_blocks[forloop.index0] -%}{%- endunless -%}
                   <label class="pdp-opt{% unless variant.available %} pdp-opt--sold{% endunless %}"{% if opt %} {{ opt.shopify_attributes }}{% endif %}>
-                    <input type="radio" name="id" value="{{ variant.id }}" data-variant-price="{{ variant.price | money }}" data-variant-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}" data-variant-save="{% if variant.compare_at_price > variant.price %}Bespaar {{ variant.compare_at_price | minus: variant.price | money }}{% endif %}" {% if variant == current %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                    <input type="radio" name="id" value="{{ variant.id }}" data-variant-price="{{ variant.price | money }}" data-variant-price-cents="{{ variant.price }}" data-variant-value="jij betaalt {{ variant.price | money }}" data-variant-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}" data-variant-save="{% if variant.compare_at_price > variant.price %}Bespaar {{ variant.compare_at_price | minus: variant.price | money }}{% endif %}" {% if variant == current %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
                     {%- if opt.settings.badge_text != blank -%}<span class="pdp-opt__badge pdp-opt__badge--{{ opt.settings.badge_color }}">{{ opt.settings.badge_text }}</span>{%- endif -%}
                     <span class="pdp-opt__media">
                       {%- if opt.settings.image != blank -%}<img src="{{ opt.settings.image | image_url: width: 200 }}" alt="" width="90" height="90" loading="lazy">
@@ -284,10 +290,11 @@
             {%- endif -%}
             <div class="pdp-atc__row">
               <button type="submit" name="add" class="pdp-atc__btn"{% unless product.available %} disabled{% endunless %}>
-                <span>{% if product.available %}{{ section.settings.atc_label | default: 'In winkelwagen' }}{% else %}Uitverkocht{% endif %}</span>
+                <span data-atc-label>{% if product.available %}{{ section.settings.atc_label | default: 'In winkelwagen' }}{% else %}Uitverkocht{% endif %}</span>
                 <span class="pdp-atc__btn-paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
               </button>
             </div>
+            <p class="pdp-atc__status" data-atc-status role="status" aria-live="polite" hidden></p>
             <ul class="pdp-atc__trust" role="list">
               <li><span aria-hidden="true">{%- render 'kb-icon', icon: 'shield-check' -%}</span>Veilig betalen</li>
               <li><span aria-hidden="true">{%- render 'kb-icon', icon: 'refresh' -%}</span>Niet goed? Geld terug</li>
@@ -335,7 +342,7 @@
         <span class="pdp-sticky__price" data-sticky-price>{{ current.price | money }}</span>
       </div>
       <button type="submit" form="pdp-form" name="add" class="pdp-sticky__btn"{% unless product.available %} disabled{% endunless %}>
-        {% if product.available %}{{ section.settings.atc_label | default: 'In winkelwagen' }}{% else %}Uitverkocht{% endif %}
+        <span data-atc-label>{% if product.available %}{{ section.settings.atc_label | default: 'In winkelwagen' }}{% else %}Uitverkocht{% endif %}</span>
         <span class="pdp-sticky__paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
       </button>
     </div>
@@ -488,6 +495,8 @@
 .pdp-atc__btn-paw { display: inline-flex; animation: pdp-wag 1.6s ease-in-out infinite; }
 .pdp-atc__btn-paw svg { width: 22px; height: 22px; }
 @keyframes pdp-wag { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } }
+.pdp-atc__status { margin: 12px 0 0; text-align: center; font-family: var(--font-body); font-size: .88rem; font-weight: 700; color: var(--pac); }
+.pdp-atc__status[hidden] { display: none; }
 .pdp-atc__trust { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: center; }
 .pdp-atc__trust li { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: .78rem; font-weight: 700; color: var(--color-ink); }
 .pdp-atc__trust li span { display: inline-flex; color: var(--color-green); }
@@ -666,6 +675,17 @@
     var compareEl = document.querySelector('[data-compare]');
     var saveEl = document.querySelector('[data-save]');
     var stickyPrice = document.querySelector('[data-sticky-price]');
+    var valueTotal = document.querySelector('[data-value-total]');
+    var valueWas = document.querySelector('[data-value-was]');
+    var valueNow = document.querySelector('[data-value-now]');
+    /* Euro-bedrag (hele euro's = decimaal) Nederlands formatteren: € 1.234,95 */
+    var fmtEuro = function (amount) {
+      try {
+        return '€' + amount.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      } catch (err) {
+        return '€' + amount.toFixed(2).replace('.', ',');
+      }
+    };
     form.querySelectorAll('input[name="id"][type="radio"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         if (hidden) hidden.value = radio.value;
@@ -681,6 +701,16 @@
           if (radio.dataset.variantSave) { saveEl.textContent = radio.dataset.variantSave; saveEl.hidden = false; }
           else { saveEl.hidden = true; }
         }
+        /* Waarde-stack: 'jij betaalt' + 'totale waarde' meeschalen met de gekozen variant */
+        if (valueNow && radio.dataset.variantValue) { valueNow.textContent = radio.dataset.variantValue; }
+        if (valueTotal && valueWas) {
+          var base = parseFloat(valueTotal.getAttribute('data-value-base'));        /* totale waarde standaard-box, in euro's */
+          var priceBase = parseFloat(valueTotal.getAttribute('data-price-base'));    /* prijs standaard-box, in centen */
+          var cents = radio.dataset.variantPriceCents ? parseFloat(radio.dataset.variantPriceCents) : NaN;
+          if (!isNaN(base) && !isNaN(priceBase) && priceBase > 0 && !isNaN(cents)) {
+            valueWas.textContent = fmtEuro(base * (cents / priceBase));
+          }
+        }
       });
     });
 
@@ -694,19 +724,41 @@
       var mainId = radio ? radio.value : (hidden ? hidden.value : null);
       if (!mainId) { form.submit(); return; }
       var btns = Array.prototype.slice.call(form.querySelectorAll('[name="add"]'));
+      /* Onthoud de oorspronkelijke knoptekst zodat we 'm bij een fout kunnen herstellen. */
+      var btnLabels = btns.map(function (b) {
+        var t = b.querySelector('[data-atc-label]') || b;
+        return { el: t, text: t.textContent };
+      });
+      var setLabel = function (txt) { btnLabels.forEach(function (l) { l.el.textContent = txt; }); };
+      var restoreLabels = function () { btnLabels.forEach(function (l) { l.el.textContent = l.text; }); };
       btns.forEach(function (b) { b.disabled = true; });
+      /* Toegankelijke statusmelding voor screenreaders + zichtbare foutmelding. */
+      var status = form.querySelector('[data-atc-status]');
       var fd = new FormData(form);
       fd.set('id', mainId);
       fd.delete('add');
       fetch('/cart/add.js', { method: 'POST', body: fd })
+        .then(function (r) { if (!r.ok) throw new Error('main'); return r; })
         .then(function () {
           return fetch('/cart/add.js', {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ items: addons.map(function (id) { return { id: id, quantity: 1 }; }) })
           });
         })
-        .then(function () { window.location = '/cart'; })
-        .catch(function () { btns.forEach(function (b) { b.disabled = false; }); });
+        .then(function (r) { if (!r.ok) throw new Error('addons'); return r; })
+        .then(function () {
+          setLabel('Toegevoegd ✓');
+          if (status) { status.textContent = 'Toegevoegd aan je winkelwagen.'; status.hidden = false; }
+          window.location = '/cart';
+        })
+        .catch(function () {
+          btns.forEach(function (b) { b.disabled = false; });
+          restoreLabels();
+          if (status) {
+            status.textContent = 'Oeps, dat ging niet helemaal goed — probeer het nog eens.';
+            status.hidden = false;
+          }
+        });
     });
   }
 
@@ -771,7 +823,7 @@
     { "type": "header", "content": "Productinfo" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Voor blije honden" },
     { "type": "text", "id": "rating", "label": "Beoordeling", "default": "4,9/5" },
-    { "type": "text", "id": "review_count", "label": "Aantal reviews", "default": "1.200+ reviews" },
+    { "type": "text", "id": "review_count", "label": "Aantal reviews", "default": "350+ reviews" },
     { "type": "url", "id": "reviews_url", "label": "Link naar reviews-pagina", "info": "Maakt de sterren/score klikbaar. Kies je reviews-pagina." },
     { "type": "richtext", "id": "intro", "label": "Emotionele omschrijving (laat leeg voor productbeschrijving)", "default": "<p>Iedere maand stellen we met liefde een verrassingsbox samen, boordevol speelplezier en lekkers. Want jouw hond verdient telkens weer een feestje!</p>" },
     { "type": "header", "content": "Vormgeving & urgentie" },

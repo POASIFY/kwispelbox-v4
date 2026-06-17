@@ -16,7 +16,7 @@
       <div class="pay-hero__text">
         {%- if section.settings.hero_eyebrow != blank -%}<span class="pay-hero__eyebrow">{{ section.settings.hero_eyebrow }}</span>{%- endif -%}
         <h1 class="pay-hero__title">
-          {%- if section.settings.hero_title_1 != blank -%}<span>{{ section.settings.hero_title_1 }}</span>{%- endif -%}
+          <span>{{ section.settings.hero_title_1 | default: 'Betaal zoals' }}</span>
           {%- if section.settings.hero_title_2 != blank -%}<span class="pay-hero__title-em">{{ section.settings.hero_title_2 }}</span>{%- endif -%}
         </h1>
         {%- if section.settings.hero_intro != blank -%}<p class="pay-hero__intro">{{ section.settings.hero_intro }}</p>{%- endif -%}
@@ -328,7 +328,7 @@
     { "type": "textarea", "id": "contact_text", "label": "Tekst", "default": "Geen zorgen! Ons team van hondenliefhebbers helpt je graag snel en persoonlijk verder." },
     { "type": "text", "id": "contact_cta_label", "label": "Knoptekst", "default": "Neem contact op" },
     { "type": "url", "id": "contact_cta_url", "label": "Knop link" },
-    { "type": "text", "id": "contact_email", "label": "E-mailadres", "default": "hallo@kwispelbox.nl" },
+    { "type": "text", "id": "contact_email", "label": "E-mailadres", "default": "hello@kwispelbox.nl" },
     { "type": "text", "id": "contact_response", "label": "Reactietijd", "default": "We reageren binnen 24 uur" },
     { "type": "text", "id": "contact_phone", "label": "Telefoonnummer (optioneel)" },
     { "type": "header", "content": "Afsluitende CTA" },

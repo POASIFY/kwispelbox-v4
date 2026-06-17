@@ -14,6 +14,15 @@
  */
 {
   "sections": {
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "icon": "heart",
+        "eyebrow": "We helpen je graag",
+        "heading": "Veelgestelde vragen over Kwispelbox",
+        "intro": "<p>Alles wat je wilt weten over de Kwispelbox: hoe het werkt, wanneer je box wordt bezorgd, personaliseren, retourneren en de Kwispelclub. Staat je vraag er niet bij? <a href=\"/pages/contact\">Neem gerust contact op</a> — we denken graag met je mee.</p>"
+      }
+    },
     "main": {
       "type": "product-faq",
       "blocks": {
@@ -77,7 +86,7 @@
         "q8"
       ],
       "settings": {
-        "title": "Veelgestelde vragen",
+        "title": "Vragen & antwoorden",
         "contact_title": "Geen antwoord gevonden?",
         "contact_text": "Ons team helpt je graag persoonlijk verder.",
         "contact_cta_label": "Neem contact op",
@@ -87,6 +96,7 @@
     }
   },
   "order": [
+    "intro",
     "main"
   ]
 }

@@ -18,11 +18,11 @@
         "title_highlight2": "lekkers",
         "title_end": "en liefde",
         "text": "De leukste verrassingsbox voor jouw hond.",
-        "cta_primary_label": "Ontdek onze boxen",
+        "cta_primary_label": "Verras je hond",
         "cta_primary_url": "/pages/alle-boxen",
         "note_text": "Elke box met zorg samengesteld",
         "rating_score": "4,9/5",
-        "rating_text": "uit meer dan 350+ reviews",
+        "rating_text": "uit 350+ reviews",
         "avatars_text": "Sluit je aan bij 1.200+ blije honden en hun baasjes",
         "image": "shopify://shop_images/ChatGPT_Image_16_jun_2026_09_59_01.png",
         "image_mobile": "shopify://shop_images/ChatGPT_Image_16_jun_2026_09_59_01.png",
@@ -346,7 +346,7 @@
             "icon": "heart",
             "color": "pink",
             "title": "Valentijnsbox",
-            "text": "Maak van de verjaardag van jouw hond een feestje om nooit te vergeten.",
+            "text": "Een box vol liefde voor het trouwste maatje dat je hebt.",
             "badge": "",
             "button_label": "Bekijk Valentijnsbox",
             "button_url": "/products/valentijn-box"
@@ -359,7 +359,7 @@
             "icon": "tree",
             "color": "green",
             "title": "Kerstbox",
-            "text": "Maak van de verjaardag van jouw hond een feestje om nooit te vergeten.",
+            "text": "Maak de feestdagen extra gezellig met een verrassing onder de boom voor jouw hond.",
             "badge": "",
             "button_label": "Bekijk Kerstbox",
             "button_url": "/products/kerst-box"
@@ -372,7 +372,7 @@
             "icon": "pumpkin",
             "color": "orange",
             "title": "Halloweenbox",
-            "text": "Maak van de verjaardag van jouw hond een feestje om nooit te vergeten.",
+            "text": "Spookgezellige speeltjes en snoeperij voor een griezelig leuk feestje.",
             "badge": "",
             "button_label": "Bekijk Halloweenbox",
             "button_url": "/products/halloween-box"
@@ -385,7 +385,7 @@
             "icon": "sun",
             "color": "yellow",
             "title": "Zomerbox",
-            "text": "Maak van de verjaardag van jouw hond een feestje om nooit te vergeten.",
+            "text": "Verkoelende speeltjes en zomerse snacks voor dagen vol buitenpret.",
             "badge": "",
             "button_label": "Bekijk Zomerbox",
             "button_url": "/collections/special-editions"
@@ -549,7 +549,7 @@
             "icon": "star",
             "color": "yellow",
             "value": "4,9/5",
-            "label": "Onze hond wordt iedere keer weer blij van zijn box!"
+            "label": "Gemiddelde waardering uit 350+ reviews"
           }
         }
       },
@@ -584,8 +584,8 @@
             "badge": "Happy Box",
             "badge_color": "pink",
             "rating": 5,
-            "review_title": "Elke maand weer een feestje!",
-            "review_text": "Luna wordt altijd zó enthousiast als de Kwispelbox binnenkomt. De speeltjes zijn stevig en superleuk, en ze is dol op de knuffels. Echt een aanrader!",
+            "review_title": "Haar staart gaat meteen los",
+            "review_text": "Zodra het pakketje op de mat ligt, weet Luna precies hoe laat het is. De speeltjes zijn lekker stevig en de knuffel gaat overal mee naartoe. We zijn er allebei blij mee.",
             "verified_text": "Geverifieerde aankoop",
             "accent": "pink"
           }
@@ -598,8 +598,8 @@
             "badge": "Mega Box",
             "badge_color": "orange",
             "rating": 5,
-            "review_title": "Kwaliteit waar je blij van wordt",
-            "review_text": "Je merkt dat er echt aandacht is besteed aan de selectie van de producten. Milo speelt overal mee en de box voelt als een cadeau, elke keer weer.",
+            "review_title": "Je voelt dat het met zorg is uitgezocht",
+            "review_text": "Milo is een echte bezige hond, maar met de Mega box heeft hij genoeg te doen. Mooi samengesteld en het uitpakken voelt elke keer als een echt cadeautje.",
             "verified_text": "Geverifieerde aankoop",
             "accent": "orange"
           }
@@ -612,8 +612,8 @@
             "badge": "Mini Box",
             "badge_color": "green",
             "rating": 5,
-            "review_title": "Perfect voor onze kleine avonturier",
-            "review_text": "Bobby is kieskeurig, maar alles in de Kwispelbox is een hit! Zelfs de snacks zijn favoriet. Super service en snelle levering ook!",
+            "review_title": "Zelfs onze kieskeurige Bobby is om",
+            "review_text": "Bobby snuffelt normaal overal aan voorbij, maar de speeltjes en snacks uit de Mini box vindt hij echt leuk. Fijn formaat voor een kleine hond en netjes bezorgd.",
             "verified_text": "Geverifieerde aankoop",
             "accent": "green"
           }
@@ -627,7 +627,7 @@
       "settings": {
         "eyebrow": "Geliefd door honden én hun baasjes",
         "title": "Wat onze klanten zeggen",
-        "subtitle": "Duizenden honden genieten al elke maand van hun Kwispelbox. Lees wat hun baasjes hiervan vinden.",
+        "subtitle": "Ruim 1.200 honden genieten al elke maand van hun Kwispelbox. Lees wat hun baasjes hiervan vinden.",
         "highlight_word": "Kwispelbox",
         "show_decorations": true
       }

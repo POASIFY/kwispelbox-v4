@@ -13,7 +13,7 @@
       {%- if section.settings.eyebrow != blank -%}
         <span class="rvp__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ section.settings.eyebrow }}</span>
       {%- endif -%}
-      {%- if section.settings.title != blank -%}<h1 class="rvp__title">{{ section.settings.title }}</h1>{%- endif -%}
+      <h1 class="rvp__title">{{ section.settings.title | default: 'Wat baasjes over Kwispelbox zeggen' }}</h1>
       {%- if section.settings.intro != blank -%}<p class="rvp__intro">{{ section.settings.intro }}</p>{%- endif -%}
 
       <div class="rvp__summary">
@@ -23,7 +23,7 @@
             <span class="rvp__score-stars" aria-hidden="true">
               {%- for i in (1..5) -%}<svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.9 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l7.1-1.01z"/></svg>{%- endfor -%}
             </span>
-            <span class="rvp__score-count">{{ section.settings.review_count | default: '1.200+ reviews' }}</span>
+            <span class="rvp__score-count">{{ section.settings.review_count | default: '350+ reviews' }}</span>
           </span>
         </div>
         <div class="rvp__bars">
@@ -67,7 +67,7 @@
               {%- endfor -%}
             </div>
 
-            {%- if block.settings.review_title != blank -%}<h2 class="rvp-card__title">{{ block.settings.review_title }}</h2>{%- endif -%}
+            {%- if block.settings.review_title != blank -%}<h3 class="rvp-card__title">{{ block.settings.review_title }}</h3>{%- endif -%}
             {%- if block.settings.review_text != blank -%}<p class="rvp-card__text">{{ block.settings.review_text }}</p>{%- endif -%}
 
             <div class="rvp-card__foot">
@@ -181,7 +181,7 @@
     { "type": "textarea", "id": "intro", "label": "Intro", "default": "Duizenden honden krijgen elke maand een verrassingsbox. Dit is wat hun baasjes ervan vinden." },
     { "type": "header", "content": "Samenvatting" },
     { "type": "text", "id": "rating_score", "label": "Gemiddelde score", "default": "4,9" },
-    { "type": "text", "id": "review_count", "label": "Aantal reviews", "default": "1.200+ reviews" },
+    { "type": "text", "id": "review_count", "label": "Aantal reviews", "default": "350+ reviews" },
     { "type": "range", "id": "bar_5", "label": "% 5 sterren", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 92 },
     { "type": "range", "id": "bar_4", "label": "% 4 sterren", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 6 },
     { "type": "range", "id": "bar_3", "label": "% 3 sterren", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 1 },

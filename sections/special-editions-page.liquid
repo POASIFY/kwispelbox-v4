@@ -9,7 +9,7 @@
 
     <header class="sep__head">
       {%- if section.settings.eyebrow != blank -%}<span class="sep__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: 'sparkles' -%}</span>{{ section.settings.eyebrow }}</span>{%- endif -%}
-      {%- if section.settings.title != blank -%}<h1 class="sep__title">{{ section.settings.title }}</h1>{%- endif -%}
+      <h1 class="sep__title">{{ section.settings.title | default: 'Er is altijd een reden om te kwispelen' }}</h1>
       {%- if section.settings.intro != blank -%}<p class="sep__intro">{{ section.settings.intro }}</p>{%- endif -%}
     </header>
 

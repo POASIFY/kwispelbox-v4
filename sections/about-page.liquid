@@ -8,7 +8,7 @@
 
     <header class="abt__head">
       {%- if section.settings.eyebrow != blank -%}<span class="abt__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ section.settings.eyebrow }}</span>{%- endif -%}
-      {%- if section.settings.title != blank -%}<h1 class="abt__title">{{ section.settings.title }}</h1>{%- endif -%}
+      <h1 class="abt__title">{{ section.settings.title | default: 'Ons verhaal' }}</h1>
       {%- if section.settings.intro != blank -%}<p class="abt__intro">{{ section.settings.intro }}</p>{%- endif -%}
     </header>
 

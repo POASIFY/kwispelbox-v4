@@ -8,7 +8,7 @@
     {%- comment -%} Hero {%- endcomment -%}
     <header class="prt__hero">
       {%- if section.settings.eyebrow != blank -%}<span class="prt__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ section.settings.eyebrow }}</span>{%- endif -%}
-      {%- if section.settings.title != blank -%}<h1 class="prt__title">{{ section.settings.title }}</h1>{%- endif -%}
+      <h1 class="prt__title">{{ section.settings.title | default: 'Word partner van Kwispelbox' }}</h1>
       {%- if section.settings.intro != blank -%}<p class="prt__intro">{{ section.settings.intro }}</p>{%- endif -%}
       <a href="#aanmelden" class="prt__hero-btn">{{ section.settings.hero_cta | default: 'Word partner' }}<span class="prt__hero-btn-paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span></a>
     </header>
