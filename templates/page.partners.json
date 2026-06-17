@@ -1,0 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "partners-page",
+      "blocks": {
+        "t1": { "type": "ptype", "settings": { "icon": "sparkles", "title": "Trimsalons", "text": "Terugkerend klantcontact met baasjes die al in hun hond investeren.", "moment": "Na elke trimbeurt" } },
+        "t2": { "type": "ptype", "settings": { "icon": "star", "title": "Puppytrainers & hondenscholen", "text": "Nieuwe eigenaren met hoge koopintentie en veel vertrouwen in jouw advies.", "moment": "Start of einde puppycursus" } },
+        "t3": { "type": "ptype", "settings": { "icon": "shield-check", "title": "Dierenartsen", "text": "Maximaal vertrouwen en het eerste contactmoment bij een nieuwe pup.", "moment": "Eerste consult of puppycheck" } },
+        "t4": { "type": "ptype", "settings": { "icon": "heart", "title": "Opvang & uitlaatservice", "text": "Frequent contact met betrokken baasjes die hun hond verwennen.", "moment": "Intake of verjaardag hond" } },
+        "t5": { "type": "ptype", "settings": { "icon": "dog", "title": "Fokkers & asielen", "text": "Het allereerste moment van eigenaarschap — perfect voor een warm welkom.", "moment": "Bij ophalen pup of adoptie" } },
+        "t6": { "type": "ptype", "settings": { "icon": "camera", "title": "Hondenfotografen", "text": "Ideaal rond verjaardagen, cadeaus en social content.", "moment": "Fotoshoot of verjaardag" } },
+        "s1": { "type": "step", "settings": { "title": "Meld je aan", "text": "Vul het formulier in. We nemen contact op en kiezen samen het best passende model." } },
+        "s2": { "type": "step", "settings": { "title": "Ontvang je partnerpakket", "text": "Je krijgt een unieke code & QR-link, co-branded kaartjes en kant-en-klare teksten." } },
+        "s3": { "type": "step", "settings": { "title": "Deel & verras", "text": "Jouw klanten krijgen een gratis extra voor hun hond. Jij ziet de resultaten per maand." } },
+        "p1": { "type": "perk", "settings": { "text": "Een gratis extra voor jouw klant — geen korting, wél cadeaugevoel" } },
+        "p2": { "type": "perk", "settings": { "text": "Een unieke partnercode en QR-link" } },
+        "p3": { "type": "perk", "settings": { "text": "Co-branded kaartjes en/of een baliedisplay" } },
+        "p4": { "type": "perk", "settings": { "text": "Social media visuals en voorbeeldteksten" } },
+        "p5": { "type": "perk", "settings": { "text": "Commissie, tegoed of gratis boxen bij resultaat" } },
+        "p6": { "type": "perk", "settings": { "text": "Mogelijke vermelding op de Kwispelbox-site" } },
+        "p7": { "type": "perk", "settings": { "text": "Eventueel een samplebox op locatie" } },
+        "p8": { "type": "perk", "settings": { "text": "Deelname aan winacties en lokale campagnes" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4", "t5", "t6", "s1", "s2", "s3", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
