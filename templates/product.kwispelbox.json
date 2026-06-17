@@ -17,7 +17,9 @@
           "settings": {
             "variant_title": "Mini",
             "description": "Voor kleinere honden",
-            "item_count": "3–4 verrassingen"
+            "item_count": "3–4 verrassingen",
+            "badge_text": "",
+            "badge_color": "pink"
           }
         },
         "o2": {
@@ -35,7 +37,9 @@
           "settings": {
             "variant_title": "Mega",
             "description": "Voor grote avonturiers",
-            "item_count": "7–8 verrassingen"
+            "item_count": "7–8 verrassingen",
+            "badge_text": "",
+            "badge_color": "pink"
           }
         },
         "tb1": {
@@ -140,10 +144,37 @@
         "u3"
       ],
       "settings": {
+        "badge_primary": "Meest gekozen",
+        "badge_secondary": "Gratis verzending",
+        "eyebrow": "Voor blije honden",
+        "rating": "4,9/5",
+        "review_count": "1.200+ reviews",
         "intro": "<p>Stel je voor: de bel gaat en je hond rent al naar de deur. Elke Kwispelbox is een cadeautje dat met liefde voor jouw beste vriend is uitgezocht — boordevol speelplezier, knuffels en lekkers. Dat moment vlak voor het uitpakken? Daar doen we het voor.</p>",
+        "accent": "green",
+        "urgency_text": "",
+        "delivery_text": "Vóór 16:00 besteld? Vandaag verzonden 🐾",
+        "countdown_date": "",
+        "countdown_label": "Nog te bestellen:",
         "options_title": "Kies het cadeautje",
+        "show_personalize": true,
+        "personalize_open": false,
+        "personalize_title": "Vertel iets over je hond",
+        "personalize_text": "Zo stellen we de box nóg persoonlijker samen",
+        "show_photo_upload": true,
+        "personalize_note": "Gepersonaliseerde boxen hebben soms iets meer verwerkingstijd.",
+        "atc_label": "Verras mijn hond",
         "atc_summary": "Jouw hond krijgt een cadeautje dat met liefde is ingepakt",
-        "show_subscription": true
+        "show_value_stack": true,
+        "value_title": "Wat krijgt jouw hond?",
+        "value_total": "€64,95",
+        "show_guarantee": true,
+        "guarantee_days": "30",
+        "guarantee_title": "Niet-goed-geld-terug garantie",
+        "guarantee_text": "Is je hond niet door het dolle? Je krijgt je geld terug.",
+        "ugc_title": "Blije honden, échte foto’s",
+        "show_subscription": true,
+        "subscribe_title": "Eenmalig of voordelig abonnement?",
+        "subscribe_text": "Met een abonnement bespaar je elke maand én je hond mist nooit een verrassing."
       }
     },
     "contents": {
@@ -193,8 +224,14 @@
         "c4"
       ],
       "settings": {
+        "eyebrow": "Elke box met liefde samengesteld",
         "heading": "Een kijkje in het cadeautje",
-        "intro": "Elke box is een cadeautje om samen uit te pakken — vol thema-verrassingen, speelgoed en lekkers."
+        "heading_highlight": "Kwispelbox",
+        "heading_suffix": "?",
+        "intro": "Elke box is een cadeautje om samen uit te pakken — vol thema-verrassingen, speelgoed en lekkers.",
+        "show_badge": true,
+        "badge_text": "Geen twee boxen zijn hetzelfde",
+        "show_decorations": true
       }
     },
     "how": {
@@ -239,7 +276,10 @@
         "h3",
         "h4"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Zo makkelijk is het",
+        "title": "Hoe werkt het?"
+      }
     },
     "community": {
       "type": "community",
@@ -339,7 +379,12 @@
         "st3",
         "st4"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Een community vol kwispelende staarten",
+        "heading": "Meer dan 1.200 blije honden.",
+        "intro": "Elke dag maken we honden (en hun baasjes) blij met onze verrassingsboxen.",
+        "show_decorations": true
+      }
     },
     "reviews": {
       "type": "reviews",
@@ -392,7 +437,13 @@
         "r2",
         "r3"
       ],
-      "settings": {}
+      "settings": {
+        "eyebrow": "Geliefd door honden én hun baasjes",
+        "title": "Wat onze klanten zeggen",
+        "subtitle": "Duizenden honden genieten al elke maand van hun Kwispelbox. Lees wat hun baasjes hiervan vinden.",
+        "highlight_word": "Kwispelbox",
+        "show_decorations": true
+      }
     },
     "faq": {
       "type": "product-faq",
@@ -440,14 +491,23 @@
         "q4",
         "q5"
       ],
-      "settings": {}
+      "settings": {
+        "title": "Veelgestelde vragen",
+        "contact_title": "Toch nog vragen?",
+        "contact_text": "Ons team van hondenliefhebbers helpt je graag snel en persoonlijk verder.",
+        "contact_cta_label": "Neem contact op",
+        "contact_cta_url": "",
+        "contact_email": "hallo@kwispelbox.nl"
+      }
     },
     "cta": {
       "type": "product-cta",
       "settings": {
         "title": "Klaar om jouw hond te verrassen?",
         "text": "Geef je beste vriend elke maand het moment waar hij niet meer op kan wachten.",
-        "button_label": "Verras je hond"
+        "button_label": "Verras je hond",
+        "button_url": "",
+        "show_decorations": true
       }
     }
   },
