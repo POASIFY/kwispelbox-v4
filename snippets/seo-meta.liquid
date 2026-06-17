@@ -29,6 +29,11 @@
       if collection.handle == 'frontpage' or collection.handle == 'maak-er-een-echt-cadeautje-van'
         assign noindex = true
       endif
+      # cannibalisatie: de curated /pages/alle-boxen + /pages/special-editions zijn de indexeerbare versies,
+      # dus de rauwe collecties noindexen (follow blijft voor link-equity)
+      if collection.handle == 'boxen' or collection.handle == 'special-editions'
+        assign noindex = true
+      endif
 
     when 'search'
       assign noindex = true

@@ -30,7 +30,7 @@
             "banner_title": "Elke box een nieuwe verrassing!",
             "banner_text": "Met liefde samengesteld voor jouw hond.",
             "banner_cta_label": "Ontdek de boxen",
-            "banner_cta_url": "/collections/verrassingsboxen",
+            "banner_cta_url": "/pages/alle-boxen",
             "club_intro_title": "Welkom bij de Kwispelclub",
             "club_intro_text": "",
             "club_check_1": "Gratis lidmaatschap",
@@ -432,7 +432,7 @@
             "description": "Speciaal voor kleine kwispelaars",
             "link_list": "menu-puppy",
             "cta_label": "Bekijk puppy shop",
-            "cta_url": "/collections/puppy"
+            "cta_url": "/collections/puppy-favorieten"
           }
         },
         "shu1": {
@@ -490,7 +490,7 @@
             "links_heading": "Zo werkt het",
             "link_list": "",
             "view_all_label": "Bekijk alle beloningen",
-            "view_all_url": "/pages/beloningen",
+            "view_all_url": "/pages/kwispelclub",
             "banner_badge": "",
             "banner_title": "Ontdek onze boxen",
             "banner_text": "Speciaal samengesteld voor jouw hond.",
@@ -509,7 +509,7 @@
             "club_motm_name": "Luna ♡",
             "club_motm_quote": "Luna is dol op haar Kwispelbox! Vooral het nieuwe speeltje is favoriet.",
             "club_motm_cta": "Deel jouw foto",
-            "club_motm_cta_url": "/pages/hond-van-de-maand",
+            "club_motm_cta_url": "/pages/kwispelclub#hond-van-de-maand",
             "club_intro_highlight": "Kwispelclub",
             "club_intro_note": "Het is zo geregeld!",
             "campaign_title": "Extra verrassing voor nieuwe leden!",

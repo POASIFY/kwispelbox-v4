@@ -19,7 +19,7 @@
         "title_end": "en liefde",
         "text": "De leukste verrassingsbox voor jouw hond.",
         "cta_primary_label": "Ontdek onze boxen",
-        "cta_primary_url": "",
+        "cta_primary_url": "/pages/alle-boxen",
         "note_text": "Elke box met zorg samengesteld",
         "rating_score": "4,9/5",
         "rating_text": "uit meer dan 350+ reviews",
@@ -98,7 +98,7 @@
             "price_suffix": "",
             "highlight": false,
             "button_label": "Bekijk box",
-            "button_url": ""
+            "button_url": "/products/kwispelbox?variant=47914747461797"
           }
         },
         "box-happy": {
@@ -117,7 +117,7 @@
             "price_suffix": "",
             "highlight": true,
             "button_label": "Bekijk box",
-            "button_url": ""
+            "button_url": "/products/kwispelbox?variant=47914747494565"
           }
         },
         "box-mega": {
@@ -136,7 +136,7 @@
             "price_suffix": "",
             "highlight": false,
             "button_label": "Bekijk box",
-            "button_url": ""
+            "button_url": "/products/kwispelbox?variant=47914747527333"
           }
         },
         "re-gift": {
