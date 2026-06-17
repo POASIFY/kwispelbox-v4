@@ -206,7 +206,7 @@
                 {%- endif -%}
               </div>
               {%- if cart.total_price < threshold -%}
-                <p class="kbcart__line-note">Nog {{ remaining | money }} voor gratis verzending</p>
+                <p class="kbcart__line-note">Nog {{ threshold | minus: cart.total_price | money }} voor gratis verzending</p>
               {%- endif -%}
             {%- endif -%}
           </div>
