@@ -14,6 +14,15 @@
  */
 {
   "sections": {
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "icon": "sparkles",
+        "eyebrow": "Zo makkelijk is het",
+        "heading": "Hoe werkt de Kwispelbox?",
+        "intro": "<p>Een Kwispelbox samenstellen voor je hond is zo gepiept. In vier simpele stappen valt er een verrassing op de mat. Klaar om te beginnen? <a href=\"/pages/boxen\">Kies jouw box</a>.</p>"
+      }
+    },
     "how": {
       "type": "product-how-it-works",
       "blocks": {
@@ -73,6 +82,7 @@
     }
   },
   "order": [
+    "intro",
     "how",
     "cta"
   ]
