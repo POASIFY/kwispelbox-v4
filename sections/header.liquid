@@ -1592,7 +1592,8 @@
 .dd-verr__promo{width:384px;flex-shrink:0;}
 @media(max-width:1200px){.dd-verr__body{gap:20px;}.dd-verr__promo{width:300px;}}
 /* ══ MOBIEL DRAWER ══════════════════════════════════════ */
-.header-drawer{position:fixed;top:0;left:0;bottom:0;width:min(390px,100vw);background:#fff;z-index:300;overflow-y:auto;overscroll-behavior:contain;transform:translateX(-100%);transition:transform 280ms cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+.header-drawer{position:fixed;top:0;left:0;bottom:0;width:100vw;background:#fff;z-index:300;overflow-y:auto;overscroll-behavior:contain;transform:translateX(-100%);transition:transform 280ms cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+@media(min-width:480px){.header-drawer{width:390px;}}
 .header-drawer[aria-hidden="false"]{transform:translateX(0);}
 .header-drawer__top{display:flex;justify-content:flex-end;padding:10px 12px 0;flex-shrink:0;}
 .header-drawer__close{display:flex;align-items:center;justify-content:center;background:var(--color-cream);border:none;border-radius:50%;cursor:pointer;width:38px;height:38px;padding:0;color:var(--color-ink);}
