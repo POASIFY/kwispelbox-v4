@@ -220,7 +220,7 @@
               <div class="pdp-personalize__grid">
                 <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'dog' -%}</span>Naam hond</span><input type="text" name="properties[Naam hond]" placeholder="Bijv. Luna"></label>
                 <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>Levensfase</span><select name="properties[Levensfase]"><option value="">Kies…</option><option>Puppy</option><option>Volwassen</option><option>Senior</option></select></label>
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'calendar' -%}</span>Geboortedatum hond</span><input type="date" name="properties[Geboortedatum]"></label>
+                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'calendar' -%}</span>Geboortedatum hond</span><input type="date" name="properties[_Geboortedatum]"></label>
                 <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'ruler' -%}</span>Formaat</span>
                   <select name="properties[Formaat]"><option value="">Kies…</option><option>Klein</option><option>Middel</option><option>Groot</option></select>
                 </label>
@@ -239,7 +239,7 @@
           {%- if section.settings.show_gift -%}
             <div class="pdp-gift" data-gift>
               <label class="pdp-gift__toggle">
-                <input type="checkbox" name="properties[Cadeau]" value="Ja" data-gift-toggle>
+                <input type="checkbox" name="properties[_Cadeau]" value="Ja" data-gift-toggle>
                 <span class="pdp-gift__icon" aria-hidden="true">{%- render 'kb-icon', icon: 'gift' -%}</span>
                 <span class="pdp-gift__head">
                   <strong>{{ section.settings.gift_title | default: 'Dit is een cadeau 🎁' }}</strong>
