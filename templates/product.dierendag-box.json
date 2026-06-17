@@ -89,7 +89,8 @@
         "urgency_text": "Extra verwennerij · beperkt",
         "options_title": "Kies jouw maat",
         "atc_label": "Verwen mijn hond op Dierendag",
-        "atc_summary": "Jouw hond ontvangt een unieke special edition vol verrassingen"
+        "atc_summary": "Jouw hond ontvangt een unieke special edition vol verrassingen",
+        "reviews_url": "/pages/reviews"
       }
     },
     "contents": {
@@ -130,40 +131,13 @@
             "title": "Extra cadeautje",
             "text": "Een klein extraatje, alleen in deze editie."
           }
-        },
-        "ct1": {
-          "type": "trust",
-          "settings": {
-            "icon": "sparkles",
-            "color": "orange",
-            "title": "Limited edition · op = op"
-          }
-        },
-        "ct2": {
-          "type": "trust",
-          "settings": {
-            "icon": "heart",
-            "color": "pink",
-            "title": "Meer dan 1.200 blije honden"
-          }
-        },
-        "ct3": {
-          "type": "trust",
-          "settings": {
-            "icon": "truck",
-            "color": "green",
-            "title": "Voor 23:59 besteld, morgen in huis"
-          }
         }
       },
       "block_order": [
         "c1",
         "c2",
         "c3",
-        "c4",
-        "ct1",
-        "ct2",
-        "ct3"
+        "c4"
       ],
       "settings": {
         "heading": "Wat zit er in de Dierendag Box?",
