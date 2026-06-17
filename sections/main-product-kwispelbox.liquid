@@ -11,6 +11,23 @@
 {%- assign ugc_blocks   = section.blocks | where: 'type', 'ugc' -%}
 {%- assign current = product.selected_or_first_available_variant -%}
 
+{%- comment -%}
+  LCP-preload: de eerste galerij-afbeelding is het hero-beeld van de PDP. URL/srcset/sizes
+  komen exact overeen met de eerste <img> hieronder, dus geen dubbele download. Alleen als
+  het eerste media-item een afbeelding is (geen video).
+{%- endcomment -%}
+{%- comment -%} theme-check-disable AssetPreload {%- endcomment -%}
+{%- if product.media.size > 0 -%}
+  {%- assign first_media = product.media.first -%}
+  {%- if first_media.media_type != 'video' and first_media.media_type != 'external_video' -%}
+    <link rel="preload" as="image" fetchpriority="high"
+      href="{{ first_media | image_url: width: 1200 }}"
+      imagesrcset="{{ first_media | image_url: width: 700 }} 700w, {{ first_media | image_url: width: 1200 }} 1200w"
+      imagesizes="(max-width: 989px) 92vw, 46vw">
+  {%- endif -%}
+{%- endif -%}
+{%- comment -%} theme-check-enable AssetPreload {%- endcomment -%}
+
 <div class="pdp pdp--{{ section.settings.accent | default: 'green' }} full-width">
   <div class="pdp__inner">
 
@@ -29,7 +46,7 @@
                        srcset="{{ media | image_url: width: 700 }} 700w, {{ media | image_url: width: 1200 }} 1200w"
                        sizes="(max-width: 989px) 92vw, 46vw"
                        alt="{{ media.alt | default: product.title | escape }}"
-                       width="600" height="600" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}" class="pdp-gallery__img">
+                       width="600" height="600" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"{% if forloop.first %} fetchpriority="high" decoding="async"{% endif %} class="pdp-gallery__img">
                 {%- endif -%}
               </div>
             {%- endfor -%}
@@ -706,20 +723,37 @@
     }, { passive: true });
   }
 
-  /* Countdown */
+  /* Countdown — interval wordt opgeruimd bij expiratie, gepauzeerd bij verborgen tab
+     of wanneer de teller uit beeld is, om INP/CPU-werk te beperken. */
   document.querySelectorAll('[data-countdown]').forEach(function (el) {
     var target = new Date(el.getAttribute('data-countdown')).getTime();
     var out = el.querySelector('[data-countdown-time]');
     if (isNaN(target) || !out) return;
+    var timer = null, expired = false, onScreen = true;
     var tick = function () {
       var diff = target - Date.now();
-      if (diff <= 0) { el.style.display = 'none'; return; }
+      if (diff <= 0) { el.style.display = 'none'; expired = true; stop(); return; }
       var d = Math.floor(diff / 86400000), h = Math.floor(diff % 86400000 / 3600000),
           m = Math.floor(diff % 3600000 / 60000), s = Math.floor(diff % 60000 / 1000);
       out.textContent = (d > 0 ? d + 'd ' : '') + h + 'u ' + m + 'm ' + s + 's';
     };
+    var stop = function () { if (timer !== null) { clearInterval(timer); timer = null; } };
+    var start = function () {
+      if (timer !== null || expired || document.hidden || !onScreen) return;
+      tick();
+      if (!expired) { timer = setInterval(tick, 1000); }
+    };
     tick();
-    setInterval(tick, 1000);
+    if (!expired) { timer = setInterval(tick, 1000); }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { stop(); } else { start(); }
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        onScreen = entries[0].isIntersecting;
+        if (onScreen) { start(); } else { stop(); }
+      }).observe(el);
+    }
   });
   }
   if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }

@@ -22,7 +22,7 @@
   </a>
 </nav>
 
-<style>
+{% stylesheet %}
 .mtab { display: none; }
 @media (max-width: 749px) {
   body { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
@@ -47,4 +47,4 @@
   .mtab__item.is-active .lucide { fill: rgba(212, 83, 126, .12); }
   .mtab__item:active { transform: scale(.94); }
 }
-</style>
+{% endstylesheet %}

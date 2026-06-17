@@ -3,6 +3,33 @@
   intro / media / cta groepen via grid-areas → desktop 2-koloms, mobiel gelaagd (mockup).
 {%- endcomment -%}
 
+{%- comment -%}
+  LCP-preload: laad de hero-afbeelding zo vroeg mogelijk voor (alleen bij hoge prioriteit).
+  URL's, srcset, sizes en media komen exact overeen met de <picture>/<img> hieronder, dus
+  geen dubbele download. media-scoped preloads matchen de <source>/<img> art-direction.
+{%- endcomment -%}
+{%- comment -%} theme-check-disable AssetPreload {%- endcomment -%}
+{%- if section.settings.image_priority and section.settings.image != blank or section.settings.image_priority and section.settings.image_mobile != blank -%}
+  {%- assign hero_pre_desktop = section.settings.image | default: section.settings.image_mobile -%}
+  {%- assign hero_pre_mobile = section.settings.image_mobile | default: section.settings.image -%}
+  {%- if section.settings.image_mobile != blank -%}
+    <link rel="preload" as="image" fetchpriority="high" media="(max-width: 989px)"
+      href="{{ hero_pre_mobile | image_url: width: 900 }}"
+      imagesrcset="{{ hero_pre_mobile | image_url: width: 600 }} 600w, {{ hero_pre_mobile | image_url: width: 900 }} 900w"
+      imagesizes="100vw">
+    <link rel="preload" as="image" fetchpriority="high" media="(min-width: 990px)"
+      href="{{ hero_pre_desktop | image_url: width: 1100 }}"
+      imagesrcset="{{ hero_pre_desktop | image_url: width: 700 }} 700w, {{ hero_pre_desktop | image_url: width: 1100 }} 1100w, {{ hero_pre_desktop | image_url: width: 1500 }} 1500w"
+      imagesizes="52vw">
+  {%- else -%}
+    <link rel="preload" as="image" fetchpriority="high"
+      href="{{ hero_pre_desktop | image_url: width: 1100 }}"
+      imagesrcset="{{ hero_pre_desktop | image_url: width: 700 }} 700w, {{ hero_pre_desktop | image_url: width: 1100 }} 1100w, {{ hero_pre_desktop | image_url: width: 1500 }} 1500w"
+      imagesizes="(max-width: 989px) 100vw, 52vw">
+  {%- endif -%}
+{%- endif -%}
+{%- comment -%} theme-check-enable AssetPreload {%- endcomment -%}
+
 <section class="hero full-width">
   <div class="hero__hill" aria-hidden="true"></div>
 
@@ -44,7 +71,7 @@
             srcset="{{ hero_desktop | image_url: width: 700 }} 700w, {{ hero_desktop | image_url: width: 1100 }} 1100w, {{ hero_desktop | image_url: width: 1500 }} 1500w"
             sizes="(max-width: 989px) 100vw, 52vw"
             alt="{{ hero_desktop.alt | default: shop.name | escape }}"
-            width="1100" height="1000"
+            width="1100" height="1000" decoding="async"
             {%- if section.settings.image_priority -%} loading="eager" fetchpriority="high"{%- else -%} loading="lazy"{%- endif -%}
             class="hero__img">
         </picture>
