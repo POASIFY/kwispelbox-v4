@@ -1,0 +1,111 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "reviews-page",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Luna",
+            "breed": "Golden Retriever",
+            "badge": "Happy Box",
+            "badge_color": "pink",
+            "rating": 5,
+            "review_title": "Elke maand weer een feestje!",
+            "review_text": "Luna wordt altijd zó enthousiast als de Kwispelbox binnenkomt. De speeltjes zijn stevig en superleuk, en ze is dol op de knuffels. Echt een aanrader!",
+            "verified_text": "Geverifieerde aankoop",
+            "date": "maart 2026",
+            "accent": "pink"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Milo",
+            "breed": "Border Collie",
+            "badge": "Mega Box",
+            "badge_color": "orange",
+            "rating": 5,
+            "review_title": "Kwaliteit waar je blij van wordt",
+            "review_text": "Je merkt dat er echt aandacht is besteed aan de selectie van de producten. Milo speelt overal mee en de box voelt als een cadeau, elke keer weer.",
+            "verified_text": "Geverifieerde aankoop",
+            "date": "februari 2026",
+            "accent": "orange"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Bobby",
+            "breed": "Cockapoo",
+            "badge": "Mini Box",
+            "badge_color": "green",
+            "rating": 5,
+            "review_title": "Perfect voor onze kleine avonturier",
+            "review_text": "Bobby is kieskeurig, maar alles in de Kwispelbox is een hit! Zelfs de snacks zijn favoriet. Super service en snelle levering ook!",
+            "verified_text": "Geverifieerde aankoop",
+            "date": "februari 2026",
+            "accent": "green"
+          }
+        },
+        "r4": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Saar",
+            "breed": "Labrador",
+            "badge": "Mega Box",
+            "badge_color": "orange",
+            "rating": 5,
+            "review_title": "De verrassing maakt het zo leuk",
+            "review_text": "Het leukste is dat je nooit weet wat erin zit. Saar herkent de doos inmiddels en springt al op als hij op de mat ligt. Onbetaalbaar.",
+            "verified_text": "Geverifieerde aankoop",
+            "date": "januari 2026",
+            "accent": "yellow"
+          }
+        },
+        "r5": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Noor",
+            "breed": "Teckel",
+            "badge": "Happy Box",
+            "badge_color": "pink",
+            "rating": 4,
+            "review_title": "Heel blij mee",
+            "review_text": "Fijne box met leuke spulletjes. Eén speeltje was net wat te groot voor mijn kleine Noor, maar verder helemaal top en het persoonlijke berichtje was een leuke touch.",
+            "verified_text": "Geverifieerde aankoop",
+            "date": "januari 2026",
+            "accent": "pink"
+          }
+        },
+        "r6": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Boef",
+            "breed": "Stafford",
+            "badge": "Mega Box",
+            "badge_color": "orange",
+            "rating": 5,
+            "review_title": "Sterke speeltjes die het uithouden",
+            "review_text": "Boef is een echte sloper, maar de speeltjes uit de Kwispelbox houden het verrassend lang vol. Eindelijk speelgoed dat tegen hem op kan!",
+            "verified_text": "Geverifieerde aankoop",
+            "date": "december 2025",
+            "accent": "green"
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3", "r4", "r5", "r6"],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
