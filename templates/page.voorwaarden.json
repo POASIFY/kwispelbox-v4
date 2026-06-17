@@ -1,0 +1,118 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "info-page",
+      "blocks": {
+        "a1": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Artikel 1 — Toepasselijkheid",
+            "text": "<p>Deze algemene voorwaarden zijn van toepassing op alle aanbiedingen, bestellingen en overeenkomsten van Kwispelbox. Door een bestelling te plaatsen ga je akkoord met deze voorwaarden.</p>"
+          }
+        },
+        "a2": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Artikel 2 — Aanbod en prijzen",
+            "text": "<p>Alle prijzen zijn in euro's en inclusief btw. Kennelijke vergissingen of fouten in het aanbod binden ons niet. Aanbiedingen gelden zolang de voorraad strekt.</p>"
+          }
+        },
+        "a3": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Artikel 3 — Bestelling en betaling",
+            "text": "<p>Een overeenkomst komt tot stand zodra je bestelling door ons is bevestigd. Betaling verloopt via de aangeboden betaalmethoden. Bekijk <a href=\"/pages/betaalmogelijkheden\">betaalmethoden</a> voor de mogelijkheden.</p>"
+          }
+        },
+        "a4": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Artikel 4 — Levering",
+            "text": "<p>We streven naar levering binnen de aangegeven termijn. Zie <a href=\"/pages/verzenden-en-bezorgen\">verzending &amp; bezorging</a> voor levertijden en kosten. Genoemde termijnen zijn indicatief.</p>"
+          }
+        },
+        "a5": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Artikel 5 — Herroepingsrecht en retour",
+            "text": "<p>Je hebt het recht je bestelling binnen 14 dagen zonder opgaaf van reden te herroepen; wij hanteren een ruimere termijn van 30 dagen. Zie <a href=\"/pages/retourneren\">retourneren</a> voor de werkwijze. Geopende verbruiksartikelen zoals snacks zijn om hygiënische redenen uitgesloten.</p>"
+          }
+        },
+        "a6": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Artikel 6 — Garantie en conformiteit",
+            "text": "<p>Onze producten voldoen aan de overeenkomst en de wettelijke eisen. Is er toch iets mis? Neem contact op via onze <a href=\"/pages/contact\">klantenservice</a>.</p>"
+          }
+        },
+        "a7": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Artikel 7 — Abonnementen",
+            "text": "<p>Kies je voor een abonnement, dan wordt dit periodiek verlengd. Je kunt je abonnement op elk moment pauzeren of opzeggen via je account of door contact met ons op te nemen.</p>"
+          }
+        },
+        "a8": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Artikel 8 — Klachten",
+            "text": "<p>Klachten kun je indienen via onze <a href=\"/pages/klachten\">klachtenpagina</a>. We reageren binnen 1 werkdag en doen ons best je klacht binnen 14 dagen op te lossen.</p>"
+          }
+        },
+        "a9": {
+          "type": "item",
+          "settings": {
+            "icon": "none",
+            "heading": "Artikel 9 — Toepasselijk recht",
+            "text": "<p>Op alle overeenkomsten is Nederlands recht van toepassing. Geschillen leggen we voor aan de bevoegde rechter.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5",
+        "a6",
+        "a7",
+        "a8",
+        "a9"
+      ],
+      "settings": {
+        "eyebrow": "Juridisch",
+        "title": "Algemene voorwaarden",
+        "intro": "De voorwaarden die gelden bij een bestelling of abonnement bij Kwispelbox. Laat deze tekst juridisch controleren voordat je live gaat.",
+        "cta_title": "Vragen over de voorwaarden?",
+        "cta_text": "Ons team helpt je graag.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
