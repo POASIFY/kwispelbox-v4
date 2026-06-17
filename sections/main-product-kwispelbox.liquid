@@ -198,7 +198,8 @@
               </summary>
               <div class="pdp-personalize__grid">
                 <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'dog' -%}</span>Naam hond</span><input type="text" name="properties[Naam hond]" placeholder="Bijv. Luna"></label>
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'calendar' -%}</span>Leeftijd</span><input type="text" name="properties[Leeftijd]" placeholder="Bijv. 3 jaar"></label>
+                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>Levensfase</span><select name="properties[Levensfase]"><option value="">Kies…</option><option>Puppy</option><option>Volwassen</option><option>Senior</option></select></label>
+                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'calendar' -%}</span>Geboortedatum hond</span><input type="date" name="properties[Geboortedatum]"></label>
                 <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'ruler' -%}</span>Formaat</span>
                   <select name="properties[Formaat]"><option value="">Kies…</option><option>Klein</option><option>Middel</option><option>Groot</option></select>
                 </label>
