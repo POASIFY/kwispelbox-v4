@@ -180,7 +180,7 @@
             "color": "pink",
             "title": "Verjaardagsbox",
             "description": "Vier de verjaardag van jouw hond",
-            "url": ""
+            "url": "/products/verjaardag-box"
           }
         },
         "se2": {
@@ -192,7 +192,7 @@
             "color": "orange",
             "title": "Halloween Box",
             "description": "Spooky speelplezier voor nieuwsgierige neuzen",
-            "url": ""
+            "url": "/products/halloween-box"
           }
         },
         "se3": {
@@ -204,7 +204,7 @@
             "color": "green",
             "title": "Kerst Box",
             "description": "Het leukste cadeautje onder de boom",
-            "url": ""
+            "url": "/products/kerst-box"
           }
         },
         "se4": {
@@ -216,7 +216,7 @@
             "color": "pink",
             "title": "Valentijn Box",
             "description": "Voor jouw allerbeste vriend",
-            "url": ""
+            "url": "/products/valentijn-box"
           }
         },
         "se5": {
@@ -228,7 +228,7 @@
             "color": "green",
             "title": "Dierendag Box",
             "description": "Extra verwennerij voor jouw hond",
-            "url": ""
+            "url": "/products/dierendag-box"
           }
         },
         "se6": {
@@ -240,7 +240,7 @@
             "color": "green",
             "title": "Lente Box",
             "description": "Tijd voor nieuwe avonturen",
-            "url": ""
+            "url": "/pages/special-editions"
           }
         },
         "se7": {
@@ -252,7 +252,7 @@
             "color": "yellow",
             "title": "Zomer Box",
             "description": "Spelen in de zon",
-            "url": ""
+            "url": "/pages/special-editions"
           }
         },
         "se8": {
@@ -264,7 +264,7 @@
             "color": "orange",
             "title": "Herfst Box",
             "description": "Knus speelplezier voor regenachtige dagen",
-            "url": ""
+            "url": "/pages/special-editions"
           }
         },
         "se9": {
@@ -276,7 +276,7 @@
             "color": "pink",
             "title": "Nieuwjaars Box",
             "description": "Begin het nieuwe jaar met een kwispel",
-            "url": ""
+            "url": "/pages/special-editions"
           }
         },
         "se10": {
@@ -288,7 +288,7 @@
             "color": "orange",
             "title": "Back to School Box",
             "description": "Klaar voor nieuwe avonturen",
-            "url": ""
+            "url": "/pages/special-editions"
           }
         },
         "seu1": {
@@ -581,7 +581,7 @@
             "color": "yellow",
             "title": "Kwispels sparen",
             "description": "Spaar Kwispels bij elke bestelling en wissel ze in voor leuke beloningen",
-            "url": "/pages/kwispels-sparen"
+            "url": "/pages/kwispelclub"
           }
         },
         "cit3": {
@@ -592,7 +592,7 @@
             "color": "pink",
             "title": "Exclusieve kortingen",
             "description": "Alleen voor leden: speciale acties en kortingen het hele jaar door",
-            "url": "/pages/kortingen"
+            "url": "/pages/kwispelclub"
           }
         },
         "cit4": {
@@ -603,7 +603,7 @@
             "color": "orange",
             "title": "Hond van de maand",
             "description": "Deel jouw foto en maak kans op een plekje in de spotlight",
-            "url": "/pages/hond-van-de-maand"
+            "url": "/pages/kwispelclub"
           }
         },
         "cit5": {
@@ -614,7 +614,7 @@
             "color": "purple",
             "title": "Verjaardagsvoordelen",
             "description": "Tijd voor taart! Ontvang een leuke verrassing voor jouw hond",
-            "url": "/pages/verjaardag"
+            "url": "/pages/kwispelclub"
           }
         },
         "cit6": {
@@ -625,7 +625,7 @@
             "color": "green",
             "title": "Clubnieuws & surprises",
             "description": "Als eerste op de hoogte van nieuwe boxen, acties en verrassingen.",
-            "url": "/pages/clubnieuws"
+            "url": "/pages/kwispelclub"
           }
         },
         "crw1": {
@@ -757,7 +757,7 @@
             "color": "green",
             "title": "Waarom Kwispelbox?",
             "description": "Ontdek wat onze boxen zo speciaal maakt.",
-            "url": "/pages/waarom-kwispelbox"
+            "url": "/pages/over-ons"
           }
         },
         "ait3": {
@@ -768,7 +768,7 @@
             "color": "green",
             "title": "Duurzaamheid",
             "description": "Goed voor jouw hond én voor de wereld.",
-            "url": "/pages/duurzaamheid"
+            "url": "/pages/over-ons"
           }
         },
         "ait4": {
@@ -779,7 +779,7 @@
             "color": "orange",
             "title": "Klantenservice",
             "description": "We helpen je graag snel en persoonlijk.",
-            "url": "/pages/klantenservice"
+            "url": "/pages/contact"
           }
         },
         "ait5": {
