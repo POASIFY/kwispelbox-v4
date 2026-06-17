@@ -23,14 +23,14 @@
             {%- if section.settings.contact_image != blank -%}
               <img src="{{ section.settings.contact_image | image_url: width: 480 }}" alt="" width="240" height="170" loading="lazy">
             {%- else -%}
-              <span class="pfaq__contact-ph" aria-hidden="true">{%- render 'lucide', icon: 'dog' -%}</span>
+              <span class="pfaq__contact-ph" aria-hidden="true">{%- render 'kb-icon', icon: 'dog' -%}</span>
             {%- endif -%}
           </div>
-          <span class="pfaq__contact-icon" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+          <span class="pfaq__contact-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
           <strong class="pfaq__contact-title">{{ section.settings.contact_title }}</strong>
           {%- if section.settings.contact_text != blank -%}<p class="pfaq__contact-text">{{ section.settings.contact_text }}</p>{%- endif -%}
           {%- if section.settings.contact_cta_label != blank -%}<a href="{{ section.settings.contact_cta_url | default: '#' }}" class="pfaq__contact-cta">{{ section.settings.contact_cta_label }}</a>{%- endif -%}
-          {%- if section.settings.contact_email != blank -%}<a href="mailto:{{ section.settings.contact_email }}" class="pfaq__contact-mail"><span aria-hidden="true">{%- render 'lucide', icon: 'mail' -%}</span>{{ section.settings.contact_email }}</a>{%- endif -%}
+          {%- if section.settings.contact_email != blank -%}<a href="mailto:{{ section.settings.contact_email }}" class="pfaq__contact-mail"><span aria-hidden="true">{%- render 'kb-icon', icon: 'mail' -%}</span>{{ section.settings.contact_email }}</a>{%- endif -%}
         </div>
       {%- endif -%}
     </div>
@@ -53,16 +53,16 @@
 .pfaq__contact-media { height: 160px; background: #ffe0ee; }
 .pfaq__contact-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .pfaq__contact-ph { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--color-pink); }
-.pfaq__contact-ph .lucide { width: 60px; height: 60px; }
+.pfaq__contact-ph svg { width: 60px; height: 60px; }
 .pfaq__contact-icon { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 50%; background: #ffe0ee; color: var(--color-pink); margin: -26px 0 12px; border: 4px solid #fff; }
-.pfaq__contact-icon .lucide { width: 24px; height: 24px; }
+.pfaq__contact-icon svg { width: 24px; height: 24px; }
 .pfaq__contact-title { display: block; font-family: var(--font-heading); font-size: 1.35rem; color: var(--color-ink); padding: 0 22px; }
 .pfaq__contact-text { font-family: var(--font-body); font-size: .9rem; line-height: 1.55; color: var(--color-body); margin: 10px 22px 18px; }
 .pfaq__contact-cta { display: inline-flex; align-items: center; justify-content: center; padding: 13px 26px; background: var(--color-green); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; text-decoration: none; transition: background 160ms, transform 160ms; }
 .pfaq__contact-cta:hover { background: #5a9a3b; transform: translateY(-1px); }
 .pfaq__contact-mail { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; font-family: var(--font-body); font-size: .85rem; font-weight: 700; color: var(--color-ink); text-decoration: none; }
 .pfaq__contact-mail span { display: inline-flex; color: var(--color-green); }
-.pfaq__contact-mail .lucide { width: 16px; height: 16px; }
+.pfaq__contact-mail svg { width: 16px; height: 16px; }
 
 @media (min-width: 990px) {
   .pfaq { padding: 72px 0; }

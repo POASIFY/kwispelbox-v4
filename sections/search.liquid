@@ -7,20 +7,20 @@
   <div class="kbsearch__inner">
     <header class="kbsearch__head">
       <p class="kbsearch__eyebrow">Op zoek naar iets leuks?</p>
-      <h1 class="kbsearch__title">{{ 'search.title' | t }}</h1>
+      <h1 class="kbsearch__title">{%- if search.performed and search.terms != blank -%}Resultaten voor “{{ search.terms }}”{%- else -%}Waar ben je naar op zoek?{%- endif -%}</h1>
     </header>
 
     <form action="{{ routes.search_url }}" method="get" role="search" class="kbsearch__form">
       <input type="search" name="q" value="{{ search.terms | escape }}"
         placeholder="Zoek naar speeltjes, boxen of verrassingen…" class="kbsearch__input">
-      <button type="submit" class="kbsearch__btn">{{ 'search.submit' | t }}</button>
+      <button type="submit" class="kbsearch__btn">Zoeken</button>
     </form>
 
     {%- if search.performed -%}
       {%- if search.results_count == 0 -%}
-        <p class="kbsearch__empty">{{ 'search.no_results_html' | t: terms: search.terms }}</p>
+        <p class="kbsearch__empty">We konden niets vinden voor “{{ search.terms }}”. Probeer een ander woord, of <a href="{{ routes.all_products_collection_url }}">bekijk alle producten</a>.</p>
       {%- else -%}
-        <p class="kbsearch__count">{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
+        <p class="kbsearch__count">{{ search.results_count }} {% if search.results_count == 1 %}resultaat{% else %}resultaten{% endif %} voor “{{ search.terms }}”</p>
         {%- paginate search.results by 24 -%}
           <ul class="kbsearch__grid" role="list">
             {%- for result in search.results -%}
@@ -30,7 +30,7 @@
                   {%- if featured_image -%}
                     <img src="{{ featured_image | image_url: width: 400 }}" alt="{{ featured_image.alt | escape }}" width="400" height="400" loading="lazy">
                   {%- else -%}
-                    <span class="kbsearch__ph">{%- render 'lucide', icon: 'paw' -%}</span>
+                    <span class="kbsearch__ph">{%- render 'kb-icon', icon: 'paw' -%}</span>
                   {%- endif -%}
                 </a>
                 <div class="kbsearch__info">
@@ -68,7 +68,7 @@
 .kbsearch__media { display: block; aspect-ratio: 1; background: var(--color-cream); }
 .kbsearch__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .kbsearch__ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: var(--color-green); }
-.kbsearch__ph .lucide { width: 44px; height: 44px; }
+.kbsearch__ph svg { width: 44px; height: 44px; }
 .kbsearch__info { display: flex; flex-direction: column; gap: 6px; padding: 16px; }
 .kbsearch__name { font-family: var(--font-heading); font-size: 1.05rem; line-height: 1.2; color: var(--color-ink); text-decoration: none; overflow-wrap: anywhere; }
 .kbsearch__name:hover { color: var(--color-green); }

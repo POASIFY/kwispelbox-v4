@@ -30,7 +30,7 @@
           <li class="hiw__step hiw__step--{{ accent }}" {{ block.shopify_attributes }}>
             <div class="hiw__badge">
               <span class="hiw__num">{{ forloop.index }}</span>
-              <span class="hiw__icon" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
+              <span class="hiw__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
             </div>
             <h3 class="hiw__step-title">{{ block.settings.title }}</h3>
             {%- if block.settings.text != blank -%}
@@ -43,7 +43,7 @@
 
     {%- if section.settings.note != blank -%}
       <p class="hiw__note">
-        <span class="hiw__note-icon" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+        <span class="hiw__note-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
         {{ section.settings.note }}
       </p>
     {%- endif -%}
@@ -86,7 +86,7 @@
   display: flex; align-items: center; justify-content: center;
   background: var(--c); color: #fff; border-radius: 50%; border: 3px solid #fff;
 }
-.hiw__icon .lucide { width: 16px; height: 16px; }
+.hiw__icon svg { width: 16px; height: 16px; }
 .hiw__step-title { font-family: var(--font-heading); font-size: var(--fs-h3); color: var(--color-ink); margin: 0 0 8px; }
 .hiw__step-text { font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.6; color: var(--color-body); margin: 0 auto; max-width: 32ch; }
 
@@ -97,7 +97,7 @@
   font-family: var(--font-body); font-size: .98rem; font-weight: 600; color: var(--color-body); text-align: center;
 }
 .hiw__note-icon { color: var(--color-pink); flex-shrink: 0; display: inline-flex; }
-.hiw__note-icon .lucide { width: 18px; height: 18px; fill: currentColor; }
+.hiw__note-icon svg { width: 18px; height: 18px; fill: currentColor; }
 
 @media (max-width: 749px) {
   .hiw__head { margin-bottom: 32px; }

@@ -1,0 +1,160 @@
+{%- comment -%}
+  sections/about-page.liquid — KB-v4 "Over ons".
+  Hero + verhaal (richtext + afbeelding) + waarden-grid + CTA. Namespace `abt`.
+{%- endcomment -%}
+
+<div class="abt full-width">
+  <div class="abt__inner">
+
+    <header class="abt__head">
+      {%- if section.settings.eyebrow != blank -%}<span class="abt__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.title != blank -%}<h1 class="abt__title">{{ section.settings.title }}</h1>{%- endif -%}
+      {%- if section.settings.intro != blank -%}<p class="abt__intro">{{ section.settings.intro }}</p>{%- endif -%}
+    </header>
+
+    {%- if section.settings.story_text != blank or section.settings.story_image != blank -%}
+      <div class="abt__story">
+        <div class="abt__story-media">
+          {%- if section.settings.story_image != blank -%}
+            <img src="{{ section.settings.story_image | image_url: width: 900 }}" srcset="{{ section.settings.story_image | image_url: width: 600 }} 600w, {{ section.settings.story_image | image_url: width: 900 }} 900w" sizes="(max-width: 859px) 92vw, 46vw" alt="{{ section.settings.story_title | default: 'Over Kwispelbox' | escape }}" width="600" height="640" loading="lazy">
+          {%- else -%}
+            <span class="abt__story-ph" aria-hidden="true">{%- render 'kb-icon', icon: 'dog' -%}</span>
+          {%- endif -%}
+          <span class="abt__story-deco abt__story-deco--heart" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
+          <span class="abt__story-deco abt__story-deco--paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
+        </div>
+        <div class="abt__story-body">
+          {%- if section.settings.story_kicker != blank -%}<span class="abt__story-kicker">{{ section.settings.story_kicker }}</span>{%- endif -%}
+          {%- if section.settings.story_title != blank -%}<h2 class="abt__story-title">{{ section.settings.story_title }}</h2>{%- endif -%}
+          {%- if section.settings.story_text != blank -%}<div class="abt__story-text">{{ section.settings.story_text }}</div>{%- endif -%}
+          {%- if section.settings.signature != blank -%}<p class="abt__signature">{{ section.settings.signature }}</p>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- assign value_blocks = section.blocks | where: 'type', 'value' -%}
+    {%- if value_blocks.size > 0 -%}
+      <div class="abt__values">
+        {%- if section.settings.values_title != blank -%}<h2 class="abt__values-title">{{ section.settings.values_title }}</h2>{%- endif -%}
+        <div class="abt__values-grid">
+          {%- for block in value_blocks -%}
+            <div class="abt-value abt-value--{{ block.settings.color | default: 'green' }}" {{ block.shopify_attributes }}>
+              <span class="abt-value__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon | default: 'heart' -%}</span>
+              <strong class="abt-value__title">{{ block.settings.title }}</strong>
+              {%- if block.settings.text != blank -%}<p class="abt-value__text">{{ block.settings.text }}</p>{%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <div class="abt__cta">
+        {%- if section.settings.cta_title != blank -%}<h2 class="abt__cta-title">{{ section.settings.cta_title }}</h2>{%- endif -%}
+        {%- if section.settings.cta_text != blank -%}<p class="abt__cta-text">{{ section.settings.cta_text }}</p>{%- endif -%}
+        <a href="{{ section.settings.cta_url | default: routes.all_products_collection_url }}" class="abt__cta-btn">{{ section.settings.cta_label }}<span class="abt__cta-paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span></a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+.abt { background: transparent; padding: var(--section-pad) 0; }
+.abt__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.abt__head { text-align: center; max-width: 720px; margin: 0 auto 48px; }
+.abt__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--color-pink); margin-bottom: 12px; }
+.abt__eyebrow span { display: inline-flex; }
+.abt__eyebrow svg { width: 16px; height: 16px; }
+.abt__title { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.04; color: var(--color-ink); margin: 0 0 12px; }
+.abt__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0 auto; max-width: 58ch; }
+
+.abt__story { display: grid; grid-template-columns: 1fr; gap: 30px; align-items: center; margin-bottom: 64px; }
+.abt__story-media { position: relative; }
+.abt__story-media img { width: 100%; aspect-ratio: 5/4; object-fit: cover; border-radius: 28px; box-shadow: 0 18px 44px rgba(61, 34, 9, .1); }
+.abt__story-ph { display: flex; align-items: center; justify-content: center; aspect-ratio: 5/4; border-radius: 28px; background: #e8f5e2; color: var(--color-green); }
+.abt__story-ph svg { width: 80px; height: 80px; }
+.abt__story-deco { position: absolute; pointer-events: none; display: flex; }
+.abt__story-deco svg { width: 100%; height: 100%; }
+.abt__story-deco--heart { top: -16px; right: 18px; width: 38px; height: 38px; color: var(--color-pink); transform: rotate(12deg); }
+.abt__story-deco--paw { bottom: -14px; left: -10px; width: 40px; height: 40px; color: var(--color-green); opacity: .5; transform: rotate(-14deg); }
+.abt__story-kicker { display: inline-block; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--color-green); margin-bottom: 10px; }
+.abt__story-title { font-family: var(--font-heading); font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.1; color: var(--color-ink); margin: 0 0 16px; }
+.abt__story-text { font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.7; color: var(--color-body); }
+.abt__story-text p { margin: 0 0 14px; }
+.abt__signature { font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-pink); margin: 18px 0 0; }
+
+.abt__values { margin-bottom: 56px; }
+.abt__values-title { text-align: center; font-family: var(--font-heading); font-size: var(--fs-h2); color: var(--color-ink); margin: 0 0 32px; }
+.abt__values-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.abt-value { background: #fff; border: 1.5px solid var(--color-line); border-radius: 22px; padding: 26px 24px; box-shadow: 0 8px 22px rgba(61, 34, 9, .05); }
+.abt-value__icon { display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; border-radius: 50%; margin-bottom: 14px; }
+.abt-value__icon svg { width: 26px; height: 26px; }
+.abt-value--green .abt-value__icon { background: #e8f5e2; color: var(--color-green); }
+.abt-value--pink .abt-value__icon { background: #ffe0ee; color: var(--color-pink); }
+.abt-value--orange .abt-value__icon { background: #fff0e4; color: var(--color-orange); }
+.abt-value--yellow .abt-value__icon { background: #fffae0; color: #d99100; }
+.abt-value__title { display: block; font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-ink); line-height: 1.15; margin-bottom: 7px; }
+.abt-value__text { font-family: var(--font-body); font-size: .92rem; line-height: 1.6; color: var(--color-body); margin: 0; }
+
+.abt__cta { text-align: center; padding: 44px 26px; background: #e8f5e2; border-radius: 28px; }
+.abt__cta-title { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.1; color: var(--color-ink); margin: 0 0 10px; }
+.abt__cta-text { font-family: var(--font-body); font-size: var(--fs-lead); color: var(--color-body); margin: 0 auto 22px; max-width: 48ch; }
+.abt__cta-btn { display: inline-flex; align-items: center; gap: 11px; padding: 16px 30px; background: var(--color-green); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.15rem; text-decoration: none; transition: filter 160ms, transform 160ms; }
+.abt__cta-btn:hover { filter: brightness(.94); transform: translateY(-2px); }
+.abt__cta-paw { display: inline-flex; }
+.abt__cta-paw svg { width: 20px; height: 20px; }
+
+@media (min-width: 860px) {
+  .abt__story { grid-template-columns: 1fr 1.05fr; gap: 50px; }
+  .abt__values-grid { grid-template-columns: repeat(2, 1fr); gap: 22px; }
+}
+@media (min-width: 1040px) { .abt__values-grid { grid-template-columns: repeat(4, 1fr); } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Over ons",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Gemaakt met liefde" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Ons verhaal" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Kwispelbox begon met één simpele overtuiging: elke hond verdient af en toe een echt cadeautje." },
+    { "type": "header", "content": "Verhaal" },
+    { "type": "image_picker", "id": "story_image", "label": "Afbeelding" },
+    { "type": "text", "id": "story_kicker", "label": "Kicker", "default": "Hoe het begon" },
+    { "type": "text", "id": "story_title", "label": "Kop", "default": "Voor de blijdschap van jouw beste vriend" },
+    { "type": "richtext", "id": "story_text", "label": "Tekst", "default": "<p>Het idee ontstond toen we zagen hoe blij honden worden van iets nieuws — een speeltje, een snack, een moment van aandacht. Dat gevoel wilden we vangen in een box.</p><p>Sindsdien stellen we elke maand met zorg een verrassing samen: stevige speeltjes, gezonde snacks en knuffels om van te houden. Geen massaproduct, maar een cadeautje dat met liefde is uitgezocht.</p>" },
+    { "type": "text", "id": "signature", "label": "Ondertekening", "default": "— Het Kwispelbox-team 🐾" },
+    { "type": "header", "content": "Waarden" },
+    { "type": "text", "id": "values_title", "label": "Kop", "default": "Waarom Kwispelbox?" },
+    { "type": "header", "content": "Oproep onderaan" },
+    { "type": "text", "id": "cta_title", "label": "CTA titel", "default": "Maak ook jouw hond blij" },
+    { "type": "text", "id": "cta_text", "label": "CTA tekst", "default": "Ontdek onze boxen en geef je hond het moment waar hij niet meer op kan wachten." },
+    { "type": "text", "id": "cta_label", "label": "Knoptekst", "default": "Bekijk onze boxen" },
+    { "type": "url", "id": "cta_url", "label": "Knop link" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Waarde",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "heart",
+          "options": [
+            { "value": "heart", "label": "Hart" }, { "value": "shield", "label": "Schild" }, { "value": "leaf", "label": "Blad" },
+            { "value": "paw", "label": "Poot" }, { "value": "gift", "label": "Cadeau" }, { "value": "star", "label": "Ster" }, { "value": "check", "label": "Vinkje" }
+          ]
+        },
+        {
+          "type": "select", "id": "color", "label": "Kleur", "default": "green",
+          "options": [ { "value": "green", "label": "Groen" }, { "value": "pink", "label": "Roze" }, { "value": "orange", "label": "Oranje" }, { "value": "yellow", "label": "Geel" } ]
+        },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Met liefde samengesteld" },
+        { "type": "textarea", "id": "text", "label": "Tekst", "default": "Elke box wordt met zorg gevuld, alsof we 'm voor onze eigen hond maken." }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Over ons" } ]
+}
+{% endschema %}

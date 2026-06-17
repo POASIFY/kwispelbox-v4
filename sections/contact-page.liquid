@@ -1,0 +1,134 @@
+{%- comment -%}
+  sections/contact-page.liquid — KB-v4 Contact.
+  Shopify {% form 'contact' %} + service-tegels (info-blokken). Namespace `cnt`.
+{%- endcomment -%}
+
+<div class="cnt full-width">
+  <div class="cnt__inner">
+
+    <header class="cnt__head">
+      {%- if section.settings.eyebrow != blank -%}<span class="cnt__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: 'mail' -%}</span>{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.title != blank -%}<h1 class="cnt__title">{{ section.settings.title }}</h1>{%- endif -%}
+      {%- if section.settings.intro != blank -%}<p class="cnt__intro">{{ section.settings.intro }}</p>{%- endif -%}
+    </header>
+
+    <div class="cnt__cols">
+      <div class="cnt__form-wrap">
+        {%- form 'contact', class: 'cnt__form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="cnt__success">
+              <span class="cnt__success-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'check' -%}</span>
+              <strong>{{ section.settings.success_title | default: 'Bedankt voor je bericht!' }}</strong>
+              <span>{{ section.settings.success_text | default: 'We nemen zo snel mogelijk contact met je op.' }}</span>
+            </div>
+          {%- endif -%}
+          {%- if form.errors -%}
+            <div class="cnt__errors">{{ form.errors | default_errors }}</div>
+          {%- endif -%}
+          <div class="cnt__field-row">
+            <label class="cnt__field"><span class="cnt__lbl">Naam</span><input type="text" name="contact[name]" value="{{ form.name }}" placeholder="Je naam" required></label>
+            <label class="cnt__field"><span class="cnt__lbl">E-mailadres</span><input type="email" name="contact[email]" value="{{ form.email }}" placeholder="jij@voorbeeld.nl" required></label>
+          </div>
+          <label class="cnt__field"><span class="cnt__lbl">Onderwerp</span><input type="text" name="contact[onderwerp]" value="{{ form.onderwerp }}" placeholder="Waar gaat het over?"></label>
+          <label class="cnt__field"><span class="cnt__lbl">Bericht</span><textarea name="contact[body]" rows="6" placeholder="Vertel ons waar we mee kunnen helpen…" required>{{ form.body }}</textarea></label>
+          <button type="submit" class="cnt__submit">{{ section.settings.submit_label | default: 'Verstuur bericht' }}<span class="cnt__submit-paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span></button>
+        {%- endform -%}
+      </div>
+
+      <aside class="cnt__aside">
+        {%- for block in section.blocks -%}
+          <div class="cnt-tile cnt-tile--{{ block.settings.color | default: 'green' }}" {{ block.shopify_attributes }}>
+            <span class="cnt-tile__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon | default: 'mail' -%}</span>
+            <div class="cnt-tile__body">
+              <strong class="cnt-tile__title">{{ block.settings.title }}</strong>
+              {%- if block.settings.text != blank -%}<span class="cnt-tile__text">{{ block.settings.text }}</span>{%- endif -%}
+              {%- if block.settings.link_label != blank -%}<a href="{{ block.settings.link_url | default: '#' }}" class="cnt-tile__link">{{ block.settings.link_label }}<span aria-hidden="true">→</span></a>{%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </aside>
+    </div>
+
+  </div>
+</div>
+
+{% stylesheet %}
+.cnt { background: transparent; padding: var(--section-pad) 0; }
+.cnt__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.cnt__head { text-align: center; max-width: 640px; margin: 0 auto 44px; }
+.cnt__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--color-green); margin-bottom: 12px; }
+.cnt__eyebrow span { display: inline-flex; }
+.cnt__eyebrow svg { width: 16px; height: 16px; }
+.cnt__title { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.04; color: var(--color-ink); margin: 0 0 12px; }
+.cnt__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0 auto; max-width: 52ch; }
+
+.cnt__cols { display: grid; grid-template-columns: 1fr; gap: 28px; }
+.cnt__form-wrap { background: #fff; border: 1.5px solid var(--color-line); border-radius: 26px; padding: 26px; box-shadow: 0 12px 30px rgba(61, 34, 9, .06); }
+.cnt__form { display: flex; flex-direction: column; gap: 16px; }
+.cnt__field-row { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.cnt__field { display: flex; flex-direction: column; gap: 6px; }
+.cnt__lbl { font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-ink); }
+.cnt__field input, .cnt__field textarea { font-family: var(--font-body); font-size: .95rem; color: var(--color-ink); border: 1.5px solid var(--color-line); border-radius: 14px; padding: 13px 15px; background: var(--color-cream); outline: none; transition: border-color 160ms, background 160ms; }
+.cnt__field input:focus, .cnt__field textarea:focus { border-color: var(--color-green); background: #fff; }
+.cnt__field textarea { resize: vertical; min-height: 120px; }
+.cnt__submit { display: inline-flex; align-items: center; justify-content: center; gap: 11px; align-self: flex-start; padding: 15px 30px; background: var(--color-green); color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.1rem; cursor: pointer; transition: filter 160ms, transform 160ms; }
+.cnt__submit:hover { filter: brightness(.94); transform: translateY(-2px); }
+.cnt__submit-paw { display: inline-flex; }
+.cnt__submit-paw svg { width: 19px; height: 19px; }
+.cnt__success { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; background: #e8f5e2; border: 1.5px solid var(--color-green); border-radius: 16px; padding: 16px 18px; }
+.cnt__success-icon { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--color-green); color: #fff; margin-bottom: 4px; }
+.cnt__success-icon svg { width: 17px; height: 17px; }
+.cnt__success strong { font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-ink); }
+.cnt__success span { font-family: var(--font-body); font-size: .9rem; color: var(--color-body); }
+.cnt__errors { background: #ffe0ee; border: 1.5px solid var(--color-pink); border-radius: 14px; padding: 12px 16px; font-family: var(--font-body); font-size: .88rem; color: #c4396a; }
+
+.cnt__aside { display: flex; flex-direction: column; gap: 14px; }
+.cnt-tile { display: flex; gap: 14px; align-items: flex-start; background: #fff; border: 1.5px solid var(--color-line); border-radius: 20px; padding: 18px 20px; }
+.cnt-tile__icon { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; flex-shrink: 0; }
+.cnt-tile__icon svg { width: 22px; height: 22px; }
+.cnt-tile--green .cnt-tile__icon { background: #e8f5e2; color: var(--color-green); }
+.cnt-tile--pink .cnt-tile__icon { background: #ffe0ee; color: var(--color-pink); }
+.cnt-tile--orange .cnt-tile__icon { background: #fff0e4; color: var(--color-orange); }
+.cnt-tile__body { display: flex; flex-direction: column; gap: 3px; }
+.cnt-tile__title { font-family: var(--font-heading); font-size: 1.08rem; color: var(--color-ink); }
+.cnt-tile__text { font-family: var(--font-body); font-size: .88rem; color: var(--color-body); line-height: 1.5; }
+.cnt-tile__link { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; font-family: var(--font-body); font-size: .88rem; font-weight: 700; color: var(--color-green); text-decoration: none; }
+
+@media (min-width: 860px) {
+  .cnt__cols { grid-template-columns: 1.5fr 1fr; gap: 36px; align-items: start; }
+  .cnt__field-row { grid-template-columns: 1fr 1fr; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "We helpen je graag" },
+    { "type": "text", "id": "title", "label": "Titel", "default": "Neem contact op" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Een vraag over je box, bestelling of de Kwispelclub? Stuur ons een berichtje — we reageren meestal binnen 1 werkdag." },
+    { "type": "text", "id": "submit_label", "label": "Knoptekst", "default": "Verstuur bericht" },
+    { "type": "text", "id": "success_title", "label": "Succes-titel", "default": "Bedankt voor je bericht!" },
+    { "type": "text", "id": "success_text", "label": "Succes-tekst", "default": "We nemen zo snel mogelijk contact met je op." }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Service-tegel",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icoon", "default": "mail",
+          "options": [ { "value": "mail", "label": "Mail" }, { "value": "chat", "label": "Chat" }, { "value": "truck", "label": "Verzending" }, { "value": "refresh", "label": "Retour" }, { "value": "bulb", "label": "FAQ" }, { "value": "heart", "label": "Hart" } ]
+        },
+        { "type": "select", "id": "color", "label": "Kleur", "default": "green", "options": [ { "value": "green", "label": "Groen" }, { "value": "pink", "label": "Roze" }, { "value": "orange", "label": "Oranje" } ] },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Mail ons" },
+        { "type": "text", "id": "text", "label": "Tekst", "default": "hello@kwispelbox.nl" },
+        { "type": "text", "id": "link_label", "label": "Linktekst (optioneel)" },
+        { "type": "url", "id": "link_url", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Contact" } ]
+}
+{% endschema %}
