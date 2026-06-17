@@ -14,109 +14,22 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "usp1": {
-          "type": "usp",
-          "settings": {
-            "icon": "truck",
-            "color": "green",
-            "title": "Gratis verzending",
-            "text": "vanaf €75"
-          }
-        },
-        "usp2": {
-          "type": "usp",
-          "settings": {
-            "icon": "star",
-            "color": "pink",
-            "title": "4,9/5 beoordeeld",
-            "text": "door onze klanten"
-          }
-        },
-        "usp3": {
-          "type": "usp",
-          "settings": {
-            "icon": "heart",
-            "color": "yellow",
-            "title": "Met liefde",
-            "text": "samengesteld"
-          }
-        },
-        "usp4": {
-          "type": "usp",
-          "settings": {
-            "icon": "shield",
-            "color": "green",
-            "title": "Veilig betalen",
-            "text": "met jouw favoriete betaalmethode"
-          }
-        },
-        "col1": {
-          "type": "menu_col",
-          "settings": {
-            "icon": "shop",
-            "title": "Shop",
-            "menu": "menu-kwispelclub"
-          }
-        },
-        "col2": {
-          "type": "menu_col",
-          "settings": {
-            "icon": "heart",
-            "title": "Klantenservice",
-            "menu": ""
-          }
-        },
-        "col3": {
-          "type": "menu_col",
-          "settings": {
-            "icon": "paw",
-            "title": "Kwispelclub",
-            "menu": "menu-kwispelclub"
-          }
-        },
-        "col4": {
-          "type": "menu_col",
-          "settings": {
-            "icon": "star",
-            "title": "Over Kwispelbox",
-            "menu": ""
-          }
-        }
+        "usp1": { "type": "usp", "settings": { "icon": "truck", "color": "green", "title": "Gratis verzending", "text": "vanaf €75" } },
+        "usp2": { "type": "usp", "settings": { "icon": "star", "color": "pink", "title": "4,9/5 beoordeeld", "text": "door onze klanten" } },
+        "usp3": { "type": "usp", "settings": { "icon": "heart", "color": "yellow", "title": "Met liefde", "text": "samengesteld" } },
+        "usp4": { "type": "usp", "settings": { "icon": "shield", "color": "green", "title": "Veilig betalen", "text": "met jouw favoriete betaalmethode" } },
+        "col1": { "type": "menu_col", "settings": { "icon": "shop", "title": "Shop", "menu": "main-menu" } },
+        "col2": { "type": "menu_col", "settings": { "icon": "heart", "title": "Klantenservice", "menu": "footer-service" } },
+        "col3": { "type": "menu_col", "settings": { "icon": "paw", "title": "Kwispelclub", "menu": "menu-kwispelclub" } },
+        "col4": { "type": "menu_col", "settings": { "icon": "star", "title": "Over Kwispelbox", "menu": "menu-over-ons" } }
       },
-      "block_order": [
-        "usp1",
-        "usp2",
-        "usp3",
-        "usp4",
-        "col1",
-        "col2",
-        "col3",
-        "col4"
-      ],
+      "block_order": ["usp1", "usp2", "usp3", "usp4", "col1", "col2", "col3", "col4"],
       "settings": {
-        "tagline": "Elke Kwispelbox is met liefde samengesteld en voelt als een cadeautje voor je hond. Omdat jouw trouwe vriend alleen het allerbeste verdient.",
-        "instagram": "",
-        "tiktok": "",
-        "pinterest": "",
-        "facebook": "",
-        "follow_text": "Volg ons voor kwispelende inspiratie",
-        "nl_title": "Blijf op de hoogte van",
-        "nl_highlight": "nieuwe verrassingen",
-        "nl_placeholder": "Vul je e-mailadres in",
-        "nl_button": "Meld je aan",
         "show_payment_icons": true,
-        "payment_note": "Veilig en vertrouwd betalen",
-        "world_note": "Met liefde voor honden en voor de wereld",
         "privacy_url": "/policies/privacy-policy",
-        "privacy_label": "Privacybeleid",
-        "terms_url": "/policies/terms-of-service",
-        "terms_label": "Algemene voorwaarden",
-        "cookies_url": "",
-        "cookies_label": "Cookies"
+        "terms_url": "/pages/algemene-voorwaarden"
       }
     }
   },
-  "order": [
-    "footer"
-  ]
+  "order": ["footer"]
 }
