@@ -1,6 +1,7 @@
 {%- comment -%}
   sections/collection.liquid — Kwispelbox KB-v4
-  Mobiel-veilige, licht gebrande collectie-grid.
+  Mobiel-veilige, licht gebrande collectie-grid met Search & Discovery facetten,
+  sorteren, actieve-filter chips, mobiele filter-drawer + per-collectie SEO-tekst.
 {%- endcomment -%}
 
 <div class="kbcol full-width">
@@ -14,41 +15,316 @@
     </header>
 
     {%- paginate collection.products by 24 -%}
-      {%- if collection.products.size > 0 -%}
-        <ul class="kbcol__grid" role="list">
-          {%- for product in collection.products -%}
-            <li class="kbcol__card">
-              <a href="{{ product.url }}" class="kbcol__media">
-                {%- if product.featured_image -%}
-                  <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.featured_image.alt | escape }}" width="400" height="400" loading="lazy">
-                {%- else -%}
-                  <span class="kbcol__ph">{%- render 'lucide', icon: 'gift' -%}</span>
-                {%- endif -%}
-              </a>
-              <div class="kbcol__info">
-                <a href="{{ product.url }}" class="kbcol__name">{{ product.title }}</a>
-                <span class="kbcol__price">{{ product.price | money }}</span>
-              </div>
-            </li>
-          {%- endfor -%}
-        </ul>
-        {%- if paginate.pages > 1 -%}
-          <nav class="kbcol__pag" role="navigation">{{ paginate | default_pagination }}</nav>
+      {%- liquid
+        assign has_filters = false
+        if collection.filters.size > 0
+          assign has_filters = true
+        endif
+      -%}
+
+      {%- comment -%} ── Toolbar: filteren-knop (mobiel) · resultaten · sorteren ── {%- endcomment -%}
+      <div class="kbcol__toolbar">
+        {%- if has_filters -%}
+          <button type="button" class="kbcol__filter-toggle" data-kbcol-open aria-expanded="false" aria-controls="kbcol-filters">
+            {%- render 'lucide', icon: 'sparkles' -%}
+            <span>Filteren</span>
+          </button>
         {%- endif -%}
-      {%- else -%}
-        <p class="kbcol__empty">Nog geen producten in deze collectie. Kom snel terug — er is altijd iets nieuws op komst voor je hond.</p>
-      {%- endif -%}
+
+        <p class="kbcol__count">{{ collection.products_count }} producten</p>
+
+        {%- if collection.sort_options.size > 0 -%}
+          <form class="kbcol__sort" method="get" action="{{ collection.url }}" data-kbcol-sort>
+            {%- comment -%} Behoud actieve filter-params bij sorteren {%- endcomment -%}
+            {%- for filter in collection.filters -%}
+              {%- for value in filter.active_values -%}
+                <input type="hidden" name="{{ value.param_name }}" value="{{ value.value }}">
+              {%- endfor -%}
+              {%- if filter.type == 'price_range' -%}
+                {%- if filter.min_value.value != null -%}
+                  <input type="hidden" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | money_without_currency | replace: ',', '.' }}">
+                {%- endif -%}
+                {%- if filter.max_value.value != null -%}
+                  <input type="hidden" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | money_without_currency | replace: ',', '.' }}">
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+            <label class="kbcol__sort-label" for="kbcol-sort-by">Sorteren</label>
+            <div class="kbcol__select">
+              {%- assign sort_current = collection.sort_by | default: collection.default_sort_by -%}
+              <select name="sort_by" id="kbcol-sort-by">
+                {%- for option in collection.sort_options -%}
+                  <option value="{{ option.value }}"{% if option.value == sort_current %} selected{% endif %}>{{ option.name }}</option>
+                {%- endfor -%}
+              </select>
+              {%- render 'lucide', icon: 'refresh' -%}
+            </div>
+          </form>
+        {%- endif -%}
+      </div>
+
+      <div class="kbcol__layout{% unless has_filters %} kbcol__layout--full{% endunless %}">
+        {%- if has_filters -%}
+          {%- comment -%} ── Facetten: desktop sidebar + mobiele drawer ── {%- endcomment -%}
+          <div class="kbcol__overlay" data-kbcol-overlay hidden></div>
+          <aside class="kbcol__filters" id="kbcol-filters" aria-label="Filters">
+            <form method="get" action="{{ collection.url }}" class="kbcol__filter-form" data-kbcol-form>
+              <div class="kbcol__filters-head">
+                <span class="kbcol__filters-title">Filteren</span>
+                <button type="button" class="kbcol__close" data-kbcol-close aria-label="Sluiten">
+                  {%- render 'lucide', icon: 'trash' -%}
+                </button>
+              </div>
+
+              {%- comment -%} Behoud sorteer-keuze in filter-submits {%- endcomment -%}
+              {%- if collection.sort_by != blank -%}
+                <input type="hidden" name="sort_by" value="{{ collection.sort_by }}">
+              {%- endif -%}
+
+              {%- comment -%} ── Actieve filters als chips ── {%- endcomment -%}
+              {%- assign active_count = 0 -%}
+              {%- for filter in collection.filters -%}
+                {%- assign active_count = active_count | plus: filter.active_values.size -%}
+                {%- if filter.type == 'price_range' -%}
+                  {%- if filter.min_value.value != null or filter.max_value.value != null -%}
+                    {%- assign active_count = active_count | plus: 1 -%}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+
+              {%- if active_count > 0 -%}
+                <div class="kbcol__active">
+                  <div class="kbcol__chips">
+                    {%- for filter in collection.filters -%}
+                      {%- for value in filter.active_values -%}
+                        <a href="{{ value.url_to_remove }}" class="kbcol__chip">
+                          <span>{{ value.label }}</span>
+                          {%- render 'lucide', icon: 'trash' -%}
+                        </a>
+                      {%- endfor -%}
+                      {%- if filter.type == 'price_range' -%}
+                        {%- if filter.min_value.value != null or filter.max_value.value != null -%}
+                          <a href="{{ filter.url_to_remove }}" class="kbcol__chip">
+                            <span>
+                              {%- if filter.min_value.value != null -%}{{ filter.min_value.value | money }}{%- else -%}{{ 0 | money }}{%- endif -%}
+                              –
+                              {%- if filter.max_value.value != null -%}{{ filter.max_value.value | money }}{%- else -%}{{ filter.range_max | money }}{%- endif -%}
+                            </span>
+                            {%- render 'lucide', icon: 'trash' -%}
+                          </a>
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                  <a href="{{ collection.url }}" class="kbcol__clear">Wis alles</a>
+                </div>
+              {%- endif -%}
+
+              {%- comment -%} ── Facet-groepen ── {%- endcomment -%}
+              {%- for filter in collection.filters -%}
+                <details class="kbcol__facet" open>
+                  <summary class="kbcol__facet-head">
+                    <span>{{ filter.label }}</span>
+                    {%- render 'lucide', icon: 'refresh' -%}
+                  </summary>
+
+                  <div class="kbcol__facet-body">
+                    {%- case filter.type -%}
+                      {%- when 'list', 'boolean' -%}
+                        <ul class="kbcol__values" role="list">
+                          {%- for value in filter.values -%}
+                            {%- liquid
+                              assign is_disabled = false
+                              if value.count == 0 and value.active == false
+                                assign is_disabled = true
+                              endif
+                            -%}
+                            <li class="kbcol__value{% if is_disabled %} is-disabled{% endif %}">
+                              <label class="kbcol__opt">
+                                <input
+                                  type="checkbox"
+                                  name="{{ value.param_name }}"
+                                  value="{{ value.value }}"
+                                  {% if value.active %}checked{% endif %}
+                                  {% if is_disabled %}disabled{% endif %}
+                                >
+                                <span class="kbcol__box">{%- render 'lucide', icon: 'check' -%}</span>
+                                <span class="kbcol__opt-label">{{ value.label }}</span>
+                                <span class="kbcol__opt-count">({{ value.count }})</span>
+                              </label>
+                            </li>
+                          {%- endfor -%}
+                        </ul>
+
+                      {%- when 'price_range' -%}
+                        {%- liquid
+                          assign price_max = filter.range_max | money_without_currency | replace: ',', '.'
+                          assign cur_min = filter.min_value.value | money_without_currency | replace: ',', '.'
+                          assign cur_max = filter.max_value.value | money_without_currency | replace: ',', '.'
+                        -%}
+                        <div class="kbcol__price">
+                          <label class="kbcol__price-field">
+                            <span>Van</span>
+                            <input
+                              type="number"
+                              name="{{ filter.min_value.param_name }}"
+                              inputmode="decimal"
+                              min="0"
+                              max="{{ price_max }}"
+                              step="0.01"
+                              placeholder="0"
+                              {% if filter.min_value.value != null %}value="{{ cur_min }}"{% endif %}
+                            >
+                          </label>
+                          <span class="kbcol__price-sep">–</span>
+                          <label class="kbcol__price-field">
+                            <span>Tot</span>
+                            <input
+                              type="number"
+                              name="{{ filter.max_value.param_name }}"
+                              inputmode="decimal"
+                              min="0"
+                              max="{{ price_max }}"
+                              step="0.01"
+                              placeholder="{{ price_max }}"
+                              {% if filter.max_value.value != null %}value="{{ cur_max }}"{% endif %}
+                            >
+                          </label>
+                        </div>
+                    {%- endcase -%}
+                  </div>
+                </details>
+              {%- endfor -%}
+
+              <noscript>
+                <button type="submit" class="kbcol__apply">Toon resultaten</button>
+              </noscript>
+
+              <div class="kbcol__drawer-actions">
+                <button type="submit" class="kbcol__apply" data-kbcol-apply>Toon resultaten</button>
+              </div>
+            </form>
+          </aside>
+        {%- endif -%}
+
+        <div class="kbcol__results">
+          {%- if collection.products.size > 0 -%}
+            <ul class="kbcol__grid" role="list">
+              {%- for product in collection.products -%}
+                <li class="kbcol__card">
+                  <a href="{{ product.url }}" class="kbcol__media">
+                    {%- if product.featured_image -%}
+                      <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.featured_image.alt | escape }}" width="400" height="400" loading="lazy">
+                    {%- else -%}
+                      <span class="kbcol__ph">{%- render 'lucide', icon: 'gift' -%}</span>
+                    {%- endif -%}
+                  </a>
+                  <div class="kbcol__info">
+                    <a href="{{ product.url }}" class="kbcol__name">{{ product.title }}</a>
+                    <span class="kbcol__price-tag">{{ product.price | money }}</span>
+                  </div>
+                </li>
+              {%- endfor -%}
+            </ul>
+            {%- if paginate.pages > 1 -%}
+              <nav class="kbcol__pag" role="navigation">{{ paginate | default_pagination }}</nav>
+            {%- endif -%}
+          {%- else -%}
+            {%- if has_filters and active_count > 0 -%}
+              <p class="kbcol__empty">Geen producten gevonden met deze filters. <a href="{{ collection.url }}">Wis alle filters</a> en probeer het opnieuw.</p>
+            {%- else -%}
+              <p class="kbcol__empty">Nog geen producten in deze collectie. Kom snel terug — er is altijd iets nieuws op komst voor je hond.</p>
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+      </div>
     {%- endpaginate -%}
+
+    {%- comment -%} ── Per-collectie SEO-tekst (rich_text_field metafield) ── {%- endcomment -%}
+    {%- if collection.metafields.custom.seo_text != blank -%}
+      <section class="kbcol__seo">
+        {{ collection.metafields.custom.seo_text }}
+      </section>
+    {%- endif -%}
   </div>
 </div>
 
 {% stylesheet %}
 .kbcol { background: var(--color-cream); padding: 40px 0 72px; }
 .kbcol__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
-.kbcol__head { text-align: center; margin-bottom: 32px; }
+.kbcol__head { text-align: center; margin-bottom: 28px; }
 .kbcol__eyebrow { font-family: var(--font-body); font-size: .9rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-green); margin: 0 0 8px; }
 .kbcol__title { font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 3rem); color: var(--color-ink); margin: 0; }
 .kbcol__desc { font-family: var(--font-body); color: var(--color-body); line-height: 1.6; margin: 12px auto 0; max-width: 60ch; }
+
+/* ── Toolbar ───────────────────────────────────────────── */
+.kbcol__toolbar { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; font-family: var(--font-body); }
+.kbcol__count { margin: 0; font-weight: 700; color: var(--color-ink); }
+.kbcol__filter-toggle { display: none; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border: 2px solid var(--color-green); background: #fff; color: var(--color-green); font-family: var(--font-body); font-weight: 800; border-radius: var(--radius-pill); cursor: pointer; }
+.kbcol__filter-toggle .lucide { width: 18px; height: 18px; }
+.kbcol__sort { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.kbcol__sort-label { font-weight: 700; color: var(--color-ink); }
+.kbcol__select { position: relative; display: inline-flex; align-items: center; }
+.kbcol__select select { appearance: none; -webkit-appearance: none; min-height: 44px; padding: 0 40px 0 16px; border: 2px solid var(--color-line); background: #fff; color: var(--color-ink); font-family: var(--font-body); font-weight: 700; border-radius: var(--radius-pill); cursor: pointer; }
+.kbcol__select select:focus-visible { outline: none; border-color: var(--color-green); }
+.kbcol__select .lucide { position: absolute; right: 14px; width: 16px; height: 16px; pointer-events: none; color: var(--color-green); }
+
+/* ── Layout ────────────────────────────────────────────── */
+.kbcol__layout { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start; }
+.kbcol__layout--full { grid-template-columns: 1fr; }
+.kbcol__results { min-width: 0; }
+
+/* ── Filters (desktop sidebar) ─────────────────────────── */
+.kbcol__filters { position: sticky; top: 20px; }
+.kbcol__filter-form { background: #fff; border-radius: var(--radius-lg); padding: 8px 20px 20px; box-shadow: var(--shadow-card); }
+.kbcol__filters-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; }
+.kbcol__filters-title { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-ink); }
+.kbcol__close { display: none; }
+
+/* Actieve filters */
+.kbcol__active { padding: 4px 0 14px; border-bottom: 1px solid var(--color-line); margin-bottom: 6px; }
+.kbcol__chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.kbcol__chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: var(--color-cream); color: var(--color-ink); font-family: var(--font-body); font-weight: 700; font-size: .85rem; border-radius: var(--radius-pill); text-decoration: none; border: 1px solid var(--color-line); }
+.kbcol__chip:hover { border-color: var(--color-pink); color: var(--color-pink); }
+.kbcol__chip .lucide { width: 13px; height: 13px; }
+.kbcol__clear { font-family: var(--font-body); font-weight: 800; font-size: .85rem; color: var(--color-green); text-decoration: underline; }
+
+/* Facet-groep */
+.kbcol__facet { border-bottom: 1px solid var(--color-line); }
+.kbcol__facet:last-of-type { border-bottom: 0; }
+.kbcol__facet-head { display: flex; align-items: center; justify-content: space-between; list-style: none; cursor: pointer; padding: 14px 0; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); }
+.kbcol__facet-head::-webkit-details-marker { display: none; }
+.kbcol__facet-head .lucide { width: 16px; height: 16px; color: var(--color-green); transition: transform 200ms; }
+.kbcol__facet[open] > .kbcol__facet-head .lucide { transform: rotate(180deg); }
+.kbcol__facet-body { padding-bottom: 14px; }
+.kbcol__values { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; max-height: 280px; overflow-y: auto; }
+.kbcol__value.is-disabled { opacity: .4; }
+
+/* Checkbox-optie */
+.kbcol__opt { display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-family: var(--font-body); color: var(--color-body); }
+.kbcol__value.is-disabled .kbcol__opt { cursor: not-allowed; }
+.kbcol__opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+.kbcol__box { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border: 2px solid var(--color-line); border-radius: var(--radius-sm); background: #fff; color: #fff; transition: background 140ms, border-color 140ms; }
+.kbcol__box .lucide { width: 14px; height: 14px; opacity: 0; }
+.kbcol__opt input:checked + .kbcol__box { background: var(--color-green); border-color: var(--color-green); }
+.kbcol__opt input:checked + .kbcol__box .lucide { opacity: 1; }
+.kbcol__opt input:focus-visible + .kbcol__box { outline: 2px solid var(--color-green); outline-offset: 2px; }
+.kbcol__opt-label { flex: 1 1 auto; }
+.kbcol__opt-count { color: var(--color-muted); font-size: .9rem; }
+
+/* Prijsbereik */
+.kbcol__price { display: flex; align-items: flex-end; gap: 10px; }
+.kbcol__price-field { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-body); font-size: .8rem; font-weight: 700; color: var(--color-muted); flex: 1 1 0; }
+.kbcol__price-field input { min-height: 44px; width: 100%; padding: 0 12px; border: 2px solid var(--color-line); border-radius: var(--radius-sm); font-family: var(--font-body); font-size: 1rem; color: var(--color-ink); background: #fff; }
+.kbcol__price-field input:focus-visible { outline: none; border-color: var(--color-green); }
+.kbcol__price-sep { padding-bottom: 12px; color: var(--color-muted); }
+
+/* Apply-knop (drawer) */
+.kbcol__drawer-actions { display: none; }
+.kbcol__apply { width: 100%; min-height: 50px; margin-top: 8px; border: 0; background: var(--color-green); color: #fff; font-family: var(--font-body); font-weight: 800; font-size: 1.05rem; border-radius: var(--radius-pill); cursor: pointer; }
+.kbcol__apply:hover { filter: brightness(1.05); }
+
+/* ── Grid ──────────────────────────────────────────────── */
 .kbcol__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 20px; }
 .kbcol__card { display: flex; flex-direction: column; min-width: 0; background: #fff; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,.05); transition: transform 160ms, box-shadow 160ms; }
 .kbcol__card:hover { transform: translateY(-4px); box-shadow: 0 20px 44px rgba(0,0,0,.09); }
@@ -59,17 +335,113 @@
 .kbcol__info { display: flex; flex-direction: column; gap: 6px; padding: 16px; }
 .kbcol__name { font-family: var(--font-heading); font-size: 1.05rem; line-height: 1.2; color: var(--color-ink); text-decoration: none; overflow-wrap: anywhere; }
 .kbcol__name:hover { color: var(--color-green); }
-.kbcol__price { font-family: var(--font-heading); font-size: 1rem; color: var(--color-green); }
+.kbcol__price-tag { font-family: var(--font-heading); font-size: 1rem; color: var(--color-green); }
 .kbcol__empty { text-align: center; font-family: var(--font-body); color: var(--color-body); padding: 40px 0; }
+.kbcol__empty a { color: var(--color-green); font-weight: 700; }
 .kbcol__pag { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 44px; font-family: var(--font-body); font-weight: 700; }
 .kbcol__pag a, .kbcol__pag span { color: var(--color-ink); text-decoration: none; padding: 6px 12px; border-radius: var(--radius-pill); }
 .kbcol__pag a:hover { background: #fff; color: var(--color-green); }
+
+/* ── SEO-tekstblok ─────────────────────────────────────── */
+.kbcol__seo { max-width: 760px; margin: 56px auto 0; padding-top: 40px; border-top: 1px solid var(--color-line); font-family: var(--font-body); color: var(--color-body); line-height: 1.75; font-size: var(--fs-body); }
+.kbcol__seo > :first-child { margin-top: 0; }
+.kbcol__seo > :last-child { margin-bottom: 0; }
+.kbcol__seo h2 { font-family: var(--font-heading); font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.15; color: var(--color-ink); margin: 1.8em 0 .5em; }
+.kbcol__seo h3 { font-family: var(--font-heading); font-size: 1.35rem; line-height: 1.2; color: var(--color-ink); margin: 1.5em 0 .4em; }
+.kbcol__seo p { margin: 0 0 1.1em; }
+.kbcol__seo a { color: var(--color-green); text-decoration: underline; text-underline-offset: 2px; font-weight: 700; }
+.kbcol__seo a:hover { color: var(--color-pink); }
+.kbcol__seo strong { color: var(--color-ink); font-weight: 800; }
+.kbcol__seo ul, .kbcol__seo ol { margin: 0 0 1.1em; padding-left: 1.4em; }
+.kbcol__seo li { margin-bottom: .4em; }
+
+/* ── Responsive: tablet/mobiel ─────────────────────────── */
+@media (max-width: 989px) {
+  .kbcol__layout { grid-template-columns: 1fr; gap: 0; }
+  .kbcol__filter-toggle { display: inline-flex; }
+
+  /* Filters worden een slide-in drawer */
+  .kbcol__filters { position: fixed; inset: 0 auto 0 0; z-index: 60; width: min(88vw, 360px); transform: translateX(-100%); transition: transform 260ms ease; overflow-y: auto; background: var(--color-cream); }
+  .kbcol__filters.is-open { transform: translateX(0); }
+  .kbcol__filter-form { border-radius: 0; box-shadow: none; min-height: 100%; padding-bottom: 96px; }
+  .kbcol__close { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: 0; background: transparent; color: var(--color-ink); cursor: pointer; }
+  .kbcol__close .lucide { width: 22px; height: 22px; }
+
+  .kbcol__overlay { position: fixed; inset: 0; z-index: 55; background: rgba(61,34,9,.45); border: 0; }
+  .kbcol__overlay[hidden] { display: none; }
+
+  .kbcol__drawer-actions { display: block; position: sticky; bottom: 0; margin: 16px -20px -20px; padding: 14px 20px; background: var(--color-cream); border-top: 1px solid var(--color-line); }
+  .kbcol__drawer-actions .kbcol__apply { margin-top: 0; }
+
+  .kbcol__values { max-height: none; }
+}
+
 @media (max-width: 749px) {
+  .kbcol__toolbar { gap: 12px; }
+  .kbcol__sort { width: 100%; margin-left: 0; }
+  .kbcol__select, .kbcol__select select { width: 100%; }
   .kbcol__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .kbcol__info { padding: 12px; }
   .kbcol__name { font-size: .95rem; }
+  .kbcol__seo { margin-top: 40px; padding-top: 32px; }
 }
 {% endstylesheet %}
+
+{% javascript %}
+(function () {
+  var root = document.currentScript ? document.currentScript.closest('.kbcol') : document.querySelector('.kbcol');
+  if (!root) return;
+
+  var filters = root.querySelector('[id="kbcol-filters"]');
+  var openBtn = root.querySelector('[data-kbcol-open]');
+  var closeBtn = root.querySelector('[data-kbcol-close]');
+  var overlay = root.querySelector('[data-kbcol-overlay]');
+  var form = root.querySelector('[data-kbcol-form]');
+  var sortForm = root.querySelector('[data-kbcol-sort]');
+
+  // Auto-submit bij sorteer-wijziging
+  if (sortForm) {
+    var sortSelect = sortForm.querySelector('select[name="sort_by"]');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', function () { sortForm.submit(); });
+    }
+  }
+
+  function isDrawer() { return window.matchMedia('(max-width: 989px)').matches; }
+
+  function openDrawer() {
+    if (!filters) return;
+    filters.classList.add('is-open');
+    if (overlay) overlay.hidden = false;
+    if (openBtn) openBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    if (!filters) return;
+    filters.classList.remove('is-open');
+    if (overlay) overlay.hidden = true;
+    if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  if (openBtn) openBtn.addEventListener('click', openDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && filters && filters.classList.contains('is-open')) closeDrawer();
+  });
+
+  // Auto-submit op desktop bij checkbox/prijs-wijziging; in drawer wacht op "Toon resultaten"
+  if (form) {
+    form.addEventListener('change', function (e) {
+      var t = e.target;
+      if (!t || (t.type !== 'checkbox' && t.type !== 'number')) return;
+      if (isDrawer()) return;
+      form.submit();
+    });
+  }
+})();
+{% endjavascript %}
 
 {% schema %}
 {
