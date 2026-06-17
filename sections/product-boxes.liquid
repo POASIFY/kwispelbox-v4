@@ -222,27 +222,26 @@
   .kbx-card__title { font-size: 1.25rem; }
 }
 
-/* ── Mobiel: gestapelde horizontale kaarten ──────────── */
+/* ── Mobiel: gestapelde kaart — foto bovenaan, tekst eronder ──── */
 @media (max-width: 749px) {
-  .kbx__head { margin-bottom: 32px; }
-  .kbx__grid { display: flex; flex-direction: column; gap: 16px; }
+  .kbx__head { margin-bottom: 28px; }
+  .kbx__grid { display: flex; flex-direction: column; gap: 18px; }
 
-  .kbx-card { display: grid; grid-template-columns: 40% 1fr; gap: 14px; align-items: center; padding: 14px; }
-  .kbx-card__media { margin-bottom: 0; align-self: stretch; display: flex; align-items: center; }
-  .kbx-card__img, .kbx-card__img--placeholder { height: 100%; min-height: 150px; max-height: 210px; }
+  .kbx-card { padding: 14px 14px 18px; }
+  .kbx-card__media { margin-bottom: 14px; }
+  .kbx-card__img { height: 220px; }
   .kbx-card__lines { display: none; }
-  .kbx-card__badge { top: 8px; left: 8px; font-size: .66rem; padding: 5px 11px; }
-  .kbx-card__body { padding: 0; }
-  .kbx-card__title { font-size: 1.2rem; margin-bottom: 4px; }
-  .kbx-card__desc { font-size: .85rem; line-height: 1.4; margin-bottom: 10px; }
-  .kbx-card__divider { margin-bottom: 10px; }
-  .kbx-card__benefits { gap: 7px; margin-bottom: 14px; }
-  .kbx-card__benefits li { font-size: .82rem; gap: 8px; }
-  .kbx-card__check { width: 19px; height: 19px; }
-  .kbx-card__check svg { width: 18px; height: 18px; }
-  .kbx-card__price { font-size: 1.5rem; }
-  .kbx-card__btn { width: 46px; height: 46px; }
-  .kbx-card__btn svg { width: 20px; height: 20px; }
+  .kbx-card__body { padding: 0 4px; }
+  .kbx-card__title { font-size: 1.4rem; margin-bottom: 6px; }
+  .kbx-card__desc { font-size: .92rem; line-height: 1.45; margin-bottom: 14px; }
+  .kbx-card__divider { margin-bottom: 14px; }
+  .kbx-card__benefits { gap: 9px; margin-bottom: 18px; }
+  .kbx-card__benefits li { font-size: .9rem; gap: 10px; }
+  .kbx-card__check { width: 20px; height: 20px; }
+  .kbx-card__check svg { width: 19px; height: 19px; }
+  .kbx-card__price { font-size: 1.6rem; }
+  .kbx-card__btn { width: 50px; height: 50px; }
+  .kbx-card__btn svg { width: 22px; height: 22px; }
 
   .kbx-reassure { margin-top: 28px; padding: 20px 14px; gap: 6px; border-radius: 20px; }
   .kbx-reassure__item { flex-direction: column; text-align: center; gap: 9px; }
