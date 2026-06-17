@@ -7,6 +7,9 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
+/*
+ * auto-generated.
+ */
 {
   "sections": {
     "main": {
@@ -112,9 +115,300 @@
         "r6"
       ],
       "settings": {}
+    },
+    "tsep": {
+      "type": "special-editions-page",
+      "blocks": {
+        "g1": {
+          "type": "group",
+          "settings": {
+            "heading": "Populaire momenten"
+          }
+        },
+        "e1": {
+          "type": "edition",
+          "settings": {
+            "title": "Verjaardagsbox",
+            "tagline": "Maak de hondenverjaardag onvergetelijk met taart, speeltjes en knuffels.",
+            "badge": "Populair",
+            "accent": "pink",
+            "icon": "cake",
+            "button_url": "/products/verjaardag-box",
+            "button_label": "Bekijk box"
+          }
+        },
+        "e2": {
+          "type": "edition",
+          "settings": {
+            "title": "Dierendagbox",
+            "tagline": "Vier 4 oktober met een feestje voor je trouwe vriend.",
+            "accent": "green",
+            "icon": "paw",
+            "button_url": "/products/dierendag-box",
+            "button_label": "Bekijk box"
+          }
+        },
+        "e3": {
+          "type": "edition",
+          "settings": {
+            "title": "Kerstbox",
+            "tagline": "Een feestelijke box vol warmte voor onder de boom.",
+            "accent": "green",
+            "icon": "tree",
+            "button_url": "/products/kerst-box",
+            "button_label": "Bekijk box"
+          }
+        },
+        "g2": {
+          "type": "group",
+          "settings": {
+            "heading": "Seizoenen"
+          }
+        },
+        "e4": {
+          "type": "edition",
+          "settings": {
+            "title": "Halloweenbox",
+            "tagline": "Spookgezellig speelplezier voor de griezeligste maand.",
+            "accent": "orange",
+            "icon": "pumpkin",
+            "button_url": "/products/halloween-box",
+            "button_label": "Bekijk box"
+          }
+        },
+        "e5": {
+          "type": "edition",
+          "settings": {
+            "title": "Valentijnsbox",
+            "tagline": "Voor de liefste hond die je je kunt wensen.",
+            "accent": "pink",
+            "icon": "heart",
+            "button_url": "/products/valentijn-box",
+            "button_label": "Bekijk box"
+          }
+        },
+        "e6": {
+          "type": "edition",
+          "settings": {
+            "title": "Zomerbox",
+            "tagline": "Waterpret en buitenspeelgoed voor warme dagen.",
+            "accent": "yellow",
+            "icon": "sun",
+            "coming_soon": true
+          }
+        },
+        "e7": {
+          "type": "edition",
+          "settings": {
+            "title": "Paasbox",
+            "tagline": "Vrolijk voorjaarsplezier voor je hond.",
+            "accent": "green",
+            "icon": "gift",
+            "coming_soon": true
+          }
+        },
+        "g3": {
+          "type": "group",
+          "settings": {
+            "heading": "Levensmomenten"
+          }
+        },
+        "e8": {
+          "type": "edition",
+          "settings": {
+            "title": "Puppy Welkomstbox",
+            "tagline": "De perfecte start voor een nieuwe pup in huis.",
+            "accent": "orange",
+            "icon": "bone",
+            "coming_soon": true
+          }
+        },
+        "e9": {
+          "type": "edition",
+          "settings": {
+            "title": "Nieuwe hond in huis",
+            "tagline": "Voor adoptie, herplaatsing of je allereerste hond.",
+            "accent": "purple",
+            "icon": "heart",
+            "coming_soon": true
+          }
+        },
+        "e10": {
+          "type": "edition",
+          "settings": {
+            "title": "Cadeaubox voor baasjes",
+            "tagline": "Verras iemand anders met een hond.",
+            "accent": "pink",
+            "icon": "gift",
+            "coming_soon": true
+          }
+        }
+      },
+      "block_order": [
+        "g1",
+        "e1",
+        "e2",
+        "e3",
+        "g2",
+        "e4",
+        "e5",
+        "e6",
+        "e7",
+        "g3",
+        "e8",
+        "e9",
+        "e10"
+      ],
+      "settings": {}
+    },
+    "tabt": {
+      "type": "about-page",
+      "blocks": {
+        "v1": {
+          "type": "value",
+          "settings": {
+            "icon": "heart",
+            "color": "pink",
+            "title": "Met liefde samengesteld",
+            "text": "Elke box vullen we met zorg, alsof we 'm voor onze eigen hond maken."
+          }
+        },
+        "v2": {
+          "type": "value",
+          "settings": {
+            "icon": "shield",
+            "color": "green",
+            "title": "Veilige kwaliteit",
+            "text": "Alleen stevige, geteste speeltjes en gezonde, natuurlijke snacks."
+          }
+        },
+        "v3": {
+          "type": "value",
+          "settings": {
+            "icon": "paw",
+            "color": "orange",
+            "title": "De hond staat voorop",
+            "text": "Alles draait om die ene blije kwispel als de box opengaat."
+          }
+        },
+        "v4": {
+          "type": "value",
+          "settings": {
+            "icon": "leaf",
+            "color": "green",
+            "title": "Bewuste keuzes",
+            "text": "We kiezen zo duurzaam mogelijk — voor jouw hond én de wereld."
+          }
+        }
+      },
+      "block_order": [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+      ],
+      "settings": {}
+    },
+    "tcnt": {
+      "type": "contact-page",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "icon": "mail",
+            "color": "green",
+            "title": "Mail ons",
+            "text": "hello@kwispelbox.nl",
+            "link_label": "Stuur een mail",
+            "link_url": "mailto:hello@kwispelbox.nl"
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "icon": "truck",
+            "color": "orange",
+            "title": "Bestelling volgen",
+            "text": "Bekijk waar je verrassing is.",
+            "link_label": "Track & trace",
+            "link_url": "/pages/bestelling-volgen"
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "icon": "bulb",
+            "color": "pink",
+            "title": "Veelgestelde vragen",
+            "text": "Misschien staat je antwoord er al.",
+            "link_label": "Naar de FAQ",
+            "link_url": "/pages/faq"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {}
+    },
+    "tinf": {
+      "type": "info-page",
+      "blocks": {
+        "i1": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "heading": "Verzending",
+            "text": "<p>Voor 16:00 besteld? Dan gaat je box dezelfde werkdag op de post. Levering binnen Nederland duurt daarna meestal 1–2 werkdagen, naar België 2–3 werkdagen.</p><p><strong>Gratis verzending vanaf €75.</strong> Daaronder rekenen we €4,95 verzendkosten.</p>"
+          }
+        },
+        "i2": {
+          "type": "item",
+          "settings": {
+            "icon": "package",
+            "heading": "Bestelling volgen",
+            "text": "<p>Zodra je box verzonden is, ontvang je een track & trace per e-mail zodat je precies weet wanneer de verrassing op de mat valt.</p>"
+          }
+        },
+        "i3": {
+          "type": "item",
+          "settings": {
+            "icon": "refresh",
+            "heading": "Retourneren",
+            "text": "<p>Niet helemaal blij? Je hebt <strong>30 dagen</strong> de tijd om je bestelling te retourneren. Neem contact met ons op via hello@kwispelbox.nl en we regelen het samen.</p><p>Geopende snacks kunnen om hygiënische redenen niet retour, maar bij problemen vinden we altijd een oplossing.</p>"
+          }
+        },
+        "i4": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "heading": "Niet-goed-geld-terug",
+            "text": "<p>We staan achter onze boxen. Is je hond niet door het dolle? Dan krijg je je geld terug — beloofd.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4"
+      ],
+      "settings": {
+        "title": "Verzending & retour",
+        "intro": "Alles over hoe en wanneer je box bij je hond aankomt — en wat je kunt doen als iets niet bevalt.",
+        "cta_text": "Ons team helpt je graag verder.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "tsep",
+    "tabt",
+    "tcnt",
+    "tinf"
   ]
 }
