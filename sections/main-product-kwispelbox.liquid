@@ -214,6 +214,42 @@
             </details>
           {%- endif -%}
 
+          {%- comment -%} Maak je box compleet — box-builder add-ons {%- endcomment -%}
+          {%- if section.settings.show_addons -%}
+            {%- assign addon_coll = section.settings.addons_collection -%}
+            {%- unless addon_coll -%}{%- assign addon_coll = collections['cadeau-extras'] -%}{%- endunless -%}
+            {%- if addon_coll != blank and addon_coll.products.size > 0 -%}
+              <div class="pdp-addons" data-addons>
+                <div class="pdp-addons__head">
+                  <span class="pdp-addons__icon" aria-hidden="true">{%- render 'kb-icon', icon: 'gift' -%}</span>
+                  <div>
+                    <strong>{{ section.settings.addons_title | default: 'Maak je box compleet' }}</strong>
+                    {%- if section.settings.addons_text != blank -%}<span>{{ section.settings.addons_text }}</span>{%- endif -%}
+                  </div>
+                </div>
+                <div class="pdp-addons__grid">
+                  {%- assign addon_max = section.settings.addons_count | default: 4 -%}
+                  {%- for ap in addon_coll.products limit: addon_max -%}
+                    {%- assign av = ap.selected_or_first_available_variant -%}
+                    {%- if av == blank or av.available == false -%}{%- continue -%}{%- endif -%}
+                    <label class="pdp-addon">
+                      <input type="checkbox" class="pdp-addon__cb" value="{{ av.id }}" data-addon>
+                      <span class="pdp-addon__media" aria-hidden="true">
+                        {%- if ap.featured_image -%}<img src="{{ ap.featured_image | image_url: width: 160 }}" alt="" width="64" height="64" loading="lazy">
+                        {%- else -%}<span class="pdp-addon__ph">{%- render 'kb-icon', icon: 'gift' -%}</span>{%- endif -%}
+                      </span>
+                      <span class="pdp-addon__body">
+                        <span class="pdp-addon__name">{{ ap.title }}</span>
+                        <span class="pdp-addon__price">+ {{ av.price | money }}</span>
+                      </span>
+                      <span class="pdp-addon__check" aria-hidden="true">{%- render 'kb-icon', icon: 'check' -%}</span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endif -%}
+
           {%- comment -%} Abonnementswidget (app embed) {%- endcomment -%}
           {%- if section.settings.show_subscription -%}
             <div class="pdp-subscribe">
@@ -437,6 +473,30 @@
 .pdp-subscribe select { font-family: var(--font-body); font-size: .9rem; color: var(--color-ink); border: 1.5px solid var(--color-line); border-radius: 12px; padding: 9px 12px; margin: 0 16px 12px; background: var(--color-cream); max-width: calc(100% - 32px); }
 .pdp-subscribe .shopify_subscriptions_app_policy { font-family: var(--font-body); font-size: .76rem; color: var(--color-muted); padding: 0 16px 12px; margin: 0; }
 
+/* ── Box-builder add-ons ──────────────────────────────── */
+.pdp-addons { margin: 4px 0 20px; }
+.pdp-addons__head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.pdp-addons__icon { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: #ffe9f1; color: var(--color-pink); flex-shrink: 0; }
+.pdp-addons__icon svg { width: 21px; height: 21px; }
+.pdp-addons__head strong { display: block; font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-ink); }
+.pdp-addons__head > div > span { font-family: var(--font-body); font-size: .88rem; color: var(--color-body); }
+.pdp-addons__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pdp-addon { position: relative; display: flex; align-items: center; gap: 10px; padding: 10px; border: 1.5px solid var(--color-line); border-radius: 14px; background: #fff; cursor: pointer; transition: border-color 160ms, box-shadow 160ms, background 160ms; }
+.pdp-addon:has(input:checked) { border-color: var(--color-pink); box-shadow: 0 8px 20px rgba(61, 34, 9, .08); background: #fff7fb; }
+.pdp-addon__cb { position: absolute; opacity: 0; pointer-events: none; }
+.pdp-addon__cb:focus-visible + .pdp-addon__media { outline: 2px solid var(--color-pink); outline-offset: 2px; }
+.pdp-addon__media { display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 10px; background: var(--color-cream); overflow: hidden; flex-shrink: 0; }
+.pdp-addon__media img { width: 100%; height: 100%; object-fit: cover; }
+.pdp-addon__ph svg { width: 24px; height: 24px; color: var(--color-pink); }
+.pdp-addon__body { min-width: 0; flex: 1; }
+.pdp-addon__name { display: block; font-family: var(--font-body); font-weight: 700; font-size: .9rem; color: var(--color-ink); line-height: 1.25; }
+.pdp-addon__price { display: block; font-family: var(--font-body); font-size: .85rem; color: var(--color-pink); font-weight: 700; margin-top: 2px; }
+.pdp-addon__check { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--color-line); color: #fff; flex-shrink: 0; transition: background 160ms, border-color 160ms; }
+.pdp-addon__check svg { width: 13px; height: 13px; opacity: 0; transition: opacity 160ms; }
+.pdp-addon:has(input:checked) .pdp-addon__check { background: var(--color-pink); border-color: var(--color-pink); }
+.pdp-addon:has(input:checked) .pdp-addon__check svg { opacity: 1; }
+@media (max-width: 749px) { .pdp-addons__grid { grid-template-columns: 1fr; } }
+
 /* ── Add to cart ──────────────────────────────────────── */
 .pdp-atc { background: var(--pac-soft); border: 1.5px solid color-mix(in srgb, var(--pac) 30%, transparent); border-radius: 24px; padding: 22px; }
 .pdp-atc__summary { display: flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); margin: 0 0 16px; }
@@ -641,6 +701,31 @@
         }
       });
     });
+
+    /* Box-builder: extra's als losse regels meesturen.
+       Alleen onderscheppen als er iets is aangevinkt — anders normale POST (behoudt foto-upload). */
+    form.addEventListener('submit', function (e) {
+      var addons = Array.prototype.slice.call(form.querySelectorAll('[data-addon]:checked')).map(function (c) { return c.value; });
+      if (!addons.length) return;
+      e.preventDefault();
+      var radio = form.querySelector('input[name="id"][type="radio"]:checked');
+      var mainId = radio ? radio.value : (hidden ? hidden.value : null);
+      if (!mainId) { form.submit(); return; }
+      var btns = Array.prototype.slice.call(form.querySelectorAll('[name="add"]'));
+      btns.forEach(function (b) { b.disabled = true; });
+      var fd = new FormData(form);
+      fd.set('id', mainId);
+      fd.delete('add');
+      fetch('/cart/add.js', { method: 'POST', body: fd })
+        .then(function () {
+          return fetch('/cart/add.js', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: addons.map(function (id) { return { id: id, quantity: 1 }; }) })
+          });
+        })
+        .then(function () { window.location = '/cart'; })
+        .catch(function () { btns.forEach(function (b) { b.disabled = false; }); });
+    });
   }
 
   /* Sticky koopbalk: tonen wanneer hoofd-ATC uit beeld is en niet onderaan de pagina */
@@ -728,6 +813,12 @@
     { "type": "text", "id": "guarantee_text", "label": "Subtekst", "default": "Is je hond niet door het dolle? Je krijgt je geld terug." },
     { "type": "header", "content": "Klantfoto's (UGC)", "info": "Voeg 'Klantfoto' blokken toe." },
     { "type": "text", "id": "ugc_title", "label": "Kopje", "default": "Blije honden, échte foto’s" },
+    { "type": "header", "content": "Box-builder (extra's)" },
+    { "type": "checkbox", "id": "show_addons", "label": "Box-builder tonen", "default": true, "info": "Toont cadeau-extra's die de klant kan aanvinken; ze worden als losse regels aan de winkelwagen toegevoegd." },
+    { "type": "text", "id": "addons_title", "label": "Titel", "default": "Maak je box compleet" },
+    { "type": "text", "id": "addons_text", "label": "Subtekst", "default": "Voeg een extra verrassing toe — je hond verdient het." },
+    { "type": "collection", "id": "addons_collection", "label": "Collectie met extra's", "info": "Laat leeg voor de standaard Cadeau-extra's collectie." },
+    { "type": "range", "id": "addons_count", "min": 2, "max": 6, "step": 1, "label": "Aantal extra's", "default": 4 },
     { "type": "header", "content": "Abonnement" },
     { "type": "checkbox", "id": "show_subscription", "label": "Abonnementswidget tonen", "default": false, "info": "Plaatst de subscriptions app-embed (selling plans) boven de Add-to-Cart." },
     { "type": "text", "id": "subscribe_title", "label": "Abonnement kop", "default": "Eenmalig of voordelig abonnement?" },
