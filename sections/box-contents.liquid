@@ -103,13 +103,21 @@
 .kbox__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
 
 /* Decoratie */
-.kbox__deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+/* Decoraties rond de header/titel (vaste px boven, aan de randen) — niet midden in de sectie. */
+.kbox__deco { position: absolute; top: 0; left: 0; right: 0; height: 210px; z-index: 0; pointer-events: none; }
 .kbox__deco span { position: absolute; display: block; }
 .kbox__deco span svg { display: block; width: 100%; height: 100%; }
-.kbox__deco--lines { top: 70px; left: 5%; width: 52px; height: 28px; }
-.kbox__deco--heart { top: 80px; right: 6%; width: 34px; height: 34px; }
-.kbox__deco--paw1 { top: 44%; left: 2.5%; width: 26px; height: 26px; opacity: .14; transform: rotate(-12deg); }
-.kbox__deco--paw2 { bottom: 22%; right: 3%; width: 30px; height: 30px; opacity: .12; transform: rotate(14deg); }
+.kbox__deco--lines { top: 58px; left: 7%; width: 48px; height: 26px; }
+.kbox__deco--heart { top: 20px; left: 12%; width: 30px; height: 30px; }
+.kbox__deco--paw1 { top: 28px; right: 11%; width: 26px; height: 26px; opacity: .18; transform: rotate(-12deg); }
+.kbox__deco--paw2 { top: 80px; right: 7%; width: 28px; height: 28px; opacity: .16; transform: rotate(14deg); }
+@media (max-width: 749px) {
+  .kbox__deco { height: 180px; }
+  .kbox__deco--lines { top: 44px; left: 3%; width: 38px; }
+  .kbox__deco--heart { top: 10px; left: 4%; width: 26px; height: 26px; }
+  .kbox__deco--paw1 { top: 16px; right: 4%; width: 24px; height: 24px; }
+  .kbox__deco--paw2 { top: 66px; right: 3%; width: 24px; height: 24px; }
+}
 
 /* Kop */
 .kbox__head { text-align: center; max-width: 660px; margin: 0 auto 48px; }

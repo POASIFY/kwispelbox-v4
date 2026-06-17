@@ -82,7 +82,7 @@
         "box-mini": {
           "type": "box",
           "settings": {
-            "image": "shopify://shop_images/ChatGPTImage15jun2026_18_57_59.png",
+            "image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_16_11_30.png",
             "accent": "green",
             "badge": "Klein maar fijn",
             "title": "Mini Kwispelbox",
@@ -102,6 +102,7 @@
         "box-happy": {
           "type": "box",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_16_10_38.png",
             "accent": "pink",
             "badge": "Meest gekozen",
             "title": "Happy Kwispelbox",
@@ -121,6 +122,7 @@
         "box-mega": {
           "type": "box",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_16_10_38.png",
             "accent": "orange",
             "badge": "Extra veel plezier",
             "title": "Mega Kwispelbox",
@@ -627,6 +629,7 @@
         "title": "Wat onze klanten zeggen",
         "subtitle": "Elke box stellen we met liefde samen. Lees wat baasjes van hun Kwispelbox vinden.",
         "highlight_word": "Kwispelbox",
+        "empty_text": "Onze eerste boxen zijn net onderweg. Wees een van de eersten om een review achter te laten!",
         "show_decorations": true
       }
     },

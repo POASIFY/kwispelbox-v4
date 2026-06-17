@@ -92,13 +92,15 @@
 .why__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
 
 /* Decoratie */
-.why__deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+/* Decoraties hangen rond de (gecentreerde) titel/omschrijving — vaste px boven, aan de randen,
+   zodat ze op zowel desktop als mobiel netjes rond de header blijven i.p.v. midden in de sectie. */
+.why__deco { position: absolute; top: 0; left: 0; right: 0; height: 230px; z-index: 0; pointer-events: none; }
 .why__deco span { position: absolute; display: block; }
 .why__deco span svg { display: block; width: 100%; height: 100%; }
-.why__deco--lines { top: 64px; left: 6%; width: 52px; height: 28px; }
-.why__deco--heart { top: 40px; left: 49%; width: 34px; height: 34px; }
-.why__deco--paw { top: 16%; right: 5%; width: 30px; height: 30px; opacity: .14; transform: rotate(12deg); }
-.why__deco--heart2 { bottom: 8%; right: 5%; width: 36px; height: 36px; }
+.why__deco--lines { top: 58px; left: 8%; width: 48px; height: 26px; }
+.why__deco--heart { top: 18px; left: 13%; width: 30px; height: 30px; }
+.why__deco--paw { top: 28px; right: 11%; width: 28px; height: 28px; opacity: .16; transform: rotate(12deg); }
+.why__deco--heart2 { top: 80px; right: 8%; width: 32px; height: 32px; }
 
 /* Kop */
 .why__head { text-align: center; margin: 0 auto 44px; }
@@ -173,7 +175,12 @@
   .why__cta-wrap { justify-content: center; margin-top: 28px; }
   .why__cta-arrow { display: none; }
   .why__cta { width: 100%; max-width: 420px; justify-content: center; }
-  .why__deco--paw { display: none; }
+  /* decoraties dichter naar de randen rond de titel + iets kleiner op mobiel */
+  .why__deco { height: 190px; }
+  .why__deco--lines { top: 46px; left: 3%; width: 38px; }
+  .why__deco--heart { top: 10px; left: 4%; width: 26px; height: 26px; }
+  .why__deco--paw { top: 16px; right: 4%; width: 24px; height: 24px; }
+  .why__deco--heart2 { top: 66px; right: 3%; width: 26px; height: 26px; }
 }
 {% endstylesheet %}
 

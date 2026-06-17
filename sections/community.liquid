@@ -106,13 +106,21 @@
 .com__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
 
 /* Decoratie */
-.com__deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+/* Decoraties rond de header/titel (vaste px boven, aan de randen) — niet midden in de sectie. */
+.com__deco { position: absolute; top: 0; left: 0; right: 0; height: 210px; z-index: 0; pointer-events: none; }
 .com__deco span { position: absolute; display: block; }
 .com__deco span svg { display: block; width: 100%; height: 100%; }
-.com__deco--lines { top: 60px; left: 6%; width: 52px; height: 28px; }
-.com__deco--heart { top: 70px; left: 14%; width: 30px; height: 30px; }
-.com__deco--paw { top: 12%; right: 6%; width: 30px; height: 30px; opacity: .5; }
-.com__deco--heart2 { top: 60px; right: 12%; width: 34px; height: 34px; }
+.com__deco--lines { top: 58px; left: 7%; width: 48px; height: 26px; }
+.com__deco--heart { top: 20px; left: 12%; width: 30px; height: 30px; }
+.com__deco--paw { top: 28px; right: 11%; width: 28px; height: 28px; opacity: .4; }
+.com__deco--heart2 { top: 80px; right: 8%; width: 32px; height: 32px; }
+@media (max-width: 749px) {
+  .com__deco { height: 180px; }
+  .com__deco--lines { top: 44px; left: 3%; width: 38px; }
+  .com__deco--heart { top: 10px; left: 4%; width: 26px; height: 26px; }
+  .com__deco--paw { top: 16px; right: 4%; width: 24px; height: 24px; }
+  .com__deco--heart2 { top: 66px; right: 3%; width: 26px; height: 26px; }
+}
 
 /* Kop */
 .com__head { text-align: center; margin: 0 auto 40px; }
