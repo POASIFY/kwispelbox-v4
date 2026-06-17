@@ -884,6 +884,14 @@
     </div>
   {%- endif -%}
 
+  <!-- Primaire CTA -->
+  {%- if section.settings.drawer_cta_label != blank -%}
+    <a href="{{ section.settings.drawer_cta_url | default: '/collections/boxen' }}" class="header-drawer__cta">
+      <span>{{ section.settings.drawer_cta_label }}</span>
+      <span class="header-drawer__cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+    </a>
+  {%- endif -%}
+
   <!-- Navigatie -->
   <nav aria-label="Mobiel menu" class="header-drawer__nav-wrap">
     <ul class="header-drawer__nav" role="list">
@@ -902,7 +910,8 @@
         <li class="header-drawer__nav-item{% if drawer_has_sub %} header-drawer__nav-item--has-sub{% endif %}">
           <div class="header-drawer__nav-row">
             <span class="header-drawer__nav-icon header-drawer__nav-icon--{% if nav_lx == 1 %}green{% elsif nav_lx == 2 %}pink{% elsif nav_lx == 3 %}orange{% elsif nav_lx == 4 %}purple{% else %}pink{% endif %}" aria-hidden="true">
-              {%- if nav_lx == 1 -%}{{- 'icon-gift.svg' | inline_asset_content -}}
+              {%- if link.url contains '/partners' -%}{%- render 'lucide', icon: 'handshake' -%}
+              {%- elsif nav_lx == 1 -%}{{- 'icon-gift.svg' | inline_asset_content -}}
               {%- elsif nav_lx == 2 -%}{{- 'icon-gift.svg' | inline_asset_content -}}
               {%- elsif nav_lx == 3 -%}{{- 'icon-bone.svg' | inline_asset_content -}}
               {%- elsif nav_lx == 4 -%}{{- 'icon-paw.svg' | inline_asset_content -}}
@@ -1602,6 +1611,11 @@
 .header-drawer__stat-stars{display:inline-flex;gap:1px;}
 .header-drawer__stat-stars .lucide{width:15px;height:15px;fill:#f5b301;stroke:#f5b301;}
 .header-drawer__stat-score{font-family:var(--font-body);font-size:.85rem;font-weight:800;color:var(--color-ink);}
+.header-drawer__cta{display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 16px 14px;padding:15px 20px;background:var(--color-green);color:#fff;border-radius:var(--radius-pill);font-family:var(--font-heading);font-size:1.1rem;line-height:1;flex-shrink:0;transition:filter 160ms,transform 160ms;}
+.header-drawer__cta:hover{filter:brightness(1.05);}
+.header-drawer__cta:active{transform:scale(.98);}
+.header-drawer__cta-arrow{display:inline-flex;}
+.header-drawer__cta-arrow svg{width:19px;height:19px;}
 .header-drawer__nav-wrap{flex-shrink:0;}
 .header-drawer__nav{list-style:none;margin:0;padding:2px 0;}
 .header-drawer__nav-item{border-bottom:1px solid var(--color-line);}
@@ -3256,6 +3270,17 @@
       "id": "drawer_rating",
       "label": "Beoordeling (leeg = geen sterren)",
       "default": "4,9/5"
+    },
+    {
+      "type": "text",
+      "id": "drawer_cta_label",
+      "label": "Drawer CTA-knop (leeg = verbergen)",
+      "default": "Verras je hond"
+    },
+    {
+      "type": "url",
+      "id": "drawer_cta_url",
+      "label": "Drawer CTA-link"
     },
     {
       "type": "header",
