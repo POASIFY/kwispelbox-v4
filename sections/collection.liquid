@@ -240,10 +240,17 @@
       </div>
     {%- endpaginate -%}
 
-    {%- comment -%} ── Per-collectie SEO-tekst (rich_text_field metafield) ── {%- endcomment -%}
+    {%- comment -%} ── Per-collectie SEO-tekst (platte-tekst metafields: kop + alinea's) ── {%- endcomment -%}
     {%- if collection.metafields.custom.seo_text != blank -%}
       <section class="kbcol__seo">
-        {{ collection.metafields.custom.seo_text }}
+        {%- if collection.metafields.custom.seo_heading != blank -%}
+          <h2>{{ collection.metafields.custom.seo_heading | escape }}</h2>
+        {%- endif -%}
+        {%- assign seo_paras = collection.metafields.custom.seo_text | newline_to_br | split: '<br />' -%}
+        {%- for para in seo_paras -%}
+          {%- assign para_t = para | strip -%}
+          {%- if para_t != blank -%}<p>{{ para_t }}</p>{%- endif -%}
+        {%- endfor -%}
       </section>
     {%- endif -%}
   </div>
