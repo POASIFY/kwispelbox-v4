@@ -2085,6 +2085,29 @@
   updateTop();
   window.addEventListener('resize', updateTop, { passive: true });
 
+  /* Slimme sticky header: verberg bij naar beneden scrollen, toon bij naar boven scrollen */
+  var headerGroup = wrapper ? wrapper.closest('.shopify-section-group-header-group') : null;
+  if (headerGroup) {
+    var lastY = window.scrollY || 0, hticking = false;
+    window.addEventListener('scroll', function () {
+      if (hticking) return;
+      hticking = true;
+      requestAnimationFrame(function () {
+        var y = window.scrollY || 0;
+        var ddOpen = document.querySelector('[data-nav-dropdown][data-open]');
+        if (y < 90 || ddOpen) {
+          headerGroup.classList.remove('kb-hide');          /* bovenaan of menu open → altijd tonen */
+        } else if (y > lastY + 6) {
+          headerGroup.classList.add('kb-hide');             /* omlaag → verbergen */
+        } else if (y < lastY - 6) {
+          headerGroup.classList.remove('kb-hide');          /* omhoog → tonen */
+        }
+        lastY = y;
+        hticking = false;
+      });
+    }, { passive: true });
+  }
+
   function openDD(dd, trigger) {
     clearTimeout(closeTimer);
     clearTimeout(openTimer);
