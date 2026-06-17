@@ -15,30 +15,7 @@
       assign t = 'De leukste verrassingsbox voor je hond'
       assign d = 'Elke maand een verrassingsbox vol stevige speeltjes, gezonde snacks en knuffels voor je hond. Met zorg samengesteld en gratis verzonden vanaf €75.'
 
-    when 'product'
-      case sfx
-        when 'kwispelbox'
-          assign t = 'Kwispelbox – verrassingsbox voor je hond'
-          assign d = 'Kies Mini, Happy of Mega en verras je hond met een box vol stevig speelgoed en gezonde snacks. Voor 16:00 besteld, vandaag verzonden.'
-        when 'verjaardag-box'
-          assign t = 'Verjaardagsbox voor je hond'
-          assign d = 'Vier de verjaardag van je hond met een box vol speeltjes, snacks en een feestelijke verrassing. Maak die ene dag onvergetelijk.'
-        when 'kerst-box'
-          assign t = 'Kerstbox voor je hond'
-          assign d = 'Een feestelijke hondenbox voor onder de boom: speeltjes, snacks en knuffels om samen van de kerst te genieten.'
-        when 'halloween-box'
-          assign t = 'Halloweenbox voor je hond'
-          assign d = 'Spookgezellige speeltjes en snacks voor je hond. Maak Halloween net even leuker met deze speelse themabox.'
-        when 'valentijn-box'
-          assign t = 'Valentijnsbox voor je hond'
-          assign d = 'Laat je hond voelen hoe geliefd hij is met een box vol speeltjes en lekkers. Het cadeau voor je trouwste valentijn.'
-        when 'dierendag-box'
-          assign t = 'Dierendagbox voor je hond'
-          assign d = 'Vier Dierendag op 4 oktober met een box vol speelplezier en snacks. Geef je hond het feestje dat hij verdient.'
-        else
-          assign t = product.title
-          assign d = product.description | strip_html | truncate: 155
-      endcase
+    # product & collection: gebruiken de SEO-metavelden (page_title/page_description) via de fallback onderaan
 
     when 'page'
       case sfx
@@ -89,12 +66,6 @@
           assign t = page.title
           assign d = page.content | strip_html | truncate: 155
       endcase
-
-    when 'collection'
-      assign t = collection.title
-      if collection.description != blank
-        assign d = collection.description | strip_html | truncate: 155
-      endif
 
     when 'search'
       assign noindex = true
