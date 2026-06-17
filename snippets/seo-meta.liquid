@@ -1,13 +1,14 @@
 {%- comment -%}
   snippets/seo-meta.liquid — KB-v4 per-pagina <title>, meta description en robots.
+  Keyt op template.suffix (NIET op handle) zodat de pagina-handle vrij te kiezen is.
   Titels eindigen op " | Kwispelbox.com" (≈50-60 tekens), descriptions ≈150 tekens.
-  Bepaalt ook welke pagina's op noindex staan (dunne/dubbele content + zoekresultaten).
 {%- endcomment -%}
 
 {%- liquid
   assign t = ''
   assign d = ''
   assign noindex = false
+  assign sfx = template.suffix
 
   case request.page_type
     when 'index'
@@ -15,7 +16,7 @@
       assign d = 'Elke maand een verrassingsbox vol stevige speeltjes, gezonde snacks en knuffels voor je hond. Met zorg samengesteld en gratis verzonden vanaf €75.'
 
     when 'product'
-      case product.handle
+      case sfx
         when 'kwispelbox'
           assign t = 'Kwispelbox – verrassingsbox voor je hond'
           assign d = 'Kies Mini, Happy of Mega en verras je hond met een box vol stevig speelgoed en gezonde snacks. Voor 16:00 besteld, vandaag verzonden.'
@@ -40,7 +41,7 @@
       endcase
 
     when 'page'
-      case page.handle
+      case sfx
         when 'boxen'
           assign t = 'Alle Kwispelboxen – Mini, Happy & Mega'
           assign d = 'Mini, Happy of Mega? Vergelijk onze hondenboxen op inhoud en prijs en kies de verrassingsbox die past bij jouw hond.'
@@ -89,13 +90,15 @@
           assign d = page.content | strip_html | truncate: 155
       endcase
 
+    when 'collection'
+      assign t = collection.title
+      if collection.description != blank
+        assign d = collection.description | strip_html | truncate: 155
+      endif
+
     when 'search'
       assign noindex = true
       assign t = 'Zoekresultaten'
-
-    when 'collection'
-      assign t = collection.title
-      assign d = collection.description | strip_html | truncate: 155
 
     when '404'
       assign noindex = true
