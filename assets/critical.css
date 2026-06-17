@@ -13,6 +13,14 @@ body {
   min-height: 100svh;
 }
 
+/* Sticky header: het section-group-wrapperelement (directe body-child) moet sticky zijn.
+   position:sticky op de binnenste wrapper plakt anders binnen z'n korte .shopify-section en scrollt mee weg. */
+.shopify-section-group-header-group {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
   overflow: hidden;
 }
