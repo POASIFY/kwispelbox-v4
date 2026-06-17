@@ -1,6 +1,15 @@
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: auto-generated.
  * ------------------------------------------------------------
  */
 {
@@ -290,9 +299,19 @@
         "button_url": "",
         "show_decorations": true
       }
+    },
+    "intro": {
+      "type": "page-intro",
+      "settings": {
+        "icon": "paw",
+        "eyebrow": "Kies jouw box",
+        "heading": "Alle Kwispelboxen: Mini, Happy en Mega",
+        "intro": "<p>Een Kwispelbox is een verrassingsbox vol stevige speeltjes, gezonde snacks en knuffels, met zorg samengesteld voor jouw hond. Kies de maat die past: <strong>Mini</strong> voor kleinere honden, de populaire <strong>Happy</strong>, of <strong>Mega</strong> voor grote avonturiers. Hieronder vergelijk je ze rustig op inhoud en prijs.</p><p>Liever een box voor een bijzonder moment? Bekijk onze <a href=\"/pages/special-editions\">Special Editions</a>, of lees eerst <a href=\"/pages/hoe-werkt-het\">hoe het werkt</a>.</p>"
+      }
     }
   },
   "order": [
+    "intro",
     "boxes",
     "compare",
     "how",

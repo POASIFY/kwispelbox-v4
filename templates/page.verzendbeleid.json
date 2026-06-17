@@ -17,40 +17,53 @@
     "main": {
       "type": "info-page",
       "blocks": {
-        "l1": {
+        "i1": {
           "type": "item",
           "settings": {
-            "icon": "none",
+            "icon": "truck",
             "heading": "Levertijd",
-            "text": "<p>Voor 16:00 besteld = dezelfde werkdag verzonden. Levering NL 1–2 werkdagen, BE 2–3 werkdagen.</p>"
+            "text": "<p>Voor 16:00 besteld? Dan gaat je Kwispelbox dezelfde werkdag op de post. Levering binnen Nederland duurt daarna meestal 1 tot 2 werkdagen, naar België 2 tot 3 werkdagen.</p>"
           }
         },
-        "l2": {
+        "i2": {
           "type": "item",
           "settings": {
-            "icon": "none",
+            "icon": "tag",
             "heading": "Verzendkosten",
-            "text": "<p>Gratis verzending vanaf €75. Daaronder €4,95.</p>"
+            "text": "<p><strong>Gratis verzending vanaf €75.</strong> Bestel je voor minder, dan rekenen we €4,95 verzendkosten — in heel Nederland en België.</p>"
           }
         },
-        "l3": {
+        "i3": {
           "type": "item",
           "settings": {
-            "icon": "none",
-            "heading": "Bezorging",
-            "text": "<p>We bezorgen met de bekende vervoerders, inclusief track & trace.</p>"
+            "icon": "package",
+            "heading": "Bestelling volgen",
+            "text": "<p>Zodra je box verzonden is, krijg je een track &amp; trace per e-mail. Zo weet je precies wanneer de verrassing op de mat valt.</p>"
+          }
+        },
+        "i4": {
+          "type": "item",
+          "settings": {
+            "icon": "refresh",
+            "heading": "Iets mis met je bestelling?",
+            "text": "<p>Klopt er iets niet of is je box beschadigd aangekomen? Bekijk onze <a href=\"/pages/retourbeleid\">retourpagina</a> of <a href=\"/pages/contact\">neem contact op</a> — we lossen het samen op.</p>"
           }
         }
       },
       "block_order": [
-        "l1",
-        "l2",
-        "l3"
+        "i1",
+        "i2",
+        "i3",
+        "i4"
       ],
       "settings": {
-        "eyebrow": "Juridisch",
-        "title": "Verzendbeleid",
-        "intro": "Onze verzendtarieven en levertijden."
+        "eyebrow": "Bezorging",
+        "title": "Verzending & bezorging",
+        "intro": "Alles over hoe en wanneer je Kwispelbox bij je hond aankomt.",
+        "cta_title": "Vragen over je bezorging?",
+        "cta_text": "Ons team helpt je graag verder.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact"
       }
     }
   },

@@ -17,49 +17,53 @@
     "main": {
       "type": "info-page",
       "blocks": {
-        "l1": {
+        "i1": {
           "type": "item",
           "settings": {
-            "icon": "none",
+            "icon": "refresh",
             "heading": "Retourtermijn",
-            "text": "<p>Je hebt 30 dagen vanaf ontvangst om je bestelling te retourneren.</p>"
+            "text": "<p>Niet helemaal blij? Je hebt <strong>30 dagen</strong> vanaf ontvangst om je bestelling te retourneren.</p>"
           }
         },
-        "l2": {
+        "i2": {
           "type": "item",
           "settings": {
-            "icon": "none",
-            "heading": "Voorwaarden",
-            "text": "<p>Producten moeten ongebruikt en in de originele staat zijn. Geopende snacks kunnen om hygiënische redenen niet retour.</p>"
+            "icon": "shield",
+            "heading": "Niet goed, geld terug",
+            "text": "<p>We staan achter onze boxen. Is je hond niet door het dolle met de verrassing? Dan krijg je je geld terug — dat beloven we.</p>"
           }
         },
-        "l3": {
+        "i3": {
           "type": "item",
           "settings": {
-            "icon": "none",
+            "icon": "check",
             "heading": "Hoe retourneren",
-            "text": "<p>Mail naar hello@kwispelbox.nl met je bestelnummer. Wij sturen je de retourinstructies.</p>"
+            "text": "<p>Mail naar <a href=\"/pages/contact\">onze klantenservice</a> met je bestelnummer. Wij sturen je de retourinstructies. Geopende snacks kunnen om hygiënische redenen niet retour, maar bij problemen vinden we altijd een oplossing.</p>"
           }
         },
-        "l4": {
+        "i4": {
           "type": "item",
           "settings": {
-            "icon": "none",
+            "icon": "tag",
             "heading": "Terugbetaling",
-            "text": "<p>Na ontvangst van de retour betalen we binnen 14 dagen het aankoopbedrag terug via dezelfde betaalmethode.</p>"
+            "text": "<p>Na ontvangst van je retour betalen we binnen 14 dagen het aankoopbedrag terug via dezelfde betaalmethode. Meer over betalen lees je op <a href=\"/pages/betaalmogelijkheden\">betaalmethoden</a>.</p>"
           }
         }
       },
       "block_order": [
-        "l1",
-        "l2",
-        "l3",
-        "l4"
+        "i1",
+        "i2",
+        "i3",
+        "i4"
       ],
       "settings": {
-        "eyebrow": "Juridisch",
-        "title": "Retourbeleid",
-        "intro": "Hoe en binnen welke termijn je je bestelling kunt retourneren."
+        "eyebrow": "Retourneren",
+        "title": "Retourneren & geld terug",
+        "intro": "Niet tevreden? Zo regel je eenvoudig een retour. Bekijk ook onze <strong>verzendinfo</strong>.",
+        "cta_title": "Hulp nodig bij een retour?",
+        "cta_text": "We helpen je graag persoonlijk.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact"
       }
     }
   },

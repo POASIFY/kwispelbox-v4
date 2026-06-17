@@ -1,0 +1,44 @@
+{%- comment -%}
+  sections/page-intro.liquid — KB-v4 pagina-intro met H1.
+  Geeft multi-sectie-pagina's één duidelijke H1 + keyword-rijke introtekst
+  (met ruimte voor interne links). Namespace `pin`.
+{%- endcomment -%}
+
+<div class="pin full-width">
+  <div class="pin__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="pin__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: section.settings.icon | default: 'paw' -%}</span>{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}<h1 class="pin__heading">{{ section.settings.heading }}</h1>{%- endif -%}
+    {%- if section.settings.intro != blank -%}<div class="pin__intro">{{ section.settings.intro }}</div>{%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+.pin { background: transparent; padding: var(--section-pad) 0 0; }
+.pin__inner { max-width: 760px; margin: 0 auto; padding: 0 var(--page-margin); text-align: center; }
+.pin__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--color-green); margin-bottom: 12px; }
+.pin__eyebrow span { display: inline-flex; }
+.pin__eyebrow svg { width: 16px; height: 16px; }
+.pin__heading { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.04; color: var(--color-ink); margin: 0 0 14px; }
+.pin__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.65; color: var(--color-body); }
+.pin__intro p { margin: 0 0 12px; }
+.pin__intro p:last-child { margin-bottom: 0; }
+.pin__intro a { color: var(--color-green); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.pin__intro a:hover { color: var(--color-pink); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Pagina-intro (H1)",
+  "tag": "section",
+  "settings": [
+    { "type": "select", "id": "icon", "label": "Eyebrow-icoon", "default": "paw",
+      "options": [ {"value":"paw","label":"Poot"}, {"value":"gift","label":"Cadeau"}, {"value":"heart","label":"Hart"}, {"value":"sparkles","label":"Sparkles"}, {"value":"truck","label":"Verzending"}, {"value":"refresh","label":"Retour"} ] },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "H1 (paginakop)", "default": "Paginakop" },
+    { "type": "richtext", "id": "intro", "label": "Introtekst (mag interne links bevatten)" }
+  ],
+  "presets": [ { "name": "Pagina-intro (H1)" } ]
+}
+{% endschema %}
