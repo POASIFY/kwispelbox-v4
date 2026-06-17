@@ -93,42 +93,6 @@
             "text": "Jouw hond hoort helemaal bij de Kwispelbox familie!"
           }
         },
-        "t1": {
-          "type": "trust",
-          "settings": {
-            "icon": "paw",
-            "color": "green",
-            "title": "1.200+ blije honden",
-            "text": "Een groeiende community"
-          }
-        },
-        "t2": {
-          "type": "trust",
-          "settings": {
-            "icon": "star",
-            "color": "yellow",
-            "title": "4,9/5",
-            "text": "Uitstekend beoordeeld"
-          }
-        },
-        "t3": {
-          "type": "trust",
-          "settings": {
-            "icon": "heart",
-            "color": "pink",
-            "title": "Met liefde samengesteld",
-            "text": "Iedere box met zorg"
-          }
-        },
-        "t4": {
-          "type": "trust",
-          "settings": {
-            "icon": "shield-check",
-            "color": "green",
-            "title": "Veilig en betrouwbaar",
-            "text": "Veilig betalen & lid worden"
-          }
-        },
         "m1": {
           "type": "member",
           "settings": {}
@@ -156,10 +120,6 @@
         "s3",
         "s4",
         "s5",
-        "t1",
-        "t2",
-        "t3",
-        "t4",
         "m1",
         "m2",
         "m3",
