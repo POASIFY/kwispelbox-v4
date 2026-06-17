@@ -40,6 +40,14 @@
         {%- endif -%}
       {%- endfor -%}
 
+      {%- comment -%} Gratis cadeau (GWP): verborgen €0-product, automatisch toegevoegd vanaf de drempel {%- endcomment -%}
+      {%- assign gift = all_products[section.settings.gift_product_handle] -%}
+      {%- assign gift_variant_id = gift.selected_or_first_available_variant.id -%}
+      {%- assign gift_in_cart = false -%}
+      {%- for item in cart.items -%}
+        {%- if item.variant.id == gift_variant_id -%}{%- assign gift_in_cart = true -%}{%- endif -%}
+      {%- endfor -%}
+
       <header class="kbcart__head">
         {%- if section.settings.dog_image != blank -%}
           <img class="kbcart__dog" src="{{ section.settings.dog_image | image_url: width: 600 }}"
@@ -91,6 +99,7 @@
             <ul class="kbcart__items" role="list">
               {%- for item in cart.items -%}
                 {%- if item.variant.id == wrap_variant_id -%}{%- continue -%}{%- endif -%}
+                {%- if item.variant.id == gift_variant_id -%}{%- continue -%}{%- endif -%}
                 <li class="kbcart__item" {{ item.shopify_attributes }}>
                   <a href="{{ item.url }}" class="kbcart__item-media" tabindex="-1" aria-hidden="true">
                     {%- if item.image -%}
@@ -135,6 +144,19 @@
                   </div>
                 </li>
               {%- endfor -%}
+
+              {%- if gift_in_cart -%}
+                <li class="kbcart__item kbcart__item--gift">
+                  <span class="kbcart__item-media kbcart__gift-media" aria-hidden="true">🎁</span>
+                  <div class="kbcart__item-body">
+                    <span class="kbcart__item-title">{{ gift.title | replace: ' 🎁', '' }}</span>
+                    <p class="kbcart__gift-tag">Cadeautje van ons 🐾</p>
+                  </div>
+                  <div class="kbcart__item-side">
+                    <span class="kbcart__gift-price"><s>{{ gift.selected_or_first_available_variant.compare_at_price | money }}</s> <strong>Gratis</strong></span>
+                  </div>
+                </li>
+              {%- endif -%}
             </ul>
 
             {%- comment -%} Inpak-upsell (roze gestippeld) {%- endcomment -%}
@@ -315,6 +337,20 @@
 
 <script>
   (function () {
+    {%- comment -%} Gratis cadeau (GWP): automatisch toevoegen vanaf de drempel, weghalen eronder {%- endcomment -%}
+    {%- if section.settings.gift_threshold > 0 and gift_variant_id != blank -%}
+    (function () {
+      var GIFT_ID = {{ gift_variant_id }};
+      var GIFT_THRESHOLD = {{ section.settings.gift_threshold | times: 100 }};
+      var giftInCart = {% if gift_in_cart %}true{% else %}false{% endif %};
+      var subtotal = {{ cart.total_price }};
+      if (subtotal >= GIFT_THRESHOLD && !giftInCart) {
+        fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: [{ id: GIFT_ID, quantity: 1 }] }) }).then(function () { window.location.reload(); });
+      } else if (subtotal < GIFT_THRESHOLD && giftInCart) {
+        fetch('/cart/change.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: String(GIFT_ID), quantity: 0 }) }).then(function () { window.location.reload(); });
+      }
+    }());
+    {%- endif -%}
     function post(url, body, el) {
       if (el) el.style.pointerEvents = 'none';
       fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
@@ -388,6 +424,14 @@
 .kbcart__ship-node { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 2px solid var(--color-line); display: flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; z-index: 1; box-shadow: 0 2px 6px rgba(61, 34, 9, .12); }
 .kbcart__ship-node--end { left: 100%; }
 .kbcart__ship-node.is-reached { border-color: var(--color-green); background: #e8f5e2; }
+/* Gratis cadeau-regel */
+.kbcart__item--gift { background: linear-gradient(180deg, #fff5f9, #fff); border: 1.5px dashed var(--color-pink); border-radius: 16px; padding: 12px 14px; }
+.kbcart__gift-media { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; font-size: 30px; background: #ffe9f1; border-radius: 12px; flex-shrink: 0; }
+.kbcart__gift-tag { font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-pink); margin: 4px 0 0; }
+.kbcart__item--gift .kbcart__item-side { margin-left: auto; text-align: right; }
+.kbcart__gift-price { font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); white-space: nowrap; }
+.kbcart__gift-price s { color: var(--color-muted); font-family: var(--font-body); font-weight: 400; margin-right: 4px; }
+.kbcart__gift-price strong { color: var(--color-green); }
 
 /* Regelitems */
 .kbcart__items { list-style: none; margin: 0; padding: 0; }
@@ -585,6 +629,7 @@
     { "type": "number", "id": "free_shipping_threshold", "label": "Drempel gratis verzending (in €)", "default": 75 },
     { "type": "number", "id": "gift_threshold", "label": "Drempel gratis cadeau (in €)", "default": 89, "info": "0 = geen tweede drempel." },
     { "type": "text", "id": "gift_label", "label": "Naam gratis cadeau", "default": "mystery verrassing" },
+    { "type": "text", "id": "gift_product_handle", "label": "Product-handle gratis cadeau", "default": "gratis-mystery-verrassing", "info": "Het (verborgen, €0) product dat automatisch wordt toegevoegd vanaf de drempel." },
     { "type": "header", "content": "Inpak-upsell" },
     { "type": "text", "id": "giftwrap_handle", "label": "Product-handle inpakken", "default": "inpakken", "info": "Verschijnt alleen als dit product bestaat en koopbaar is." },
     { "type": "text", "id": "giftwrap_title", "label": "Titel", "default": "Cadeautjes inpakken" },
