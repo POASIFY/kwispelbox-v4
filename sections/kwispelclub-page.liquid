@@ -336,6 +336,13 @@
   .kc-step__title { margin-top: 8px; }
 }
 
+/* ── Mobiel ───────────────────────────────────────────── */
+@media (max-width: 749px) {
+  /* Lange koppen als "Kwispelclub" mogen niet over de schermrand lopen */
+  .kc-hero__title { font-size: clamp(2.2rem, 10vw, 3.4rem); overflow-wrap: anywhere; }
+  .kc-hero__buttons .kc-btn { flex: 1 1 auto; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .kc-benefit, .kc-btn { transition: none; }
 }

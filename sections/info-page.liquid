@@ -71,6 +71,12 @@
 .inf__cta-body span { font-family: var(--font-body); font-size: .9rem; color: var(--color-body); }
 .inf__cta-btn { display: inline-flex; align-items: center; padding: 12px 24px; background: var(--color-orange); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; text-decoration: none; transition: filter 160ms, transform 160ms; }
 .inf__cta-btn:hover { filter: brightness(.95); transform: translateY(-2px); }
+
+@media (max-width: 749px) {
+  .inf__item { padding: 20px 18px; }
+  .inf__cta { padding: 20px 18px; }
+  .inf__cta-btn { flex: 1 0 100%; justify-content: center; }
+}
 {% endstylesheet %}
 
 {% schema %}

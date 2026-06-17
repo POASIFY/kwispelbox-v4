@@ -223,12 +223,18 @@
   .hero__inner { grid-template-columns: 1fr; grid-template-areas: "intro" "media" "cta"; column-gap: 0; padding: var(--section-pad-sm) var(--page-margin) 24px; }
   .hero__intro { position: relative; z-index: 3; }
   .hero__title { font-size: clamp(2rem, 9vw, 2.9rem); }
-  .hero__text { max-width: 60%; }
+  .hero__text { max-width: 32ch; }
   .hero__media { margin: -70px 0 -40px; }
   .hero__img { max-height: 520px; object-position: center bottom; }
-  .hero__cta { align-self: stretch; position: relative; z-index: 3; margin-top: 0; }
+  .hero__cta { align-self: stretch; position: relative; z-index: 3; margin-top: 0; display: flex; flex-direction: column; }
   .hero__cta-divider { max-width: 100%; }
-  .hero__btn { font-size: 1.05rem; padding: 15px 26px; }
+  /* Primaire CTA full-width + gecentreerd op mobiel */
+  .hero__btn { font-size: 1.08rem; padding: 16px 26px; }
+  .hero__btn--primary { display: flex; width: 100%; justify-content: center; }
+  /* Notitie + social proof gecentreerd onder de knop */
+  .hero__note { max-width: none; justify-content: center; }
+  .hero__rating { justify-content: center; }
+  .hero__avatars { align-self: center; }
   .hero__circle { top: 30%; left: 36%; width: 104px; height: 104px; }
   .hero__circle-text { font-size: .72rem; }
   /* Hartjes rond/boven de kop van de hond (relatief aan de media-afbeelding) */

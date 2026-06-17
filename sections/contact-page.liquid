@@ -94,6 +94,10 @@
 .cnt-tile__text { font-family: var(--font-body); font-size: .88rem; color: var(--color-body); line-height: 1.5; }
 .cnt-tile__link { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; font-family: var(--font-body); font-size: .88rem; font-weight: 700; color: var(--color-green); text-decoration: none; }
 
+@media (max-width: 749px) {
+  .cnt__form-wrap { padding: 22px 18px; }
+  .cnt__submit { align-self: stretch; }
+}
 @media (min-width: 860px) {
   .cnt__cols { grid-template-columns: 1.5fr 1fr; gap: 36px; align-items: start; }
   .cnt__field-row { grid-template-columns: 1fr 1fr; }
