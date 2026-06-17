@@ -6,7 +6,14 @@
 
 {%- assign threshold = section.settings.free_shipping_threshold | times: 100 -%}
 
-<div class="kbcart full-width">
+{%- comment -%} GWP-variant vooraf bepalen zodat de data-attributen op de root kloppen. {%- endcomment -%}
+{%- assign gwp_gift = all_products[section.settings.gift_product_handle] -%}
+{%- assign gwp_gift_variant_id = gwp_gift.selected_or_first_available_variant.id -%}
+
+<div class="kbcart full-width" data-cart-section="{{ section.id }}"
+  {%- if section.settings.gift_threshold > 0 and gwp_gift_variant_id != blank %} data-gwp-gift-id="{{ gwp_gift_variant_id }}" data-gwp-threshold="{{ section.settings.gift_threshold | times: 100 }}"{%- endif -%}
+>
+  <p class="kbcart__sr-status" aria-live="polite" role="status"></p>
   {%- if section.settings.show_decorations -%}
     <span class="kbcart__bg kbcart__bg--paw1" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
     <span class="kbcart__bg kbcart__bg--paw2" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
@@ -333,60 +340,158 @@
   {%- endif -%}
 </div>
 
+{%- comment -%}
+  In-place cart updates via de Shopify Section Rendering API.
+  Geen full-page reloads meer: dezelfde sectie wordt opnieuw gerenderd en
+  alleen .kbcart__inner wordt geswapt. Identiek gedrag en visuals.
+{%- endcomment -%}
 <script>
   (function () {
-    {%- comment -%} Gratis cadeau (GWP): automatisch toevoegen vanaf de drempel, weghalen eronder {%- endcomment -%}
-    {%- if section.settings.gift_threshold > 0 and gift_variant_id != blank -%}
-    (function () {
-      var GIFT_ID = {{ gift_variant_id }};
-      var THRESHOLD = {{ section.settings.gift_threshold | times: 100 }};
-      fetch('/cart.js').then(function (r) { return r.json(); }).then(function (cart) {
-        var giftLine = null, qualifying = 0;
-        cart.items.forEach(function (i) {
-          if (i.variant_id === GIFT_ID) { giftLine = i; }
-          else { qualifying += i.final_line_price; }
-        });
-        if (qualifying >= THRESHOLD && !giftLine) {
-          fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items: [{ id: GIFT_ID, quantity: 1 }] }) }).then(function () { window.location.reload(); });
-        } else if (giftLine && (qualifying < THRESHOLD || giftLine.quantity > 1)) {
-          fetch('/cart/change.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: String(GIFT_ID), quantity: (qualifying >= THRESHOLD ? 1 : 0) }) }).then(function () { window.location.reload(); });
-        }
-      });
-    }());
-    {%- endif -%}
-    function post(url, body, el) {
-      if (el) el.style.pointerEvents = 'none';
-      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
-        .then(function () { window.location.reload(); })
-        .catch(function () { if (el) el.style.pointerEvents = ''; });
+    var root = document.querySelector('.kbcart[data-cart-section]');
+    if (!root) { return; }
+    var SECTION_ID = root.getAttribute('data-cart-section');
+    var status = root.querySelector('.kbcart__sr-status');
+
+    {%- comment -%} GWP-config komt uit data-attributen op de root (DOM, niet inline Liquid in JS). {%- endcomment -%}
+    var GIFT_ID = parseInt(root.getAttribute('data-gwp-gift-id'), 10);
+    var THRESHOLD = parseInt(root.getAttribute('data-gwp-threshold'), 10);
+    var GWP_ENABLED = !isNaN(GIFT_ID) && !isNaN(THRESHOLD);
+
+    var busy = false;
+    var gwpRunning = false;
+
+    function setBusy(state) {
+      busy = state;
+      root.setAttribute('aria-busy', state ? 'true' : 'false');
     }
+
+    function announce(msg) {
+      if (status) { status.textContent = msg; }
+    }
+
+    {%- comment -%} Swap .kbcart__inner met de opnieuw gerenderde sectie-HTML. {%- endcomment -%}
+    function swap(sectionHTML) {
+      var doc = new DOMParser().parseFromString(sectionHTML, 'text/html');
+      var fresh = doc.querySelector('.kbcart__inner');
+      var current = root.querySelector('.kbcart__inner');
+      if (fresh && current) {
+        current.innerHTML = fresh.innerHTML;
+        return true;
+      }
+      return false;
+    }
+
+    {%- comment -%}
+      POST naar de Cart API met sections-parameters zodat de respons de
+      opnieuw gerenderde sectie-HTML bevat. Geen reload meer.
+    {%- endcomment -%}
+    function post(url, body) {
+      body.sections = SECTION_ID;
+      body.sections_url = window.location.pathname;
+      return fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(body)
+      }).then(function (r) { return r.json(); });
+    }
+
+    {%- comment -%} Cart-mutatie + swap + daarna één GWP-controle (geen lus). {%- endcomment -%}
+    function mutate(url, body) {
+      if (busy) { return Promise.resolve(); }
+      setBusy(true);
+      announce('Winkelwagen bijwerken…');
+      return post(url, body)
+        .then(function (res) {
+          if (res && res.sections && res.sections[SECTION_ID]) {
+            swap(res.sections[SECTION_ID]);
+          }
+          setBusy(false);
+          announce('Winkelwagen bijgewerkt.');
+          return checkGWP();
+        })
+        .catch(function () {
+          setBusy(false);
+          announce('Er ging iets mis. Probeer het opnieuw.');
+        });
+    }
+
+    {%- comment -%}
+      GWP: voeg het gratis cadeau toe bij/boven de drempel, haal het eronder weg.
+      Loopt nooit oneindig: elke aanroep doet hooguit één mutatie, en na die
+      mutatie controleren we exact één keer of de drempelstatus nu klopt.
+      gwpRunning voorkomt dat overlappende swaps de check her-triggeren.
+    {%- endcomment -%}
+    function checkGWP() {
+      if (!GWP_ENABLED || gwpRunning) { return Promise.resolve(); }
+      gwpRunning = true;
+      return fetch('/cart.js', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (cart) {
+          var giftLine = null, qualifying = 0;
+          cart.items.forEach(function (i) {
+            if (i.variant_id === GIFT_ID) { giftLine = i; }
+            else { qualifying += i.final_line_price; }
+          });
+          var needsAdd = qualifying >= THRESHOLD && !giftLine;
+          var needsRemove = giftLine && qualifying < THRESHOLD;
+          var needsFix = giftLine && qualifying >= THRESHOLD && giftLine.quantity > 1;
+
+          if (!needsAdd && !needsRemove && !needsFix) {
+            gwpRunning = false;
+            return;
+          }
+          announce('Winkelwagen bijwerken…');
+          root.setAttribute('aria-busy', 'true');
+          var req = needsAdd
+            ? post('/cart/add.js', { items: [{ id: GIFT_ID, quantity: 1 }] })
+            : post('/cart/change.js', { id: String(GIFT_ID), quantity: (qualifying >= THRESHOLD ? 1 : 0) });
+          return req.then(function (res) {
+            if (res && res.sections && res.sections[SECTION_ID]) {
+              swap(res.sections[SECTION_ID]);
+            }
+            root.setAttribute('aria-busy', 'false');
+            gwpRunning = false;
+            {%- comment -%} Géén her-controle hier: de drempelstatus klopt nu per definitie. {%- endcomment -%}
+          });
+        })
+        .catch(function () { gwpRunning = false; });
+    }
+
+    {%- comment -%} Gedelegeerde listeners op document overleven de innerHTML-swap. {%- endcomment -%}
     document.addEventListener('click', function (e) {
       var step = e.target.closest('[data-cart-step]');
-      if (step) {
+      if (step && root.contains(step)) {
         e.preventDefault();
-        post('/cart/change.js', { line: parseInt(step.getAttribute('data-line'), 10), quantity: parseInt(step.getAttribute('data-qty'), 10) }, step);
+        mutate('/cart/change.js', { line: parseInt(step.getAttribute('data-line'), 10), quantity: parseInt(step.getAttribute('data-qty'), 10) });
         return;
       }
       var add = e.target.closest('[data-cart-add]');
-      if (add) {
+      if (add && root.contains(add)) {
         e.preventDefault();
-        post('/cart/add.js', { items: [{ id: add.getAttribute('data-cart-add'), quantity: 1 }] }, add);
+        mutate('/cart/add.js', { items: [{ id: add.getAttribute('data-cart-add'), quantity: 1 }] });
       }
     });
-    var dform = document.getElementById('kbcart-discount-form');
-    if (dform) {
-      dform.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var code = document.getElementById('kbcart-discount-input').value.trim();
-        if (code) window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart';
-      });
-    }
+
+    {%- comment -%} Kortingscode blijft een normale navigatie (geen JSON-endpoint). {%- endcomment -%}
+    document.addEventListener('submit', function (e) {
+      var dform = e.target.closest('#kbcart-discount-form');
+      if (!dform || !root.contains(dform)) { return; }
+      e.preventDefault();
+      var input = dform.querySelector('#kbcart-discount-input');
+      var code = input ? input.value.trim() : '';
+      if (code) { window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart'; }
+    });
+
+    {%- comment -%} GWP-controle bij eerste load (verving de oude reload-IIFE). {%- endcomment -%}
+    checkGWP();
   })();
 </script>
 
 {% stylesheet %}
 .kbcart { position: relative; background: var(--color-cream); padding: 40px 0 0; overflow: hidden; }
 .kbcart__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
+.kbcart__sr-status { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.kbcart[aria-busy="true"] .kbcart__inner { opacity: .6; pointer-events: none; transition: opacity 140ms; }
 
 /* Achtergrond-decoratie */
 .kbcart__bg { position: absolute; z-index: 0; color: var(--color-ink); opacity: .05; pointer-events: none; }
