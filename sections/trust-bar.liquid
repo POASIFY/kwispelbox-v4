@@ -31,15 +31,15 @@
 .kbtrust__list { list-style: none; margin: 0; padding: 18px 8px; display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
 .kbtrust__item { display: flex; align-items: center; gap: 14px; padding: 8px 22px; min-width: 0; }
 .kbtrust__item + .kbtrust__item { border-left: 1px solid var(--color-line); }
-.kbtrust__icon { display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0; }
-.kbtrust__icon svg { width: 24px; height: 24px; }
+.kbtrust__icon { display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; border-radius: 50%; flex-shrink: 0; }
+.kbtrust__icon svg { width: 25px; height: 25px; }
 .kbtrust__icon--green { background: #e8f5e2; color: var(--color-green); }
 .kbtrust__icon--orange { background: #fff0e4; color: var(--color-orange); }
 .kbtrust__icon--pink { background: #ffe0ee; color: var(--color-pink); }
 .kbtrust__icon--purple { background: #ede7f7; color: #8b6fc4; }
 .kbtrust__icon--yellow { background: #fff6da; color: #d9a400; }
 .kbtrust__text { display: flex; flex-direction: column; min-width: 0; }
-.kbtrust__text strong { font-family: var(--font-body); font-size: .95rem; font-weight: 800; color: var(--color-ink); line-height: 1.25; }
+.kbtrust__text strong { font-family: var(--font-heading); font-size: 1.02rem; font-weight: 400; color: var(--color-ink); line-height: 1.2; }
 .kbtrust__text span { font-family: var(--font-body); font-size: .88rem; color: var(--color-muted); line-height: 1.25; }
 
 /* Mobiel: 3 op een rij (de 4e wrapt netjes gecentreerd), icoon boven de tekst */
@@ -49,11 +49,11 @@
   .kbtrust__item:nth-child(4) { display: none; }
   .kbtrust__item { flex: 1 1 0; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 4px 6px; }
   .kbtrust__item + .kbtrust__item { border-left: none; }
-  .kbtrust__icon { width: 42px; height: 42px; }
-  .kbtrust__icon svg { width: 21px; height: 21px; }
+  .kbtrust__icon { width: 48px; height: 48px; }
+  .kbtrust__icon svg { width: 22px; height: 22px; }
   .kbtrust__text { align-items: center; }
-  .kbtrust__text strong { font-size: .74rem; line-height: 1.2; }
-  .kbtrust__text span { font-size: .7rem; line-height: 1.2; }
+  .kbtrust__text strong { font-size: .9rem; line-height: 1.2; }
+  .kbtrust__text span { font-size: .76rem; line-height: 1.2; }
 }
 {% endstylesheet %}
 
