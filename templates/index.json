@@ -333,7 +333,7 @@
             "title": "Verjaardagsbox",
             "text": "Maak van de verjaardag van jouw hond een feestje om nooit te vergeten.",
             "badge": "Meest gekozen",
-            "button_label": "Bekijk verjaardagsbox",
+            "button_label": "Bekijk",
             "button_url": "/products/verjaardag-box"
           }
         },
@@ -346,7 +346,7 @@
             "title": "Valentijnsbox",
             "text": "Een box vol liefde voor het trouwste maatje dat je hebt.",
             "badge": "",
-            "button_label": "Bekijk Valentijnsbox",
+            "button_label": "Bekijk",
             "button_url": "/products/valentijn-box"
           }
         },
@@ -359,7 +359,7 @@
             "title": "Kerstbox",
             "text": "Maak de feestdagen extra gezellig met een verrassing onder de boom voor jouw hond.",
             "badge": "",
-            "button_label": "Bekijk Kerstbox",
+            "button_label": "Bekijk",
             "button_url": "/products/kerst-box"
           }
         },
@@ -372,7 +372,7 @@
             "title": "Halloweenbox",
             "text": "Spookgezellige speeltjes en snoeperij voor een griezelig leuk feestje.",
             "badge": "",
-            "button_label": "Bekijk Halloweenbox",
+            "button_label": "Bekijk",
             "button_url": "/products/halloween-box"
           }
         },
@@ -385,7 +385,7 @@
             "title": "Zomerbox",
             "text": "Verkoelende speeltjes en zomerse snacks voor dagen vol buitenpret.",
             "badge": "",
-            "button_label": "Bekijk Zomerbox",
+            "button_label": "Bekijk",
             "button_url": "/collections/special-editions"
           }
         }
