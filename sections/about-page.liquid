@@ -39,7 +39,7 @@
         <div class="abt__values-grid">
           {%- for block in value_blocks -%}
             <div class="abt-value abt-value--{{ block.settings.color | default: 'green' }}" {{ block.shopify_attributes }}>
-              <span class="abt-value__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon | default: 'heart' -%}</span>
+              <span class="abt-value__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon, default: 'heart' -%}</span>
               <strong class="abt-value__title">{{ block.settings.title }}</strong>
               {%- if block.settings.text != blank -%}<p class="abt-value__text">{{ block.settings.text }}</p>{%- endif -%}
             </div>
@@ -158,3 +158,13 @@
   "presets": [ { "name": "Over ons" } ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'kb-icon', icon: block.settings.icon | default: 'heart' -%}"
+  to: "{%- render 'kb-icon', icon: block.settings.icon, default: 'heart' -%}"
+  position: 2888..2957
+{% endcomment %}

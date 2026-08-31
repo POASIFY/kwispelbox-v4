@@ -7,7 +7,7 @@
 <div class="pin full-width">
   <div class="pin__inner">
     {%- if section.settings.eyebrow != blank -%}
-      <span class="pin__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: section.settings.icon | default: 'paw' -%}</span>{{ section.settings.eyebrow }}</span>
+      <span class="pin__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: section.settings.icon, default: 'paw' -%}</span>{{ section.settings.eyebrow }}</span>
     {%- endif -%}
     {%- if section.settings.heading != blank -%}<h1 class="pin__heading">{{ section.settings.heading }}</h1>{%- endif -%}
     {%- if section.settings.intro != blank -%}<div class="pin__intro">{{ section.settings.intro }}</div>{%- endif -%}
@@ -42,3 +42,13 @@
   "presets": [ { "name": "Pagina-intro (H1)" } ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'kb-icon', icon: section.settings.icon | default: 'paw' -%}"
+  to: "{%- render 'kb-icon', icon: section.settings.icon, default: 'paw' -%}"
+  position: 384..453
+{% endcomment %}

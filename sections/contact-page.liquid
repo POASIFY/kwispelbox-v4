@@ -38,7 +38,7 @@
       <aside class="cnt__aside">
         {%- for block in section.blocks -%}
           <div class="cnt-tile cnt-tile--{{ block.settings.color | default: 'green' }}" {{ block.shopify_attributes }}>
-            <span class="cnt-tile__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon | default: 'mail' -%}</span>
+            <span class="cnt-tile__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon, default: 'mail' -%}</span>
             <div class="cnt-tile__body">
               <strong class="cnt-tile__title">{{ block.settings.title }}</strong>
               {%- if block.settings.text != blank -%}<span class="cnt-tile__text">{{ block.settings.text }}</span>{%- endif -%}
@@ -136,3 +136,13 @@
   "presets": [ { "name": "Contact" } ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'kb-icon', icon: block.settings.icon | default: 'mail' -%}"
+  to: "{%- render 'kb-icon', icon: block.settings.icon, default: 'mail' -%}"
+  position: 2734..2802
+{% endcomment %}

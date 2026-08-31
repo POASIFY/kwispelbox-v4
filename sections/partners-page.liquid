@@ -22,7 +22,7 @@
         <div class="prt__types">
           {%- for block in ptypes -%}
             <div class="prt-type" {{ block.shopify_attributes }}>
-              <span class="prt-type__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon | default: 'paw' -%}</span>
+              <span class="prt-type__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon, default: 'paw' -%}</span>
               <strong class="prt-type__title">{{ block.settings.title }}</strong>
               {%- if block.settings.text != blank -%}<span class="prt-type__text">{{ block.settings.text }}</span>{%- endif -%}
               {%- if block.settings.moment != blank -%}<span class="prt-type__moment"><span aria-hidden="true">{%- render 'kb-icon', icon: 'sparkles' -%}</span>{{ block.settings.moment }}</span>{%- endif -%}
@@ -270,3 +270,13 @@
   "presets": [{ "name": "Partners pagina" }]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render 'kb-icon', icon: block.settings.icon | default: 'paw' -%}"
+  to: "{%- render 'kb-icon', icon: block.settings.icon, default: 'paw' -%}"
+  position: 1659..1726
+{% endcomment %}
