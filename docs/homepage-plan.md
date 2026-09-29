@@ -30,11 +30,11 @@ Geen volledige from-scratch herbouw.
 | 1 | Aankondigingsbalk | `announcement-bar.liquid` | aanpassen (bruin, 3 blocks) | ✅ gedaan |
 | 2 | Header | `header.liquid` | hergebruiken + menu/iconen | ✅ gedaan |
 | 3 | Hero | `hero.liquid` | aanpassen (3 kleurregels + 3 USP-kaartjes) | ✅ gedaan |
-| 4 | Voor elk moment | `moments.liquid` (nieuw) | nieuw, 6 tegels | ⬜ te doen |
-| 5 | Meest gekozen | `featured-products.liquid` (nieuw) | nieuw, collectie + metafield-kleur | ⬜ te doen |
-| 6 | Verjaardagsblok | `birthday-block.liquid` (nieuw) | nieuw, gele kaart + klantformulier | ⬜ te doen |
-| 7 | USP-balk | `usp-bar.liquid` | hergebruiken, 4 blocks | ⬜ te doen |
-| 8 | Blije honden | `happy-dogs.liquid` (nieuw) | nieuw, fotoslider | ⬜ te doen |
+| 4 | Voor elk moment | `moments.liquid` | nieuw, 6 tegels | ✅ gedaan |
+| 5 | Meest gekozen | `featured-products.liquid` | collectie + metafield kleur/tekst | ✅ gedaan |
+| 6 | Verjaardagsblok | `birthday-block.liquid` | gele kaart + klantformulier | ✅ gedaan |
+| 7 | USP-balk | `usp-bar.liquid` | herschreven, 4 blocks | ✅ gedaan |
+| 8 | Blije honden | `happy-dogs.liquid` | fotoslider | ✅ gedaan |
 | 9 | Footer | `footer.liquid` | kleine aanpassing | ⬜ te doen |
 
 Toe te voegen iconen (SVG): ~~`clock`~~ ✅, `home`/huis, pleister (beterschap), `bell`.
