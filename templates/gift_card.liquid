@@ -41,8 +41,8 @@
         {% endif %}
 
         <p>
-          {% if settings.logo %}
-            {{ settings.logo | image_url: width: 300 | image_tag: alt: shop.name }}
+          {% if settings.seo_logo %}
+            {{ settings.seo_logo | image_url: width: 300 | image_tag: alt: shop.name }}
           {% else %}
             <img
               src="{{ 'gift-card/card.svg' | shopify_asset_url }}"

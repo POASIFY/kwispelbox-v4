@@ -17,7 +17,7 @@
 
     when 'page'
       # dunne/dubbele pagina's niet indexeren (canonieke varianten staan elders)
-      if sfx == 'verzendbeleid' or sfx == 'retourbeleid' or sfx == 'verzending-retour'
+      if sfx == 'shipping' or sfx == 'returns'
         assign noindex = true
       endif
       if page.handle == 'vergelijk-de-boxen' or page.handle == 'data-sharing-opt-out'

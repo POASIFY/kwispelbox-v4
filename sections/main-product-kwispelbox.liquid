@@ -215,7 +215,7 @@
                     {%- endif -%}
                   {%- endif -%}
                   <label class="pdp-opt{% unless variant.available %} pdp-opt--sold{% endunless %}"{% if opt %} {{ opt.shopify_attributes }}{% endif %}>
-                    <input type="radio" name="id" value="{{ variant.id }}" data-variant-price="{{ variant.price | money }}" data-variant-price-cents="{{ variant.price }}" data-variant-value="jij betaalt {{ variant.price | money }}" data-variant-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}" data-variant-save="{% if variant.compare_at_price > variant.price %}Bespaar {{ variant.compare_at_price | minus: variant.price | money }}{% endif %}" {% if variant == current %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                    <input type="radio" name="variant-choice" value="{{ variant.id }}" data-variant-price="{{ variant.price | money }}" data-variant-price-cents="{{ variant.price }}" data-variant-value="jij betaalt {{ variant.price | money }}" data-variant-compare="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}" data-variant-save="{% if variant.compare_at_price > variant.price %}Bespaar {{ variant.compare_at_price | minus: variant.price | money }}{% endif %}" {% if variant == current %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
                     {%- if opt.settings.badge_text != blank -%}<span class="pdp-opt__badge pdp-opt__badge--{{ opt.settings.badge_color }}">{{ opt.settings.badge_text }}</span>{%- endif -%}
                     <span class="pdp-opt__media">
                       {%- if opt.settings.image != blank -%}<img src="{{ opt.settings.image | image_url: width: 200 }}" alt="" width="90" height="90" loading="lazy">
@@ -761,7 +761,7 @@
         return '€' + amount.toFixed(2).replace('.', ',');
       }
     };
-    form.querySelectorAll('input[name="id"][type="radio"]').forEach(function (radio) {
+    form.querySelectorAll('input[name="variant-choice"][type="radio"]').forEach(function (radio) {
       radio.addEventListener('change', function () {
         if (hidden) hidden.value = radio.value;
         if (radio.dataset.variantPrice) {
