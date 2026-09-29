@@ -37,9 +37,17 @@ Kant-en-klare generatie-prompts, formaten, exacte bestandsnamen en mobiele varia
   > zodat het op onze crème sectie zweeft. Fel, vrolijk, zachte slagschaduw.
 
 ### `hero-home-mobile.png`
-- **Formaat:** PNG met transparante achtergrond, ± **1200×1200 px** (1:1)
-- **Prompt:** zelfde scène, **strakkere vierkante uitsnede** gecentreerd op de kop van de hond + de
-  doos, zodat het goed leest op 390px breed.
+- **Formaat:** PNG met **transparante** achtergrond, **1200×1200 px** (1:1) of **1080×1350** (4:5)
+- **Prompt:**
+  > [merk-stijl] Blije golden retriever met een roze gestippeld feesthoedje, zittend vlak naast een
+  > open Kwispelbox (kraftbruine doos met groene en roze pootjes en opdruk "Kwispelbox.com — voor blije
+  > honden"). De doos puilt uit met: PAWSOME natural treats-zakje, roze GOOD DOG TREATS-zakje, bruin
+  > teddybeertje, roze donut-knuffel, vilten verjaardagstaartje met kaarsje, tennisbal met pootje,
+  > roze/wit/groen touwspeeltje en een kaartje "Voor een heel bijzondere hond!". **Verticale/vierkante
+  > compositie**: hond en doos dicht bij elkaar en gecentreerd zodat het goed leest op een smal
+  > telefoonscherm (390px). Onderwerp **volledig vrijstaand op transparante achtergrond** (geen omgeving),
+  > zachte natuurlijke slagschaduw, fotorealistisch, vrolijk. Zelfde stijl en dezelfde hond/box als de
+  > desktop-hero.
 
 > Liever een volledige fotoscène (wazige woonkamer erachter)? Lever dan als **JPG** in dezelfde
 > maten; ik pas de styling dan aan. Transparante PNG heeft de voorkeur.
