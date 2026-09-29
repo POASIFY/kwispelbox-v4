@@ -10,6 +10,13 @@ Afbeeldingen-briefing: `docs/afbeeldingen-brief.md`.
 - De draft **"Kwispelbox v5"** niet aanraken.
 - `docs/` en `CLAUDE.md` staan buiten de theme-mappen → worden **niet** door Shopify-sync opgepakt (veilig).
 
+## Aanpak (besloten 29-9)
+**Schone homepage op het huidige moderne fundament.** De v4 staat al op een OS 2.0/Skeleton-basis.
+Behoud de werkende product-/collectie-/cart-pagina's + SEO + mega-menu. Herbouw de 9 homepage-secties
+volledig schoon volgens Shopify-best-practices, verwijder legacy homepage-secties uit `index.json`
+(bestanden blijven), en ruim gaandeweg op (fonts in git, CSS-prefixes, header vereenvoudigen).
+Geen volledige from-scratch herbouw.
+
 ## Vastgelegde keuzes
 1. **Aankondigingsbalk**: los `announcement-bar.liquid` gebruiken (bruin), ingebouwde header-balk uitzetten.
 2. **Menu**: mockup-indeling — Boxen, Verjaardag, Feestdagen, Momenten, Kwispelclub, Zakelijk — met per-item instelbaar icoon.
