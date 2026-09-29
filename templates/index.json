@@ -1,7 +1,26 @@
 {
   "sections": {
     "hero": {
-      "type": "hero"
+      "type": "hero",
+      "blocks": {
+        "u1": { "type": "usp", "settings": { "title": "Met liefde samengesteld", "icon": "package", "color": "orange" } },
+        "u2": { "type": "usp", "settings": { "title": "Alleen de beste kwaliteit", "icon": "leaf", "color": "green" } },
+        "u3": { "type": "usp", "settings": { "title": "Voor blije honden en trotse baasjes", "icon": "heart", "color": "pink" } }
+      },
+      "block_order": ["u1", "u2", "u3"],
+      "settings": {
+        "badge_text": "",
+        "line1_a": "Een feestje", "line1_a_color": "ink", "line1_b": "", "line1_b_color": "green",
+        "line2_a": "in een", "line2_a_color": "pink", "line2_b": "doos", "line2_b_color": "orange",
+        "line3_a": "voor jouw hond", "line3_a_color": "green", "line3_b": "", "line3_b_color": "orange",
+        "text": "Cadeauboxen vol speeltjes en snacks voor elke verjaardag, feestdag en elk moment.",
+        "cta_primary_label": "Kies een box",
+        "cta_primary_url": "/collections/boxen",
+        "image": "shopify://shop_images/hero-home-desktop.png",
+        "image_mobile": "",
+        "circle_text": "Elke box voelt als een cadeautje",
+        "image_priority": true
+      }
     }
   },
   "order": ["hero"]
