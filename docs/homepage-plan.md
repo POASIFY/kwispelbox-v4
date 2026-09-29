@@ -80,6 +80,18 @@ Toe te voegen iconen (SVG): ~~`clock`~~ ✅, `home`/huis, pleister (beterschap),
   zodra geüpload.
 - `shopify theme check`: 0 nieuwe fouten.
 
+### Header + hero verfijning (feedback Jasper, ronde 2)
+- **Scheidingslijntjes** tussen menu-items (`#EDE2C9`).
+- **Zoekbalk** opgeschoond: losse decoraties (sterretjes/pootje) verborgen.
+- **Subtiel lijntje onder de header** (`border-bottom` in `--color-line`).
+- **Hero-afbeelding geüpload** naar Shopify Files als `hero-home-desktop.png`
+  (`gid://shopify/MediaImage/46244623024293`), gekoppeld in de hero.
+- **Hero herbouwd dichter op mockup:** titel per regel **2 kleursegmenten** (regel 2 = "in een" roze +
+  "doos" oranje), knop met **pootje + pijl**, USP-iconen/kleuren (pakket oranje, blad groen, hart roze),
+  roze sticker rechtsboven bij de box, en meer **speelse decoraties** (hartjes, sterretjes, pootjes, squiggles).
+- Mobiel: beeld boven de tekst. `theme check`: 0 nieuwe fouten.
+- Openstaand: aparte **mobiele hero-crop** (`hero-home-mobile.png`) — nu wordt de desktop-afbeelding gebruikt.
+
 ### Aandachtspunt: fonts niet in git
 `lilita-one-*.woff2` en `karla-*.woff2` worden gerefereerd in `css-variables.liquid`/`theme.liquid` maar
 staan niet in de repo (wél op het live thema). Werkt nu, maar een verse deploy vanaf git mist ze.
