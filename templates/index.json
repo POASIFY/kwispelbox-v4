@@ -1,0 +1,707 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "blocks": {
+        "u1": { "type": "usp", "settings": { "title": "Met liefde samengesteld", "icon": "package", "color": "orange" } },
+        "u2": { "type": "usp", "settings": { "title": "Alleen de beste kwaliteit", "icon": "leaf", "color": "green" } },
+        "u3": { "type": "usp", "settings": { "title": "Voor blije honden en trotse baasjes", "icon": "heart", "color": "pink" } }
+      },
+      "block_order": ["u1", "u2", "u3"],
+      "settings": {
+        "badge_text": "",
+        "line1_a": "Een feestje", "line1_a_color": "ink", "line1_b": "", "line1_b_color": "green",
+        "line2_a": "in een", "line2_a_color": "pink", "line2_b": "doos", "line2_b_color": "orange",
+        "line3_a": "voor jouw hond", "line3_a_color": "green", "line3_b": "", "line3_b_color": "orange",
+        "text": "Cadeauboxen vol speeltjes en snacks voor elke verjaardag, feestdag en elk moment.",
+        "cta_primary_label": "Kies een box",
+        "cta_primary_url": "/collections/boxen",
+        "image": "shopify://shop_images/hero-home-desktop.png",
+        "image_mobile": "shopify://shop_images/hero-home-desktop.png",
+        "circle_text": "Elke box voelt als een cadeautje",
+        "image_priority": true
+      }
+    },
+    "trust-bar": {
+      "type": "trust-bar",
+      "blocks": {
+        "u1": {
+          "type": "usp",
+          "settings": {
+            "title": "Gratis verzending",
+            "subtitle": "vanaf €75",
+            "icon": "icon-truck.svg",
+            "color": "green"
+          }
+        },
+        "u2": {
+          "type": "usp",
+          "settings": {
+            "title": "Met liefde",
+            "subtitle": "samengesteld",
+            "icon": "icon-paw.svg",
+            "color": "orange"
+          }
+        },
+        "u3": {
+          "type": "usp",
+          "settings": {
+            "title": "Elke box voelt als",
+            "subtitle": "een cadeautje",
+            "icon": "icon-gift.svg",
+            "color": "pink"
+          }
+        },
+        "u4": {
+          "type": "usp",
+          "settings": {
+            "title": "Veilig & vertrouwd",
+            "subtitle": "betalen",
+            "icon": "icon-shield.svg",
+            "color": "purple"
+          }
+        }
+      },
+      "block_order": [
+        "u1",
+        "u2",
+        "u3",
+        "u4"
+      ],
+      "settings": {}
+    },
+    "product-boxes": {
+      "type": "product-boxes",
+      "blocks": {
+        "box-mini": {
+          "type": "box",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPTImage15jun2026_18_57_59.png",
+            "accent": "green",
+            "badge": "Klein maar fijn",
+            "title": "Mini Kwispelbox",
+            "description": "Een fijne eerste verrassing of klein cadeautje.",
+            "benefit_1": "± 5 verrassingen op maat",
+            "benefit_2": "Speeltjes & lekkere snacks",
+            "benefit_3": "Met liefde samengesteld",
+            "benefit_4": "",
+            "benefit_5": "",
+            "price": "€44,95",
+            "price_suffix": "",
+            "highlight": false,
+            "button_label": "Bekijk box",
+            "button_url": "/products/kwispelbox?variant=47914747461797"
+          }
+        },
+        "box-happy": {
+          "type": "box",
+          "settings": {
+            "accent": "pink",
+            "badge": "Meest gekozen",
+            "title": "Happy Kwispelbox",
+            "description": "Onze populairste box, boordevol speelplezier.",
+            "benefit_1": "± 7 verrassingen op maat",
+            "benefit_2": "Wisselende thema's",
+            "benefit_3": "Afgestemd op jouw hond",
+            "benefit_4": "",
+            "benefit_5": "",
+            "price": "€64,95",
+            "price_suffix": "",
+            "highlight": true,
+            "button_label": "Bekijk box",
+            "button_url": "/products/kwispelbox?variant=47914747494565"
+          }
+        },
+        "box-mega": {
+          "type": "box",
+          "settings": {
+            "accent": "orange",
+            "badge": "Extra veel plezier",
+            "title": "Mega Kwispelbox",
+            "description": "Het ultieme verwenpakket voor je hond.",
+            "benefit_1": "± 10 verrassingen op maat",
+            "benefit_2": "Extra luxe items",
+            "benefit_3": "Afgestemd op jouw hond",
+            "benefit_4": "",
+            "benefit_5": "",
+            "price": "€89,95",
+            "price_suffix": "",
+            "highlight": false,
+            "button_label": "Bekijk box",
+            "button_url": "/products/kwispelbox?variant=47914747527333"
+          }
+        },
+        "re-gift": {
+          "type": "benefit",
+          "settings": {
+            "title": "Elke box voelt als een cadeautje",
+            "description": "Met zorg samengesteld en feestelijk verpakt.",
+            "icon": "gift",
+            "color": "pink"
+          }
+        },
+        "re-flex": {
+          "type": "benefit",
+          "settings": {
+            "title": "Voor elke hond iets",
+            "description": "Mini, Happy of Mega — altijd een box die bij jouw hond past.",
+            "icon": "paw",
+            "color": "green"
+          }
+        },
+        "re-happy": {
+          "type": "benefit",
+          "settings": {
+            "title": "100% Tevredenheid",
+            "description": "Niet tevreden? We maken het samen goed.",
+            "icon": "heart",
+            "color": "purple"
+          }
+        }
+      },
+      "block_order": [
+        "box-mini",
+        "box-happy",
+        "box-mega",
+        "re-gift",
+        "re-flex",
+        "re-happy"
+      ],
+      "settings": {
+        "label": "",
+        "heading": "Kies jouw",
+        "heading_highlight": "Kwispelbox",
+        "intro": "Voor elke hond de perfecte verrassing. Elke box zit boordevol speelplezier, lekkers en liefde."
+      }
+    },
+    "home-steps": {
+      "type": "home-steps",
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Kies jouw box",
+            "text": "Mini, Happy of Mega — jij kiest wat past bij jouw hond.",
+            "icon": "gift",
+            "color": "green"
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Wij stellen 'm samen",
+            "text": "Met de leukste speeltjes, snacks en knuffels, met liefde uitgezocht.",
+            "icon": "sparkles",
+            "color": "pink"
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Uitpakken & genieten",
+            "text": "De verrassing valt op de mat. Tijd voor een feestje!",
+            "icon": "heart",
+            "color": "orange"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "eyebrow": "Zo simpel werkt het",
+        "heading": "In 3 stappen naar een",
+        "heading_highlight": "blije hond",
+        "intro": "Geen gedoe — jij kiest, wij verrassen, je hond geniet.",
+        "note": "Wij zorgen voor de verrassing, jij voor de blije kwispel."
+      }
+    },
+    "box-contents": {
+      "type": "box-contents",
+      "blocks": {
+        "c1": {
+          "type": "card",
+          "settings": {
+            "icon": "teddy",
+            "color": "pink",
+            "title": "Knuffels",
+            "text": "Zachte vriendjes om mee te spelen en te knuffelen."
+          }
+        },
+        "c2": {
+          "type": "card",
+          "settings": {
+            "icon": "leaf",
+            "color": "orange",
+            "title": "Natuurlijke snacks",
+            "text": "Verantwoord verwennen met heerlijke traktaties."
+          }
+        },
+        "c3": {
+          "type": "card",
+          "settings": {
+            "icon": "ball",
+            "color": "green",
+            "title": "Speeltjes",
+            "text": "Interactieve speeltjes voor urenlang speelplezier."
+          }
+        },
+        "c4": {
+          "type": "card",
+          "settings": {
+            "icon": "squeak",
+            "color": "yellow",
+            "title": "Piepers & geluid",
+            "text": "Voor nieuwsgierige honden die van ontdekken houden."
+          }
+        },
+        "c5": {
+          "type": "card",
+          "settings": {
+            "icon": "bone",
+            "color": "orange",
+            "title": "Touw & trekspelletjes",
+            "text": "Voor actieve honden die van uitdaging houden."
+          }
+        },
+        "c6": {
+          "type": "card",
+          "settings": {
+            "icon": "partyhat",
+            "color": "pink",
+            "title": "Passend thema",
+            "text": "Bijvoorbeeld verjaardag, Pasen, zomer of kerst."
+          }
+        },
+        "c7": {
+          "type": "card",
+          "settings": {
+            "icon": "gift",
+            "color": "yellow",
+            "title": "Extra verrassing",
+            "text": "Elke box bevat iets onverwachts."
+          }
+        },
+        "c8": {
+          "type": "card",
+          "settings": {
+            "icon": "envelope",
+            "color": "green",
+            "title": "Persoonlijk kaartje",
+            "text": "Met een warme boodschap speciaal voor jouw hond."
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8"
+      ],
+      "settings": {
+        "eyebrow": "Elke box met liefde samengesteld",
+        "heading": "Wat zit er in een",
+        "heading_highlight": "Kwispelbox",
+        "heading_suffix": "?",
+        "intro": "Geen standaard cadeautje, maar een zorgvuldig samengestelde verrassing afgestemd op jouw hond.",
+        "show_badge": true,
+        "badge_text": "Geen twee boxen zijn hetzelfde",
+        "show_decorations": true
+      }
+    },
+    "special-editions": {
+      "type": "special-editions",
+      "blocks": {
+        "verjaardag": {
+          "type": "special",
+          "settings": {
+            "featured": true,
+            "icon": "cake",
+            "color": "pink",
+            "title": "Verjaardagsbox",
+            "text": "Maak van de verjaardag van jouw hond een feestje om nooit te vergeten.",
+            "badge": "Meest gekozen",
+            "button_label": "Bekijk",
+            "button_url": "/products/verjaardag-box"
+          }
+        },
+        "valentijn": {
+          "type": "special",
+          "settings": {
+            "featured": false,
+            "icon": "heart",
+            "color": "pink",
+            "title": "Valentijnsbox",
+            "text": "Een box vol liefde voor het trouwste maatje dat je hebt.",
+            "badge": "",
+            "button_label": "Bekijk",
+            "button_url": "/products/valentijn-box"
+          }
+        },
+        "kerst": {
+          "type": "special",
+          "settings": {
+            "featured": false,
+            "icon": "tree",
+            "color": "green",
+            "title": "Kerstbox",
+            "text": "Maak de feestdagen extra gezellig met een verrassing onder de boom voor jouw hond.",
+            "badge": "",
+            "button_label": "Bekijk",
+            "button_url": "/products/kerst-box"
+          }
+        },
+        "halloween": {
+          "type": "special",
+          "settings": {
+            "featured": false,
+            "icon": "pumpkin",
+            "color": "orange",
+            "title": "Halloweenbox",
+            "text": "Spookgezellige speeltjes en snoeperij voor een griezelig leuk feestje.",
+            "badge": "",
+            "button_label": "Bekijk",
+            "button_url": "/products/halloween-box"
+          }
+        },
+        "zomer": {
+          "type": "special",
+          "settings": {
+            "featured": false,
+            "icon": "sun",
+            "color": "yellow",
+            "title": "Zomerbox",
+            "text": "Verkoelende speeltjes en zomerse snacks voor dagen vol buitenpret.",
+            "badge": "",
+            "button_label": "Bekijk",
+            "button_url": "/collections/special-editions"
+          }
+        }
+      },
+      "block_order": [
+        "verjaardag",
+        "valentijn",
+        "kerst",
+        "halloween",
+        "zomer"
+      ],
+      "settings": {
+        "eyebrow": "Verrassingen voor elk speciaal moment",
+        "heading": "Er is altijd een reden om te",
+        "heading_highlight": "kwispelen",
+        "intro": "Van verjaardagen tot feestdagen. Ontdek onze leukste speciale edities.",
+        "cta_title": "Er komen regelmatig nieuwe special editions uit.",
+        "cta_text": "Blijf ons volgen en mis geen enkele feestelijke verrassing!",
+        "cta_label": "Bekijk alle special editions",
+        "cta_url": "/collections/special-editions",
+        "show_decorations": true
+      }
+    },
+    "why-kwispelbox": {
+      "type": "why-kwispelbox",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "teddy",
+            "color": "pink",
+            "title": "Altijd iets nieuws om te ontdekken",
+            "text": "Honden houden van afwisseling. Nieuwe geuren, vormen en texturen zorgen voor meer uitdaging."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "heart",
+            "color": "green",
+            "title": "Samengesteld met liefde",
+            "text": "Elke box wordt zorgvuldig samengesteld met veilige en kwalitatieve producten."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "gift",
+            "color": "yellow",
+            "title": "Een cadeautje voor hond én baasje",
+            "text": "Het uitpakken is minstens zo leuk als de inhoud zelf."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "calendar",
+            "color": "orange",
+            "title": "Afgestemd op het seizoen",
+            "text": "Verjaardag, Pasen, Kerst of gewoon zomaar een leuke verrassing."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "heading": "Waarom honden dol zijn op",
+        "heading_highlight": "Kwispelbox",
+        "intro": "Omdat elke box een feestje is voor jouw hond én voor jou.",
+        "show_badge": false,
+        "badge_text": "Geen twee boxen zijn hetzelfde",
+        "cta_label": "Bekijk de boxen",
+        "cta_url": "/collections/boxen",
+        "show_decorations": true
+      }
+    },
+    "community": {
+      "type": "community",
+      "blocks": {
+        "feat": {
+          "type": "featured",
+          "settings": {
+            "dog_name": "Luna",
+            "quote": "Ze rent iedere keer naar de deur zodra de Kwispelbox komt. Echt haar favoriete moment van de maand!",
+            "rating": 5,
+            "owner_name": "Sanne"
+          }
+        },
+        "ph1": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Milo"
+          }
+        },
+        "ph2": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Pip"
+          }
+        },
+        "ph3": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Boris"
+          }
+        },
+        "ph4": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Nala"
+          }
+        },
+        "ph5": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Max"
+          }
+        },
+        "ph6": {
+          "type": "photo",
+          "settings": {
+            "dog_name": "Charlie"
+          }
+        },
+        "st1": {
+          "type": "stat",
+          "settings": {
+            "icon": "users",
+            "color": "green",
+            "value": "Voor honden,",
+            "label": "door hondenliefhebbers"
+          }
+        },
+        "st2": {
+          "type": "stat",
+          "settings": {
+            "icon": "camera",
+            "color": "pink",
+            "value": "Dagelijks",
+            "label": "Nieuwe foto's en verhalen"
+          }
+        },
+        "st3": {
+          "type": "stat",
+          "settings": {
+            "icon": "heart",
+            "color": "yellow",
+            "value": "Samen",
+            "label": "Eén grote community van hondenliefhebbers"
+          }
+        },
+        "st4": {
+          "type": "stat",
+          "settings": {
+            "icon": "heart",
+            "color": "yellow",
+            "value": "Een echt",
+            "label": "cadeautje voor je hond"
+          }
+        }
+      },
+      "block_order": [
+        "feat",
+        "ph1",
+        "ph2",
+        "ph3",
+        "ph4",
+        "ph5",
+        "ph6",
+        "st1",
+        "st2",
+        "st3",
+        "st4"
+      ],
+      "settings": {
+        "eyebrow": "Een community vol kwispelende staarten",
+        "heading": "Voor honden, door hondenliefhebbers.",
+        "intro": "Elke dag maken we honden (en hun baasjes) blij met onze verrassingsboxen.",
+        "show_decorations": true
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Luna",
+            "breed": "Golden Retriever",
+            "badge": "Happy Box",
+            "badge_color": "pink",
+            "rating": 5,
+            "review_title": "Haar staart gaat meteen los",
+            "review_text": "Zodra het pakketje op de mat ligt, weet Luna precies hoe laat het is. De speeltjes zijn lekker stevig en de knuffel gaat overal mee naartoe. We zijn er allebei blij mee.",
+            "verified_text": "Geverifieerde aankoop",
+            "accent": "pink"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Milo",
+            "breed": "Border Collie",
+            "badge": "Mega Box",
+            "badge_color": "orange",
+            "rating": 5,
+            "review_title": "Je voelt dat het met zorg is uitgezocht",
+            "review_text": "Milo is een echte bezige hond, maar met de Mega box heeft hij genoeg te doen. Mooi samengesteld en het uitpakken voelt echt als een cadeautje.",
+            "verified_text": "Geverifieerde aankoop",
+            "accent": "orange"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Bobby",
+            "breed": "Cockapoo",
+            "badge": "Mini Box",
+            "badge_color": "green",
+            "rating": 5,
+            "review_title": "Zelfs onze kieskeurige Bobby is om",
+            "review_text": "Bobby snuffelt normaal overal aan voorbij, maar de speeltjes en snacks uit de Mini box vindt hij echt leuk. Fijn formaat voor een kleine hond en netjes bezorgd.",
+            "verified_text": "Geverifieerde aankoop",
+            "accent": "green"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "eyebrow": "Geliefd door honden én hun baasjes",
+        "title": "Wat onze klanten zeggen",
+        "subtitle": "Elke box stellen we met liefde samen. Lees wat baasjes van hun Kwispelbox vinden.",
+        "highlight_word": "Kwispelbox",
+        "show_decorations": true
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "sparkles",
+            "color": "green",
+            "title": "Special Editions",
+            "text": "Als eerste weten"
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "bulb",
+            "color": "pink",
+            "title": "Kwispeltips",
+            "text": "Handig & inspirerend"
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "tag",
+            "color": "orange",
+            "title": "Exclusieve acties",
+            "text": "Alleen voor leden"
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shield",
+            "color": "green",
+            "title": "Geen spam,",
+            "text": "alleen leuks"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ],
+      "settings": {
+        "eyebrow": "Sluit je aan bij de Kwispelclub",
+        "heading": "Mis nooit meer een verrassing",
+        "intro": "Wees als eerste op de hoogte van onze Special Editions, exclusieve acties, handige hondentips en leuke verrassingen.",
+        "signup_title": "Word lid van de Kwispelclub!",
+        "signup_text": "Meld je aan voor onze nieuwsbrief en ontvang pootje-voor updates, tips en exclusieve voordelen.",
+        "placeholder": "Jouw e-mailadres",
+        "button_label": "Aanmelden",
+        "note": "Geen spam, alleen leuke updates.",
+        "success_text": "Hoera! Je staat op de lijst. Houd je inbox in de gaten voor leuke verrassingen.",
+        "show_decorations": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "product-boxes",
+    "home-steps",
+    "box-contents",
+    "special-editions",
+    "why-kwispelbox",
+    "community",
+    "reviews",
+    "newsletter"
+  ]
+}
