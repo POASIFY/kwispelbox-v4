@@ -92,6 +92,15 @@ Toe te voegen iconen (SVG): ~~`clock`~~ ✅, `home`/huis, pleister (beterschap),
 - Mobiel: beeld boven de tekst. `theme check`: 0 nieuwe fouten.
 - Openstaand: aparte **mobiele hero-crop** (`hero-home-mobile.png`) — nu wordt de desktop-afbeelding gebruikt.
 
+### ⚠️ Les: GitHub-sync & JSON-templates (belangrijk)
+- **Nooit een sectie in `sections` laten staan die niet in `order` zit.** Zo'n "wees"-sectie laat
+  Shopify's GitHub-**import de héle `templates/index.json` weigeren** — de oude versie blijft dan staan
+  en je wijzigingen komen niet live. `shopify theme check` detecteert dit NIET.
+- Symptoom hier: header/sectiebestanden syncten wél, `index.json` niet. Bleek de wees-`trust-bar` te zijn.
+- Verifieer een homepage-wijziging via de Admin API (theme files → `templates/index.json`) i.p.v. alleen
+  de editor/preview (die kan cachen). Lokale bytes == thema `size` = zeker goed gesynct.
+- Direct schrijven naar het live/MAIN-thema via de API is geblokkeerd; git is het enige kanaal.
+
 ### Aandachtspunt: fonts niet in git
 `lilita-one-*.woff2` en `karla-*.woff2` worden gerefereerd in `css-variables.liquid`/`theme.liquid` maar
 staan niet in de repo (wél op het live thema). Werkt nu, maar een verse deploy vanaf git mist ze.
