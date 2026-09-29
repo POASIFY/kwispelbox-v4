@@ -4,14 +4,17 @@
   Behoudt volledige Shopify cart-functionaliteit + AJAX steppers/add (Cart API).
 {%- endcomment -%}
 
-{%- assign threshold = section.settings.free_shipping_threshold | times: 100 -%}
+{%- comment -%} Beloftes uit de globale settings (één bron); val terug op sectie-instelling. {%- endcomment -%}
+{%- assign fs_eur = settings.kb_free_shipping | default: section.settings.free_shipping_threshold -%}
+{%- assign gift_eur = settings.kb_gift_threshold | default: section.settings.gift_threshold -%}
+{%- assign threshold = fs_eur | times: 100 -%}
 
 {%- comment -%} GWP-variant vooraf bepalen zodat de data-attributen op de root kloppen. {%- endcomment -%}
 {%- assign gwp_gift = all_products[section.settings.gift_product_handle] -%}
 {%- assign gwp_gift_variant_id = gwp_gift.selected_or_first_available_variant.id -%}
 
 <div class="kbcart full-width" data-cart-section="{{ section.id }}"
-  {%- if section.settings.gift_threshold > 0 and gwp_gift_variant_id != blank %} data-gwp-gift-id="{{ gwp_gift_variant_id }}" data-gwp-threshold="{{ section.settings.gift_threshold | times: 100 }}"{%- endif -%}
+  {%- if gift_eur > 0 and gwp_gift_variant_id != blank %} data-gwp-gift-id="{{ gwp_gift_variant_id }}" data-gwp-threshold="{{ gift_eur | times: 100 }}"{%- endif -%}
 >
   <p class="kbcart__sr-status" aria-live="polite" role="status"></p>
   {%- if section.settings.show_decorations -%}
@@ -74,9 +77,9 @@
           <div class="kbcart__card">
 
             {%- comment -%} Gratis-verzending voortgang {%- endcomment -%}
-            {%- comment -%} Beloningsladder: gratis verzending (€75) → gratis mystery verrassing (€89) {%- endcomment -%}
+            {%- comment -%} Beloningsladder: gratis verzending → gratis mystery verrassing (drempels uit globale settings) {%- endcomment -%}
             {%- if section.settings.show_shipping_bar and threshold > 0 -%}
-              {%- assign gift_t = section.settings.gift_threshold | times: 100 -%}
+              {%- assign gift_t = gift_eur | times: 100 -%}
               {%- assign gift_name = section.settings.gift_label | default: 'mystery verrassing' -%}
               {%- if gift_t > threshold -%}{%- assign bar_top = gift_t -%}{%- else -%}{%- assign bar_top = threshold -%}{%- endif -%}
               {%- assign bar_pct = cart.total_price | times: 100 | divided_by: bar_top -%}
@@ -887,7 +890,7 @@
     { "type": "checkbox", "id": "show_decorations", "label": "Pootjes-decoratie tonen", "default": true },
     { "type": "header", "content": "Gratis verzending" },
     { "type": "checkbox", "id": "show_shipping_bar", "label": "Beloningsladder tonen", "default": true },
-    { "type": "number", "id": "free_shipping_threshold", "label": "Drempel gratis verzending (in €)", "default": 75 },
+    { "type": "number", "id": "free_shipping_threshold", "label": "Drempel gratis verzending (in €)", "default": 50 },
     { "type": "number", "id": "gift_threshold", "label": "Drempel gratis cadeau (in €)", "default": 89, "info": "0 = geen tweede drempel." },
     { "type": "text", "id": "gift_label", "label": "Naam gratis cadeau", "default": "mystery verrassing" },
     { "type": "text", "id": "gift_product_handle", "label": "Product-handle gratis cadeau", "default": "gratis-mystery-verrassing", "info": "Het (verborgen, €0) product dat automatisch wordt toegevoegd vanaf de drempel." },

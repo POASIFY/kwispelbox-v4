@@ -47,7 +47,7 @@
           "settings": {
             "icon": "truck",
             "color": "green",
-            "text": "Gratis verzending vanaf €75"
+            "text": "Gratis verzending vanaf €50"
           }
         },
         "tb2": {
@@ -400,7 +400,7 @@
           "type": "faq",
           "settings": {
             "question": "Hoe snel wordt mijn box geleverd?",
-            "answer": "Voor 23:59 besteld? Dan is je box meestal de volgende werkdag in huis. Gepersonaliseerde boxen kunnen iets meer tijd nodig hebben."
+            "answer": "Voor 16:00 besteld? Dan is je box meestal de volgende werkdag in huis. Gepersonaliseerde boxen kunnen iets meer tijd nodig hebben."
           }
         },
         "q2": {
@@ -445,7 +445,7 @@
         "contact_text": "Ons team van hondenliefhebbers helpt je graag snel en persoonlijk verder.",
         "contact_cta_label": "Neem contact op",
         "contact_cta_url": "",
-        "contact_email": "hallo@kwispelbox.nl"
+        "contact_email": "hallo@kwispelbox.com"
       }
     },
     "cta": {

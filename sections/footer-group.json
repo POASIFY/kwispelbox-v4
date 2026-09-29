@@ -14,7 +14,7 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "usp1": { "type": "usp", "settings": { "icon": "truck", "color": "green", "title": "Gratis verzending", "text": "vanaf €75" } },
+        "usp1": { "type": "usp", "settings": { "icon": "truck", "color": "green", "title": "Gratis verzending", "text": "vanaf €50" } },
         "usp2": { "type": "usp", "settings": { "icon": "heart", "color": "pink", "title": "Met liefde", "text": "samengesteld in Nederland" } },
         "usp3": { "type": "usp", "settings": { "icon": "heart", "color": "yellow", "title": "Met liefde", "text": "samengesteld" } },
         "usp4": { "type": "usp", "settings": { "icon": "shield", "color": "green", "title": "Veilig betalen", "text": "met jouw favoriete betaalmethode" } },

@@ -1,11 +1,22 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Kwispelbox KB-v3",
-    "theme_version": "3.0.0",
+    "theme_name": "Kwispelbox KB-v4",
+    "theme_version": "4.0.0",
     "theme_author": "POASIFY",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
     "theme_support_url": "https://support.shopify.com/"
+  },
+  {
+    "name": "Kwispelbox — beloftes",
+    "settings": [
+      { "type": "paragraph", "content": "Eén centrale bron voor je beloftes. Secties lezen hieruit, zodat je verzending, cutoff, cadeau-drempel en e-mail op één plek aanpast." },
+      { "type": "number", "id": "kb_free_shipping", "label": "Gratis-verzenddrempel (€)", "default": 50 },
+      { "type": "text", "id": "kb_order_cutoff", "label": "Bestel-cutoff (tijd)", "default": "16:00" },
+      { "type": "text", "id": "kb_delivery", "label": "Levertijd-tekst", "default": "morgen in huis" },
+      { "type": "number", "id": "kb_gift_threshold", "label": "Drempel gratis cadeau (€)", "default": 89 },
+      { "type": "text", "id": "kb_support_email", "label": "Klantenservice e-mail", "default": "hallo@kwispelbox.com" }
+    ]
   },
   {
     "name": "Indeling",

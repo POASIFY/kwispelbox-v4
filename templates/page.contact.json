@@ -23,9 +23,9 @@
             "icon": "mail",
             "color": "green",
             "title": "Mail ons",
-            "text": "hello@kwispelbox.nl",
+            "text": "hallo@kwispelbox.com",
             "link_label": "Stuur een mail",
-            "link_url": "mailto:hello@kwispelbox.nl"
+            "link_url": "mailto:hallo@kwispelbox.com"
           }
         },
         "t2": {
