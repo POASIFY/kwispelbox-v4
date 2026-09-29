@@ -11,6 +11,16 @@
   "type": "header",
   "name": "Navigatie",
   "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "m1": { "type": "message", "settings": { "text": "Gratis verzending vanaf €50", "icon": "icon-truck.svg" } },
+        "m2": { "type": "message", "settings": { "text": "Voor 16:00 besteld, morgen in huis", "icon": "icon-clock.svg" } },
+        "m3": { "type": "message", "settings": { "text": "Met een persoonlijk kaartje", "icon": "icon-gift.svg" } }
+      },
+      "block_order": ["m1", "m2", "m3"],
+      "settings": {}
+    },
     "header": {
       "type": "header",
       "blocks": {
@@ -86,42 +96,6 @@
             "product": "mega-kwispelbox",
             "badge": "",
             "description": "Voor honden die van veel afwisseling houden"
-          }
-        },
-        "trust_1": {
-          "type": "trust_item",
-          "settings": {
-            "title": "Gratis verzending",
-            "subtitle": "vanaf €75",
-            "url": "",
-            "icon": "icon-truck.svg"
-          }
-        },
-        "trust_2": {
-          "type": "trust_item",
-          "settings": {
-            "title": "Met liefde samengesteld in Nederland",
-            "subtitle": "",
-            "url": "",
-            "icon": "icon-paw.svg"
-          }
-        },
-        "trust_3": {
-          "type": "trust_item",
-          "settings": {
-            "title": "Elke box voelt als een cadeautje",
-            "subtitle": "",
-            "url": "",
-            "icon": "icon-gift.svg"
-          }
-        },
-        "trust_4": {
-          "type": "trust_item",
-          "settings": {
-            "title": "Lid van de Kwispelclub – spaar Kwispels & ontvang extra's",
-            "subtitle": "",
-            "url": "",
-            "icon": "icon-heart.svg"
           }
         },
         "dd_config_2": {
@@ -933,10 +907,6 @@
         "prod_1",
         "prod_2",
         "prod_3",
-        "trust_1",
-        "trust_2",
-        "trust_3",
-        "trust_4",
         "dd_config_2",
         "se1",
         "se2",
@@ -1026,6 +996,7 @@
     }
   },
   "order": [
+    "announcement-bar",
     "header"
   ]
 }

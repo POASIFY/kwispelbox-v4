@@ -20,7 +20,7 @@ Afbeeldingen-briefing: `docs/afbeeldingen-brief.md`.
 ## Sectie-plan & status
 | # | Sectie | Bestand | Aanpak | Status |
 |---|--------|---------|--------|--------|
-| 1 | Aankondigingsbalk | `announcement-bar.liquid` | aanpassen (bruin, 3 blocks) | ⬜ te doen |
+| 1 | Aankondigingsbalk | `announcement-bar.liquid` | aanpassen (bruin, 3 blocks) | ✅ gedaan |
 | 2 | Header | `header.liquid` | hergebruiken + menu/iconen | ⬜ te doen |
 | 3 | Hero | `hero.liquid` | aanpassen (3 kleurregels + 3 USP-kaartjes) | ⬜ te doen |
 | 4 | Voor elk moment | `moments.liquid` (nieuw) | nieuw, 6 tegels | ⬜ te doen |
@@ -30,7 +30,20 @@ Afbeeldingen-briefing: `docs/afbeeldingen-brief.md`.
 | 8 | Blije honden | `happy-dogs.liquid` (nieuw) | nieuw, fotoslider | ⬜ te doen |
 | 9 | Footer | `footer.liquid` | kleine aanpassing | ⬜ te doen |
 
-Toe te voegen iconen (SVG): `clock`, `home`/huis, pleister (beterschap), `bell`.
+Toe te voegen iconen (SVG): ~~`clock`~~ ✅, `home`/huis, pleister (beterschap), `bell`.
+
+### Sectie 1 — Aankondigingsbalk (gedaan)
+- `announcement-bar.liquid` herschreven: bruin (`bg_color`/`text_color` instelbaar), cream tekst+iconen,
+  3-up desktop, marquee mobiel. Preset = "Gratis verzending vanaf €50" / "Voor 16:00 besteld, morgen in huis" / "Met een persoonlijk kaartje".
+- Nieuw `assets/icon-clock.svg`.
+- `header-group.json`: announcement-bar als eerste sectie toegevoegd; oude `trust_item`-blocks uit de header
+  verwijderd (voorkomt dubbele balk). Header rendert die balk alleen bij aanwezige trust_item-blocks.
+- `shopify theme check`: 0 nieuwe fouten. (6 bestaande MissingAsset-fouten voor `.woff2`-fonts — zie aandachtspunt.)
+
+### Aandachtspunt: fonts niet in git
+`lilita-one-*.woff2` en `karla-*.woff2` worden gerefereerd in `css-variables.liquid`/`theme.liquid` maar
+staan niet in de repo (wél op het live thema). Werkt nu, maar een verse deploy vanaf git mist ze.
+Later: fontbestanden alsnog in `assets/` committen.
 
 ## Admin-setup (Shopify)
 - Store: `kwispelbox.myshopify.com` (EUR, NL).
