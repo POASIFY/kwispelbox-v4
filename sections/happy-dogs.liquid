@@ -1,0 +1,127 @@
+{%- comment -%}
+  sections/happy-dogs.liquid — Kwispelbox KB-v4
+  "Blije honden, blije baasjes" — fotoslider met afbeeldingsblocks. Volgens docs/mockup-home.png.
+{%- endcomment -%}
+
+{%- assign photos = section.blocks | where: 'type', 'photo' -%}
+{%- assign pal = 'pink,green,orange,yellow' | split: ',' -%}
+
+<section class="hd full-width" data-hd>
+  <div class="hd__inner">
+    <div class="hd__head">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="hd__heading">
+          {{ section.settings.heading }}
+          <span class="hd__heading-heart" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="hd__sub">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if photos.size > 0 -%}
+    <div class="hd__slider">
+      <button type="button" class="hd__nav hd__nav--prev" aria-label="Vorige" data-hd-prev>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <ul class="hd__track" role="list" data-hd-track>
+        {%- for block in photos -%}
+          {%- assign ti = forloop.index0 | modulo: 4 -%}
+          {%- assign tint = pal[ti] -%}
+          <li class="hd__slide" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,350,500', sizes: '280px', alt: block.settings.image.alt | default: block.settings.dog_name | default: 'Blije hond', class: 'hd__img' }}
+            {%- else -%}
+              <span class="hd__img hd__img--ph hd__img--{{ tint }}">{%- render 'lucide', icon: 'dog' -%}</span>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+      <button type="button" class="hd__nav hd__nav--next" aria-label="Volgende" data-hd-next>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+.hd { background: transparent; }
+.hd__inner { max-width: var(--page-width); margin: 0 auto; padding: var(--section-pad-sm) var(--page-margin) 16px; }
+.hd__head { display: flex; flex-direction: column; gap: 4px; }
+.hd__heading { font-family: var(--font-heading); font-size: var(--fs-h2); color: var(--color-ink); margin: 0; display: flex; align-items: center; gap: 10px; }
+.hd__heading-heart { display: inline-flex; color: var(--color-pink); }
+.hd__heading-heart svg { width: .7em; height: .7em; fill: none; stroke: currentColor; stroke-width: 2.4; }
+.hd__sub { font-family: var(--font-body); font-size: 1rem; color: var(--color-muted); margin: 0; }
+
+.hd__slider { position: relative; max-width: var(--page-width); margin: 0 auto; padding: 8px var(--page-margin) var(--section-pad-sm); }
+.hd__track { list-style: none; margin: 0; padding: 4px; display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.hd__track::-webkit-scrollbar { display: none; }
+.hd__slide { flex: 0 0 clamp(200px, 24%, 280px); scroll-snap-align: start; }
+.hd__img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.hd__img--ph { display: flex; align-items: center; justify-content: center; }
+.hd__img--ph svg { width: 40%; height: 40%; color: rgba(255,255,255,.85); }
+.hd__img--pink   { background: #f7a8c4; }
+.hd__img--green  { background: #a7d18a; }
+.hd__img--orange { background: #f4b06a; }
+.hd__img--yellow { background: #f2cf6a; }
+
+.hd__nav { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--color-line); background: #fff; color: var(--color-ink); cursor: pointer; box-shadow: var(--shadow-card); transition: background 140ms, transform 140ms; }
+.hd__nav:hover { background: var(--color-cream); }
+.hd__nav--prev { left: 6px; }
+.hd__nav--next { right: 6px; }
+.hd__nav svg { width: 20px; height: 20px; }
+
+@media (max-width: 749px) {
+  .hd__slide { flex-basis: 62%; }
+  .hd__nav { display: none; }
+}
+{% endstylesheet %}
+
+{% javascript %}
+document.querySelectorAll('[data-hd]').forEach(function (root) {
+  var track = root.querySelector('[data-hd-track]');
+  if (!track) return;
+  var step = function () {
+    var slide = track.querySelector('.hd__slide');
+    return slide ? slide.getBoundingClientRect().width + 16 : 300;
+  };
+  var prev = root.querySelector('[data-hd-prev]');
+  var next = root.querySelector('[data-hd-next]');
+  if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step() * 2, behavior: 'smooth' }); });
+  if (next) next.addEventListener('click', function () { track.scrollBy({ left: step() * 2, behavior: 'smooth' }); });
+});
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Blije honden",
+  "tag": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Kop", "default": "Blije honden, blije baasjes" },
+    { "type": "text", "id": "text", "label": "Subtekst", "default": "Tag @kwispelbox en wie weet staat jouw hond hier binnenkort!" }
+  ],
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Foto",
+      "limit": 16,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Foto" },
+        { "type": "text", "id": "dog_name", "label": "Naam hond (alt-tekst)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blije honden",
+      "blocks": [
+        { "type": "photo" }, { "type": "photo" }, { "type": "photo" },
+        { "type": "photo" }, { "type": "photo" }, { "type": "photo" }
+      ]
+    }
+  ]
+}
+{% endschema %}
