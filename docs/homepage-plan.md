@@ -29,7 +29,7 @@ Geen volledige from-scratch herbouw.
 |---|--------|---------|--------|--------|
 | 1 | Aankondigingsbalk | `announcement-bar.liquid` | aanpassen (bruin, 3 blocks) | ✅ gedaan |
 | 2 | Header | `header.liquid` | hergebruiken + menu/iconen | ✅ gedaan |
-| 3 | Hero | `hero.liquid` | aanpassen (3 kleurregels + 3 USP-kaartjes) | ⬜ te doen |
+| 3 | Hero | `hero.liquid` | aanpassen (3 kleurregels + 3 USP-kaartjes) | ✅ gedaan |
 | 4 | Voor elk moment | `moments.liquid` (nieuw) | nieuw, 6 tegels | ⬜ te doen |
 | 5 | Meest gekozen | `featured-products.liquid` (nieuw) | nieuw, collectie + metafield-kleur | ⬜ te doen |
 | 6 | Verjaardagsblok | `birthday-block.liquid` (nieuw) | nieuw, gele kaart + klantformulier | ⬜ te doen |
@@ -61,6 +61,23 @@ Toe te voegen iconen (SVG): ~~`clock`~~ ✅, `home`/huis, pleister (beterschap),
   Feestdagen → `/collections/special-editions` · Momenten → `/collections/special-editions`
   (nog geen eigen "momenten"-collectie) · Kwispelclub → `/pages/kwispelclub` ·
   Zakelijk → `/pages/partners` (nog geen aparte "zakelijk"-pagina).
+- `shopify theme check`: 0 nieuwe fouten.
+
+### Header fix naar mockup (na feedback Jasper)
+- Winkelwagen = **roze gevulde knop** (`#e75480`, witte tekst) i.p.v. wit/outline; teller-badge bruin.
+- **"Happy Kwispelbox"-chip** uitgezet (nav_chip leeg) — stond niet in de mockup.
+- Nav-icoonkleur nu per `nav_icon`-block (Boxen groen, Verjaardag roze, Feestdagen groen, Momenten roze,
+  Kwispelclub groen, Zakelijk bruin) i.p.v. van oude mega-menu-accenten.
+- Zoekbalk opgeschoond (filter/verzendknop verborgen), placeholder "Waar ben je naar op zoek?",
+  account-label "Account".
+
+### Sectie 3 — Hero (gedaan)
+- `hero.liquid` herbouwd: **titel in 3 regels met kleur per regel** (Een feestje / in een doos / voor jouw hond),
+  subtekst, knop "Kies een box", afbeelding + roze sticker + decoraties, en **3 USP-kaartjes als blocks**.
+- `index.json` hero bijgewerkt (nieuwe teksten + 3 usp-blocks). Losse **trust-bar** uit de volgorde gehaald
+  (dubbele USP-rij); keert terug als aparte **USP-balk** (sectie 7).
+- Afbeelding: voorlopig bestaande `ChatGPT_Image_16_jun_2026...` — vervangen door `hero-home-desktop.png`
+  zodra geüpload.
 - `shopify theme check`: 0 nieuwe fouten.
 
 ### Aandachtspunt: fonts niet in git
