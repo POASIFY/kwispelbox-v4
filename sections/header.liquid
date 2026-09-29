@@ -20,6 +20,7 @@
 {%- assign about_item_blocks = section.blocks | where: 'type', 'about_item' -%}
 {%- assign about_usp_blocks = section.blocks | where: 'type', 'about_usp' -%}
 {%- assign about_value_blocks = section.blocks | where: 'type', 'about_value' -%}
+{%- assign nav_icon_blocks = section.blocks | where: 'type', 'nav_icon' -%}
 
 <div class="site-header__wrapper full-width">
 
@@ -150,12 +151,9 @@
       {%- endcase -%}
       <a href="{{ link.url }}" class="site-header__cat"{% if link.active %} aria-current="page"{% endif %}>
         <span class="site-header__cat-ic site-header__cat-ic--{{ ctint }}" aria-hidden="true">
-          {%- case ci -%}
-            {%- when 1 -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>
-            {%- when 2 -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg>
-            {%- when 3 -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5.07A6 6 0 0 0 6.5 4 4.5 4.5 0 0 0 4 12.5c-.5 1-.5 2 .5 2.5.5 2 2 3 4 3h3c2 0 3.5-1 4-3 1-.5 1-1.5.5-2.5A4.5 4.5 0 0 0 17.5 4 6 6 0 0 0 13 5.07a3 3 0 0 0-2 0Z"/></svg>
-            {%- else -%}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg>
-          {%- endcase -%}
+          {%- assign cat_ic = '' -%}
+          {%- for ib in nav_icon_blocks -%}{%- if ib.settings.menu_item_index == ci -%}{%- assign cat_ic = ib.settings.icon -%}{%- endif -%}{%- endfor -%}
+          {%- if cat_ic != blank -%}{%- render 'lucide', icon: cat_ic -%}{%- else -%}{%- render 'lucide', icon: 'paw' -%}{%- endif -%}
         </span>
         <span class="site-header__cat-label">{{ link.title }}</span>
       </a>
@@ -183,7 +181,9 @@
                 {%- if b.settings.menu_item_index == lx -%}{%- assign dd = b -%}{%- endif -%}
               {%- endfor -%}
               {%- assign has_dd = false -%}
-              {%- if dd != nil or link.links.size > 0 -%}{%- assign has_dd = true -%}{%- endif -%}
+              {%- if section.settings.enable_megamenu -%}
+                {%- if dd != nil or link.links.size > 0 -%}{%- assign has_dd = true -%}{%- endif -%}
+              {%- endif -%}
 
               <li class="site-header__chip-item{% if has_dd %} site-header__chip-item--has-dd{% endif %}" data-nav-item>
 
@@ -191,12 +191,9 @@
                    class="site-header__chip{% if dd %} site-header__chip--{{ dd.settings.accent_color }}{% endif %}"
                    {% if link.active %}aria-current="page"{% endif %}
                    {% if has_dd %}aria-haspopup="true" aria-expanded="false" data-nav-trigger{% endif %}>
-                  {%- if lx == 1 -%}<span class="site-header__chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>
-                  {%- elsif lx == 2 -%}<span class="site-header__chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></svg></span>
-                  {%- elsif lx == 3 -%}<span class="site-header__chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z"/></svg></span>
-                  {%- elsif lx == 4 -%}<span class="site-header__chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="4" r="2"/><circle cx="18" cy="8" r="2"/><circle cx="20" cy="16" r="2"/><path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z"/></svg></span>
-                  {%- elsif lx == 5 -%}<span class="site-header__chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
-                  {%- endif -%}
+                  {%- assign chip_ic = '' -%}
+                  {%- for ib in nav_icon_blocks -%}{%- if ib.settings.menu_item_index == lx -%}{%- assign chip_ic = ib.settings.icon -%}{%- endif -%}{%- endfor -%}
+                  {%- if chip_ic != blank -%}<span class="site-header__chip-icon" aria-hidden="true">{%- render 'lucide', icon: chip_ic -%}</span>{%- endif -%}
                   {{ link.title }}
                   {%- if has_dd -%}
                     <span class="site-header__chip-chevron" aria-hidden="true">
@@ -899,17 +896,15 @@
         {%- assign nav_about_count = 0 -%}
         {%- for b in about_item_blocks -%}{%- if b.settings.menu_item_index == nav_lx -%}{%- assign nav_about_count = nav_about_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
         {%- assign drawer_has_sub = false -%}
-        {%- if link.links.size > 0 or nav_se_count > 0 or nav_shop_count > 0 or nav_club_count > 0 or nav_about_count > 0 -%}{%- assign drawer_has_sub = true -%}{%- endif -%}
+        {%- if section.settings.enable_megamenu -%}
+          {%- if link.links.size > 0 or nav_se_count > 0 or nav_shop_count > 0 or nav_club_count > 0 or nav_about_count > 0 -%}{%- assign drawer_has_sub = true -%}{%- endif -%}
+        {%- endif -%}
         <li class="header-drawer__nav-item{% if drawer_has_sub %} header-drawer__nav-item--has-sub{% endif %}">
           <div class="header-drawer__nav-row">
             <span class="header-drawer__nav-icon header-drawer__nav-icon--{% if nav_lx == 1 %}green{% elsif nav_lx == 2 %}pink{% elsif nav_lx == 3 %}orange{% elsif nav_lx == 4 %}purple{% else %}pink{% endif %}" aria-hidden="true">
-              {%- if link.url contains '/partners' -%}{%- render 'lucide', icon: 'handshake' -%}
-              {%- elsif nav_lx == 1 -%}{{- 'icon-gift.svg' | inline_asset_content -}}
-              {%- elsif nav_lx == 2 -%}{{- 'icon-gift.svg' | inline_asset_content -}}
-              {%- elsif nav_lx == 3 -%}{{- 'icon-bone.svg' | inline_asset_content -}}
-              {%- elsif nav_lx == 4 -%}{{- 'icon-paw.svg' | inline_asset_content -}}
-              {%- else -%}{{- 'icon-heart.svg' | inline_asset_content -}}
-              {%- endif -%}
+              {%- assign dnav_ic = '' -%}
+              {%- for ib in nav_icon_blocks -%}{%- if ib.settings.menu_item_index == nav_lx -%}{%- assign dnav_ic = ib.settings.icon -%}{%- endif -%}{%- endfor -%}
+              {%- if dnav_ic != blank -%}{%- render 'lucide', icon: dnav_ic -%}{%- else -%}{%- render 'lucide', icon: 'paw' -%}{%- endif -%}
             </span>
             <a href="{{ link.url }}" class="header-drawer__nav-link" {% if link.active %}aria-current="page"{% endif %}>{{ link.title }}</a>
             {%- if drawer_has_sub -%}
@@ -2295,6 +2290,35 @@
   "name": "Header",
   "blocks": [
     {
+      "type": "nav_icon",
+      "name": "Menu-icoon",
+      "limit": 10,
+      "settings": [
+        { "type": "range", "id": "menu_item_index", "label": "Menu-item nummer", "info": "1 = eerste, 2 = tweede, etc.", "min": 1, "max": 10, "step": 1, "default": 1 },
+        { "type": "select", "id": "icon", "label": "Icoon", "default": "gift", "options": [
+          { "value": "gift", "label": "Cadeau" },
+          { "value": "cake", "label": "Taart" },
+          { "value": "tree", "label": "Kerstboom" },
+          { "value": "heart", "label": "Hart" },
+          { "value": "paw", "label": "Poot" },
+          { "value": "bone", "label": "Botje" },
+          { "value": "ball", "label": "Bal" },
+          { "value": "teddy", "label": "Knuffel" },
+          { "value": "star", "label": "Ster" },
+          { "value": "sparkles", "label": "Sterretjes" },
+          { "value": "sun", "label": "Zon" },
+          { "value": "leaf", "label": "Blad" },
+          { "value": "package", "label": "Pakket" },
+          { "value": "briefcase", "label": "Koffertje" },
+          { "value": "home", "label": "Huis" },
+          { "value": "calendar", "label": "Kalender" },
+          { "value": "users", "label": "Gebruikers" },
+          { "value": "crown", "label": "Kroon" },
+          { "value": "truck", "label": "Vrachtwagen" }
+        ]}
+      ]
+    },
+    {
       "type": "dropdown_config",
       "name": "Dropdown instellingen",
       "limit": 10,
@@ -3204,6 +3228,13 @@
       "id": "menu",
       "label": "Hoofdmenu",
       "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_megamenu",
+      "label": "Mega-menu's tonen",
+      "info": "Uit = strak menu met alleen iconen en links (zoals de mockup). Aan = uitklapmenu's per menu-item.",
+      "default": false
     },
     {
       "type": "link_list",

@@ -28,7 +28,7 @@ Geen volledige from-scratch herbouw.
 | # | Sectie | Bestand | Aanpak | Status |
 |---|--------|---------|--------|--------|
 | 1 | Aankondigingsbalk | `announcement-bar.liquid` | aanpassen (bruin, 3 blocks) | ✅ gedaan |
-| 2 | Header | `header.liquid` | hergebruiken + menu/iconen | ⬜ te doen |
+| 2 | Header | `header.liquid` | hergebruiken + menu/iconen | ✅ gedaan |
 | 3 | Hero | `hero.liquid` | aanpassen (3 kleurregels + 3 USP-kaartjes) | ⬜ te doen |
 | 4 | Voor elk moment | `moments.liquid` (nieuw) | nieuw, 6 tegels | ⬜ te doen |
 | 5 | Meest gekozen | `featured-products.liquid` (nieuw) | nieuw, collectie + metafield-kleur | ⬜ te doen |
@@ -46,6 +46,22 @@ Toe te voegen iconen (SVG): ~~`clock`~~ ✅, `home`/huis, pleister (beterschap),
 - `header-group.json`: announcement-bar als eerste sectie toegevoegd; oude `trust_item`-blocks uit de header
   verwijderd (voorkomt dubbele balk). Header rendert die balk alleen bij aanwezige trust_item-blocks.
 - `shopify theme check`: 0 nieuwe fouten. (6 bestaande MissingAsset-fouten voor `.woff2`-fonts — zie aandachtspunt.)
+
+### Sectie 2 — Header (gedaan)
+- **Per-item menu-iconen instelbaar** via nieuw block `nav_icon` (menu_item_index + icoon, lucide).
+  Vervangt de hardcoded iconen op 3 plekken: desktop-chips, mobiele categorie-rij, mobiele drawer.
+- Nieuwe setting **`enable_megamenu`** (default **uit**): mega-menu's + drawer-submenu's veilig
+  uitgeschakeld → strak menu met iconen + links (zoals mockup). Alle bestaande mega-menu-blocks/data
+  **blijven bewaard**; aanzetten = alles terug (wel opnieuw koppelen aan de nieuwe menu-indeling).
+- Nieuw icoon `briefcase` in `lucide.liquid`.
+- `main-menu` (`gid://shopify/Menu/250216448165`) bijgewerkt → **Boxen, Verjaardag, Feestdagen,
+  Momenten, Kwispelclub, Zakelijk**. Iconen: gift, cake, tree, heart, paw, briefcase.
+- **Menu-bestemmingen (placeholders — Jasper mag verfijnen):**
+  Boxen → `/collections/boxen` · Verjaardag → `/products/verjaardag-box` ·
+  Feestdagen → `/collections/special-editions` · Momenten → `/collections/special-editions`
+  (nog geen eigen "momenten"-collectie) · Kwispelclub → `/pages/kwispelclub` ·
+  Zakelijk → `/pages/partners` (nog geen aparte "zakelijk"-pagina).
+- `shopify theme check`: 0 nieuwe fouten.
 
 ### Aandachtspunt: fonts niet in git
 `lilita-one-*.woff2` en `karla-*.woff2` worden gerefereerd in `css-variables.liquid`/`theme.liquid` maar
