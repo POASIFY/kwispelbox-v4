@@ -129,7 +129,7 @@
                       {%- for prop in item.properties -%}
                         {%- assign first_char = prop.first | slice: 0 -%}
                         {%- if prop.last != blank and first_char != '_' -%}
-                          <li><span>{{ prop.first }}:</span> {{ prop.last }}</li>
+                          <li><span>{{ prop.first | escape }}:</span> {{ prop.last | escape }}</li>
                         {%- endif -%}
                       {%- endfor -%}
                     {%- endcapture -%}
@@ -556,7 +556,7 @@
       e.preventDefault();
       var input = dform.querySelector('#kbcart-discount-input');
       var code = input ? input.value.trim() : '';
-      if (code) { window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart'; }
+      if (code) { window.location.href = CART_ROOT + 'discount/' + encodeURIComponent(code) + '?redirect=' + CART_ROOT + 'cart'; }
     });
 
     {%- comment -%}

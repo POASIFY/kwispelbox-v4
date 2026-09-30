@@ -74,7 +74,7 @@
     <footer class="kbcd__foot" data-cd-foot hidden>
       <div class="kbcd__subtotal"><span>Subtotaal</span><strong data-cd-subtotal></strong></div>
       <p class="kbcd__foot-note">Verzendkosten worden bij het afrekenen berekend.</p>
-      <a href="/checkout" class="kbcd__checkout" data-cd-checkout>Naar afrekenen<span aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span></a>
+      <a href="{{ routes.checkout_url }}" class="kbcd__checkout" data-cd-checkout>Naar afrekenen<span aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span></a>
       <a href="{{ routes.cart_url }}" class="kbcd__viewcart">Bekijk winkelwagen</a>
     </footer>
 
