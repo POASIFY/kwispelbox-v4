@@ -247,13 +247,10 @@
           </div>
           <p class="kbcart__total-tax">Inclusief btw</p>
 
-          {%- comment -%}
-            Eerlijke live levertijd-countdown — zelfde cutoff-logica als op de PDP.
-            JS rekent in lokale tijd; cutoff-uur via data-attribuut. Geen seconden, 1×/min.
-          {%- endcomment -%}
-          <p class="kbcart__ship-promise" data-ship-countdown data-cutoff-hour="{{ section.settings.shipping_cutoff_hour | default: 16 }}">
+          {%- comment -%} Vaste, betrouwbare levertijd-belofte uit de globale settings (geen browser-klok). {%- endcomment -%}
+          <p class="kbcart__ship-promise">
             <span class="kbcart__ship-promise-icon" aria-hidden="true">{%- render 'lucide', icon: 'truck' -%}</span>
-            <span data-ship-text>{{ section.settings.delivery_fallback | default: 'Snel in huis 🐾' }}</span>
+            <span>Voor {{ settings.kb_order_cutoff | default: '16:00' }} besteld, meestal {{ settings.kb_delivery | default: 'morgen in huis' }}</span>
           </p>
 
           {%- comment -%}
@@ -362,6 +359,13 @@
     {%- endif -%}
 
   </div>
+
+  {%- comment -%} App blocks (cart-upsells, badges) — plaatsbaar via de Theme-editor. {%- endcomment -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == '@app' -%}
+      <div class="kbcart__app-block" {{ block.shopify_attributes }}>{% render block %}</div>
+    {%- endif -%}
+  {%- endfor -%}
 
   {%- comment -%} ── Onderste trust-balk ───────────────────────── {%- endcomment -%}
   {%- assign trust_blocks = section.blocks | where: 'type', 'trust' -%}
@@ -573,35 +577,7 @@
   })();
 </script>
 
-{%- comment -%}
-  Eerlijke live levertijd-countdown in de winkelwagen. Querye't de DOM bij elke tick,
-  zodat het ook na de innerHTML-swap (cart-mutaties) blijft kloppen — geen herinit nodig.
-{%- endcomment -%}
-<script>
-  (function () {
-    function renderShip() {
-      var el = document.querySelector('.kbcart [data-ship-countdown]');
-      if (!el) { return; }
-      var out = el.querySelector('[data-ship-text]');
-      if (!out) { return; }
-      var cutoffHour = parseInt(el.getAttribute('data-cutoff-hour'), 10);
-      if (isNaN(cutoffHour)) { cutoffHour = 16; }
-      var now = new Date();
-      var cutoff = new Date(now.getFullYear(), now.getMonth(), now.getDate(), cutoffHour, 0, 0, 0);
-      var diff = cutoff.getTime() - now.getTime();
-      if (diff <= 0) {
-        out.textContent = 'Besteld? Morgen verzonden 🐾';
-        return;
-      }
-      var h = Math.floor(diff / 3600000);
-      var m = Math.floor(diff % 3600000 / 60000);
-      out.textContent = 'Bestel binnen ' + h + 'u ' + m + 'm → vandaag verzonden 🐾';
-    }
-    renderShip();
-    setInterval(renderShip, 60000);
-    document.addEventListener('visibilitychange', function () { if (!document.hidden) { renderShip(); } });
-  })();
-</script>
+{%- comment -%} Levertijd-belofte is nu vaste, betrouwbare tekst uit de globale settings; de browser-klok is verwijderd. {%- endcomment -%}
 
 {% stylesheet %}
 .kbcart { position: relative; background: var(--color-cream); padding: 40px 0 0; overflow: hidden; }
@@ -954,7 +930,8 @@
           ]
         }
       ]
-    }
+    },
+    { "type": "@app" }
   ],
   "presets": [
     {

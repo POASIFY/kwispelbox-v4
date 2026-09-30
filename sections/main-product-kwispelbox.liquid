@@ -119,13 +119,13 @@
         </div>
 
         {%- comment -%}
-          Eerlijke live levertijd-countdown tot de dagelijkse cutoff. JS rekent in lokale tijd
-          (cutoff-uur via data-attribuut). Vóór cutoff: aftellen "→ vandaag verzonden".
-          Na cutoff: "Morgen verzonden". Statische delivery_text dient enkel als no-JS fallback.
+          Vaste, betrouwbare levertijd-belofte uit de globale settings (geen browser-klok:
+          die hield geen rekening met NL-tijd, weekenden of feestdagen). De "slimme" klok kan
+          later terug zonder teksten te wijzigen — ze leest dezelfde centrale settings.
         {%- endcomment -%}
-        <p class="pdp-info__delivery" data-ship-countdown data-cutoff-hour="{{ section.settings.shipping_cutoff_hour | default: 16 }}">
+        <p class="pdp-info__delivery">
           <span class="pdp-info__delivery-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'truck' -%}</span>
-          <span data-ship-text>{{ section.settings.delivery_text | default: 'Snel in huis 🐾' }}</span>
+          <span>Voor {{ settings.kb_order_cutoff | default: '16:00' }} besteld, meestal {{ settings.kb_delivery | default: 'morgen in huis' }}</span>
         </p>
 
         {%- if section.settings.countdown_date != blank -%}
@@ -374,6 +374,13 @@
         </div>
       </div>
     {%- endif -%}
+
+    {%- comment -%} App blocks (reviews, badges, upsells) — plaatsbaar via de Theme-editor. {%- endcomment -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == '@app' -%}
+        <div class="pdp-app-block" {{ block.shopify_attributes }}>{% render block %}</div>
+      {%- endif -%}
+    {%- endfor -%}
 
     <div class="pdp-sticky" data-sticky>
       <div class="pdp-sticky__info">
@@ -828,33 +835,8 @@
     syncName();
   }
 
-  /* Eerlijke live levertijd-countdown tot de dagelijkse cutoff (lokale tijd).
-     Vóór cutoff: "Bestel binnen Xu Ym → vandaag verzonden 🐾" (aftellend).
-     Na cutoff: "Besteld? Morgen verzonden 🐾". Cutoff-uur via data-attribuut. */
-  document.querySelectorAll('[data-ship-countdown]').forEach(function (el) {
-    var out = el.querySelector('[data-ship-text]');
-    if (!out) { return; }
-    var cutoffHour = parseInt(el.getAttribute('data-cutoff-hour'), 10);
-    if (isNaN(cutoffHour)) { cutoffHour = 16; }
-    var shipTimer = null;
-    var renderShip = function () {
-      var now = new Date();
-      var cutoff = new Date(now.getFullYear(), now.getMonth(), now.getDate(), cutoffHour, 0, 0, 0);
-      var diff = cutoff.getTime() - now.getTime();
-      if (diff <= 0) {
-        out.textContent = 'Besteld? Morgen verzonden 🐾';
-        if (shipTimer !== null) { clearInterval(shipTimer); shipTimer = null; }
-        return;
-      }
-      var h = Math.floor(diff / 3600000);
-      var m = Math.floor(diff % 3600000 / 60000);
-      out.textContent = 'Bestel binnen ' + h + 'u ' + m + 'm → vandaag verzonden 🐾';
-    };
-    renderShip();
-    /* Eén keer per minuut volstaat; we tonen geen seconden. */
-    shipTimer = setInterval(renderShip, 60000);
-    document.addEventListener('visibilitychange', function () { if (!document.hidden) { renderShip(); } });
-  });
+  /* Levertijd-belofte is nu vaste, betrouwbare tekst (server-side uit globale settings);
+     de onbetrouwbare browser-klok is verwijderd. */
 
   /* Countdown — interval wordt opgeruimd bij expiratie, gepauzeerd bij verborgen tab
      of wanneer de teller uit beeld is, om INP/CPU-werk te beperken. */
@@ -1017,7 +999,8 @@
         },
         { "type": "text", "id": "text", "label": "Tekst", "default": "Gratis verzending vanaf €50" }
       ]
-    }
+    },
+    { "type": "@app" }
   ],
   "presets": [
     {
