@@ -164,7 +164,12 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
   definitief verwijderd** (critical.css — was blijven hangen, re-push fixte 't; live geverifieerd).
 - ✅ **Voor elk moment**: chunky meerkleurige **sticker-SVGs** (`snippets/moment-sticker.liquid`, bruine outline);
   kaarten breder/lager, titel direct op de tegel + wit rond pijltje (geen pill), subtiele hoek-decoraties.
-- ⬜ Volgende: **Meest gekozen** → verjaardagsblok → USP-strip → UGC-slider → footer → volledige desktop-spacing-pass.
+- ✅ **Hero + Voor elk moment**: door Jasper "goed genoeg om te bevriezen" bevonden; micro-tweaks doorgevoerd
+  (hero-bottom krapper, roze sticker kleiner, doodles selectiever; stickers groter/dikker/speelser + extra presence huis/boom/cadeau).
+- ✅ **Meest gekozen**: compactere kaarten, foto groter in het `kaart_kleur`-vlak, hiërarchie titel/desc/prijs/hart/knop,
+  kleiner/lichter hart, compacte groene knop, krappere sectie-gap. (Prijzen tonen echte productprijzen; transparante
+  productfoto's nog te uploaden voor de schoonste look.)
+- ⬜ Volgende: verjaardagsblok → USP-strip → UGC-slider → footer → volledige desktop-spacing-pass → mobiele pass (met mockup).
 - Notitie: "Meest gekozen"-leegmelding was stale; boxen zijn gepubliceerd (Webshop), collectie gekoppeld —
   4 kaarten horen te tonen (thema-productfoto's nog te uploaden).
 
