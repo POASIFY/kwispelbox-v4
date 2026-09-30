@@ -177,7 +177,11 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
   hart evt. 1–2px kleiner; producttitel-gewicht meenemen in de globale typografie-pass; daarna evt. media-schaal 3–5% bijstellen.
 - ✅ **Verjaardagsblok**: herontworpen — speelse gele banner, polaroid (+placeholder), grotere headline + cake-sticker,
   compacter formulier (subtieler e-mailveld), bredere ronde roze CTA, doodles, minder hoogte.
-- ⬜ Volgende: USP-strip → UGC-slider (blije honden) → footer → volledige desktop-spacing-pass → mobiele pass (met mockup).
+- ✅ **Verjaardagsblok**: fine-tune (polaroid groter/meer gedraaid, headline groter cluster, compactere velden,
+  subtieler e-mailveld, bredere lagere CTA, banner compacter) — **bevroren**.
+- ✅ **USP-strip**: door Jasper "zit al goed" — alleen mee in de latere typografie-pass.
+- ✅ **Blije-honden-slider**: bredere landschapsbeelden (4/3), ~6 in beeld op desktop, dichtere grid.
+- ⬜ Volgende: **footer** → volledige desktop-typografie/spacing-pass → mobiele pass (met mockup).
 - Notitie: "Meest gekozen"-leegmelding was stale; boxen zijn gepubliceerd (Webshop), collectie gekoppeld —
   4 kaarten horen te tonen (thema-productfoto's nog te uploaden).
 
