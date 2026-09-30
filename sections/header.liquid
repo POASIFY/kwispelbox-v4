@@ -847,42 +847,51 @@
 <!-- ══ MOBIEL DRAWER ════════════════════════════════════ -->
 <div class="header-drawer" id="header-drawer" role="dialog" aria-modal="true" aria-label="Navigatiemenu" aria-hidden="true">
 
-  <!-- Header: alleen sluiten -->
+  <!-- Header: logo + sluiten op één rij -->
   <div class="header-drawer__top">
+    <a href="{{ routes.root_url }}" class="header-drawer__brand" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 360 }}"
+             alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+             width="150" height="auto" loading="lazy" class="header-drawer__brand-img">
+      {%- else -%}
+        <span class="header-drawer__logo-text">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
     <button class="header-drawer__close" aria-label="Sluiten" data-drawer-close>
       {{- 'icon-close.svg' | inline_asset_content -}}
     </button>
   </div>
 
-  <!-- Merk -->
-  <a href="{{ routes.root_url }}" class="header-drawer__brand" aria-label="{{ shop.name }}">
-    {%- if section.settings.logo != blank -%}
-      <img src="{{ section.settings.logo | image_url: width: 480 }}"
-           alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
-           width="240" height="auto" loading="lazy" class="header-drawer__brand-img">
-    {%- else -%}
-      <span class="header-drawer__logo-text">{{ shop.name }}</span>
-    {%- endif -%}
-  </a>
-
-  <!-- Stats-kaart -->
-  {%- if section.settings.drawer_stat_text != blank -%}
-    <div class="header-drawer__stat">
-      <span class="header-drawer__stat-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
-      <div class="header-drawer__stat-body">
-        <strong class="header-drawer__stat-title">{{ section.settings.drawer_stat_text }}</strong>
-        {%- render 'judgeme-rating', show: 'score', size: 'sm' -%}
-      </div>
+  {%- comment -%}
+    NL/BE-marktwissel — dit IS de echte Shopify Markets localization-form (geen fake switch).
+    Het toont het huidige land en alle landen die in Shopify Admin → Markets beschikbaar zijn,
+    en wisselt de markt via Shopify's eigen localization-endpoint. Zodra België aan Markets is
+    toegevoegd, verschijnt het automatisch als tweede optie — geen extra code nodig.
+    Geen valuta hardcoded: Shopify bepaalt markt/valuta. Koppelpunt = dit form 'localization'.
+  {%- endcomment -%}
+  {%- if localization.available_countries.size > 0 -%}
+    <div class="header-drawer__market">
+      {%- form 'localization', id: 'drawer-localization', class: 'header-drawer__market-form' -%}
+        <label class="header-drawer__market-label" for="drawer-country-select">Land</label>
+        <div class="header-drawer__market-control">
+          <span class="header-drawer__market-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+          <select id="drawer-country-select" name="country_code" class="header-drawer__market-select" onchange="this.form.submit()">
+            {%- for country in localization.available_countries -%}
+              <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }}</option>
+            {%- endfor -%}
+          </select>
+          <span class="header-drawer__market-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+        </div>
+      {%- endform -%}
     </div>
   {%- endif -%}
 
-  <!-- Primaire CTA -->
-  {%- if section.settings.drawer_cta_label != blank -%}
-    <a href="{{ section.settings.drawer_cta_url | default: '/collections/boxen' }}" class="header-drawer__cta">
-      <span>{{ section.settings.drawer_cta_label }}</span>
-      <span class="header-drawer__cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-    </a>
-  {%- endif -%}
+  <!-- Subtiele merkregel (i.p.v. het grote roze stat-blok) -->
+  <p class="header-drawer__tagline">
+    <span class="header-drawer__tagline-icon" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+    Met liefde samengesteld voor blije honden
+  </p>
 
   <!-- Navigatie -->
   <nav aria-label="Mobiel menu" class="header-drawer__nav-wrap">
@@ -1099,6 +1108,14 @@
       {%- endfor -%}
     </ul>
   </nav>
+
+  <!-- Primaire CTA — bewust ná de navigatie (categorieën eerst, daarna commerciële actie) -->
+  {%- if section.settings.drawer_cta_label != blank -%}
+    <a href="{{ section.settings.drawer_cta_url | default: '/collections/boxen' }}" class="header-drawer__cta">
+      <span>{{ section.settings.drawer_cta_label }}</span>
+      <span class="header-drawer__cta-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+    </a>
+  {%- endif -%}
 
   <!-- Extra links -->
   <div class="header-drawer__extras">
@@ -1365,16 +1382,18 @@
 .site-header__search-filter:active{color:var(--color-green);}
 
 /* Mobiele categorie-rij — 4 op een rij, vult de breedte (standaard verborgen) */
-.site-header__cats{display:none;align-items:flex-start;gap:8px;padding:2px var(--page-margin) 16px;background:#fff;}
-.site-header__cat{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px;text-decoration:none;}
-.site-header__cat-ic{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:18px;transition:transform 160ms;}
+/* Compacte mobiele quick-nav (één rij, geen dashboard-tiles). Zichtbaar via .site-header__cats{display:flex} in de mobiele breakpoint. */
+.site-header__cats{display:none;align-items:flex-start;gap:6px;padding:2px var(--page-margin) 10px;background:#fff;}
+.site-header__cat{flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;padding:2px 0;border-radius:12px;}
+.site-header__cat-ic{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:14px;transition:transform 160ms;}
 .site-header__cat:active .site-header__cat-ic{transform:scale(.93);}
-.site-header__cat-ic svg{width:26px;height:26px;}
+.site-header__cat:focus-visible{outline:2px solid var(--color-green);outline-offset:2px;}
+.site-header__cat-ic svg{width:22px;height:22px;}
 .site-header__cat-ic--green{background:#eef7e8;color:var(--color-green);}
 .site-header__cat-ic--pink{background:#fdeaf2;color:var(--color-pink);}
 .site-header__cat-ic--orange{background:#fdf0e2;color:var(--color-orange);}
 .site-header__cat-ic--purple{background:#f1ecf9;color:#9579cc;}
-.site-header__cat-label{font-family:var(--font-body);font-size:.72rem;font-weight:600;color:var(--color-ink);text-align:center;line-height:1.2;}
+.site-header__cat-label{font-family:var(--font-body);font-size:.68rem;font-weight:600;color:var(--color-ink);text-align:center;line-height:1.15;}
 
 /* Announcement title/sub */
 .site-header__trust-sub{color:rgba(255,255,255,.72);font-weight:600;}
@@ -1590,11 +1609,28 @@
 .header-drawer{position:fixed;top:0;left:0;bottom:0;width:100vw;background:#fff;z-index:300;overflow-y:auto;overscroll-behavior:contain;transform:translateX(-100%);transition:transform 280ms cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
 @media(min-width:480px){.header-drawer{width:390px;}}
 .header-drawer[aria-hidden="false"]{transform:translateX(0);}
-.header-drawer__top{display:flex;justify-content:flex-end;padding:10px 12px 0;flex-shrink:0;}
-.header-drawer__close{display:flex;align-items:center;justify-content:center;background:var(--color-cream);border:none;border-radius:50%;cursor:pointer;width:38px;height:38px;padding:0;color:var(--color-ink);}
+.header-drawer__top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px 8px;flex-shrink:0;}
+.header-drawer__close{display:flex;align-items:center;justify-content:center;background:var(--color-cream);border:none;border-radius:50%;cursor:pointer;width:44px;height:44px;padding:0;color:var(--color-ink);flex-shrink:0;}
 .header-drawer__close svg{width:20px;height:20px;}
-.header-drawer__brand{display:flex;align-items:center;justify-content:center;text-decoration:none;padding:0 20px 12px;flex-shrink:0;}
-.header-drawer__brand-img{height:auto;max-height:48px;width:auto;display:block;}
+.header-drawer__brand{display:flex;align-items:center;justify-content:flex-start;text-decoration:none;padding:0;flex-shrink:1;min-width:0;}
+.header-drawer__brand-img{height:auto;max-height:44px;width:auto;display:block;}
+
+/* NL/BE-marktwissel (Shopify localization-form) */
+.header-drawer__market{padding:4px 16px 8px;flex-shrink:0;}
+.header-drawer__market-form{margin:0;}
+.header-drawer__market-label{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+.header-drawer__market-control{position:relative;display:flex;align-items:center;gap:8px;background:var(--color-cream);border:1.5px solid var(--color-line);border-radius:var(--radius-pill);padding:0 12px;height:42px;}
+.header-drawer__market-icon{display:inline-flex;color:var(--color-muted);flex-shrink:0;}
+.header-drawer__market-icon svg{width:18px;height:18px;}
+.header-drawer__market-select{appearance:none;-webkit-appearance:none;border:none;background:transparent;flex:1;min-width:0;font-family:var(--font-body);font-size:.9rem;font-weight:700;color:var(--color-ink);padding:0 18px 0 0;cursor:pointer;}
+.header-drawer__market-select:focus-visible{outline:2px solid var(--color-green);outline-offset:3px;border-radius:6px;}
+.header-drawer__market-chev{position:absolute;right:12px;display:inline-flex;color:var(--color-muted);pointer-events:none;}
+.header-drawer__market-chev svg{width:16px;height:16px;}
+
+/* Subtiele merkregel */
+.header-drawer__tagline{display:flex;align-items:center;gap:8px;margin:0 16px 6px;padding:0 2px;font-family:var(--font-body);font-size:.82rem;font-weight:600;color:var(--color-muted);flex-shrink:0;}
+.header-drawer__tagline-icon{display:inline-flex;color:var(--color-pink);flex-shrink:0;}
+.header-drawer__tagline-icon .lucide{width:15px;height:15px;}
 .header-drawer__logo-text{font-family:var(--font-heading);font-size:1.6rem;color:var(--color-ink);}
 .header-drawer__cart-count{position:absolute;top:-2px;right:-2px;background:var(--color-pink);color:#fff;font-family:var(--font-body);font-size:.6rem;font-weight:800;min-width:18px;height:18px;padding:0 4px;border-radius:999px;display:flex;align-items:center;justify-content:center;border:2px solid #fff;}
 /* Stats-kaart */
