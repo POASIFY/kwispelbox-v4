@@ -1316,11 +1316,11 @@
   box-shadow:0 10px 22px rgba(61,34,9,.10);
 }
 /* Gelabelde acties + winkelwagen-pill (naar mockup) */
-.site-header__action{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--color-ink);font-family:var(--font-body);font-size:.92rem;font-weight:600;transition:color 160ms;}
+.site-header__action{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--color-ink);font-family:var(--font-body);font-size:.92rem;font-weight:600;letter-spacing:.01em;transition:color 160ms;}
 .site-header__action:hover{color:var(--color-green);}
 .site-header__action-icon{display:inline-flex;}
 .site-header__action-icon svg{width:22px;height:22px;}
-.site-header__cart-pill{position:relative;display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border:1.5px solid #e75480;border-radius:var(--radius-pill);background:#e75480;text-decoration:none;color:#fff;font-family:var(--font-body);font-weight:700;font-size:.92rem;box-shadow:0 8px 20px rgba(231,84,128,.28);transition:background 160ms,box-shadow 160ms,transform 160ms;}
+.site-header__cart-pill{position:relative;display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border:1.5px solid #e75480;border-radius:var(--radius-pill);background:#e75480;text-decoration:none;color:#fff;font-family:var(--font-body);font-weight:700;font-size:.92rem;letter-spacing:.015em;box-shadow:0 8px 20px rgba(231,84,128,.28);transition:background 160ms,box-shadow 160ms,transform 160ms;}
 .site-header__cart-pill:hover{background:#d64470;border-color:#d64470;transform:translateY(-2px);box-shadow:0 12px 26px rgba(231,84,128,.34);}
 .site-header__cart-pill svg{width:22px;height:22px;}
 .site-header__cart-pill .site-header__cart-count{position:absolute;top:-6px;right:-4px;background:var(--color-ink);color:#fff;font-family:var(--font-body);font-size:.66rem;font-weight:800;min-width:20px;height:20px;padding:0 5px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;border:2px solid #fff;}
@@ -1421,7 +1421,8 @@
   border-radius:var(--radius-pill);
   font-family:var(--font-body);
   font-size:.92rem;
-  font-weight:700;
+  font-weight:600;
+  letter-spacing:.01em;
   text-decoration:none;
   white-space:nowrap;
   color:var(--color-ink);
