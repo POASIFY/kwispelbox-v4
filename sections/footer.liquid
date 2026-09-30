@@ -157,21 +157,21 @@
 /* Speelse doodles (subtiel) */
 .kbfoot__doodle { position: absolute; z-index: 0; color: #f3ece0; opacity: .05; pointer-events: none; }
 .kbfoot__doodle svg { width: 100%; height: 100%; }
-.kbfoot__doodle--paw1 { top: 34px; right: 6%; width: 58px; transform: rotate(18deg); }
-.kbfoot__doodle--paw2 { bottom: 90px; left: 3%; width: 46px; transform: rotate(-14deg); }
-.kbfoot__doodle--bone { top: 46%; left: 40%; width: 60px; transform: rotate(24deg); opacity: .04; }
+.kbfoot__doodle--paw1 { top: 34px; right: 6%; width: 58px; transform: rotate(18deg); opacity: .06; }
+.kbfoot__doodle--paw2 { bottom: 90px; left: 3%; width: 46px; transform: rotate(-14deg); opacity: .06; }
+.kbfoot__doodle--bone { top: 46%; left: 40%; width: 60px; transform: rotate(24deg); opacity: .045; }
 
-.kbfoot__main { display: grid; grid-template-columns: 1.4fr 2.4fr 1.5fr; gap: 40px; padding-bottom: 32px; align-items: start; }
+.kbfoot__main { display: grid; grid-template-columns: 1.15fr 2.75fr 1.5fr; gap: 30px 44px; padding-bottom: 30px; align-items: start; }
 
 /* Merk */
 .kbfoot__logo { display: inline-flex; text-decoration: none; }
 .kbfoot__logo-img { height: auto; max-height: 64px; width: auto; display: block; }
 .kbfoot__logo-text { font-family: var(--font-heading); font-size: 1.8rem; color: #fff; }
-.kbfoot__tagline { font-family: var(--font-body); font-size: .92rem; line-height: 1.65; color: var(--foot-soft); margin: 16px 0 0; max-width: 32ch; }
-.kbfoot__socials { display: flex; gap: 11px; margin-top: 20px; }
-.kbfoot__social { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: #f3ece0; color: var(--foot); transition: transform 160ms, background 160ms, color 160ms; }
-.kbfoot__social svg { width: 20px; height: 20px; }
-.kbfoot__social:hover { transform: translateY(-2px); background: var(--color-green); color: #fff; }
+.kbfoot__tagline { font-family: var(--font-body); font-size: .86rem; line-height: 1.55; color: rgba(243,236,224,.5); margin: 14px 0 0; max-width: 30ch; }
+.kbfoot__socials { display: flex; gap: 12px; margin-top: 22px; }
+.kbfoot__social { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: #f3ece0; color: var(--foot); box-shadow: 0 4px 12px rgba(0,0,0,.18); transition: transform 160ms, background 160ms, color 160ms; }
+.kbfoot__social svg { width: 21px; height: 21px; }
+.kbfoot__social:hover { transform: translateY(-3px); background: var(--color-pink); color: #fff; }
 
 /* Link-kolommen */
 .kbfoot__cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px 24px; }
@@ -179,26 +179,26 @@
 .kbfoot__col-head { list-style: none; display: flex; align-items: center; gap: 10px; cursor: default; }
 .kbfoot__col-head::-webkit-details-marker { display: none; }
 .kbfoot__col-icon { display: none; }
-.kbfoot__col-title { font-family: var(--font-heading); font-size: 1.1rem; color: #fff; position: relative; padding-bottom: 10px; }
-.kbfoot__col-title::after { content: ""; position: absolute; left: 0; bottom: 0; width: 26px; height: 2.5px; border-radius: 2px; background: var(--color-pink); }
+.kbfoot__col-title { font-family: var(--font-heading); font-size: 1.05rem; color: #fff; position: relative; padding-bottom: 9px; }
+.kbfoot__col-title::after { content: ""; position: absolute; left: 0; bottom: 0; width: 24px; height: 2.5px; border-radius: 2px; background: var(--color-pink); }
 .kbfoot__col-chev { display: none; }
-.kbfoot__col-list { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.kbfoot__link { font-family: var(--font-body); font-size: .92rem; color: var(--foot-soft); text-decoration: none; transition: color 140ms; }
+.kbfoot__col-list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+.kbfoot__link { font-family: var(--font-body); font-size: .9rem; color: var(--foot-soft); text-decoration: none; transition: color 140ms; }
 .kbfoot__link:hover { color: #fff; }
 
 /* Nieuwsbrief-kaart + hond */
 .kbfoot__news { position: relative; }
 .kbfoot__news-dog { display: block; width: 70%; max-width: 240px; height: auto; margin: 0 auto -26px; position: relative; z-index: 1; }
-.kbfoot__news-card { position: relative; background: #e7f1dd; border-radius: 22px; padding: 26px 24px; }
-.kbfoot__news-title { display: block; font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-ink); line-height: 1.2; margin-bottom: 16px; }
+.kbfoot__news-card { position: relative; background: #e7f1dd; border-radius: 22px; padding: 22px 22px; }
+.kbfoot__news-title { display: block; font-family: var(--font-heading); font-size: 1.22rem; color: var(--color-ink); line-height: 1.18; margin-bottom: 14px; }
 .kbfoot__news-em { color: var(--color-green); }
-.kbfoot__news-field { position: relative; margin-bottom: 12px; }
-.kbfoot__news-input { width: 100%; box-sizing: border-box; height: 52px; padding: 0 46px 0 18px; border: 1.5px solid transparent; border-radius: var(--radius-pill); background: #fff; font-family: var(--font-body); font-size: .95rem; color: var(--color-ink); }
+.kbfoot__news-field { position: relative; margin-bottom: 10px; }
+.kbfoot__news-input { width: 100%; box-sizing: border-box; height: 48px; padding: 0 46px 0 18px; border: 1.5px solid transparent; border-radius: var(--radius-pill); background: #fff; font-family: var(--font-body); font-size: .95rem; color: var(--color-ink); }
 .kbfoot__news-input:focus { outline: none; border-color: var(--color-green); }
 .kbfoot__news-input::placeholder { color: var(--color-muted); }
 .kbfoot__news-mail { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--color-muted); pointer-events: none; }
 .kbfoot__news-mail svg { width: 19px; height: 19px; display: block; }
-.kbfoot__news-btn { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 52px; border: none; border-radius: var(--radius-pill); background: var(--color-pink); color: #fff; font-family: var(--font-heading); font-size: 1.02rem; cursor: pointer; transition: background 160ms, transform 160ms; }
+.kbfoot__news-btn { width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 48px; border: none; border-radius: var(--radius-pill); background: var(--color-pink); color: #fff; font-family: var(--font-heading); font-size: 1rem; cursor: pointer; transition: background 160ms, transform 160ms; }
 .kbfoot__news-btn:hover { background: #c13c6a; transform: translateY(-2px); }
 .kbfoot__news-arrow svg { width: 18px; height: 18px; display: block; }
 .kbfoot__news-ok { font-family: var(--font-body); font-weight: 700; color: var(--color-green); margin: 0; }
@@ -208,21 +208,21 @@
 .kbfoot__follow-text { font-family: var(--font-heading); font-size: 1rem; color: var(--foot-soft); }
 
 /* Betaalrij */
-.kbfoot__payrow { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; padding: 24px 0; border-top: 1px solid rgba(243,236,224,.12); }
-.kbfoot__pay-note { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .9rem; font-weight: 700; color: var(--foot-soft); }
+.kbfoot__payrow { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding: 18px 0; border-top: 1px solid rgba(243,236,224,.1); }
+.kbfoot__pay-note { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .84rem; font-weight: 700; color: rgba(243,236,224,.55); }
 .kbfoot__pay-heart { display: inline-flex; color: #f0c14b; }
 .kbfoot__pay-heart svg { width: 17px; height: 17px; fill: currentColor; stroke: currentColor; }
 .kbfoot__pay { display: flex; flex-wrap: wrap; gap: 8px; }
-.kbfoot__pay-icon { width: 46px; height: 30px; border-radius: 6px; background: #fff; }
-.kbfoot__pay-world { font-family: var(--font-body); font-size: .85rem; color: var(--foot-soft); margin-left: auto; }
+.kbfoot__pay-icon { width: 42px; height: 28px; border-radius: 5px; background: #fff; }
+.kbfoot__pay-world { font-family: var(--font-body); font-size: .82rem; color: rgba(243,236,224,.45); margin-left: auto; }
 
 /* Onderbalk */
-.kbfoot__legal { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 20px 0 28px; border-top: 1px solid rgba(243,236,224,.12); }
-.kbfoot__copy { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .85rem; color: var(--foot-soft); margin: 0; }
+.kbfoot__legal { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 16px 0 24px; border-top: 1px solid rgba(243,236,224,.1); }
+.kbfoot__copy { display: inline-flex; align-items: center; gap: 9px; font-family: var(--font-body); font-size: .82rem; color: rgba(243,236,224,.55); margin: 0; }
 .kbfoot__copy-heart { display: inline-flex; color: var(--color-pink); }
 .kbfoot__copy-heart svg { width: 15px; height: 15px; fill: currentColor; stroke: currentColor; }
 .kbfoot__legal-links { display: inline-flex; align-items: center; gap: 22px; flex-wrap: wrap; }
-.kbfoot__legal-links a { font-family: var(--font-body); font-size: .85rem; color: var(--foot-soft); text-decoration: none; transition: color 140ms; }
+.kbfoot__legal-links a { font-family: var(--font-body); font-size: .82rem; color: rgba(243,236,224,.55); text-decoration: none; transition: color 140ms; }
 .kbfoot__legal-links a:hover { color: #fff; }
 
 .kbfoot__sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
@@ -341,7 +341,7 @@
   "settings": [
     { "type": "header", "content": "Merk" },
     { "type": "image_picker", "id": "logo", "label": "Logo (leeg = winkelnaam)" },
-    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Elke Kwispelbox is met liefde samengesteld en voelt als een cadeautje voor je hond. Omdat jouw trouwe vriend alleen het allerbeste verdient." },
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "Cadeauboxen vol verrassingen, met liefde samengesteld voor jouw trouwe viervoeter." },
     { "type": "url", "id": "instagram", "label": "Instagram URL" },
     { "type": "url", "id": "tiktok", "label": "TikTok URL" },
     { "type": "url", "id": "pinterest", "label": "Pinterest URL" },
