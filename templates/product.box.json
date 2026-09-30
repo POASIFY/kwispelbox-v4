@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -7,7 +16,10 @@
           "type": "box_option",
           "settings": {
             "variant_title": "Mini",
-            "description": "Een fijne kennismaking"
+            "description": "Een fijne kennismaking",
+            "item_count": "± 5 verrassingen",
+            "badge_text": "",
+            "badge_color": "pink"
           }
         },
         "o2": {
@@ -15,6 +27,7 @@
           "settings": {
             "variant_title": "Happy",
             "description": "Onze populairste keuze",
+            "item_count": "± 5 verrassingen",
             "badge_text": "Meest gekozen",
             "badge_color": "pink"
           }
@@ -23,21 +36,50 @@
           "type": "box_option",
           "settings": {
             "variant_title": "Mega",
-            "description": "Maximaal verwennen"
+            "description": "Maximaal verwennen",
+            "item_count": "± 5 verrassingen",
+            "badge_text": "",
+            "badge_color": "pink"
           }
         }
       },
-      "block_order": ["o1", "o2", "o3"],
+      "block_order": [
+        "o1",
+        "o2",
+        "o3"
+      ],
       "settings": {
+        "badge_primary": "Meest gekozen",
+        "badge_secondary": "Gratis verzending",
         "eyebrow": "Special edition",
+        "reviews_url": "/pages/reviews",
+        "intro": "<p>Met liefde stellen we een verrassingsbox samen, boordevol speelplezier en lekkers. Want jouw hond verdient een feestje!</p>",
         "accent": "green",
+        "urgency_text": "",
+        "delivery_text": "Snel in huis 🐾",
+        "shipping_cutoff_hour": 16,
+        "countdown_date": "",
+        "countdown_label": "Nog te bestellen:",
+        "dogname_label": "Voor wie pakken we in? 🐾",
+        "dogname_placeholder": "De naam van je hond",
         "options_title": "Kies jouw maat",
         "show_personalize": true,
+        "personalize_open": false,
         "personalize_title": "Maak het persoonlijk",
         "personalize_text": "Een paar details maken het cadeau compleet.",
+        "show_photo_upload": true,
+        "personalize_note": "Je box wordt met liefde op maat samengesteld.",
         "atc_label": "Verras je hond",
         "atc_summary": "Een unieke box vol verrassingen, met de hand samengesteld.",
-        "reviews_url": "/pages/reviews"
+        "gwp_hint": "Vanaf €89 stoppen we er een gratis verrassing bij",
+        "show_value_stack": true,
+        "value_title": "Wat krijgt jouw hond?",
+        "value_total": "€64,95",
+        "show_guarantee": true,
+        "guarantee_days": "30",
+        "guarantee_title": "Niet-goed-geld-terug garantie",
+        "guarantee_text": "Is je hond niet door het dolle? Je krijgt je geld terug.",
+        "ugc_title": "Blije honden, échte foto’s"
       }
     },
     "contents": {
@@ -48,7 +90,17 @@
         "heading_highlight": "",
         "heading_suffix": "",
         "intro": "Elke box stellen we met de hand samen, afgestemd op de gekozen maat.",
+        "show_badge": true,
+        "badge_text": "Geen twee boxen zijn hetzelfde",
         "show_decorations": true
+      }
+    },
+    "extras": {
+      "type": "product-extras",
+      "settings": {
+        "heading": "Maak er een écht cadeau van",
+        "text": "Voeg een klein extraatje toe — met één tik.",
+        "collection": ""
       }
     },
     "jmereviews": {
@@ -90,20 +142,26 @@
           }
         }
       },
-      "block_order": ["q1", "q2", "q3", "q4"],
-      "settings": { "title": "Veelgestelde vragen" }
-    },
-    "extras": {
-      "type": "product-extras",
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
       "settings": {
-        "heading": "Maak er een écht cadeau van",
-        "text": "Voeg een klein extraatje toe — met één tik."
+        "title": "Veelgestelde vragen",
+        "contact_title": "Toch nog vragen?",
+        "contact_text": "Ons team van hondenliefhebbers helpt je graag snel en persoonlijk verder.",
+        "contact_cta_label": "Neem contact op",
+        "contact_cta_url": "",
+        "contact_email": "hallo@kwispelbox.com"
       }
     },
     "related": {
       "type": "product-related",
       "settings": {
-        "heading": "Ook leuk voor je hond"
+        "heading": "Ook leuk voor je hond",
+        "collection": ""
       }
     },
     "cta": {
@@ -112,9 +170,18 @@
         "title": "Klaar om je hond te verrassen?",
         "text": "Kies een maat en maak er een echt cadeau van.",
         "button_label": "Bekijk alle boxen",
-        "button_url": "/collections/boxen"
+        "button_url": "/collections/boxen",
+        "show_decorations": true
       }
     }
   },
-  "order": ["main", "contents", "extras", "jmereviews", "faq", "related", "cta"]
+  "order": [
+    "main",
+    "contents",
+    "extras",
+    "jmereviews",
+    "faq",
+    "related",
+    "cta"
+  ]
 }
