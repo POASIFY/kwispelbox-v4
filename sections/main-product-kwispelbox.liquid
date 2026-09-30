@@ -12,6 +12,28 @@
 {%- assign current = product.selected_or_first_available_variant -%}
 
 {%- comment -%}
+  ── Metafield-gedreven content (één gedeeld template voor alle boxen) ──
+  Occasion-verschil komt uit custom.* metafields; sectie-settings zijn fallback.
+  Zie docs/pdp-plan.md.
+{%- endcomment -%}
+{%- assign mf = product.metafields.custom -%}
+{%- assign occ = mf.occasion.value | first | default: '' -%}
+{%- assign pdp_accent = section.settings.accent | default: 'green' -%}
+{%- case occ -%}
+  {%- when 'verjaardag' -%}{%- assign pdp_accent = 'yellow' -%}
+  {%- when 'kerst' -%}{%- assign pdp_accent = 'green' -%}
+  {%- when 'halloween' -%}{%- assign pdp_accent = 'orange' -%}
+  {%- when 'dierendag' -%}{%- assign pdp_accent = 'yellow' -%}
+  {%- when 'valentijn' -%}{%- assign pdp_accent = 'pink' -%}
+{%- endcase -%}
+{%- assign pdp_badge = mf.badge.value | default: section.settings.badge_primary -%}
+{%- assign pdp_short = mf.short_description.value -%}
+{%- assign pdp_personalize = section.settings.show_personalize -%}
+{%- if mf.personalization_available != blank -%}{%- assign pdp_personalize = mf.personalization_available.value -%}{%- endif -%}
+{%- assign pdp_card = false -%}
+{%- if mf.card_available.value == true -%}{%- assign pdp_card = true -%}{%- endif -%}
+
+{%- comment -%}
   LCP-preload: de eerste galerij-afbeelding is het hero-beeld van de PDP. URL/srcset/sizes
   komen exact overeen met de eerste <img> hieronder, dus geen dubbele download. Alleen als
   het eerste media-item een afbeelding is (geen video).
@@ -28,7 +50,7 @@
 {%- endif -%}
 {%- comment -%} theme-check-enable AssetPreload {%- endcomment -%}
 
-<div class="pdp pdp--{{ section.settings.accent | default: 'green' }} full-width">
+<div class="pdp pdp--{{ pdp_accent }} full-width">
   <div class="pdp__inner">
 
     <div class="pdp-hero">
@@ -54,7 +76,7 @@
             <div class="pdp-gallery__slide is-active"><div class="pdp-gallery__img pdp-gallery__img--ph">{%- render 'kb-icon', icon: 'gift' -%}</div></div>
           {%- endif -%}
 
-          {%- if section.settings.badge_primary != blank -%}<span class="pdp-gallery__badge pdp-gallery__badge--pink">{{ section.settings.badge_primary }}</span>{%- endif -%}
+          {%- if pdp_badge != blank -%}<span class="pdp-gallery__badge pdp-gallery__badge--pink">{{ pdp_badge }}</span>{%- endif -%}
           {%- if section.settings.badge_secondary != blank -%}<span class="pdp-gallery__badge pdp-gallery__badge--green">{{ section.settings.badge_secondary }}</span>{%- endif -%}
           {%- if product.media.size > 0 -%}
             <button type="button" class="pdp-gallery__zoom" data-zoom aria-label="Bekijk afbeelding groter">
@@ -105,6 +127,8 @@
             <span class="pdp-info__sr">— lees alle reviews</span>
           </a>
         {%- endif -%}
+
+        {%- if pdp_short != blank -%}<p class="pdp-info__short">{{ pdp_short }}</p>{%- endif -%}
 
         <div class="pdp-info__price" data-price-wrap>
           <span class="pdp-info__price-now" data-price>{{ current.price | money }}</span>
@@ -234,30 +258,28 @@
             </fieldset>
           {%- endif -%}
 
-          {%- comment -%} Personalisatie {%- endcomment -%}
-          {%- if section.settings.show_personalize -%}
+          {%- comment -%}
+            Personalisatie — bewust compact (module C): alleen velden die we echt verwerken.
+            'Naam hond' staat al prominent bovenaan. Hier: leeftijd (optioneel), persoonlijke
+            boodschap, en — als custom.card_available — een kaartkeuze. Geen allergie-/formaat-
+            velden of -claims (niet operationeel ingericht).
+          {%- endcomment -%}
+          {%- if pdp_personalize -%}
             <details class="pdp-personalize"{% if section.settings.personalize_open %} open{% endif %}>
               <summary class="pdp-personalize__head">
                 <span class="pdp-personalize__icon" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
                 <div>
-                  <strong>{{ section.settings.personalize_title | default: 'Vertel iets over je hond' }} <span class="pdp-personalize__opt">optioneel</span></strong>
+                  <strong>{{ section.settings.personalize_title | default: 'Maak het persoonlijk' }} <span class="pdp-personalize__opt">optioneel</span></strong>
                   {%- if section.settings.personalize_text != blank -%}<span>{{ section.settings.personalize_text }}</span>{%- endif -%}
                 </div>
                 <span class="pdp-personalize__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
               </summary>
               <div class="pdp-personalize__grid">
-                {%- comment -%} 'Naam hond' staat nu prominent bovenaan de koopflow (zie .pdp-dogname). {%- endcomment -%}
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>Levensfase</span><select name="properties[Levensfase]"><option value="">Kies…</option><option>Puppy</option><option>Volwassen</option><option>Senior</option></select></label>
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'calendar' -%}</span>Geboortedatum hond</span><input type="date" name="properties[_Geboortedatum]"></label>
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'ruler' -%}</span>Formaat</span>
-                  <select name="properties[Formaat]"><option value="">Kies…</option><option>Klein</option><option>Middel</option><option>Groot</option></select>
-                </label>
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'ball' -%}</span>Favoriete speeltjes</span><input type="text" name="properties[Favoriete speeltjes]" placeholder="Bijv. piepers, touwen"></label>
-                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'leaf' -%}</span>Allergieën</span><input type="text" name="properties[Allergieen]" placeholder="Bijv. graanvrij"><span class="pdp-field__help">Wij stellen de box allergievriendelijk samen.</span></label>
-                <label class="pdp-field pdp-field--wide"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'mail' -%}</span>Persoonlijk bericht</span><input type="text" name="properties[Bericht]" placeholder="Een lief berichtje voor in de box"></label>
-                {%- if section.settings.show_photo_upload -%}
-                  <label class="pdp-field pdp-field--wide pdp-field--upload"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'upload' -%}</span>Foto van je hond (optioneel)</span><input type="file" name="properties[Foto]" accept="image/*"></label>
+                <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'calendar' -%}</span>Leeftijd van je hond <span class="pdp-field__opt">optioneel</span></span><input type="text" name="properties[Leeftijd]" placeholder="Bijv. 3 jaar" autocomplete="off"></label>
+                {%- if pdp_card -%}
+                  <label class="pdp-field"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'gift' -%}</span>Persoonlijk kaartje</span><select name="properties[Kaartje]"><option value="Geen kaartje">Geen kaartje</option><option value="Ja, met mijn boodschap">Ja, met mijn boodschap</option></select></label>
                 {%- endif -%}
+                <label class="pdp-field pdp-field--wide"><span class="pdp-field__lbl"><span aria-hidden="true">{%- render 'kb-icon', icon: 'mail' -%}</span>Persoonlijke boodschap <span class="pdp-field__opt">optioneel</span></span><input type="text" name="properties[Bericht]" placeholder="Een lief berichtje voor in de box"></label>
               </div>
               {%- if section.settings.personalize_note != blank -%}<p class="pdp-personalize__note">{%- render 'kb-icon', icon: 'sparkles' -%}{{ section.settings.personalize_note }}</p>{%- endif -%}
             </details>
@@ -299,6 +321,34 @@
             {%- endif -%}
           </div>
         {%- endform -%}
+
+        {%- comment -%} ── Modulaire info: voor welke hond · levering · veiligheid (uit metafields) ── {%- endcomment -%}
+        {%- if mf.dog_size_info != blank -%}
+          <div class="pdp-sizeinfo">
+            <span class="pdp-sizeinfo__icon" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
+            <div class="pdp-sizeinfo__body">
+              <strong class="pdp-sizeinfo__title">Voor welke hond?</strong>
+              <div class="pdp-sizeinfo__text">{{ mf.dog_size_info }}</div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if mf.delivery_note != blank or mf.safety_note != blank -%}
+          <div class="pdp-accordions">
+            {%- if mf.delivery_note != blank -%}
+              <details class="pdp-acc">
+                <summary class="pdp-acc__head"><span class="pdp-acc__icon" aria-hidden="true">{%- render 'kb-icon', icon: 'truck' -%}</span><span class="pdp-acc__title">Levering</span><span class="pdp-acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+                <div class="pdp-acc__body"><p>{{ mf.delivery_note }}</p></div>
+              </details>
+            {%- endif -%}
+            {%- if mf.safety_note != blank -%}
+              <details class="pdp-acc">
+                <summary class="pdp-acc__head"><span class="pdp-acc__icon" aria-hidden="true">{%- render 'kb-icon', icon: 'shield-check' -%}</span><span class="pdp-acc__title">Veiligheid</span><span class="pdp-acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+                <div class="pdp-acc__body">{{ mf.safety_note }}</div>
+              </details>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       </div>
 
       {%- comment -%}
@@ -308,9 +358,12 @@
         De waarde-stack schaalt mee met de gekozen variant: de JS bevraagt globaal op
         [data-value-total]/[data-value-was]/[data-value-now], dus de kolomwissel maakt niets uit.
       {%- endcomment -%}
-      {%- assign pdp_story = '' -%}
-      {%- if section.settings.intro != blank -%}{%- assign pdp_story = section.settings.intro -%}
-      {%- elsif product.description != blank -%}{%- assign pdp_story = product.description -%}{%- endif -%}
+      {%- comment -%}
+        Story = optionele redactionele intro (section-setting). We tonen bewust NIET de volledige
+        product.description, om dubbeling met de modulaire secties (short_description, whats_inside,
+        dog_size_info, levering/veiligheid) te voorkomen. De descriptionHtml blijft SEO-bron/fallback.
+      {%- endcomment -%}
+      {%- assign pdp_story = section.settings.intro -%}
       {%- if pdp_story != blank -%}
         <div class="pdp-story">
           <div class="pdp-info__intro">{{ pdp_story }}</div>
@@ -711,6 +764,30 @@
 .pdp-ugc__dog { color: var(--color-pink); }
 @media (min-width: 990px) { .pdp-ugc { margin-top: 28px; } .pdp-ugc__card { width: 250px; } }
 
+/* ── Modulaire metafield-secties (PDP) ── */
+.pdp-info__short { font-family: var(--font-body); font-size: 1.02rem; line-height: 1.5; color: var(--color-body); margin: 0 0 14px; max-width: 46ch; }
+.pdp-field__opt { font-family: var(--font-body); font-size: .7rem; font-weight: 600; color: var(--color-muted); margin-left: 4px; }
+
+.pdp-sizeinfo { display: flex; gap: 12px; align-items: flex-start; background: #fffaf2; border-radius: var(--radius-md); padding: 14px 16px; margin: 18px 0 0; }
+.pdp-sizeinfo__icon { display: inline-flex; flex-shrink: 0; width: 34px; height: 34px; align-items: center; justify-content: center; border-radius: 50%; background: #e8f5e2; color: var(--color-green); }
+.pdp-sizeinfo__icon svg { width: 18px; height: 18px; }
+.pdp-sizeinfo__title { display: block; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); margin-bottom: 2px; }
+.pdp-sizeinfo__text { font-family: var(--font-body); font-size: .92rem; line-height: 1.5; color: var(--color-body); }
+.pdp-sizeinfo__text p { margin: 0; }
+
+.pdp-accordions { margin: 16px 0 0; border-top: 1px solid var(--color-line); }
+.pdp-acc { border-bottom: 1px solid var(--color-line); }
+.pdp-acc__head { list-style: none; display: flex; align-items: center; gap: 10px; padding: 14px 2px; cursor: pointer; font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); }
+.pdp-acc__head::-webkit-details-marker { display: none; }
+.pdp-acc__icon { display: inline-flex; color: var(--color-green); }
+.pdp-acc__icon svg { width: 19px; height: 19px; }
+.pdp-acc__title { flex: 1; }
+.pdp-acc__chev { display: inline-flex; color: var(--color-muted); transition: transform 200ms; }
+.pdp-acc__chev svg { width: 18px; height: 18px; }
+.pdp-acc[open] .pdp-acc__chev { transform: rotate(180deg); }
+.pdp-acc__body { padding: 0 2px 16px; font-family: var(--font-body); font-size: .92rem; line-height: 1.55; color: var(--color-body); }
+.pdp-acc__body p { margin: 0 0 8px; }
+.pdp-acc__body :last-child { margin-bottom: 0; }
 {% endstylesheet %}
 
 {% javascript %}
