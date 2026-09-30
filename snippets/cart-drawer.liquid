@@ -309,7 +309,17 @@
       // laat "Bekijk winkelwagen" in de drawer zelf gewoon navigeren
       if (link.closest('[data-cart-drawer]')) return;
       e.preventDefault();
-      open();
+      // Komt de klik uit de open nav-drawer? Sluit die eerst volledig (aria-hidden, focus-trap
+      // vrij, scroll-lock vrij) en open de cart-drawer pas daarna. Nooit twee aria-modal dialogs
+      // of twee scroll-locks tegelijk.
+      var navDrawer = document.getElementById('header-drawer');
+      if (navDrawer && link.closest('#header-drawer') && navDrawer.getAttribute('aria-hidden') === 'false') {
+        var navClose = navDrawer.querySelector('[data-drawer-close]');
+        if (navClose) { navClose.click(); }
+        setTimeout(open, 60); // korte tel zodat nav-drawer trap/scroll-lock echt is vrijgegeven
+      } else {
+        open();
+      }
     });
   });
 
