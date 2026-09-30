@@ -59,6 +59,14 @@ Accent-mapping uit `occasion` (geen per-template kleur meer): verjaardag→yello
 5. **Cross-sell + gerelateerde boxen**.
 6. Theme check · PDP verifiëren (box mét personalisatie + gedrag als `personalization_available=false`) · mobiel · commit per batch.
 
+## Uitvoeringsstatus (30-09-2026)
+- ✅ **Batch 1 — buy box** (`main-product-kwispelbox.liquid`): badge/short_description/accent uit `custom.*`; nieuwe modules "Voor welke hond?" (`dog_size_info`) + Levering/Veiligheid-accordions (`delivery_note`/`safety_note`); personalisatie vereenvoudigd naar module C (leeftijd optioneel, boodschap, kaartkeuze als `card_available`), conditioneel op `personalization_available`; **allergie-veld + -claim verwijderd**; volledige `descriptionHtml` niet meer getoond (geen dubbeling; blijft SEO-bron).
+- ✅ **Batch 2 — box-contents**: rendert `custom.whats_inside` als cards (icoon/tekst-mapping per categorie), fallback naar block-cards.
+- ✅ **Batch 4 — consolidatie**: nieuw gedeeld `templates/product.box.json` (metafield-gedreven, generiek, geen allergie-FAQ). Alle 5 boxen → `templateSuffix: box`. Oude `product.{occasion}-box.json` verwijderd. (`product.kwispelbox.json` blijft staan voor het gearchiveerde hoofdproduct — ongebruikt, later evt. opruimen.)
+- ✅ Batch 3 (allergie-FAQ) opgelost via consolidatie (nieuwe FAQ zonder allergie-claim).
+- ⏳ **Batch 5 — nog te bouwen**: contextuele cross-sell (cadeau-extra's, occasion-gefilterd) + gerelateerde boxen (3–4 andere Special Editions). `product-boxes.liquid`/`box-compare.liquid` bestaan als mogelijke basis.
+- ⏳ Verificatie: PDP visueel checken (kan niet screenshotten — Jasper) op box mét personalisatie + mobiel. Theme check schoon (6 bekende font-errors + 1 pre-existing HardcodedRoutes-warning).
+
 ## Openstaand / aannames
 - Alle 5 boxen hebben nu `personalization_available=true` → "een zonder" test = tijdelijk simuleren of vertrouwen op de conditie.
 - Contextuele cross-sell filtert op de `cadeau-extras`-collectie (geen aparte metafield nodig); later evt. `related_products` metafield.
