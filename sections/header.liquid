@@ -1534,9 +1534,12 @@
   .site-header__action{color:var(--color-ink);}
   .site-header__action--search{display:inline-flex;}
   .site-header__action-icon svg{width:23px;height:23px;}
-  /* Winkelwagen: plat icoon met badge i.p.v. pill */
-  .site-header__cart-pill{padding:0;width:auto;height:auto;border:none;background:none;box-shadow:none;border-radius:0;}
-  .site-header__cart-pill .site-header__cart-count{top:-7px;right:-8px;}
+  /* Winkelwagen: plat icoon met badge i.p.v. pill.
+     Expliciete on-brand kleur (niet de geërfde #fff → anders wit-op-wit onzichtbaar).
+     44×44 tap-target, icoon gecentreerd, badge rechtsboven zonder icoon af te dekken. */
+  .site-header__cart-pill{padding:0;width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:none;background:none;box-shadow:none;border-radius:0;color:#e75480;}
+  .site-header__cart-pill svg{width:24px;height:24px;}
+  .site-header__cart-pill .site-header__cart-count{top:1px;right:1px;min-width:18px;height:18px;font-size:.6rem;}
   .site-header__search-bar{grid-area:search;display:flex;max-width:none;margin:0;}
   .site-header__search-bar-field{height:50px;box-shadow:0 3px 12px rgba(61,34,9,.05);border-color:var(--color-line);padding:0 6px 0 18px;}
   .site-header__search-bar-icon svg{width:19px;height:19px;}
