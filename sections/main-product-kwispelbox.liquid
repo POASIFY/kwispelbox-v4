@@ -534,7 +534,7 @@
 @media (max-width: 749px) {
   .pdp-sticky {
     display: flex; align-items: center; gap: 12px;
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
     background: #fff; border-top: 1.5px solid var(--color-line);
     padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
     box-shadow: 0 -6px 20px rgba(61, 34, 9, .12);
@@ -543,8 +543,8 @@
   .pdp-sticky.is-visible { transform: translateY(0); }
   .pdp-sticky__info { display: flex; flex-direction: column; line-height: 1.2; min-width: 0; }
   .pdp-sticky__name { font-family: var(--font-body); font-size: .76rem; font-weight: 700; color: var(--color-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 36vw; }
-  .pdp-sticky__price { font-family: var(--font-heading); font-size: 1.15rem; color: var(--pac); }
-  .pdp-sticky__btn { flex: 1; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 18px; background: var(--pac); color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; cursor: pointer; }
+  .pdp-sticky__price { font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); white-space: nowrap; }
+  .pdp-sticky__btn { flex: 1; min-width: 0; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 18px; background: var(--color-green); color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; letter-spacing: var(--ls-button); cursor: pointer; box-shadow: 0 6px 16px rgba(102,170,68,.28); }
   .pdp-sticky__btn:disabled { background: var(--color-muted); }
   .pdp-sticky__paw svg { width: 17px; height: 17px; }
 }
