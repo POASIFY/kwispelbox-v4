@@ -265,7 +265,7 @@
                 <input type="checkbox" data-gift-toggle{% if gift_on %} checked{% endif %}>
                 <span class="kbcart__gift-tog-icon" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
                 <span class="kbcart__gift-tog-head">
-                  <strong>{{ section.settings.gift_title | default: 'Dit is een cadeau 🎁' }}</strong>
+                  <strong>{{ section.settings.gift_title | default: 'Rechtstreeks cadeau geven? 🎁' }}</strong>
                   {%- if section.settings.gift_text != blank -%}<span>{{ section.settings.gift_text }}</span>{%- endif -%}
                 </span>
                 <span class="kbcart__gift-switch" aria-hidden="true"><span class="kbcart__gift-switch-dot"></span></span>
@@ -302,7 +302,6 @@
           <ul class="kbcart__reassure" role="list">
             <li><span aria-hidden="true">{%- render 'lucide', icon: 'lock' -%}</span> Veilig betalen</li>
             <li><span aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span> Met liefde ingepakt</li>
-            <li><span aria-hidden="true">{%- render 'lucide', icon: 'refresh' -%}</span> Niet goed? Geld terug</li>
           </ul>
 
           <details class="kbcart__disc">
@@ -317,17 +316,24 @@
           {%- comment -%} Maak de verrassing compleet (upsell uit collectie) {%- endcomment -%}
           {%- assign upsell = collections[section.settings.upsell_collection] -%}
           {%- if upsell != blank and upsell.products.size > 0 -%}
-            {%- assign upsell_max = section.settings.upsell_count | default: 4 -%}
+            {%- assign upsell_max = section.settings.upsell_count | default: 2 -%}
+            {%- comment -%} Variant-id's die al in de cart zitten, zodat we die niet als upsell tonen. {%- endcomment -%}
+            {%- assign cart_vids = ',' -%}
+            {%- for ci in cart.items -%}{%- assign cart_vids = cart_vids | append: ci.variant_id | append: ',' -%}{%- endfor -%}
             <div class="kbcart__cross">
               <h2 class="kbcart__cross-title">{{ section.settings.upsell_heading | default: 'Maak de verrassing compleet' }}<span class="kbcart__cross-scribble" aria-hidden="true"><svg viewBox="0 0 60 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 11c6-9 10 6 16-1s10 6 16-1 10 5 22-2"/></svg></span></h2>
               <ul class="kbcart__cross-grid" role="list">
                 {%- assign shown = 0 -%}
                 {%- for product in upsell.products -%}
-                  {%- comment -%} Inpakservice nooit dubbel: heeft al eigen regel {%- endcomment -%}
-                  {%- if product.handle == section.settings.giftwrap_handle -%}{%- continue -%}{%- endif -%}
                   {%- if shown >= upsell_max -%}{%- break -%}{%- endif -%}
-                  {%- assign shown = shown | plus: 1 -%}
+                  {%- comment -%} Inpakservice heeft eigen regel; GWP-gift nooit als betaalde upsell. {%- endcomment -%}
+                  {%- if product.handle == section.settings.giftwrap_handle -%}{%- continue -%}{%- endif -%}
+                  {%- if product.handle == 'gratis-mystery-verrassing' -%}{%- continue -%}{%- endif -%}
                   {%- assign pv = product.selected_or_first_available_variant -%}
+                  {%- comment -%} Al in cart? Niet tonen. {%- endcomment -%}
+                  {%- capture vtoken -%},{{ pv.id }},{%- endcapture -%}
+                  {%- if cart_vids contains vtoken -%}{%- continue -%}{%- endif -%}
+                  {%- assign shown = shown | plus: 1 -%}
                   <li class="kbcart__cross-card{% unless product.available %} is-sold{% endunless %}">
                     <a href="{{ product.url }}" class="kbcart__cross-media" tabindex="-1" aria-hidden="true">
                       {%- if product.featured_image -%}
@@ -783,8 +789,11 @@
 
 /* Desktop */
 @media (min-width: 990px) {
-  .kbcart__grid { grid-template-columns: minmax(0, 1fr) 380px; align-items: start; }
-  .kbcart__summary { position: sticky; top: 24px; }
+  /* Upsell direct onder de items in de LINKERkolom; summary spant rechts (geen lege ruimte). */
+  .kbcart__grid { grid-template-columns: minmax(0, 1fr) 380px; grid-template-areas: "main summary" "cross summary"; align-items: start; }
+  .kbcart__main { grid-area: main; }
+  .kbcart__summary { grid-area: summary; position: sticky; top: 24px; }
+  .kbcart__cross { grid-area: cross; margin-top: 4px; }
 }
 @media (min-width: 750px) {
   .kbcart__cross-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -800,13 +809,14 @@
   .kbcart__dog { width: 110px; right: 0; opacity: .9; }
   .kbcart__card { padding: 16px; }
 
-  /* Regelitem: foto + body, stepper-rij eronder */
-  .kbcart__item { grid-template-columns: 72px minmax(0, 1fr); gap: 14px; padding: 16px 0; }
-  .kbcart__item-media { width: 72px; height: 72px; }
-  .kbcart__item-title { font-size: 1.02rem; }
-  .kbcart__item-price--inline { display: block; margin-top: 6px; font-size: 1.1rem; }
-  .kbcart__item-remove { margin-top: 8px; }
-  .kbcart__item-controls { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: flex-start; gap: 16px; padding-top: 14px; }
+  /* Regelitem compact: thumbnail spant, body + stepper in kolom 2 (geen volle-breedte stepper-rij) */
+  .kbcart__item { grid-template-columns: 68px minmax(0, 1fr); grid-template-areas: "media body" "media controls"; column-gap: 14px; row-gap: 6px; padding: 14px 0; align-items: start; }
+  .kbcart__item-media { grid-area: media; width: 68px; height: 68px; align-self: start; }
+  .kbcart__item-body { grid-area: body; }
+  .kbcart__item-title { font-size: 1rem; }
+  .kbcart__item-price--inline { display: block; margin-top: 4px; font-size: 1.05rem; }
+  .kbcart__item-remove { margin-top: 0; }
+  .kbcart__item-controls { grid-area: controls; flex-direction: row; align-items: center; justify-content: flex-start; gap: 14px; padding-top: 4px; }
   .kbcart__item-controls .kbcart__item-price { display: none; }
 
   /* Inpak-rij: knop op eigen volle regel (geen woord-per-regel) */
@@ -877,8 +887,8 @@
     { "type": "text", "id": "delivery_fallback", "label": "Levertijd fallback (zonder JS)", "default": "Snel in huis 🐾" },
     { "type": "header", "content": "Cadeau-optie" },
     { "type": "checkbox", "id": "show_gift", "label": "Cadeau-optie tonen", "default": true, "info": "Toont een 'Dit is een cadeau'-schakelaar met ontvanger + persoonlijk bericht. Wordt op orderniveau opgeslagen (cart-eigenschappen)." },
-    { "type": "text", "id": "gift_title", "label": "Cadeau-kop", "default": "Dit is een cadeau 🎁" },
-    { "type": "textarea", "id": "gift_text", "label": "Cadeau-subtekst", "default": "Voeg een persoonlijk bericht toe — wij pakken het extra feestelijk in." },
+    { "type": "text", "id": "gift_title", "label": "Cadeau-kop", "default": "Rechtstreeks cadeau geven? 🎁" },
+    { "type": "textarea", "id": "gift_text", "label": "Cadeau-subtekst", "default": "Voeg een bericht voor de ontvanger toe." },
     { "type": "header", "content": "Lege winkelwagen" },
     { "type": "text", "id": "empty_title", "label": "Titel", "default": "Nog geen cadeautjes ingepakt" },
     { "type": "textarea", "id": "empty_text", "label": "Tekst", "default": "Je winkelwagen wacht op iets moois. Kies een box en verras je hond met het moment waar hij niet meer op kan wachten." },
