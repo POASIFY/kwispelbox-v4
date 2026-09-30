@@ -200,8 +200,8 @@
                   <strong>{{ section.settings.promo_title | default: 'Vergeet je hond niet te verrassen?' }}</strong>
                   <span>{{ section.settings.promo_text | default: 'Bekijk onze Special Editions voor elke gelegenheid.' }}</span>
                 </div>
-                {%- if section.settings.promo_button_label != blank -%}
-                  <a href="{{ section.settings.promo_button_url | default: '#' }}" class="kbcart__promo-btn">{{ section.settings.promo_button_label }}<span aria-hidden="true">›</span></a>
+                {%- if section.settings.promo_button_label != blank and section.settings.promo_button_url != blank -%}
+                  <a href="{{ section.settings.promo_button_url }}" class="kbcart__promo-btn">{{ section.settings.promo_button_label }}<span aria-hidden="true">›</span></a>
                 {%- endif -%}
               </div>
             {%- endif -%}

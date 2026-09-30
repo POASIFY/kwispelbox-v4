@@ -1,0 +1,77 @@
+{
+  "general": {
+    "404": "Niet gevonden",
+    "article": "Artikel",
+    "block": "Blok",
+    "blog": "Blog",
+    "cart": "Winkelwagen",
+    "collection": "Collectie",
+    "collections": "Collecties",
+    "collection_card": "Collectiekaart",
+    "collections_grid": "Collectieraster",
+    "colors": "Kleuren",
+    "column": "Kolom",
+    "content": "Inhoud",
+    "custom_section": "Aangepaste sectie",
+    "fonts": "Lettertypen",
+    "footer": "Footer",
+    "group": "Groep",
+    "header": "Header",
+    "layout": "Indeling",
+    "main": "Hoofd",
+    "page": "Pagina",
+    "password": "Wachtwoord",
+    "primary": "Primair",
+    "product": "Product",
+    "row": "Rij",
+    "search": "Zoeken",
+    "secondary": "Secundair",
+    "section": "Sectie",
+    "settings": "Instellingen",
+    "sidebar": "Zijbalk",
+    "text": "Tekst",
+    "theme": "Thema",
+    "typography": "Typografie"
+  },
+  "labels": {
+    "alignment": "Uitlijning",
+    "background": "Achtergrond",
+    "foreground": "Voorgrond",
+    "grid_gap": "Rasterafstand",
+    "grid_item_width": "Breedte rasteritem",
+    "input_corner_radius": "Hoekradius invoervelden",
+    "layout_direction": "Indelingsrichting",
+    "menu": "Menu",
+    "customer_account_menu": "Klantaccount-menu",
+    "padding": "Padding",
+    "page_margin": "Paginamarge",
+    "page_width": "Paginabreedte",
+    "show_payment_icons": "Betaaliconen tonen",
+    "text_style": "Tekststijl",
+    "text": "Tekst"
+  },
+  "options": {
+    "alignment": {
+      "left": "Links",
+      "center": "Midden",
+      "right": "Rechts"
+    },
+    "direction": {
+      "horizontal": "Horizontaal",
+      "vertical": "Verticaal"
+    },
+    "page_width": {
+      "narrow": "Smal",
+      "wide": "Breed"
+    },
+    "size": {
+      "large": "Groot",
+      "small": "Klein"
+    },
+    "text_style": {
+      "title": "Titel",
+      "subtitle": "Subtitel",
+      "normal": "Normale tekst"
+    }
+  }
+}

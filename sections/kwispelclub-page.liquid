@@ -111,7 +111,7 @@
           {%- if section.settings.spotlight_title != blank -%}<strong class="kc-spotlight__title">{{ section.settings.spotlight_title }}</strong>{%- endif -%}
           {%- if section.settings.spotlight_text != blank -%}<p class="kc-spotlight__text">{{ section.settings.spotlight_text }}</p>{%- endif -%}
           {%- if section.settings.spotlight_cta_label != blank -%}
-            <a href="{{ section.settings.spotlight_cta_url | default: '#' }}" class="kc-btn kc-btn--pink">{{ section.settings.spotlight_cta_label }}<span aria-hidden="true">{%- render 'lucide', icon: 'camera' -%}</span></a>
+            {%- if section.settings.spotlight_cta_label != blank and section.settings.spotlight_cta_url != blank -%}<a href="{{ section.settings.spotlight_cta_url }}" class="kc-btn kc-btn--pink">{{ section.settings.spotlight_cta_label }}<span aria-hidden="true">{%- render 'lucide', icon: 'camera' -%}</span></a>{%- endif -%}
           {%- endif -%}
         </div>
       </section>
