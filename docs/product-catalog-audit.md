@@ -259,14 +259,20 @@ Beslissingen: Handles omzetten ✅ · Legacy ZippyPaws + Inpakken archiveren ✅
 ### ✅ Batch 2 — Metafield-definities (uitgevoerd)
 12 nieuwe `custom` product-definities aangemaakt: `short_description`, `occasion`, `gift_box_type`, `badge`, `whats_inside`, `dog_size_info`, `personalization_available`, `card_available`, `delivery_note`, `safety_note`, `homepage_featured`, `sort_priority`. `theme_accent` bewust NIET aangemaakt (hergebruik `kaart_kleur`).
 
-### ⏳ Batch 3 — Verrijking (volgende stap)
-- Tags (canoniek schema) op 5 boxen + 4 cadeau-extra's.
-- Factuele metafield-waarden: occasion, gift_box_type=special_edition, badge, delivery_note, personalization_available, card_available, homepage_featured (4× meest-gekozen), sort_priority (1–5).
-- **Valentijn** ontbrekende `kaart_kleur` (#e75480 of passend) + `kaart_tekst` invullen.
-- `whats_inside` op **categorie-niveau** (Speeltjes / Snacks / Knuffel bij grotere maten / Kaartje mogelijk) — want inhoud wordt per bestelling samengesteld (zie `curatie_richtlijn`), geen vaste items.
-- `short_description` (PDP-intro) + `safety_note` + `dog_size_info` (Mini/Happy/Mega).
-- Lange beschrijving: huidige teksten zijn al goed/on-brand → **beslissing:** uitbreiden naar volledige structuur (wat zit erin / voor welke hond / levering / veiligheid / cadeau-ervaring) of huidige behouden? (pilot op Verjaardag eerst).
-- Shopify **category** (taxonomy) op boxen/extra's.
+### ✅ Batch 3 — Verrijking (uitgevoerd, keuze A + modulair, akkoord Jasper)
+Regels toegepast: content in **losse metafields** (PDP rendert modulair), lange `descriptionHtml` = rijke brondata/fallback, **geen shipping/levering-claims in de gedeelde beschrijving** (staan in aparte metafields voor NL/BE-flexibiliteit), **geen niet-waarmaakbare claims** (allergie-belofte weggelaten), `whats_inside` feitelijk op categorie-niveau, **unieke tekst per gelegenheid**.
+
+**5 boxen** — elk kreeg: unieke uitgebreide `descriptionHtml` (intro / wat zit erin / voor welk moment / voor welke hond / personalisatie / cadeau-ervaring, semantische HTML), unieke SEO title+description, canonieke tags (`kwispelbox, cadeaubox, hondencadeau, special-edition, <gelegenheid>`), en metafields:
+- `short_description`, `occasion`, `gift_box_type=special_edition`, `badge`, `whats_inside` (["Speeltjes","Snacks","Knuffel (bij grotere maten)"]), `personalization_available=true`, `card_available=true`, `delivery_note` (NL), `dog_size_info` (rich text), `safety_note` (rich text), `homepage_featured` (true voor Verj/Kerst/Hall/Dier, false Valentijn), `sort_priority` (1–5).
+- **Valentijn**: ontbrekende `kaart_kleur` (#e75480) + `kaart_tekst` ("Vol liefde voor je trouwste maatje.") ingevuld.
+
+**4 cadeau-extra's** — compacte variant: canonieke tags (`kwispelbox, cadeau-extra`) + `short_description`. Bestaande korte on-brand teksten behouden.
+
+### ⏳ Batch 4 — Nog te doen (laag-prioriteit / asset-afhankelijk)
+- **Shopify category (taxonomy)** op boxen/extra's: bewust NIET gezet (geen passende "cadeaubox"-taxonomy; risicovol te gokken). Optioneel later handmatig.
+- **Variant-hygiëne**: weight 0 → invullen; barcodes ontbreken (optioneel). Niet urgent.
+- **Media**: zie assets hieronder.
+- **Alt-teksten**: zodra media bestaat, per beeldtype (packshot/inhoud/detail/lifestyle).
 
 ### 📌 Assets (blijft openstaan bij Jasper)
 Boxen + cadeau-extra's hebben **geen productafbeeldingen**. Transparante PNG's 1600×1600 nodig (`product-verjaardagsbox.png` etc.). Niet automatisch koppelen tot ze in Shopify staan.
