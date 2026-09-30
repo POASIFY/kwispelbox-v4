@@ -140,9 +140,16 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
   "Voor {{ kb_order_cutoff }} besteld, meestal {{ kb_delivery }}" uit de globale settings. Slimme klok kan later
   terug zonder teksten te wijzigen.
 
-### ⬜ Nog te doen (P1-groot → P2 → pixel)
-- **P1-groot (apart)**: GWP betrouwbaar server-side (automatische korting/Shopify Function) i.p.v. alleen JS —
-  keuze nodig over het mechanisme.
+### ✅ P1-groot deel 2 — GWP server-side (gedaan)
+- Mechanisme (keuze Jasper): **automatische Buy X Get Y-korting** (native, geen app).
+- Aangemaakt: hulp-smartcollectie **"Alle producten (voor acties)"** (`gid://…/Collection/490706436261`,
+  regel vendor=Kwispelbox, 13 producten) + automatische korting **"Gratis verrassing vanaf €89"**
+  (`gid://…/DiscountAutomaticNode/1489147560101`): koop ≥ €89 → cadeauproduct 100% korting.
+- Cadeauproduct (`Gratis mystery verrassing`, variant 47926617899173) wordt **niet voorraad-getrackt** → altijd toevoegbaar.
+- Frontend-cart-JS = alleen UX (voortgang + gift toevoegen/verwijderen); de €0-prijs wordt server-side afgedwongen.
+- Aandachtspunt: houd de drempel in de cart (`kb_gift_threshold` = €89) gelijk aan de korting; wijzig je de een, pas de ander aan.
+
+### ⬜ Nog te doen (P2 → pixel)
 - **P2 refactor**: header (3538 r.), PDP (1045 r.), cart (967 r.) opsplitsen; focus-traps (drawer/filter/lightbox);
   header-mega-menu `href="#"` opschonen.
 - **Daarna**: pixel-match homepage (section-pad, hero-ratio, moment-iconen, productcards, verjaardagblok, UGC-ratio).
