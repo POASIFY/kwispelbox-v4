@@ -1,29 +1,33 @@
 {%- comment -%}
   sections/birthday-block.liquid — Kwispelbox KB-v4
-  "Wanneer is jouw hond jarig?" — gele kaart met polaroid + klantformulier (form 'customer').
-  Naam hond → contact[first_name], verjaardag → contact[note], e-mail → contact[email],
-  vaste tag om leads te segmenteren. Later evt. Klaviyo. Volgens docs/mockup-home.png.
+  "Wanneer is jouw hond jarig?" — speelse gele banner met polaroid + klantformulier (form 'customer').
+  Naam hond → contact[first_name], verjaardag → contact[note], e-mail → contact[email], vaste tag.
+  Volgens docs/mockup-home.png.
 {%- endcomment -%}
 
 <section class="bd full-width">
   <div class="bd__inner">
     <div class="bd__card">
+      <span class="bd__deco bd__deco--spark1" aria-hidden="true">{%- render 'lucide', icon: 'sparkles' -%}</span>
+      <span class="bd__deco bd__deco--spark2" aria-hidden="true">{%- render 'lucide', icon: 'sparkles' -%}</span>
+      <span class="bd__deco bd__deco--heart" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
+      <span class="bd__deco bd__deco--paw" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
 
-      {%- if section.settings.image != blank -%}
-        <div class="bd__polaroid">
-          {{ section.settings.image | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200,300,400', sizes: '220px', alt: section.settings.image.alt | default: 'Jarige hond', class: 'bd__polaroid-img' }}
-        </div>
-      {%- endif -%}
+      <div class="bd__polaroid">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 420 | image_tag: loading: 'lazy', widths: '210,320,420', sizes: '200px', alt: section.settings.image.alt | default: 'Jarige hond', class: 'bd__polaroid-img' }}
+        {%- else -%}
+          <span class="bd__polaroid-img bd__polaroid-ph" aria-hidden="true">{%- render 'lucide', icon: 'dog' -%}</span>
+        {%- endif -%}
+      </div>
 
       <div class="bd__text">
         {%- if section.settings.heading != blank -%}
-          <h2 class="bd__heading">{{ section.settings.heading }}</h2>
+          <h2 class="bd__heading">{{ section.settings.heading }}<span class="bd__heading-cake" aria-hidden="true">{%- render 'moment-sticker', icon: 'cake' -%}</span></h2>
         {%- endif -%}
         {%- if section.settings.text != blank -%}
           <p class="bd__sub">{{ section.settings.text }}</p>
         {%- endif -%}
-        <span class="bd__deco bd__deco--spark" aria-hidden="true">{%- render 'lucide', icon: 'sparkles' -%}</span>
-        <span class="bd__deco bd__deco--cake" aria-hidden="true">{%- render 'lucide', icon: 'cake' -%}</span>
       </div>
 
       <div class="bd__form-wrap">
@@ -43,8 +47,7 @@
               </label>
             </div>
             <label class="bd__field bd__field--email">
-              <span class="bd__label">{{ section.settings.email_label }}</span>
-              <input type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder }}" required autocomplete="email">
+              <input type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder }}" required autocomplete="email" aria-label="{{ section.settings.email_label }}">
             </label>
             {%- if form.errors -%}
               <p class="bd__error">{{ form.errors | default_errors }}</p>
@@ -63,39 +66,48 @@
 
 {% stylesheet %}
 .bd { background: transparent; }
-.bd__inner { max-width: var(--page-width); margin: 0 auto; padding: var(--section-pad-sm) var(--page-margin); }
-.bd__card { position: relative; display: grid; grid-template-columns: auto 1fr 1.1fr; align-items: center; gap: 26px; background: var(--color-yellow); border-radius: var(--radius-lg); padding: 26px 32px; overflow: hidden; }
+.bd__inner { max-width: var(--page-width); margin: 0 auto; padding: clamp(16px, 2.2vw, 26px) var(--page-margin); }
+.bd__card { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 330px); align-items: center; gap: 28px; background: var(--color-yellow); border-radius: var(--radius-lg); padding: 22px 30px; overflow: hidden; }
 
-.bd__polaroid { background: #fff; padding: 10px 10px 26px; border-radius: 8px; box-shadow: 0 10px 24px rgba(61,34,9,.16); transform: rotate(-5deg); }
-.bd__polaroid-img { display: block; width: 200px; height: 150px; object-fit: cover; border-radius: 3px; }
+.bd__polaroid { background: #fff; padding: 9px 9px 22px; border-radius: 6px; box-shadow: 0 10px 22px rgba(61,34,9,.16); transform: rotate(-5deg); flex-shrink: 0; }
+.bd__polaroid-img { display: block; width: 185px; height: 138px; object-fit: cover; border-radius: 3px; }
+.bd__polaroid-ph { display: flex; align-items: center; justify-content: center; background: #fff0f5; color: var(--color-pink); }
+.bd__polaroid-ph .lucide { width: 46px; height: 46px; }
 
 .bd__text { position: relative; min-width: 0; }
-.bd__heading { font-family: var(--font-heading); font-size: clamp(1.6rem, 2.6vw, 2.3rem); color: var(--color-ink); line-height: 1.05; margin: 0 0 8px; }
-.bd__sub { font-family: var(--font-body); font-size: 1rem; color: var(--color-ink); margin: 0; max-width: 30ch; }
-.bd__deco { position: absolute; pointer-events: none; }
-.bd__deco svg { width: 100%; height: 100%; }
-.bd__deco--spark { top: -6px; right: 8%; width: 22px; color: var(--color-pink); }
-.bd__deco--cake { bottom: -4px; right: 2%; width: 26px; color: var(--color-orange); }
+.bd__heading { font-family: var(--font-heading); font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--color-ink); line-height: 1.02; margin: 0 0 7px; }
+.bd__heading-cake { display: inline-block; vertical-align: middle; margin-left: 8px; }
+.bd__heading-cake .mom-sticker { width: 40px; height: 40px; }
+.bd__sub { font-family: var(--font-body); font-size: .98rem; font-weight: 600; color: var(--color-ink); margin: 0; max-width: 34ch; }
 
 .bd__form-wrap { min-width: 0; }
-.bd__form { display: flex; flex-direction: column; gap: 10px; }
-.bd__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.bd__field { display: flex; flex-direction: column; gap: 4px; }
-.bd__label { font-family: var(--font-body); font-size: .8rem; font-weight: 700; color: var(--color-ink); }
-.bd__field input { width: 100%; box-sizing: border-box; height: 46px; border: 1.5px solid rgba(61,34,9,.14); border-radius: 12px; padding: 0 14px; font-family: var(--font-body); font-size: .95rem; color: var(--color-ink); background: #fff; outline: none; transition: border-color 140ms; }
+.bd__form { display: flex; flex-direction: column; gap: 8px; }
+.bd__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.bd__field { display: flex; flex-direction: column; gap: 3px; }
+.bd__label { font-family: var(--font-body); font-size: .74rem; font-weight: 700; color: var(--color-ink); }
+.bd__field input { width: 100%; box-sizing: border-box; height: 42px; border: 1.5px solid rgba(61,34,9,.12); border-radius: 11px; padding: 0 13px; font-family: var(--font-body); font-size: .92rem; color: var(--color-ink); background: #fff; outline: none; transition: border-color 140ms; }
 .bd__field input:focus { border-color: var(--color-green); }
-.bd__btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; height: 50px; background: #e75480; color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.05rem; cursor: pointer; transition: background 140ms, transform 140ms; }
+.bd__field--email input { height: 38px; background: rgba(255,255,255,.72); border-color: rgba(61,34,9,.1); font-size: .88rem; }
+.bd__btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; height: 50px; margin-top: 2px; background: #e75480; color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.08rem; cursor: pointer; transition: background 140ms, transform 140ms; box-shadow: 0 8px 20px rgba(231,84,128,.26); }
 .bd__btn:hover { background: #d64470; transform: translateY(-1px); }
 .bd__btn-icon { display: inline-flex; }
 .bd__btn-icon svg { width: 18px; height: 18px; }
 .bd__success { font-family: var(--font-body); font-weight: 700; color: var(--color-green); background: #fff; border-radius: 12px; padding: 16px; margin: 0; }
-.bd__error { font-family: var(--font-body); font-size: .85rem; color: #b3261e; margin: 0; }
+.bd__error { font-family: var(--font-body); font-size: .82rem; color: #b3261e; margin: 0; }
+
+.bd__deco { position: absolute; pointer-events: none; }
+.bd__deco svg { width: 100%; height: 100%; }
+.bd__deco--spark1 { top: 12px; left: 40%; width: 22px; color: #fff; }
+.bd__deco--spark2 { bottom: 16px; left: 33%; width: 18px; color: var(--color-orange); }
+.bd__deco--heart { top: 14px; right: 3%; width: 22px; color: #e75480; }
+.bd__deco--heart svg { fill: none; stroke: currentColor; stroke-width: 2.2; }
+.bd__deco--paw { bottom: 12px; right: 34%; width: 22px; color: var(--color-orange); opacity: .55; }
 
 @media (max-width: 989px) {
-  .bd__card { grid-template-columns: 1fr; gap: 18px; padding: 22px; text-align: center; }
+  .bd__card { grid-template-columns: 1fr; gap: 16px; padding: 22px; text-align: center; }
   .bd__polaroid { justify-self: center; }
-  .bd__sub { max-width: none; }
-  .bd__deco--cake, .bd__deco--spark { display: none; }
+  .bd__sub { max-width: none; margin-inline: auto; }
+  .bd__deco--paw, .bd__deco--spark2 { display: none; }
 }
 @media (max-width: 480px) {
   .bd__fields { grid-template-columns: 1fr; }
@@ -115,8 +127,8 @@
     { "type": "text", "id": "name_label", "label": "Label naam", "default": "Naam van je hond" },
     { "type": "text", "id": "name_placeholder", "label": "Placeholder naam", "default": "Bijv. Max" },
     { "type": "text", "id": "date_label", "label": "Label verjaardag", "default": "Verjaardag" },
-    { "type": "text", "id": "email_label", "label": "Label e-mail", "default": "Jouw e-mailadres" },
-    { "type": "text", "id": "email_placeholder", "label": "Placeholder e-mail", "default": "naam@voorbeeld.nl" },
+    { "type": "text", "id": "email_label", "label": "Label e-mail (schermlezer)", "default": "Jouw e-mailadres" },
+    { "type": "text", "id": "email_placeholder", "label": "Placeholder e-mail", "default": "Jouw e-mailadres" },
     { "type": "text", "id": "button_label", "label": "Knoptekst", "default": "Houd me op de hoogte" },
     { "type": "text", "id": "tag", "label": "Klant-tag", "default": "kwispelkalender" },
     { "type": "text", "id": "success_text", "label": "Bevestigingstekst", "default": "Hoera! We houden je op de hoogte van de verjaardag van je hond." }
