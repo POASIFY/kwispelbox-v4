@@ -219,3 +219,27 @@ Bestaande box-producten (voor "Meest gekozen"):
 - Valentijn Kwispelbox — `valentijn-box`
 - Dierendag Kwispelbox — `dierendag-box`
 - Kwispelbox (hoofd) — `kwispelbox`
+
+## Update 30-09-2026 — Typografie-pass + USP-herontwerp + footer-logo
+
+### ✅ Typografie-pass (sitebreed, desktop) — afgerond
+Gestaffeld uitgevoerd, per stap met Jasper beoordeeld:
+- **Fundering** (`snippets/css-variables.liquid`): nieuwe tokens `--fs-h1`, `--lh-heading` (1.0), `--lh-heading-sm` (1.12), `--ls-heading` (.006em), `--lh-body` (1.55), `--ls-button` (.015em). Globale basisregels: koppen h1–h3 strak / h4–h6 ruimer, body warm/leesbaar, buttons vriendelijke tracking. Sectie-CSS blijft leidend (specificiteit).
+- **2a producttitels**: `.mg__title` minder zwaar/compact (1rem, line-height 1.1, tracking .012em).
+- **2b sectiekoppen**: al uniform op `--fs-h2`; "Blije honden" ~7% kleiner (`calc(var(--fs-h2)*0.93)`).
+- **2c nav + buttons**: nav-chips 700→600 + .01em; account/wishlist/cart in balans; anchor-CTA's (hero + "Bekijk") kregen `--ls-button` (globale regel raakte alleen echte `<button>`s).
+- **2d kleine teksten**: USP-gewicht 800→700; tracking op aankondiging (.02em), formulierlabels (.02em), footerlinks (.01em). Karla blijft de rustige tegenhanger.
+
+### ✅ USP-balk herontwerp (Optie A — behouden, niet verwijderd)
+`sections/usp-bar.liquid`: harde witte balk + randen + scheidingslijnen weg → vier zachte mini-cards (`#fffaf2`, ronde hoeken, zachte schaduw) met pastel icoon-bubbels (groen/oranje/roze/geel). Cards compacter (padding 15px 14px, gap 11px) → leest als één rustige rij. Live block-kleuren in `index.json` ook gevarieerd gezet.
+
+### ✅ Footer-logo — lichte variant
+`sections/footer.liquid`: donkere logo-afbeelding teruggedraaid uit `footer-group.json`; fallback is nu een lichte inline-SVG (crème "Kwispelbox"-woordmerk in Lilita + kleurrijke cadeaudoos-glyph). Perfect contrast op donkerbruin. **Definitief wit logo** later gewoon uploaden bij de footer-logo-instelling → afbeelding neemt voorrang.
+
+### 🔒 Bevroren (geen structurele wijzigingen meer): header, hero, moments, verjaardagsblok, USP-balk, footer-layout.
+
+### ⏳ Volgende stappen (volgorde)
+1. **Assets uploaden (Jasper)**: transparante product-PNG's · polaroid verjaardagsfoto · UGC-sliderfoto's · social-URL's (staan nu op `#`) · evt. definitief wit footer-logo.
+2. **Asset-afhankelijke finetune (Claude, na upload)**: "Meest gekozen" (productschaal in kleurvlak, kaartdichtheid, titelgewicht) · verjaardagsblok (crop/rotatie polaroid, form-polish) · "Blije honden" (warmte + pijltjes-formaat t.o.v. echte foto's).
+3. **Finale desktop-eindcheck** met echte beelden.
+4. **Mobiel** als aparte design-pass (niet enkel verkleinen — per component herbalanceren; wacht op mobiele hero + mobiele mockup).
