@@ -95,6 +95,7 @@
             class="site-header__search-bar-input"
             placeholder="{{ section.settings.search_placeholder }}"
             autocomplete="off" autocorrect="off" spellcheck="false"
+            role="combobox" aria-expanded="false" aria-haspopup="listbox"
             data-search-input aria-autocomplete="list" aria-controls="search-results">
           <button type="button" class="site-header__search-clear" aria-label="Wissen" hidden data-search-clear>
             {{- 'icon-close.svg' | inline_asset_content -}}
@@ -329,8 +330,8 @@
                                     {%- endfor -%}
                                   </ul>
                                 {%- endif -%}
-                                {%- if cb.settings.cta_label != blank -%}
-                                  <a href="{{ cb.settings.cta_url | default: '#' }}" class="dd-cat-col__cta dd-cat-col__cta--{{ cb.settings.color }}">
+                                {%- if cb.settings.cta_label != blank and cb.settings.cta_url != blank -%}
+                                  <a href="{{ cb.settings.cta_url }}" class="dd-cat-col__cta dd-cat-col__cta--{{ cb.settings.color }}">
                                     {{ cb.settings.cta_label }}
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                                   </a>
@@ -2183,21 +2184,73 @@
   }
 
   if (searchInput && searchResults) {
+    var SEARCH_ROOT = (window.Shopify && Shopify.routes && Shopify.routes.root) || '/';
     var debounceTimer = null;
+    var activeIndex = -1;
     function money(c) { var n = parseFloat(c); return isNaN(n) ? '' : '\u20ac' + n.toFixed(2).replace('.', ','); }
+    function opts() { return searchResults.querySelectorAll('[role="option"]'); }
+    function openList() { searchResults.hidden = false; searchInput.setAttribute('aria-expanded', 'true'); }
+    function closeList() { searchResults.hidden = true; searchInput.setAttribute('aria-expanded', 'false'); setActive(-1); }
+    function setActive(idx) {
+      var list = opts();
+      activeIndex = idx;
+      list.forEach(function (el, i) {
+        var on = i === idx;
+        el.setAttribute('aria-selected', on ? 'true' : 'false');
+        el.classList.toggle('is-active', on);
+        if (on) { searchInput.setAttribute('aria-activedescendant', el.id); el.scrollIntoView({ block: 'nearest' }); }
+      });
+      if (idx < 0) searchInput.removeAttribute('aria-activedescendant');
+    }
+    // Resultaten via DOM-nodes + textContent (geen innerHTML met API-data).
     function renderResults(results, q) {
-      if (!results.length) { searchResults.hidden = true; return; }
-      var html = results.map(function (i) {
-        var img = i.image ? '<img src="' + i.image + '" alt="" class="search-result-item__img" width="44" height="44" loading="lazy">' : '<div class="search-result-item__img"></div>';
-        var price = i.price ? '<span class="search-result-item__price">' + money(i.price) + '</span>' : '';
-        return '<a href="' + i.url + '" class="search-result-item" role="option">' + img + '<span><span class="search-result-item__title">' + i.title + '</span>' + price + '</span></a>';
-      }).join('') + '<a href="/search?type=product&q=' + encodeURIComponent(q) + '" class="search-result-item__all">Alle resultaten &rarr;</a>';
-      searchResults.innerHTML = html;
-      searchResults.hidden = false;
+      while (searchResults.firstChild) { searchResults.removeChild(searchResults.firstChild); }
+      activeIndex = -1;
+      if (!results.length) { closeList(); return; }
+      results.forEach(function (i, idx) {
+        var a = document.createElement('a');
+        a.href = i.url;
+        a.className = 'search-result-item';
+        a.id = 'search-opt-' + idx;
+        a.setAttribute('role', 'option');
+        a.setAttribute('aria-selected', 'false');
+        var img;
+        if (i.image) {
+          img = document.createElement('img');
+          img.src = i.image; img.alt = ''; img.width = 44; img.height = 44; img.loading = 'lazy';
+          img.className = 'search-result-item__img';
+        } else {
+          img = document.createElement('div');
+          img.className = 'search-result-item__img';
+        }
+        a.appendChild(img);
+        var wrap = document.createElement('span');
+        var title = document.createElement('span');
+        title.className = 'search-result-item__title';
+        title.textContent = i.title;
+        wrap.appendChild(title);
+        if (i.price) {
+          var price = document.createElement('span');
+          price.className = 'search-result-item__price';
+          price.textContent = money(i.price);
+          wrap.appendChild(price);
+        }
+        a.appendChild(wrap);
+        searchResults.appendChild(a);
+      });
+      var all = document.createElement('a');
+      all.href = SEARCH_ROOT + 'search?type=product&q=' + encodeURIComponent(q);
+      all.className = 'search-result-item__all';
+      all.id = 'search-opt-all';
+      all.setAttribute('role', 'option');
+      all.setAttribute('aria-selected', 'false');
+      all.textContent = 'Alle resultaten \u2192';
+      searchResults.appendChild(all);
+      openList();
     }
     function fetchSuggestions(q) {
-      if (q.length < 2) { searchResults.hidden = true; return; }
-      fetch('/search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=5')
+      if (q.length < 2) { closeList(); return; }
+      fetch(SEARCH_ROOT + 'search/suggest.json?q=' + encodeURIComponent(q) + '&resources[type]=product&resources[limit]=5')
         .then(function (r) { return r.json(); })
         .then(function (data) {
           var p = (data.resources && data.resources.results && data.resources.results.products) || [];
@@ -2206,7 +2259,7 @@
             if (src && src.indexOf('width=') === -1) { src += (src.indexOf('?') === -1 ? '?' : '&') + 'width=96'; }
             return { title: x.title, url: x.url, image: src, price: x.price };
           }), q);
-        }).catch(function () { searchResults.hidden = true; });
+        }).catch(function () { closeList(); });
     }
     searchInput.addEventListener('input', function () {
       var q = this.value.trim();
@@ -2214,9 +2267,17 @@
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(function () { fetchSuggestions(q); }, 220);
     });
-    searchClear && searchClear.addEventListener('click', function () { searchInput.value = ''; searchInput.focus(); this.hidden = true; searchResults.hidden = true; });
+    searchInput.addEventListener('keydown', function (e) {
+      var list = opts();
+      if (searchResults.hidden || !list.length) return;
+      if (e.key === 'ArrowDown') { e.preventDefault(); setActive((activeIndex + 1) % list.length); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((activeIndex - 1 + list.length) % list.length); }
+      else if (e.key === 'Enter') { if (activeIndex >= 0 && list[activeIndex]) { e.preventDefault(); list[activeIndex].click(); } }
+      else if (e.key === 'Escape') { closeList(); }
+    });
+    searchClear && searchClear.addEventListener('click', function () { searchInput.value = ''; searchInput.focus(); this.hidden = true; closeList(); });
     document.addEventListener('click', function (e) {
-      if (searchForm && !searchForm.contains(e.target) && searchToggle && !searchToggle.contains(e.target)) searchResults.hidden = true;
+      if (searchForm && !searchForm.contains(e.target) && searchToggle && !searchToggle.contains(e.target)) closeList();
     });
   }
 

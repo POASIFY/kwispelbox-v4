@@ -15,7 +15,7 @@
         {%- if section.settings.title != blank -%}<h2 class="pcta__title">{{ section.settings.title }}</h2>{%- endif -%}
         {%- if section.settings.text != blank -%}<p class="pcta__intro">{{ section.settings.text }}</p>{%- endif -%}
         {%- if section.settings.button_label != blank -%}
-          <a href="{{ section.settings.button_url | default: '#' }}" class="pcta__btn">{{ section.settings.button_label }}<span aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span></a>
+          {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}<a href="{{ section.settings.button_url }}" class="pcta__btn">{{ section.settings.button_label }}<span aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span></a>{%- endif -%}
         {%- endif -%}
       </div>
       <div class="pcta__media">

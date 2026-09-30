@@ -24,7 +24,7 @@
         {%- if section.settings.hero_text != blank -%}<p class="kc-hero__intro">{{ section.settings.hero_text }}</p>{%- endif -%}
         <div class="kc-hero__buttons">
           {%- if section.settings.hero_primary_label != blank -%}
-            <a href="{{ section.settings.hero_primary_url | default: '#' }}" class="kc-btn kc-btn--pink">{{ section.settings.hero_primary_label }}<span aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span></a>
+            {%- if section.settings.hero_primary_label != blank and section.settings.hero_primary_url != blank -%}<a href="{{ section.settings.hero_primary_url }}" class="kc-btn kc-btn--pink">{{ section.settings.hero_primary_label }}<span aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span></a>{%- endif -%}
           {%- endif -%}
           {%- if section.settings.hero_secondary_label != blank -%}
             <a href="{{ section.settings.hero_secondary_url | default: routes.account_login_url }}" class="kc-btn kc-btn--light">{{ section.settings.hero_secondary_label }}</a>

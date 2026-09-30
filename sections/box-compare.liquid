@@ -55,7 +55,7 @@
           <div class="bcmp__cell bcmp__cell--corner" aria-hidden="true"></div>
           {%- for box in box_blocks -%}
             <div class="bcmp__cell bcmp__cell--cta{% if box.settings.highlight %} is-featured{% endif %}">
-              <a href="{{ box.settings.button_url | default: '#' }}" class="bcmp__btn bcmp__btn--{{ box.settings.accent | default: 'green' }}{% if box.settings.highlight %} bcmp__btn--solid{% endif %}">{{ box.settings.button_label | default: 'Kies deze box' }}</a>
+              {%- if box.settings.button_url != blank -%}<a href="{{ box.settings.button_url }}" class="bcmp__btn bcmp__btn--{{ box.settings.accent | default: 'green' }}{% if box.settings.highlight %} bcmp__btn--solid{% endif %}">{{ box.settings.button_label | default: 'Kies deze box' }}</a>{%- endif -%}
             </div>
           {%- endfor -%}
 

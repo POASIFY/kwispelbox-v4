@@ -18,7 +18,11 @@
       <ul class="mom__grid" role="list">
         {%- for block in tiles -%}
           <li class="mom__cell" {{ block.shopify_attributes }}>
-            <a href="{{ block.settings.link | default: '#' }}" class="mom__tile mom__tile--{{ block.settings.color }}">
+            {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}" class="mom__tile mom__tile--{{ block.settings.color }}">
+            {%- else -%}
+            <div class="mom__tile mom__tile--{{ block.settings.color }}">
+            {%- endif -%}
               <span class="mom__deco mom__deco--tl" aria-hidden="true">{%- render 'lucide', icon: 'sparkles' -%}</span>
               <span class="mom__deco mom__deco--tr" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
               <span class="mom__deco mom__deco--br" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
@@ -27,7 +31,7 @@
                 <span class="mom__label-text">{{ block.settings.title }}</span>
                 <span class="mom__label-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
               </span>
-            </a>
+            {%- if block.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
           </li>
         {%- endfor -%}
       </ul>

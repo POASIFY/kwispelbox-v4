@@ -48,7 +48,7 @@
           <span class="pfaq__contact-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
           <strong class="pfaq__contact-title">{{ section.settings.contact_title }}</strong>
           {%- if section.settings.contact_text != blank -%}<p class="pfaq__contact-text">{{ section.settings.contact_text }}</p>{%- endif -%}
-          {%- if section.settings.contact_cta_label != blank -%}<a href="{{ section.settings.contact_cta_url | default: '#' }}" class="pfaq__contact-cta">{{ section.settings.contact_cta_label }}</a>{%- endif -%}
+          {%- if section.settings.contact_cta_label != blank and section.settings.contact_cta_url != blank -%}<a href="{{ section.settings.contact_cta_url }}" class="pfaq__contact-cta">{{ section.settings.contact_cta_label }}</a>{%- endif -%}
           {%- if section.settings.contact_email != blank -%}<a href="mailto:{{ section.settings.contact_email }}" class="pfaq__contact-mail"><span aria-hidden="true">{%- render 'kb-icon', icon: 'mail' -%}</span>{{ section.settings.contact_email }}</a>{%- endif -%}
         </div>
       {%- endif -%}

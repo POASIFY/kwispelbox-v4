@@ -110,7 +110,7 @@
             <strong class="pay-contact__title">{{ section.settings.contact_title }}</strong>
             {%- if section.settings.contact_text != blank -%}<p class="pay-contact__text">{{ section.settings.contact_text }}</p>{%- endif -%}
             {%- if section.settings.contact_cta_label != blank -%}
-              <a href="{{ section.settings.contact_cta_url | default: '#' }}" class="pay-contact__cta">{{ section.settings.contact_cta_label }}</a>
+              {%- if section.settings.contact_cta_label != blank and section.settings.contact_cta_url != blank -%}<a href="{{ section.settings.contact_cta_url }}" class="pay-contact__cta">{{ section.settings.contact_cta_label }}</a>{%- endif -%}
             {%- endif -%}
             <ul class="pay-contact__meta" role="list">
               {%- if section.settings.contact_email != blank -%}
@@ -134,8 +134,8 @@
         <div class="pay-cta__text">
           <h2 class="pay-cta__title">{{ section.settings.cta_title }}</h2>
           {%- if section.settings.cta_text != blank -%}<p class="pay-cta__intro">{{ section.settings.cta_text }}</p>{%- endif -%}
-          {%- if section.settings.cta_button_label != blank -%}
-            <a href="{{ section.settings.cta_button_url | default: '#' }}" class="pay-cta__btn">
+          {%- if section.settings.cta_button_label != blank and section.settings.cta_button_url != blank -%}
+            <a href="{{ section.settings.cta_button_url }}" class="pay-cta__btn">
               {{ section.settings.cta_button_label }}
               <span aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span>
             </a>

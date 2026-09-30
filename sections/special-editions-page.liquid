@@ -19,10 +19,12 @@
           <h2 class="sep__group" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
         {%- else -%}
           {%- assign accent = block.settings.accent | default: 'pink' -%}
-          {%- if block.settings.coming_soon -%}
-            <article class="sep-card sep-card--{{ accent }} is-soon" {{ block.shopify_attributes }}>
+          {%- assign sep_as_link = false -%}
+          {%- unless block.settings.coming_soon -%}{%- if block.settings.button_url != blank -%}{%- assign sep_as_link = true -%}{%- endif -%}{%- endunless -%}
+          {%- if sep_as_link -%}
+            <a href="{{ block.settings.button_url }}" class="sep-card sep-card--{{ accent }}" {{ block.shopify_attributes }}>
           {%- else -%}
-            <a href="{{ block.settings.button_url | default: '#' }}" class="sep-card sep-card--{{ accent }}" {{ block.shopify_attributes }}>
+            <article class="sep-card sep-card--{{ accent }}{% if block.settings.coming_soon %} is-soon{% endif %}" {{ block.shopify_attributes }}>
           {%- endif -%}
             <div class="sep-card__media">
               {%- if block.settings.image != blank -%}
@@ -38,7 +40,7 @@
               {%- if block.settings.tagline != blank -%}<p class="sep-card__tagline">{{ block.settings.tagline }}</p>{%- endif -%}
               {%- unless block.settings.coming_soon -%}<span class="sep-card__link">{{ block.settings.button_label | default: 'Bekijk box' }}<span aria-hidden="true" class="sep-card__arrow">→</span></span>{%- endunless -%}
             </div>
-          {%- if block.settings.coming_soon -%}</article>{%- else -%}</a>{%- endif -%}
+          {%- if sep_as_link -%}</a>{%- else -%}</article>{%- endif -%}
         {%- endif -%}
       {%- endfor -%}
     </div>

@@ -393,6 +393,8 @@
     if (!root) { return; }
     var SECTION_ID = root.getAttribute('data-cart-section');
     var status = root.querySelector('.kbcart__sr-status');
+    {%- comment -%} Locale-aware basis-URL zodat Markets/talen correct blijven werken. {%- endcomment -%}
+    var CART_ROOT = (window.Shopify && Shopify.routes && Shopify.routes.root) || '/';
 
     {%- comment -%} GWP-config komt uit data-attributen op de root (DOM, niet inline Liquid in JS). {%- endcomment -%}
     var GIFT_ID = parseInt(root.getAttribute('data-gwp-gift-id'), 10);
@@ -466,7 +468,7 @@
     function checkGWP() {
       if (!GWP_ENABLED || gwpRunning) { return Promise.resolve(); }
       gwpRunning = true;
-      return fetch('/cart.js', { headers: { Accept: 'application/json' } })
+      return fetch(CART_ROOT + 'cart.js', { headers: { Accept: 'application/json' } })
         .then(function (r) { return r.json(); })
         .then(function (cart) {
           var giftLine = null, qualifying = 0;
@@ -485,8 +487,8 @@
           announce('Winkelwagen bijwerken…');
           root.setAttribute('aria-busy', 'true');
           var req = needsAdd
-            ? post('/cart/add.js', { items: [{ id: GIFT_ID, quantity: 1 }] })
-            : post('/cart/change.js', { id: String(GIFT_ID), quantity: (qualifying >= THRESHOLD ? 1 : 0) });
+            ? post(CART_ROOT + 'cart/add.js', { items: [{ id: GIFT_ID, quantity: 1 }] })
+            : post(CART_ROOT + 'cart/change.js', { id: String(GIFT_ID), quantity: (qualifying >= THRESHOLD ? 1 : 0) });
           return req.then(function (res) {
             if (res && res.sections && res.sections[SECTION_ID]) {
               swap(res.sections[SECTION_ID]);
@@ -504,13 +506,13 @@
       var step = e.target.closest('[data-cart-step]');
       if (step && root.contains(step)) {
         e.preventDefault();
-        mutate('/cart/change.js', { line: parseInt(step.getAttribute('data-line'), 10), quantity: parseInt(step.getAttribute('data-qty'), 10) });
+        mutate(CART_ROOT + 'cart/change.js', { line: parseInt(step.getAttribute('data-line'), 10), quantity: parseInt(step.getAttribute('data-qty'), 10) });
         return;
       }
       var add = e.target.closest('[data-cart-add]');
       if (add && root.contains(add)) {
         e.preventDefault();
-        mutate('/cart/add.js', { items: [{ id: add.getAttribute('data-cart-add'), quantity: 1 }] });
+        mutate(CART_ROOT + 'cart/add.js', { items: [{ id: add.getAttribute('data-cart-add'), quantity: 1 }] });
       }
     });
 
@@ -524,7 +526,7 @@
       var recipient = gift.querySelector('[data-gift-recipient]');
       var message = gift.querySelector('[data-gift-message]');
       var on = toggle && toggle.checked;
-      mutate('/cart/update.js', {
+      mutate(CART_ROOT + 'cart/update.js', {
         attributes: {
           'Cadeau': on ? 'Ja' : '',
           'Cadeau voor': on && recipient ? recipient.value : '',

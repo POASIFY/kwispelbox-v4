@@ -7,6 +7,12 @@
 {%- assign usp_blocks = section.blocks | where: 'type', 'usp' -%}
 {%- assign col_blocks = section.blocks | where: 'type', 'menu_col' -%}
 
+{%- comment -%} Socials uit één bron: globale SEO-settings, met terugval op sectie-instellingen. {%- endcomment -%}
+{%- assign soc_instagram = settings.social_instagram | default: section.settings.instagram -%}
+{%- assign soc_tiktok = settings.social_tiktok | default: section.settings.tiktok -%}
+{%- assign soc_pinterest = settings.social_pinterest | default: section.settings.pinterest -%}
+{%- assign soc_facebook = settings.social_facebook | default: section.settings.facebook -%}
+
 <footer class="kbfoot full-width">
 
   {%- if usp_blocks.size > 0 -%}
@@ -40,10 +46,10 @@
             <p class="kbfoot__tagline">{{ section.settings.tagline }}</p>
           {%- endif -%}
           <div class="kbfoot__socials">
-            {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" class="kbfoot__social" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>{%- endif -%}
-            {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" class="kbfoot__social" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.1 1.5 3.7 3.5 4v2.6c-1.3.1-2.5-.3-3.5-1V15a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v2.7a2.8 2.8 0 1 0 1.9 2.7V3z"/></svg></a>{%- endif -%}
-            {%- if section.settings.pinterest != blank -%}<a href="{{ section.settings.pinterest }}" class="kbfoot__social" aria-label="Pinterest" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2.9.5 1.7 1.4 1.7 1.7 0 2.9-2.2 2.9-4.7 0-2-1.3-3.4-3.7-3.4a4.2 4.2 0 0 0-4.4 4.2c0 .8.2 1.4.6 1.8.1.2.2.3.1.5l-.2.9c-.1.3-.2.4-.5.2-1.2-.5-1.8-1.9-1.8-3.5 0-2.6 2.2-5.7 6.5-5.7 3.5 0 5.7 2.5 5.7 5.2 0 3.5-2 6.2-4.9 6.2-1 0-1.9-.5-2.2-1.1l-.6 2.4c-.2.8-.7 1.7-1 2.3A10 10 0 1 0 12 2z"/></svg></a>{%- endif -%}
-            {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" class="kbfoot__social" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3l.5-3H14V4.5c0-.8.3-1.5 1.5-1.5H17V.5C16.7.4 15.7.3 14.7.3 12.4.3 11 1.7 11 4.2V6H8v3h3v9h3z"/></svg></a>{%- endif -%}
+            {%- if soc_instagram != blank -%}<a href="{{ soc_instagram }}" class="kbfoot__social" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>{%- endif -%}
+            {%- if soc_tiktok != blank -%}<a href="{{ soc_tiktok }}" class="kbfoot__social" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.1 1.5 3.7 3.5 4v2.6c-1.3.1-2.5-.3-3.5-1V15a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v2.7a2.8 2.8 0 1 0 1.9 2.7V3z"/></svg></a>{%- endif -%}
+            {%- if soc_pinterest != blank -%}<a href="{{ soc_pinterest }}" class="kbfoot__social" aria-label="Pinterest" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2.9.5 1.7 1.4 1.7 1.7 0 2.9-2.2 2.9-4.7 0-2-1.3-3.4-3.7-3.4a4.2 4.2 0 0 0-4.4 4.2c0 .8.2 1.4.6 1.8.1.2.2.3.1.5l-.2.9c-.1.3-.2.4-.5.2-1.2-.5-1.8-1.9-1.8-3.5 0-2.6 2.2-5.7 6.5-5.7 3.5 0 5.7 2.5 5.7 5.2 0 3.5-2 6.2-4.9 6.2-1 0-1.9-.5-2.2-1.1l-.6 2.4c-.2.8-.7 1.7-1 2.3A10 10 0 1 0 12 2z"/></svg></a>{%- endif -%}
+            {%- if soc_facebook != blank -%}<a href="{{ soc_facebook }}" class="kbfoot__social" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3l.5-3H14V4.5c0-.8.3-1.5 1.5-1.5H17V.5C16.7.4 15.7.3 14.7.3 12.4.3 11 1.7 11 4.2V6H8v3h3v9h3z"/></svg></a>{%- endif -%}
           </div>
         </div>
 
@@ -96,10 +102,10 @@
       <div class="kbfoot__follow">
         {%- if section.settings.follow_text != blank -%}<span class="kbfoot__follow-text">{{ section.settings.follow_text }}</span>{%- endif -%}
         <div class="kbfoot__socials kbfoot__socials--follow">
-          {%- if section.settings.instagram != blank -%}<a href="{{ section.settings.instagram }}" class="kbfoot__social" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>{%- endif -%}
-          {%- if section.settings.tiktok != blank -%}<a href="{{ section.settings.tiktok }}" class="kbfoot__social" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.1 1.5 3.7 3.5 4v2.6c-1.3.1-2.5-.3-3.5-1V15a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v2.7a2.8 2.8 0 1 0 1.9 2.7V3z"/></svg></a>{%- endif -%}
-          {%- if section.settings.pinterest != blank -%}<a href="{{ section.settings.pinterest }}" class="kbfoot__social" aria-label="Pinterest" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2.9.5 1.7 1.4 1.7 1.7 0 2.9-2.2 2.9-4.7 0-2-1.3-3.4-3.7-3.4a4.2 4.2 0 0 0-4.4 4.2c0 .8.2 1.4.6 1.8.1.2.2.3.1.5l-.2.9c-.1.3-.2.4-.5.2-1.2-.5-1.8-1.9-1.8-3.5 0-2.6 2.2-5.7 6.5-5.7 3.5 0 5.7 2.5 5.7 5.2 0 3.5-2 6.2-4.9 6.2-1 0-1.9-.5-2.2-1.1l-.6 2.4c-.2.8-.7 1.7-1 2.3A10 10 0 1 0 12 2z"/></svg></a>{%- endif -%}
-          {%- if section.settings.facebook != blank -%}<a href="{{ section.settings.facebook }}" class="kbfoot__social" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3l.5-3H14V4.5c0-.8.3-1.5 1.5-1.5H17V.5C16.7.4 15.7.3 14.7.3 12.4.3 11 1.7 11 4.2V6H8v3h3v9h3z"/></svg></a>{%- endif -%}
+          {%- if soc_instagram != blank -%}<a href="{{ soc_instagram }}" class="kbfoot__social" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>{%- endif -%}
+          {%- if soc_tiktok != blank -%}<a href="{{ soc_tiktok }}" class="kbfoot__social" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 3c.3 2.1 1.5 3.7 3.5 4v2.6c-1.3.1-2.5-.3-3.5-1V15a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v2.7a2.8 2.8 0 1 0 1.9 2.7V3z"/></svg></a>{%- endif -%}
+          {%- if soc_pinterest != blank -%}<a href="{{ soc_pinterest }}" class="kbfoot__social" aria-label="Pinterest" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2.9.5 1.7 1.4 1.7 1.7 0 2.9-2.2 2.9-4.7 0-2-1.3-3.4-3.7-3.4a4.2 4.2 0 0 0-4.4 4.2c0 .8.2 1.4.6 1.8.1.2.2.3.1.5l-.2.9c-.1.3-.2.4-.5.2-1.2-.5-1.8-1.9-1.8-3.5 0-2.6 2.2-5.7 6.5-5.7 3.5 0 5.7 2.5 5.7 5.2 0 3.5-2 6.2-4.9 6.2-1 0-1.9-.5-2.2-1.1l-.6 2.4c-.2.8-.7 1.7-1 2.3A10 10 0 1 0 12 2z"/></svg></a>{%- endif -%}
+          {%- if soc_facebook != blank -%}<a href="{{ soc_facebook }}" class="kbfoot__social" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3l.5-3H14V4.5c0-.8.3-1.5 1.5-1.5H17V.5C16.7.4 15.7.3 14.7.3 12.4.3 11 1.7 11 4.2V6H8v3h3v9h3z"/></svg></a>{%- endif -%}
         </div>
       </div>
 

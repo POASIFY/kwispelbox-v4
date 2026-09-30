@@ -42,7 +42,7 @@
             <div class="cnt-tile__body">
               <strong class="cnt-tile__title">{{ block.settings.title }}</strong>
               {%- if block.settings.text != blank -%}<span class="cnt-tile__text">{{ block.settings.text }}</span>{%- endif -%}
-              {%- if block.settings.link_label != blank -%}<a href="{{ block.settings.link_url | default: '#' }}" class="cnt-tile__link">{{ block.settings.link_label }}<span aria-hidden="true">→</span></a>{%- endif -%}
+              {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}<a href="{{ block.settings.link_url }}" class="cnt-tile__link">{{ block.settings.link_label }}<span aria-hidden="true">→</span></a>{%- endif -%}
             </div>
           </div>
         {%- endfor -%}
