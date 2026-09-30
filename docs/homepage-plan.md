@@ -122,13 +122,27 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
   (ook `.nl`→`.com` en `hello`→`hallo`). theme-info → **KB-v4 / 4.0.0**.
 - Besliste waarden (Jasper): €50 · 16:00 · €89 · hallo@kwispelbox.com.
 
-### ⬜ Nog te doen (P1 → P2 → pixel)
-- **P1**: cart/predictive-search AJAX locale-aware (`Shopify.routes.root`); predictive results via DOM/textContent;
-  GWP betrouwbaar server-side (discount/Function) i.p.v. alleen JS; levertijd-klok tijdzone/weekenden;
-  PDP/cart `@app` blocks; footer socials één bron; NL-locale toevoegen.
-- **P2**: header (3538 r.), PDP (1045 r.), cart (967 r.) opsplitsen; focus-traps (drawer/filter/lightbox);
-  `href="#"` fallbacks; predictive-search keyboard; diverse defaults/opschoning.
+### ✅ P1-klein (gedaan)
+- **AJAX locale-aware**: cart (`cart.js`/`add`/`change`/`update`) en predictive search via `Shopify.routes.root`.
+- **Predictive search** herschreven: resultaten via DOM-nodes + `textContent` (geen innerHTML met API-data);
+  volwaardige combobox — pijl op/neer, Enter, Escape, `aria-activedescendant`, `role=combobox/option`.
+- **NL default-locale**: `nl.default.json` + `nl.default.schema.json`; Engels → fallback (`en.json`/`en.schema.json`).
+- **Footer socials** uit één bron: globale `settings.social_*` (fallback op sectie-instellingen).
+- **`href="#"`-fallbacks** weg (moments, kwispelclub, cart-promo, product-cta/faq, box-compare, special-editions(-page),
+  contact/payment): CTA rendert alleen bij geldige URL. Resterende `href="#"` zitten in het **uitgeschakelde
+  header-mega-menu/drawer** → meenemen in de header-refactor (P2), geen weggegooid werk.
+- Eindsweep: geen hardcoded `/cart`//`/search`-routes, geen €75/23:59/`.nl`-e-mail meer.
+
+### ⬜ Nog te doen (P1-groot → P2 → pixel)
+- **P1-groot (apart)**: GWP betrouwbaar server-side (discount/Function) i.p.v. alleen JS; levertijd-klok
+  NL-tijd/weekenden/feestdagen; PDP/cart `@app` blocks (vóór PDP-refactor).
+- **P2 refactor**: header (3538 r.), PDP (1045 r.), cart (967 r.) opsplitsen; focus-traps (drawer/filter/lightbox);
+  header-mega-menu `href="#"` opschonen.
 - **Daarna**: pixel-match homepage (section-pad, hero-ratio, moment-iconen, productcards, verjaardagblok, UGC-ratio).
+
+### ⏳ Openstaand voor Jasper
+- `loy_77036486821.js`: check live Network-tab + App embeds/loyalty-apps; pas daarna evt. verwijderen.
+- Social-URL's invullen in Theme-instellingen → "SEO & Bedrijf" (`social_*`) — footer + structured data lezen daaruit.
 
 ### Aandachtspunt: fonts niet in git
 `lilita-one-*.woff2` en `karla-*.woff2` worden gerefereerd in `css-variables.liquid`/`theme.liquid` maar
