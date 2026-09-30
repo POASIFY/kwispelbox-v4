@@ -68,12 +68,15 @@
 .prel-card__btn:hover { background: #5a9a3b; transform: translateY(-1px); }
 .prel-card__btn svg { width: 13px; height: 13px; }
 
+/* Mobiel: horizontale swipe-carousel (~1.25 kaart zichtbaar, edge-bleed peek). */
 @media (max-width: 749px) {
-  .prel__grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-}
-@media (max-width: 480px) {
-  .prel-card__body { padding: 10px 11px 12px; }
-  .prel-card__meta { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .prel__grid {
+    display: flex; grid-template-columns: none; gap: 12px;
+    overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    margin: 0 calc(-1 * var(--page-margin)); padding: 4px var(--page-margin) 12px;
+  }
+  .prel__grid::-webkit-scrollbar { display: none; }
+  .prel-card { flex: 0 0 76%; scroll-snap-align: start; }
 }
 {% endstylesheet %}
 
