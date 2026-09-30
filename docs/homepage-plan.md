@@ -133,9 +133,16 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
   header-mega-menu/drawer** → meenemen in de header-refactor (P2), geen weggegooid werk.
 - Eindsweep: geen hardcoded `/cart`//`/search`-routes, geen €75/23:59/`.nl`-e-mail meer.
 
+### ✅ P1-groot deel 1 (gedaan)
+- **`@app` blocks** op PDP (`main-product-kwispelbox`) én cart: `{ "type": "@app" }` in schema + render-loop met
+  `{{ block.shopify_attributes }}`. Judge.me blijft een aparte sectie → geen dubbele rendering (app blocks zijn opt-in).
+- **Levertijd-klok verwijderd** (browser-tijd, geen weekenden/feestdagen) op PDP + cart → **vaste tekst**
+  "Voor {{ kb_order_cutoff }} besteld, meestal {{ kb_delivery }}" uit de globale settings. Slimme klok kan later
+  terug zonder teksten te wijzigen.
+
 ### ⬜ Nog te doen (P1-groot → P2 → pixel)
-- **P1-groot (apart)**: GWP betrouwbaar server-side (discount/Function) i.p.v. alleen JS; levertijd-klok
-  NL-tijd/weekenden/feestdagen; PDP/cart `@app` blocks (vóór PDP-refactor).
+- **P1-groot (apart)**: GWP betrouwbaar server-side (automatische korting/Shopify Function) i.p.v. alleen JS —
+  keuze nodig over het mechanisme.
 - **P2 refactor**: header (3538 r.), PDP (1045 r.), cart (967 r.) opsplitsen; focus-traps (drawer/filter/lightbox);
   header-mega-menu `href="#"` opschonen.
 - **Daarna**: pixel-match homepage (section-pad, hero-ratio, moment-iconen, productcards, verjaardagblok, UGC-ratio).
