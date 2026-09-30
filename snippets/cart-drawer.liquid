@@ -1,0 +1,365 @@
+{%- comment -%}
+  snippets/cart-drawer.liquid — Kwispelbox KB-v4
+  Mobiele cart-drawer (≤749px). Enige cart-bron = Shopify cart AJAX (/cart.js, /cart/change.js).
+  GWP via de gedeelde window.kbGwp.sync(). Cart-PAGINA blijft bestaan als "Bekijk winkelwagen"-fallback.
+  Desktop-UX ongewijzigd: op desktop opent de drawer NIET (header-cart → /cart zoals voorheen).
+
+  Triggers (mobiel):
+  - header-cart klik → drawer openen
+  - hoofdproduct add-to-cart (#pdp-form) → toevoegen + GWP-sync + drawer openen
+  - upsell quick-add in drawer → toevoegen, drawer blijft open
+  - (cadeau-extra quick-add op PDP opent de drawer NIET; zie product-extras.liquid)
+{%- endcomment -%}
+
+{%- assign fs_cents = settings.kb_free_shipping | default: 50 | times: 100 -%}
+{%- assign extras_coll = collections['cadeau-extras'] -%}
+
+<div class="kbcd" data-cart-drawer aria-hidden="true"
+     data-fs-threshold="{{ fs_cents }}"
+     data-checkout-url="{{ routes.cart_url }}">
+  <div class="kbcd__overlay" data-cart-close></div>
+  <aside class="kbcd__panel" role="dialog" aria-modal="true" aria-label="Winkelwagen" tabindex="-1">
+
+    <header class="kbcd__top">
+      <div>
+        <strong class="kbcd__title">Je winkelwagen<span class="kbcd__count" data-cd-count></span></strong>
+        <span class="kbcd__subtitle">Bijna klaar om te kwispelen 🐾</span>
+      </div>
+      <button type="button" class="kbcd__close" data-cart-close aria-label="Sluiten">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </header>
+
+    {%- comment -%} Progress (gratis verzending + GWP), realtime via JS gevuld {%- endcomment -%}
+    <div class="kbcd__progress" data-cd-progress hidden>
+      <div class="kbcd__bar"><span class="kbcd__bar-fill" data-cd-bar></span></div>
+      <p class="kbcd__progress-msg" data-cd-ship></p>
+      <p class="kbcd__progress-msg kbcd__progress-msg--gift" data-cd-gift></p>
+    </div>
+
+    <div class="kbcd__body" data-cd-body>
+      <ul class="kbcd__items" data-cd-items role="list"></ul>
+
+      {%- comment -%} Upsell: max 2, cadeau-extra's, quick-add; JS filtert wat al in cart zit {%- endcomment -%}
+      {%- if extras_coll != blank and extras_coll.products.size > 0 -%}
+        <div class="kbcd__upsell" data-cd-upsell hidden>
+          <span class="kbcd__upsell-title">Maak het cadeau compleet</span>
+          <div class="kbcd__upsell-row">
+            {%- for extra in extras_coll.products limit: 4 -%}
+              {%- if extra.available and extra.selected_or_first_available_variant.id != blank -%}
+                <div class="kbcd__up" data-cd-up data-variant-id="{{ extra.selected_or_first_available_variant.id }}">
+                  <span class="kbcd__up-media">
+                    {%- if extra.featured_image != blank -%}
+                      {{ extra.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '60,120', sizes: '48px', alt: extra.title, class: 'kbcd__up-img' }}
+                    {%- else -%}<span class="kbcd__up-ph" aria-hidden="true">{%- render 'kb-icon', icon: 'gift' -%}</span>{%- endif -%}
+                  </span>
+                  <span class="kbcd__up-info"><span class="kbcd__up-name">{{ extra.title }}</span><span class="kbcd__up-price">{{ extra.price | money }}</span></span>
+                  <button type="button" class="kbcd__up-add" data-cd-up-add="{{ extra.selected_or_first_available_variant.id }}" aria-label="Voeg {{ extra.title | escape }} toe">
+                    <span class="kbcd__up-plus" aria-hidden="true">+</span><span class="kbcd__up-ok" aria-hidden="true">{%- render 'kb-icon', icon: 'check' -%}</span>
+                  </button>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="kbcd__empty" data-cd-empty hidden>
+        <span class="kbcd__empty-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'gift' -%}</span>
+        <p class="kbcd__empty-text">Je winkelwagen is nog leeg.</p>
+        <a href="/collections/boxen" class="kbcd__empty-btn" data-cart-close>Bekijk de boxen</a>
+      </div>
+    </div>
+
+    <footer class="kbcd__foot" data-cd-foot hidden>
+      <div class="kbcd__subtotal"><span>Subtotaal</span><strong data-cd-subtotal></strong></div>
+      <p class="kbcd__foot-note">Verzendkosten worden bij het afrekenen berekend.</p>
+      <a href="/checkout" class="kbcd__checkout" data-cd-checkout>Naar afrekenen<span aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span></a>
+      <a href="{{ routes.cart_url }}" class="kbcd__viewcart">Bekijk winkelwagen</a>
+    </footer>
+
+  </aside>
+</div>
+
+{% stylesheet %}
+.kbcd { display: none; }
+@media (max-width: 749px) {
+  .kbcd { display: block; position: fixed; inset: 0; z-index: 400; visibility: hidden; }
+  .kbcd.is-open { visibility: visible; }
+  .kbcd__overlay { position: absolute; inset: 0; background: rgba(61,34,9,.42); opacity: 0; transition: opacity 280ms ease; }
+  .kbcd.is-open .kbcd__overlay { opacity: 1; }
+  .kbcd__panel { position: absolute; top: 0; right: 0; bottom: 0; width: 100vw; max-width: 420px; background: var(--color-cream); display: flex; flex-direction: column; transform: translateX(100%); transition: transform 300ms cubic-bezier(.4,0,.2,1); overflow: hidden; }
+  .kbcd.is-open .kbcd__panel { transform: translateX(0); }
+
+  .kbcd__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 16px 12px; border-bottom: 1px solid var(--color-line); flex-shrink: 0; }
+  .kbcd__title { display: block; font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-ink); }
+  .kbcd__count { font-family: var(--font-body); font-size: .8rem; font-weight: 700; color: var(--color-muted); margin-left: 6px; }
+  .kbcd__subtitle { font-family: var(--font-body); font-size: .8rem; color: var(--color-muted); }
+  .kbcd__close { flex-shrink: 0; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border: none; background: #fff; border-radius: 50%; color: var(--color-ink); cursor: pointer; }
+  .kbcd__close svg { width: 20px; height: 20px; }
+
+  .kbcd__progress { padding: 12px 16px; background: #fff; border-bottom: 1px solid var(--color-line); flex-shrink: 0; }
+  .kbcd__bar { height: 8px; border-radius: 999px; background: var(--color-line); overflow: hidden; }
+  .kbcd__bar-fill { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--color-green); transition: width 400ms ease; }
+  .kbcd__progress-msg { font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-ink); margin: 8px 0 0; display: flex; align-items: center; gap: 6px; }
+  .kbcd__progress-msg--gift { color: var(--color-pink); }
+  .kbcd__progress-msg:empty { display: none; }
+
+  .kbcd__body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding: 8px 16px 16px; }
+  .kbcd__items { list-style: none; margin: 0; padding: 0; }
+  .kbcd__item { display: grid; grid-template-columns: 60px 1fr auto; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--color-line); }
+  .kbcd__item-media { width: 60px; height: 60px; border-radius: 12px; overflow: hidden; background: #fffaf2; display: flex; align-items: center; justify-content: center; }
+  .kbcd__item-media img { width: 100%; height: 100%; object-fit: contain; }
+  .kbcd__item-main { min-width: 0; }
+  .kbcd__item-title { font-family: var(--font-heading); font-size: .96rem; line-height: 1.15; color: var(--color-ink); }
+  .kbcd__item-variant { font-family: var(--font-body); font-size: .78rem; color: var(--color-muted); margin-top: 2px; }
+  .kbcd__item-props { font-family: var(--font-body); font-size: .74rem; color: var(--color-muted); margin-top: 4px; line-height: 1.35; }
+  .kbcd__item-props span { display: block; }
+  .kbcd__item-side { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 8px; }
+  .kbcd__item-price { font-family: var(--font-heading); font-size: .96rem; color: var(--color-ink); white-space: nowrap; }
+  .kbcd__item-price--free { color: var(--color-green); }
+  .kbcd__qty { display: inline-flex; align-items: center; border: 1.5px solid var(--color-line); border-radius: 999px; background: #fff; }
+  .kbcd__qty button { width: 30px; height: 30px; border: none; background: transparent; font-size: 1.1rem; line-height: 1; color: var(--color-muted); cursor: pointer; }
+  .kbcd__qty span { min-width: 22px; text-align: center; font-family: var(--font-heading); font-size: .9rem; color: var(--color-ink); }
+  .kbcd__item-remove { font-family: var(--font-body); font-size: .72rem; color: var(--color-muted); background: none; border: none; cursor: pointer; text-decoration: underline; }
+  .kbcd__item-gifttag { font-family: var(--font-body); font-size: .72rem; font-weight: 700; color: var(--color-pink); }
+  .kbcd__item.is-busy { opacity: .5; pointer-events: none; }
+
+  .kbcd__upsell { margin-top: 16px; }
+  .kbcd__upsell-title { display: block; font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); margin-bottom: 10px; }
+  .kbcd__upsell-row { display: flex; flex-direction: column; gap: 8px; }
+  .kbcd__up { display: flex; align-items: center; gap: 10px; background: #fffaf2; border-radius: 14px; padding: 8px 10px; }
+  .kbcd__up-media { width: 44px; height: 44px; border-radius: 10px; overflow: hidden; background: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .kbcd__up-media img { width: 100%; height: 100%; object-fit: contain; }
+  .kbcd__up-ph { color: var(--color-pink); }
+  .kbcd__up-ph svg { width: 22px; height: 22px; }
+  .kbcd__up-info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .kbcd__up-name { font-family: var(--font-heading); font-size: .9rem; color: var(--color-ink); }
+  .kbcd__up-price { font-family: var(--font-body); font-size: .8rem; font-weight: 700; color: var(--color-body); }
+  .kbcd__up-add { flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%; border: none; background: var(--color-green); color: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .kbcd__up-plus { font-size: 1.4rem; line-height: 1; }
+  .kbcd__up-ok { display: none; }
+  .kbcd__up-ok svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 3; }
+  .kbcd__up-add.is-added .kbcd__up-plus { display: none; }
+  .kbcd__up-add.is-added .kbcd__up-ok { display: inline-flex; }
+
+  .kbcd__empty { text-align: center; padding: 40px 16px; }
+  .kbcd__empty-icon { display: inline-flex; width: 56px; height: 56px; align-items: center; justify-content: center; border-radius: 50%; background: #fff0f5; color: var(--color-pink); margin-bottom: 12px; }
+  .kbcd__empty-icon svg { width: 28px; height: 28px; }
+  .kbcd__empty-text { font-family: var(--font-body); color: var(--color-muted); margin: 0 0 16px; }
+  .kbcd__empty-btn { display: inline-flex; padding: 12px 24px; background: var(--color-green); color: #fff; border-radius: 999px; font-family: var(--font-heading); text-decoration: none; }
+
+  .kbcd__foot { flex-shrink: 0; background: #fff; border-top: 1px solid var(--color-line); padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); }
+  .kbcd__subtotal { display: flex; align-items: baseline; justify-content: space-between; font-family: var(--font-body); font-size: .95rem; color: var(--color-ink); }
+  .kbcd__subtotal strong { font-family: var(--font-heading); font-size: 1.3rem; }
+  .kbcd__foot-note { font-family: var(--font-body); font-size: .74rem; color: var(--color-muted); margin: 4px 0 12px; }
+  .kbcd__checkout { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; box-sizing: border-box; min-height: 52px; background: var(--color-green); color: #fff; border-radius: 999px; font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: var(--ls-button); text-decoration: none; }
+  .kbcd__checkout svg { width: 18px; height: 18px; }
+  .kbcd__viewcart { display: block; text-align: center; margin-top: 10px; font-family: var(--font-body); font-size: .85rem; font-weight: 700; color: var(--color-ink); text-decoration: underline; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kbcd__panel, .kbcd__overlay, .kbcd__bar-fill { transition: none; }
+}
+{% endstylesheet %}
+
+{% javascript %}
+(function () {
+  var drawer = document.querySelector('[data-cart-drawer]');
+  if (!drawer) return;
+  var isMobile = function () { return window.matchMedia('(max-width: 749px)').matches; };
+  var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+  var panel = drawer.querySelector('.kbcd__panel');
+  var itemsEl = drawer.querySelector('[data-cd-items]');
+  var emptyEl = drawer.querySelector('[data-cd-empty]');
+  var footEl = drawer.querySelector('[data-cd-foot]');
+  var progEl = drawer.querySelector('[data-cd-progress]');
+  var barEl = drawer.querySelector('[data-cd-bar]');
+  var shipEl = drawer.querySelector('[data-cd-ship]');
+  var giftEl = drawer.querySelector('[data-cd-gift]');
+  var subEl = drawer.querySelector('[data-cd-subtotal]');
+  var countEl = drawer.querySelector('[data-cd-count]');
+  var upsellEl = drawer.querySelector('[data-cd-upsell]');
+  var fsThreshold = parseInt(drawer.getAttribute('data-fs-threshold'), 10) || 0;
+  var trap = window.kbTrap ? window.kbTrap(panel, null) : null;
+  var lastFocus = null;
+  var busy = false;
+
+  function money(cents) {
+    try { return '€' + (cents / 100).toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    catch (e) { return '€' + (cents / 100).toFixed(2).replace('.', ','); }
+  }
+  function post(url, body) {
+    return fetch(root + url, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify(body) }).then(function (r) { return r.json(); });
+  }
+  function getCart() { return fetch(root + 'cart.js', { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); }); }
+
+  var GIFT_ID = (window.kbGwp && window.kbGwp.config) ? window.kbGwp.config.giftId : null;
+
+  function updateCounters(count) {
+    document.querySelectorAll('.site-header__cart-count, .header-drawer__cart-count').forEach(function (el) { el.textContent = count; });
+  }
+
+  function esc(s) { return (s == null ? '' : String(s)).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+
+  function render(cart) {
+    if (!cart) return;
+    var count = cart.item_count;
+    countEl.textContent = count ? '(' + count + ')' : '';
+    updateCounters(count);
+
+    if (!cart.items || cart.items.length === 0) {
+      itemsEl.innerHTML = '';
+      emptyEl.hidden = false; footEl.hidden = true; progEl.hidden = true;
+      if (upsellEl) upsellEl.hidden = true;
+      return;
+    }
+    emptyEl.hidden = true; footEl.hidden = false;
+
+    var html = '';
+    cart.items.forEach(function (it) {
+      var isGift = GIFT_ID && it.variant_id === GIFT_ID;
+      var img = it.image ? '<img src="' + it.image.replace(/(\.[a-z]+)(\?|$)/i, '_120x$1$2') + '" alt="" loading="lazy">' : '';
+      var props = '';
+      if (it.properties) {
+        Object.keys(it.properties).forEach(function (k) {
+          if (k.charAt(0) === '_' || !it.properties[k]) return;
+          props += '<span>' + esc(k) + ': ' + esc(it.properties[k]) + '</span>';
+        });
+      }
+      var priceHtml = isGift ? '<span class="kbcd__item-price kbcd__item-price--free">Gratis</span>' : '<span class="kbcd__item-price">' + money(it.final_line_price) + '</span>';
+      var controls = isGift
+        ? '<span class="kbcd__item-gifttag">🎁 Cadeau</span>'
+        : '<div class="kbcd__qty"><button type="button" data-cd-dec="' + esc(it.key) + '" aria-label="Minder">−</button><span>' + it.quantity + '</span><button type="button" data-cd-inc="' + esc(it.key) + '" aria-label="Meer">+</button></div>'
+          + '<button type="button" class="kbcd__item-remove" data-cd-remove="' + esc(it.key) + '">Verwijderen</button>';
+      html += '<li class="kbcd__item" data-key="' + esc(it.key) + '">'
+        + '<span class="kbcd__item-media">' + img + '</span>'
+        + '<div class="kbcd__item-main"><div class="kbcd__item-title">' + esc(it.product_title) + '</div>'
+        + (it.variant_title && it.variant_title !== 'Default Title' ? '<div class="kbcd__item-variant">' + esc(it.variant_title) + '</div>' : '')
+        + (props ? '<div class="kbcd__item-props">' + props + '</div>' : '') + '</div>'
+        + '<div class="kbcd__item-side">' + priceHtml + controls + '</div>'
+        + '</li>';
+    });
+    itemsEl.innerHTML = html;
+
+    // Progress (gratis verzending)
+    if (fsThreshold > 0) {
+      progEl.hidden = false;
+      var qualifying = (window.kbGwp ? window.kbGwp.status(cart).qualifying : cart.total_price);
+      var pct = Math.min(100, Math.round((qualifying / fsThreshold) * 100));
+      barEl.style.width = pct + '%';
+      if (qualifying >= fsThreshold) { shipEl.textContent = 'Yes! Je bestelling wordt gratis verzonden 🚚'; }
+      else { shipEl.textContent = 'Nog ' + money(fsThreshold - qualifying) + ' tot gratis verzending'; }
+      // GWP-status (drempel uit kbGwp)
+      if (window.kbGwp && window.kbGwp.config) {
+        var st = window.kbGwp.status(cart);
+        giftEl.textContent = st.qualifying >= st.threshold ? 'Je gratis verrassing is verdiend 🎁' : ('Nog ' + money(st.remaining) + ' tot je gratis verrassing 🎁');
+      } else { giftEl.textContent = ''; }
+    } else { progEl.hidden = true; }
+
+    subEl.textContent = money(cart.total_price);
+    renderUpsell(cart);
+  }
+
+  function renderUpsell(cart) {
+    if (!upsellEl) return;
+    var inCart = {};
+    cart.items.forEach(function (it) { inCart[it.variant_id] = true; });
+    var shown = 0;
+    upsellEl.querySelectorAll('[data-cd-up]').forEach(function (up) {
+      var vid = parseInt(up.getAttribute('data-variant-id'), 10);
+      var hide = inCart[vid] || shown >= 2 || (GIFT_ID && vid === GIFT_ID);
+      up.style.display = hide ? 'none' : '';
+      if (!hide) shown++;
+    });
+    upsellEl.hidden = shown === 0;
+  }
+
+  function refresh() { return getCart().then(render); }
+
+  function open() {
+    if (!isMobile()) return;
+    lastFocus = document.activeElement;
+    drawer.classList.add('is-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    document.documentElement.style.overflow = 'hidden';
+    if (trap) trap.on(); else panel.focus();
+    refresh();
+  }
+  function close() {
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.documentElement.style.overflow = '';
+    if (trap) trap.off();
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  // Sync na mutatie: GWP + render (één bron)
+  function syncAndRender() {
+    return (window.kbGwp ? window.kbGwp.sync() : getCart()).then(render);
+  }
+
+  // Close-triggers
+  drawer.querySelectorAll('[data-cart-close]').forEach(function (el) { el.addEventListener('click', close); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && drawer.classList.contains('is-open')) close(); });
+
+  // Header-cart → drawer (alleen mobiel; desktop = normale navigatie)
+  document.querySelectorAll('a[href$="/cart"], a[href*="/cart?"], .site-header__cart-pill').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      if (!isMobile()) return;
+      // laat "Bekijk winkelwagen" in de drawer zelf gewoon navigeren
+      if (link.closest('[data-cart-drawer]')) return;
+      e.preventDefault();
+      open();
+    });
+  });
+
+  // Hoofdproduct add-to-cart (#pdp-form) → toevoegen + GWP-sync + drawer openen (mobiel)
+  var pdpForm = document.getElementById('pdp-form');
+  if (pdpForm) {
+    pdpForm.addEventListener('submit', function (e) {
+      if (!isMobile() || !window.fetch) return; // desktop / geen fetch: normale submit → /cart
+      e.preventDefault();
+      if (busy) return; busy = true;
+      var fd = new FormData(pdpForm);
+      fetch(root + 'cart/add.js', { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+        .then(function () { return syncAndRender(); })
+        .then(function () { busy = false; open(); })
+        .catch(function () { busy = false; pdpForm.submit(); });
+    });
+  }
+
+  // Upsell quick-add in drawer → drawer blijft open
+  drawer.addEventListener('click', function (e) {
+    var addBtn = e.target.closest('[data-cd-up-add]');
+    if (addBtn) {
+      if (busy) return; busy = true;
+      var vid = addBtn.getAttribute('data-cd-up-add');
+      post('cart/add.js', { items: [{ id: vid, quantity: 1 }] })
+        .then(function () { addBtn.classList.add('is-added'); setTimeout(function () { addBtn.classList.remove('is-added'); }, 1400); return syncAndRender(); })
+        .then(function () { busy = false; }).catch(function () { busy = false; });
+      return;
+    }
+    var dec = e.target.closest('[data-cd-dec]'), inc = e.target.closest('[data-cd-inc]'), rem = e.target.closest('[data-cd-remove]');
+    var key = dec ? dec.getAttribute('data-cd-dec') : inc ? inc.getAttribute('data-cd-inc') : rem ? rem.getAttribute('data-cd-remove') : null;
+    if (!key) return;
+    if (busy) return; busy = true;
+    var li = drawer.querySelector('.kbcd__item[data-key="' + key + '"]');
+    if (li) li.classList.add('is-busy');
+    getCart().then(function (cart) {
+      var line = null;
+      cart.items.forEach(function (it) { if (it.key === key) line = it; });
+      if (!line) { busy = false; return; }
+      var q = rem ? 0 : (inc ? line.quantity + 1 : Math.max(0, line.quantity - 1));
+      return post('cart/change.js', { id: key, quantity: q }).then(function () { return syncAndRender(); }).then(function () { busy = false; });
+    }).catch(function () { busy = false; });
+  });
+
+  // Externe cart-updates (bv. PDP cadeau-extra quick-add) → drawer + tellers bijwerken zonder te openen
+  document.addEventListener('kb:cart:updated', function (e) {
+    if (e.detail && e.detail.cart) { render(e.detail.cart); } else { refresh(); }
+  });
+
+  window.kbCartDrawer = { open: open, close: close, refresh: refresh };
+}());
+{% endjavascript %}

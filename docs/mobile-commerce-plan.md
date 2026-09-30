@@ -38,3 +38,17 @@ Jij gaf aan: "drawer toont alleen status, niet zelf dupliceren." Dat volg ik. Ma
 - **B.** Gift-add-logica globaliseren (één gedeelde bron die op elke cart-mutatie draait, ook in de drawer) — netter, maar raakt de bestaande cart-JS.
 
 Dit is een architectuurkeuze — ik kies niet zelf. Rest van de drawer (items, qty/remove, gratis-verzending-progress, GWP-status-display, checkout-CTA) kan ik gewoon bouwen.
+
+## Deel B — Cart drawer (uitgevoerd)
+- **GWP gecentraliseerd** (`snippets/gwp-sync.liquid`, `window.kbGwp.sync()`), globaal geladen; cart-pagina delegeert ernaar (dedup). Config: drempel uit `settings.kb_gift_threshold`, gift-variant uit product `gratis-mystery-verrassing`. Idempotent + lock; gift telt niet mee als qualifying; BXGY = enige €0-bron.
+- **Cart-drawer** (`snippets/cart-drawer.liquid`, mobiel ≤749px, globaal in `theme.liquid`):
+  - Triggers: header-cart → drawer; hoofd-add-to-cart (#pdp-form) → add + GWP-sync + drawer open; upsell quick-add → drawer blijft open; PDP cadeau-extra quick-add → géén drawer, wel GWP-sync + tellers (`product-extras.liquid`).
+  - Render uit `/cart.js` (enige bron): items (thumbnail, titel, variant, personalisatie-props, prijs, −/+ , verwijderen), gift-regel als "Gratis 🎁" zonder controls.
+  - Progress: gratis-verzending-bar (`settings.kb_free_shipping`) + GWP-status (`window.kbGwp.status`), realtime.
+  - Upsell: max 2 cadeau-extra's, sluit in-cart + gift uit, quick-add ✓.
+  - Footer: subtotaal + groene "Naar afrekenen" (/checkout) + "Bekijk winkelwagen" (/cart fallback).
+  - A11y: role=dialog, aria-modal, focus-trap (window.kbTrap), ESC, scroll-lock, safe-area-bottom, prefers-reduced-motion. z-index 400 (boven bottom-nav). Desktop: drawer opent NIET (header-cart → /cart ongewijzigd).
+  - Race-guards: `busy`-flag + `kbGwp.running`-lock → geen dubbele adds/gift.
+
+### Nog te verifiëren (screenshots/echte device) — states
+€80→+€10 (gift 1x), €95→remove→€70 (gift weg), snelle quick-adds (geen dubbel), refresh >€89 (gift 1x), drawer→checkout zonder /cart (gift aanwezig), handmatige gift-remove >€89 (hersteld op cart-page/sync), cart leeg (gift weg). Logica is idempotent; visuele/interactie-check op device nodig.

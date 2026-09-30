@@ -112,16 +112,17 @@
       e.preventDefault();
       var btn = form.querySelector('[data-pex-add]');
       var body = new FormData(form);
-      fetch('/cart/add.js', { method: 'POST', body: body, headers: { 'Accept': 'application/json' } })
+      var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+      fetch(root + 'cart/add.js', { method: 'POST', body: body, headers: { 'Accept': 'application/json' } })
         .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
         .then(function () {
           if (btn) { btn.classList.add('is-added'); setTimeout(function () { btn.classList.remove('is-added'); }, 1600); }
-          return fetch('/cart.js', { headers: { 'Accept': 'application/json' } });
+          /* GWP meesyncen via gedeelde functie (opent de drawer NIET); dispatcht kb:cart:updated. */
+          return window.kbGwp ? window.kbGwp.sync() : fetch(root + 'cart.js', { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); });
         })
-        .then(function (r) { return r ? r.json() : null; })
         .then(function (cart) {
           if (!cart) return;
-          document.querySelectorAll('.site-header__cart-count').forEach(function (el) { el.textContent = cart.item_count; });
+          document.querySelectorAll('.site-header__cart-count, .header-drawer__cart-count').forEach(function (el) { el.textContent = cart.item_count; });
         })
         .catch(function () { form.submit(); });
     });
