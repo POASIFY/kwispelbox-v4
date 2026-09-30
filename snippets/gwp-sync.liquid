@@ -1,0 +1,83 @@
+{%- comment -%}
+  snippets/gwp-sync.liquid — Kwispelbox KB-v4
+  Eén gedeelde, idempotente GWP-syncfunctie (window.kbGwp). Cart-pagina én cart-drawer roepen
+  dezelfde functie aan na elke cart-mutatie. Voegt exact 1 gratis cadeau toe ≥ drempel, verwijdert
+  het < drempel. De frontend voegt/verwijdert alleen; de BXGY-korting maakt de prijs €0 (enige bron).
+
+  Config uit centrale bron:
+  - gift variant-id ← product 'gratis-mystery-verrassing' (niet de numerieke id hardcoden)
+  - drempel ← settings.kb_gift_threshold (centrale belofte-setting)
+{%- endcomment -%}
+{%- assign gwp_product = all_products['gratis-mystery-verrassing'] -%}
+{%- assign gwp_variant_id = gwp_product.selected_or_first_available_variant.id -%}
+{%- assign gwp_threshold_cents = settings.kb_gift_threshold | default: 89 | times: 100 -%}
+{%- if gwp_variant_id != blank and gwp_threshold_cents > 0 -%}
+  <div hidden data-kb-gwp-config data-gift-id="{{ gwp_variant_id }}" data-threshold="{{ gwp_threshold_cents }}"></div>
+{%- endif -%}
+
+{% javascript %}
+(function () {
+  if (window.kbGwp) return;
+  var cfgEl = document.querySelector('[data-kb-gwp-config]');
+  var cfg = cfgEl ? { giftId: parseInt(cfgEl.getAttribute('data-gift-id'), 10), threshold: parseInt(cfgEl.getAttribute('data-threshold'), 10) } : null;
+  var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+
+  function post(url, body) {
+    return fetch(root + url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function (r) { return r.json(); });
+  }
+  function getCart() {
+    return fetch(root + 'cart.js', { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.json(); });
+  }
+
+  var api = {
+    config: cfg,
+    running: false,
+
+    /* Qualifying = totaal exclusief het gift-item zelf. */
+    status: function (cart) {
+      var giftLine = null, qualifying = 0;
+      (cart && cart.items || []).forEach(function (i) {
+        if (cfg && i.variant_id === cfg.giftId) { giftLine = i; } else { qualifying += i.final_line_price; }
+      });
+      var threshold = cfg ? cfg.threshold : 0;
+      return { enabled: !!(cfg && cfg.giftId), qualifying: qualifying, threshold: threshold, hasGift: !!giftLine, remaining: Math.max(0, threshold - qualifying) };
+    },
+
+    /* Idempotente sync: hoogstens ÉÉN mutatie per call; lock voorkomt dubbele adds bij races.
+       Retourneert de verse cart en dispatcht 'kb:cart:updated'. Geen prijsmanipulatie (BXGY doet €0). */
+    sync: function () {
+      if (!cfg || !cfg.giftId || api.running) { return getCart(); }
+      api.running = true;
+      return getCart().then(function (cart) {
+        var st = api.status(cart);
+        var needsAdd = st.qualifying >= cfg.threshold && !st.hasGift;
+        var needsRemove = st.hasGift && st.qualifying < cfg.threshold;
+        var giftLine = null;
+        cart.items.forEach(function (i) { if (i.variant_id === cfg.giftId) giftLine = i; });
+        var needsFix = giftLine && st.qualifying >= cfg.threshold && giftLine.quantity > 1;
+
+        if (!needsAdd && !needsRemove && !needsFix) { api.running = false; return cart; }
+
+        var req = needsAdd
+          ? post('cart/add.js', { items: [{ id: cfg.giftId, quantity: 1 }] })
+          : post('cart/change.js', { id: String(cfg.giftId), quantity: (st.qualifying >= cfg.threshold ? 1 : 0) });
+
+        /* Na de ene mutatie klopt de drempelstatus per definitie → geen her-controle (geen loop). */
+        return req.then(function () { return getCart(); }).then(function (fresh) {
+          api.running = false;
+          return fresh;
+        });
+      }).then(function (cart) {
+        try { document.dispatchEvent(new CustomEvent('kb:cart:updated', { detail: { cart: cart } })); } catch (e) {}
+        return cart;
+      }).catch(function () { api.running = false; return getCart(); });
+    }
+  };
+
+  window.kbGwp = api;
+}());
+{% endjavascript %}

@@ -469,40 +469,21 @@
       mutatie controleren we exact één keer of de drempelstatus nu klopt.
       gwpRunning voorkomt dat overlappende swaps de check her-triggeren.
     {%- endcomment -%}
+    {%- comment -%}
+      GWP wordt nu centraal afgehandeld door de gedeelde, idempotente functie window.kbGwp.sync()
+      (snippets/gwp-sync.liquid) — dezelfde bron die de cart-drawer gebruikt. Deze wrapper voegt
+      alleen de sectie-render toe zodat een toegevoegd/verwijderd gift op de cart-pagina zichtbaar wordt.
+    {%- endcomment -%}
     function checkGWP() {
-      if (!GWP_ENABLED || gwpRunning) { return Promise.resolve(); }
-      gwpRunning = true;
-      return fetch(CART_ROOT + 'cart.js', { headers: { Accept: 'application/json' } })
-        .then(function (r) { return r.json(); })
-        .then(function (cart) {
-          var giftLine = null, qualifying = 0;
-          cart.items.forEach(function (i) {
-            if (i.variant_id === GIFT_ID) { giftLine = i; }
-            else { qualifying += i.final_line_price; }
-          });
-          var needsAdd = qualifying >= THRESHOLD && !giftLine;
-          var needsRemove = giftLine && qualifying < THRESHOLD;
-          var needsFix = giftLine && qualifying >= THRESHOLD && giftLine.quantity > 1;
-
-          if (!needsAdd && !needsRemove && !needsFix) {
-            gwpRunning = false;
-            return;
-          }
-          announce('Winkelwagen bijwerken…');
-          root.setAttribute('aria-busy', 'true');
-          var req = needsAdd
-            ? post(CART_ROOT + 'cart/add.js', { items: [{ id: GIFT_ID, quantity: 1 }] })
-            : post(CART_ROOT + 'cart/change.js', { id: String(GIFT_ID), quantity: (qualifying >= THRESHOLD ? 1 : 0) });
-          return req.then(function (res) {
-            if (res && res.sections && res.sections[SECTION_ID]) {
-              swap(res.sections[SECTION_ID]);
-            }
-            root.setAttribute('aria-busy', 'false');
-            gwpRunning = false;
-            {%- comment -%} Géén her-controle hier: de drempelstatus klopt nu per definitie. {%- endcomment -%}
-          });
-        })
-        .catch(function () { gwpRunning = false; });
+      if (!GWP_ENABLED || !window.kbGwp) { return Promise.resolve(); }
+      announce('Winkelwagen bijwerken…');
+      root.setAttribute('aria-busy', 'true');
+      return window.kbGwp.sync().then(function () {
+        return post(CART_ROOT + 'cart/update.js', { updates: {} }).then(function (res) {
+          if (res && res.sections && res.sections[SECTION_ID]) { swap(res.sections[SECTION_ID]); }
+          root.setAttribute('aria-busy', 'false');
+        });
+      }).catch(function () { root.setAttribute('aria-busy', 'false'); });
     }
 
     {%- comment -%} Gedelegeerde listeners op document overleven de innerHTML-swap. {%- endcomment -%}
@@ -572,8 +553,11 @@
       if (code) { window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=/cart'; }
     });
 
-    {%- comment -%} GWP-controle bij eerste load (verving de oude reload-IIFE). {%- endcomment -%}
-    checkGWP();
+    {%- comment -%}
+      GWP-controle bij eerste load. Gedefereerd zodat de gedeelde window.kbGwp-module (aan het
+      eind van de body geladen) gegarandeerd beschikbaar is voordat we synchroniseren.
+    {%- endcomment -%}
+    if (window.kbGwp) { checkGWP(); } else { setTimeout(checkGWP, 0); }
   })();
 </script>
 
