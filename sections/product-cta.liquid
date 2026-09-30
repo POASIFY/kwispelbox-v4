@@ -18,43 +18,45 @@
           {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}<a href="{{ section.settings.button_url }}" class="pcta__btn">{{ section.settings.button_label }}<span aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span></a>{%- endif -%}
         {%- endif -%}
       </div>
-      <div class="pcta__media">
-        {%- if section.settings.image != blank -%}
+      {%- if section.settings.image != blank -%}
+        <div class="pcta__media">
           <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.image.alt | escape }}" width="400" height="320" loading="lazy" class="pcta__img">
-        {%- else -%}
-          <div class="pcta__img pcta__img--ph">{%- render 'kb-icon', icon: 'dog' -%}</div>
-        {%- endif -%}
-      </div>
+        </div>
+      {%- endif -%}
     </section>
   </div>
 </div>
 
 {% stylesheet %}
-.pcta { background: var(--color-cream); padding: 20px 0 64px; }
+.pcta { background: var(--color-cream); padding: 8px 0 40px; }
 .pcta__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); }
-.pcta__banner { position: relative; display: flex; flex-direction: column; gap: 8px; background: #e8f5e2; border-radius: 32px; overflow: hidden; }
+.pcta__banner { position: relative; display: flex; flex-direction: column; gap: 8px; background: #e8f5e2; border-radius: 24px; overflow: hidden; }
 .pcta__deco { position: absolute; pointer-events: none; z-index: 1; }
 .pcta__deco svg { display: block; width: 100%; height: 100%; }
 .pcta__deco--paw { top: 18px; left: 18px; width: 30px; height: 30px; color: var(--color-green); opacity: .3; transform: rotate(-12deg); }
 .pcta__deco--heart { top: 60px; right: 24px; width: 24px; height: 24px; color: var(--color-pink); opacity: .4; }
 .pcta__deco--squiggle { bottom: 16px; left: 30px; width: 60px; height: 16px; color: var(--color-orange); opacity: .35; }
-.pcta__text { position: relative; z-index: 2; padding: 36px 28px 16px; }
-.pcta__title { font-family: var(--font-heading); font-size: clamp(1.8rem, 6vw, 2.8rem); color: var(--color-ink); line-height: 1.08; margin: 0; }
-.pcta__intro { font-family: var(--font-body); font-size: 1.02rem; line-height: 1.6; color: var(--color-body); margin: 14px 0 22px; max-width: 40ch; }
-.pcta__btn { display: inline-flex; align-items: center; gap: 9px; padding: 16px 30px; background: var(--color-green); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.1rem; text-decoration: none; transition: background 160ms, transform 160ms, box-shadow 160ms; }
+.pcta__text { position: relative; z-index: 2; padding: 24px 24px; }
+.pcta__title { font-family: var(--font-heading); font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--color-ink); line-height: 1.05; margin: 0; }
+.pcta__intro { font-family: var(--font-body); font-size: .96rem; line-height: 1.55; color: var(--color-body); margin: 8px 0 16px; max-width: 44ch; }
+.pcta__btn { display: inline-flex; align-items: center; gap: 9px; padding: 13px 24px; background: var(--color-green); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; letter-spacing: var(--ls-button); text-decoration: none; transition: background 160ms, transform 160ms, box-shadow 160ms; }
 .pcta__btn:hover { background: #5a9a3b; transform: translateY(-2px); box-shadow: 0 12px 30px rgba(102, 170, 68, .3); }
 .pcta__btn span { display: inline-flex; }
 .pcta__btn svg { width: 18px; height: 18px; }
-.pcta__media { padding: 12px 28px 28px; }
-.pcta__img { width: 100%; height: 230px; object-fit: cover; border-radius: 24px; display: block; }
-.pcta__img--ph { display: flex; align-items: center; justify-content: center; background: #fff; color: var(--color-green); }
-.pcta__img--ph svg { width: 70px; height: 70px; }
+.pcta__media { padding: 0 24px 20px; }
+.pcta__img { width: 100%; height: 180px; object-fit: cover; border-radius: 18px; display: block; }
 
 @media (min-width: 750px) {
-  .pcta__banner { flex-direction: row; align-items: center; }
-  .pcta__text { flex: 1.1; padding: 52px 8px 52px 48px; }
-  .pcta__media { flex: 1; padding: 28px; }
-  .pcta__img, .pcta__img--ph { height: 300px; }
+  /* Tekst-only (geen foto): compacte, gecentreerde afsluitbanner. */
+  .pcta__banner { align-items: center; text-align: center; }
+  .pcta__text { padding: 28px 32px; }
+  .pcta__intro { margin-left: auto; margin-right: auto; }
+  /* Met foto: rij-layout. */
+  .pcta__banner:has(.pcta__media) { flex-direction: row; text-align: left; }
+  .pcta__banner:has(.pcta__media) .pcta__text { flex: 1.2; padding: 36px 8px 36px 40px; }
+  .pcta__banner:has(.pcta__media) .pcta__intro { margin-left: 0; margin-right: 0; }
+  .pcta__media { flex: 1; padding: 24px; }
+  .pcta__img { height: 220px; }
 }
 {% endstylesheet %}
 

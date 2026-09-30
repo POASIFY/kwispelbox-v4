@@ -47,15 +47,15 @@
 
 {% stylesheet %}
 .prel { background: transparent; }
-.prel__inner { max-width: var(--page-width); margin: 0 auto; padding: clamp(20px, 3vw, 40px) var(--page-margin) clamp(28px, 4vw, 56px); }
-.prel__heading { font-family: var(--font-heading); font-size: var(--fs-h2); color: var(--color-ink); margin: 0 0 18px; display: flex; align-items: center; gap: 10px; }
+.prel__inner { max-width: var(--page-width); margin: 0 auto; padding: clamp(14px, 2vw, 24px) var(--page-margin) clamp(20px, 3vw, 36px); }
+.prel__heading { font-family: var(--font-heading); font-size: calc(var(--fs-h2) * 0.78); color: var(--color-ink); margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
 .prel__heading-heart { display: inline-flex; color: var(--color-pink); }
 .prel__heading-heart svg { width: .6em; height: .6em; fill: none; stroke: currentColor; stroke-width: 2.4; }
 
 .prel__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .prel-card { display: flex; flex-direction: column; background: #fffaf2; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 5px 16px rgba(61,34,9,.05); transition: transform 160ms, box-shadow 160ms; }
 .prel-card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(61,34,9,.09); }
-.prel-card__media { display: block; position: relative; aspect-ratio: 1 / 0.82; padding: 9px; }
+.prel-card__media { display: block; position: relative; aspect-ratio: 1 / 0.6; padding: 8px; }
 .prel-card__img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .prel-card__ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.75); }
 .prel-card__ph svg { width: 38%; height: 38%; }

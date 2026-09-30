@@ -45,6 +45,8 @@
       "settings": {
         "eyebrow": "Boordevol plezier",
         "heading": "Wat zit er in de box?",
+        "heading_highlight": "",
+        "heading_suffix": "",
         "intro": "Elke box stellen we met de hand samen, afgestemd op de gekozen maat.",
         "show_decorations": true
       }
