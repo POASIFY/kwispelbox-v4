@@ -148,7 +148,7 @@
     "birthday-block": {
       "type": "birthday-block",
       "settings": {
-        "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_40_00-6.png",
+        "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_54-1.png",
         "heading": "Wanneer is jouw hond jarig?",
         "text": "Ontvang een reminder en leuke verjaardagtips!",
         "name_label": "Naam van je hond",
@@ -250,6 +250,7 @@
         "p6": {
           "type": "photo",
           "settings": {
+            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_40_00-6.png",
             "dog_name": ""
           }
         }
