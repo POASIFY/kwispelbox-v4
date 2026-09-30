@@ -1,23 +1,65 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "blocks": {
-        "u1": { "type": "usp", "settings": { "title": "Met liefde samengesteld", "icon": "package", "color": "orange" } },
-        "u2": { "type": "usp", "settings": { "title": "Alleen de beste kwaliteit", "icon": "leaf", "color": "green" } },
-        "u3": { "type": "usp", "settings": { "title": "Voor blije honden en trotse baasjes", "icon": "heart", "color": "pink" } }
+        "u1": {
+          "type": "usp",
+          "settings": {
+            "title": "Met liefde samengesteld",
+            "icon": "package",
+            "color": "orange"
+          }
+        },
+        "u2": {
+          "type": "usp",
+          "settings": {
+            "title": "Alleen de beste kwaliteit",
+            "icon": "leaf",
+            "color": "green"
+          }
+        },
+        "u3": {
+          "type": "usp",
+          "settings": {
+            "title": "Voor blije honden en trotse baasjes",
+            "icon": "heart",
+            "color": "pink"
+          }
+        }
       },
-      "block_order": ["u1", "u2", "u3"],
+      "block_order": [
+        "u1",
+        "u2",
+        "u3"
+      ],
       "settings": {
         "badge_text": "",
-        "line1_a": "Een feestje", "line1_a_color": "ink", "line1_b": "", "line1_b_color": "green",
-        "line2_a": "in een", "line2_a_color": "pink", "line2_b": "doos", "line2_b_color": "orange",
-        "line3_a": "voor jouw hond", "line3_a_color": "green", "line3_b": "", "line3_b_color": "orange",
+        "line1_a": "Een feestje",
+        "line1_a_color": "ink",
+        "line1_b": "",
+        "line1_b_color": "green",
+        "line2_a": "in een",
+        "line2_a_color": "pink",
+        "line2_b": "doos",
+        "line2_b_color": "orange",
+        "line3_a": "voor jouw hond",
+        "line3_a_color": "green",
+        "line3_b": "",
+        "line3_b_color": "orange",
         "text": "Cadeauboxen vol speeltjes en snacks voor elke verjaardag, feestdag en elk moment.",
         "cta_primary_label": "Kies een box",
         "cta_primary_url": "/collections/boxen",
         "image": "shopify://shop_images/hero-home-desktop.png",
-        "image_mobile": "",
         "circle_text": "Elke box voelt als een cadeautje",
         "image_priority": true
       }
@@ -25,15 +67,72 @@
     "moments": {
       "type": "moments",
       "blocks": {
-        "m1": { "type": "moment", "settings": { "title": "Verjaardag", "icon": "cake", "color": "pink", "link": "/products/verjaardag-kwispelbox" } },
-        "m2": { "type": "moment", "settings": { "title": "Nieuwe puppy", "icon": "paw", "color": "green", "link": "/collections/puppy-favorieten" } },
-        "m3": { "type": "moment", "settings": { "title": "Adoptiedag", "icon": "home", "color": "yellow", "link": "/collections/boxen" } },
-        "m4": { "type": "moment", "settings": { "title": "Beterschap", "icon": "bandage", "color": "pink", "link": "/collections/boxen" } },
-        "m5": { "type": "moment", "settings": { "title": "Kerst", "icon": "tree", "color": "green", "link": "/products/kerst-kwispelbox" } },
-        "m6": { "type": "moment", "settings": { "title": "Bedankt", "icon": "gift", "color": "orange", "link": "/collections/boxen" } }
+        "m1": {
+          "type": "moment",
+          "settings": {
+            "title": "Verjaardag",
+            "icon": "cake",
+            "color": "pink",
+            "link": "/products/verjaardag-kwispelbox"
+          }
+        },
+        "m2": {
+          "type": "moment",
+          "settings": {
+            "title": "Nieuwe puppy",
+            "icon": "paw",
+            "color": "green",
+            "link": "/collections/puppy-favorieten"
+          }
+        },
+        "m3": {
+          "type": "moment",
+          "settings": {
+            "title": "Adoptiedag",
+            "icon": "home",
+            "color": "yellow",
+            "link": "/collections/boxen"
+          }
+        },
+        "m4": {
+          "type": "moment",
+          "settings": {
+            "title": "Beterschap",
+            "icon": "bandage",
+            "color": "pink",
+            "link": "/collections/boxen"
+          }
+        },
+        "m5": {
+          "type": "moment",
+          "settings": {
+            "title": "Kerst",
+            "icon": "tree",
+            "color": "green",
+            "link": "/products/kerst-kwispelbox"
+          }
+        },
+        "m6": {
+          "type": "moment",
+          "settings": {
+            "title": "Bedankt",
+            "icon": "gift",
+            "color": "orange",
+            "link": "/collections/boxen"
+          }
+        }
       },
-      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6"],
-      "settings": { "heading": "Voor elk moment" }
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
+      "settings": {
+        "heading": "Voor elk moment"
+      }
     },
     "featured-products": {
       "type": "featured-products",
@@ -49,6 +148,7 @@
     "birthday-block": {
       "type": "birthday-block",
       "settings": {
+        "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_54-1.png",
         "heading": "Wanneer is jouw hond jarig?",
         "text": "Ontvang een reminder en leuke verjaardagtips!",
         "name_label": "Naam van je hond",
@@ -64,30 +164,117 @@
     "usp-bar": {
       "type": "usp-bar",
       "blocks": {
-        "s1": { "type": "usp", "settings": { "title": "Gratis verzending", "subtitle": "vanaf €50", "icon": "truck", "color": "green" } },
-        "s2": { "type": "usp", "settings": { "title": "Voor 16:00 besteld", "subtitle": "morgen in huis", "icon": "clock", "color": "orange" } },
-        "s3": { "type": "usp", "settings": { "title": "Met een persoonlijk", "subtitle": "kaartje", "icon": "heart", "color": "pink" } },
-        "s4": { "type": "usp", "settings": { "title": "Duurzame en", "subtitle": "hondvriendelijke producten", "icon": "leaf", "color": "yellow" } }
+        "s1": {
+          "type": "usp",
+          "settings": {
+            "title": "Gratis verzending",
+            "subtitle": "vanaf €50",
+            "icon": "truck",
+            "color": "green"
+          }
+        },
+        "s2": {
+          "type": "usp",
+          "settings": {
+            "title": "Voor 16:00 besteld",
+            "subtitle": "morgen in huis",
+            "icon": "clock",
+            "color": "orange"
+          }
+        },
+        "s3": {
+          "type": "usp",
+          "settings": {
+            "title": "Met een persoonlijk",
+            "subtitle": "kaartje",
+            "icon": "heart",
+            "color": "pink"
+          }
+        },
+        "s4": {
+          "type": "usp",
+          "settings": {
+            "title": "Duurzame en",
+            "subtitle": "hondvriendelijke producten",
+            "icon": "leaf",
+            "color": "yellow"
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
       "settings": {}
     },
     "happy-dogs": {
       "type": "happy-dogs",
       "blocks": {
-        "p1": { "type": "photo", "settings": {} },
-        "p2": { "type": "photo", "settings": {} },
-        "p3": { "type": "photo", "settings": {} },
-        "p4": { "type": "photo", "settings": {} },
-        "p5": { "type": "photo", "settings": {} },
-        "p6": { "type": "photo", "settings": {} }
+        "p1": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_40_02-7.png",
+            "dog_name": ""
+          }
+        },
+        "p2": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_55-2.png",
+            "dog_name": ""
+          }
+        },
+        "p3": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_59-5.png",
+            "dog_name": ""
+          }
+        },
+        "p4": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_56-3.png",
+            "dog_name": ""
+          }
+        },
+        "p5": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_58-4.png",
+            "dog_name": ""
+          }
+        },
+        "p6": {
+          "type": "photo",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_40_00-6.png",
+            "dog_name": ""
+          }
+        }
       },
-      "block_order": ["p1", "p2", "p3", "p4", "p5", "p6"],
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6"
+      ],
       "settings": {
         "heading": "Blije honden, blije baasjes",
         "text": "Tag @kwispelbox en wie weet staat jouw hond hier binnenkort!"
       }
     }
   },
-  "order": ["hero", "moments", "featured-products", "birthday-block", "usp-bar", "happy-dogs"]
+  "order": [
+    "hero",
+    "moments",
+    "featured-products",
+    "birthday-block",
+    "usp-bar",
+    "happy-dogs"
+  ]
 }
