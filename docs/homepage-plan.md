@@ -169,6 +169,9 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
 - ✅ **Meest gekozen**: compactere kaarten, foto groter in het `kaart_kleur`-vlak, hiërarchie titel/desc/prijs/hart/knop,
   kleiner/lichter hart, compacte groene knop, krappere sectie-gap. (Prijzen tonen echte productprijzen; transparante
   productfoto's nog te uploaden voor de schoonste look.)
+- ⚠️ **Les:** een collectie die je via de API maakt is niet automatisch op het **Webshop**-kanaal gepubliceerd;
+  een ongepubliceerde collectie lost op de storefront op als leeg (sectie toont fallback). `meest-gekozen` nu
+  gepubliceerd via `publishablePublish` (Webshop). Check dit voor elke nieuwe collectie die in het thema getoond wordt.
 - ⬜ Volgende: verjaardagsblok → USP-strip → UGC-slider → footer → volledige desktop-spacing-pass → mobiele pass (met mockup).
 - Notitie: "Meest gekozen"-leegmelding was stale; boxen zijn gepubliceerd (Webshop), collectie gekoppeld —
   4 kaarten horen te tonen (thema-productfoto's nog te uploaden).
