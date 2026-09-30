@@ -32,7 +32,7 @@
           {%- assign tint = pal[ti] -%}
           <li class="hd__slide" {{ block.shopify_attributes }}>
             {%- if block.settings.image != blank -%}
-              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,350,500', sizes: '280px', alt: block.settings.image.alt | default: block.settings.dog_name | default: 'Blije hond', class: 'hd__img' }}
+              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', widths: '250,350,500', sizes: '(max-width: 749px) 72vw, (max-width: 989px) 30vw, 235px', alt: block.settings.image.alt | default: block.settings.dog_name | default: 'Blije hond', class: 'hd__img' }}
             {%- else -%}
               <span class="hd__img hd__img--ph hd__img--{{ tint }}">{%- render 'lucide', icon: 'dog' -%}</span>
             {%- endif -%}
