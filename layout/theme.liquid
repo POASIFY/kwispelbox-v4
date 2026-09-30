@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code | default: 'nl' }}">
   <head>
-    {{ 'karla-v33-latin.woff2' | asset_url | preload_tag: as: 'font' }}
-    {{ 'lilita-one-v17-latin.woff2' | asset_url | preload_tag: as: 'font' }}
+    {{ 'karla-v33-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+    {{ 'lilita-one-v17-latin.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
     {%- render 'css-variables' -%}
     {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
     <script>
