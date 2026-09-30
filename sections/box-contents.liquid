@@ -5,6 +5,9 @@
 {%- endcomment -%}
 
 {%- assign card_blocks  = section.blocks | where: 'type', 'card' -%}
+{%- comment -%} Module A: inhoud uit custom.whats_inside (primair); blocks = fallback. {%- endcomment -%}
+{%- assign wi = product.metafields.custom.whats_inside.value -%}
+{%- assign wi_colors = 'green,pink,orange,yellow' | split: ',' -%}
 
 <div class="kbox full-width">
 
@@ -37,18 +40,40 @@
     <div class="kbox__stage">
 
       <div class="kbox__col kbox__col--left">
-        {%- for block in card_blocks -%}
-          {%- assign col = forloop.index | modulo: 2 -%}
-          {%- if col == 1 -%}
-            <div class="kbox-card kbox-card--{{ block.settings.color }}" style="order:{{ forloop.index }}" {{ block.shopify_attributes }}>
-              <span class="kbox-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
-              <div class="kbox-card__body">
-                <h3 class="kbox-card__title">{{ block.settings.title }}</h3>
-                {%- if block.settings.text != blank -%}<p class="kbox-card__text">{{ block.settings.text }}</p>{%- endif -%}
+        {%- if wi.size > 0 -%}
+          {%- for item in wi -%}
+            {%- assign col = forloop.index | modulo: 2 -%}
+            {%- if col == 1 -%}
+              {%- assign ci = forloop.index0 | modulo: 4 -%}
+              {%- assign wi_icon = 'gift' -%}{%- assign wi_text = '' -%}
+              {%- if item contains 'peeltje' -%}{%- assign wi_icon = 'bone' -%}{%- assign wi_text = 'Om lekker mee te ravotten' -%}
+              {%- elsif item contains 'nack' -%}{%- assign wi_icon = 'leaf' -%}{%- assign wi_text = 'Om van te smullen' -%}
+              {%- elsif item contains 'nuffel' -%}{%- assign wi_icon = 'heart' -%}{%- assign wi_text = 'Zacht en aaibaar' -%}
+              {%- elsif item contains 'aartje' or item contains 'erras' -%}{%- assign wi_icon = 'sparkles' -%}{%- assign wi_text = 'Een extra verrassing' -%}
+              {%- endif -%}
+              <div class="kbox-card kbox-card--{{ wi_colors[ci] }}" style="order:{{ forloop.index }}">
+                <span class="kbox-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: wi_icon -%}</span>
+                <div class="kbox-card__body">
+                  <h3 class="kbox-card__title">{{ item }}</h3>
+                  {%- if wi_text != blank -%}<p class="kbox-card__text">{{ wi_text }}</p>{%- endif -%}
+                </div>
               </div>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for block in card_blocks -%}
+            {%- assign col = forloop.index | modulo: 2 -%}
+            {%- if col == 1 -%}
+              <div class="kbox-card kbox-card--{{ block.settings.color }}" style="order:{{ forloop.index }}" {{ block.shopify_attributes }}>
+                <span class="kbox-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
+                <div class="kbox-card__body">
+                  <h3 class="kbox-card__title">{{ block.settings.title }}</h3>
+                  {%- if block.settings.text != blank -%}<p class="kbox-card__text">{{ block.settings.text }}</p>{%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
       </div>
 
       <div class="kbox__media">
@@ -79,18 +104,40 @@
       </div>
 
       <div class="kbox__col kbox__col--right">
-        {%- for block in card_blocks -%}
-          {%- assign col = forloop.index | modulo: 2 -%}
-          {%- if col == 0 -%}
-            <div class="kbox-card kbox-card--{{ block.settings.color }}" style="order:{{ forloop.index }}" {{ block.shopify_attributes }}>
-              <span class="kbox-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
-              <div class="kbox-card__body">
-                <h3 class="kbox-card__title">{{ block.settings.title }}</h3>
-                {%- if block.settings.text != blank -%}<p class="kbox-card__text">{{ block.settings.text }}</p>{%- endif -%}
+        {%- if wi.size > 0 -%}
+          {%- for item in wi -%}
+            {%- assign col = forloop.index | modulo: 2 -%}
+            {%- if col == 0 -%}
+              {%- assign ci = forloop.index0 | modulo: 4 -%}
+              {%- assign wi_icon = 'gift' -%}{%- assign wi_text = '' -%}
+              {%- if item contains 'peeltje' -%}{%- assign wi_icon = 'bone' -%}{%- assign wi_text = 'Om lekker mee te ravotten' -%}
+              {%- elsif item contains 'nack' -%}{%- assign wi_icon = 'leaf' -%}{%- assign wi_text = 'Om van te smullen' -%}
+              {%- elsif item contains 'nuffel' -%}{%- assign wi_icon = 'heart' -%}{%- assign wi_text = 'Zacht en aaibaar' -%}
+              {%- elsif item contains 'aartje' or item contains 'erras' -%}{%- assign wi_icon = 'sparkles' -%}{%- assign wi_text = 'Een extra verrassing' -%}
+              {%- endif -%}
+              <div class="kbox-card kbox-card--{{ wi_colors[ci] }}" style="order:{{ forloop.index }}">
+                <span class="kbox-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: wi_icon -%}</span>
+                <div class="kbox-card__body">
+                  <h3 class="kbox-card__title">{{ item }}</h3>
+                  {%- if wi_text != blank -%}<p class="kbox-card__text">{{ wi_text }}</p>{%- endif -%}
+                </div>
               </div>
-            </div>
-          {%- endif -%}
-        {%- endfor -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for block in card_blocks -%}
+            {%- assign col = forloop.index | modulo: 2 -%}
+            {%- if col == 0 -%}
+              <div class="kbox-card kbox-card--{{ block.settings.color }}" style="order:{{ forloop.index }}" {{ block.shopify_attributes }}>
+                <span class="kbox-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
+                <div class="kbox-card__body">
+                  <h3 class="kbox-card__title">{{ block.settings.title }}</h3>
+                  {%- if block.settings.text != blank -%}<p class="kbox-card__text">{{ block.settings.text }}</p>{%- endif -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
       </div>
 
     </div>
