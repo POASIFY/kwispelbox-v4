@@ -132,7 +132,7 @@
 .hero { position: relative; background: transparent; overflow: hidden; }
 .hero__media::before { content: ""; position: absolute; left: 50%; bottom: 2%; transform: translateX(-50%); width: 128%; height: 66%; background: radial-gradient(56% 56% at 50% 66%, #e8f5e2 0%, rgba(232,245,226,0) 72%); z-index: 0; pointer-events: none; }
 
-.hero__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: var(--section-pad-sm) var(--page-margin) clamp(16px, 2.5vw, 28px); display: grid; grid-template-columns: 43fr 57fr; grid-template-areas: "intro media"; align-items: center; column-gap: 16px; }
+.hero__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: var(--section-pad-sm) var(--page-margin) clamp(6px, 1.6vw, 16px); display: grid; grid-template-columns: 43fr 57fr; grid-template-areas: "intro media"; align-items: center; column-gap: 16px; }
 .hero__intro { grid-area: intro; min-width: 0; position: relative; }
 .hero__media { grid-area: media; position: relative; min-width: 0; align-self: end; }
 
@@ -176,8 +176,8 @@
 .hero__img--ph { aspect-ratio: 1.7; width: 90%; margin: 0 auto; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--color-green); box-shadow: var(--shadow-card); }
 .hero__img--ph svg { width: 40%; height: 40%; }
 
-.hero__circle { position: absolute; top: 4%; right: 3%; z-index: 2; width: 120px; height: 120px; border-radius: 50%; background: var(--color-pink); display: flex; align-items: center; justify-content: center; padding: 14px; box-shadow: 0 14px 30px rgba(212,83,126,.3); text-align: center; }
-.hero__circle-text { font-family: var(--font-heading); font-size: .84rem; line-height: 1.14; color: #fff; }
+.hero__circle { position: absolute; top: 2%; right: 1%; z-index: 2; width: 100px; height: 100px; border-radius: 50%; background: var(--color-pink); display: flex; align-items: center; justify-content: center; padding: 12px; box-shadow: 0 10px 24px rgba(212,83,126,.26); text-align: center; }
+.hero__circle-text { font-family: var(--font-heading); font-size: .74rem; line-height: 1.12; color: #fff; }
 .hero__circle-arrow { position: absolute; bottom: -14px; left: -6px; width: 26px; height: 32px; color: var(--color-pink); }
 .hero__circle-arrow svg { width: 100%; height: 100%; }
 
@@ -192,6 +192,8 @@
 .hero__deco--h1 { top: 4%; left: 6%; width: 26px; color: var(--color-pink); }
 .hero__deco--h2 { bottom: 20%; right: 2%; width: 22px; color: var(--color-pink); }
 .hero__deco--h1 svg, .hero__deco--h2 svg { fill: none; stroke: currentColor; stroke-width: 2.2; }
+/* Selectiever: minder doodles, alleen de leukste rond kop + box */
+.hero__deco--h2, .hero__deco--t-squiggle { display: none; }
 .hero__deco--paws { top: 3%; right: 26%; width: 56px; height: 28px; color: var(--color-orange); opacity: .5; display: flex; gap: 6px; }
 .hero__deco--spark { top: 30%; left: 0; width: 28px; color: var(--color-green); }
 .hero__deco--squiggle { bottom: 8%; left: 6%; width: 40px; height: 16px; color: var(--color-green); }
