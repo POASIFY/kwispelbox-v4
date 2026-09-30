@@ -92,6 +92,12 @@
               </button>
             {%- endfor -%}
           </div>
+          {%- comment -%} Mobiele swipe-indicator (dots). Alleen zichtbaar op mobiel; thumbnails op desktop. {%- endcomment -%}
+          <div class="pdp-gallery__dots" data-gallery-dots>
+            {%- for media in product.media -%}
+              <button type="button" class="pdp-gallery__dot{% if forloop.first %} is-active{% endif %}" data-dot-index="{{ forloop.index0 }}" aria-label="Ga naar afbeelding {{ forloop.index }}"></button>
+            {%- endfor -%}
+          </div>
         {%- endif -%}
         <span class="pdp-gallery__deco pdp-gallery__deco--heart" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
         <span class="pdp-gallery__deco pdp-gallery__deco--paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
@@ -403,6 +409,8 @@
 .pdp-gallery__slide.is-active { display: block; }
 .pdp-gallery__img, .pdp-gallery__slide img, .pdp-gallery__slide video, .pdp-gallery__slide iframe { width: 100%; aspect-ratio: 1/1; object-fit: contain; display: block; transition: transform 500ms ease; }
 .pdp-gallery__main:hover .pdp-gallery__img { transform: scale(1.04); }
+/* Dots: alleen mobiel (desktop gebruikt thumbnails) */
+.pdp-gallery__dots { display: none; }
 .pdp-gallery__img--ph { display: flex; align-items: center; justify-content: center; background: #e8f5e2; color: var(--color-green); }
 .pdp-gallery__img--ph svg { width: 80px; height: 80px; }
 .pdp-gallery__badge { position: absolute; z-index: 2; font-family: var(--font-body); font-size: .72rem; font-weight: 800; padding: 6px 13px; border-radius: var(--radius-pill); color: #fff; box-shadow: 0 6px 16px rgba(61, 34, 9, .2); }
@@ -550,13 +558,25 @@
 }
 /* ── Mobiele verfijningen galerij/varianten ───────────── */
 @media (max-width: 749px) {
-  .pdp-gallery__zoom { width: 44px; height: 44px; right: 12px; bottom: 12px; }
-  /* Variant-kaart prijs niet laten plakken aan de rechterrand op smalle schermen */
-  .pdp-opt { column-gap: 12px; padding: 14px 12px; }
-  .pdp-opt__name { font-size: 1.04rem; }
-  /* Waarde-totaal: laat 'jij betaalt' netjes onder de doorgestreepte waarde vallen i.p.v. knellen */
+  /* Gallery → horizontale swipe met scroll-snap; dots i.p.v. thumbnails */
+  .pdp-gallery__main { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; border-radius: 20px; }
+  .pdp-gallery__main::-webkit-scrollbar { display: none; }
+  .pdp-gallery__slide, .pdp-gallery__slide.is-active { display: block; flex: 0 0 100%; scroll-snap-align: center; }
+  .pdp-gallery__main:hover .pdp-gallery__img { transform: none; }
+  .pdp-gallery__zoom { display: none; } /* swipe i.p.v. zoom-knop; knop zit in de scroller, dus op mobiel uit */
+  .pdp-gallery__thumbs { display: none; }
+  .pdp-gallery__dots { display: flex; justify-content: center; gap: 7px; margin-top: 10px; }
+  .pdp-gallery__dot { width: 7px; height: 7px; padding: 0; border: none; border-radius: 50%; background: var(--color-line); cursor: pointer; transition: width 200ms, background 200ms; }
+  .pdp-gallery__dot.is-active { width: 20px; border-radius: 4px; background: var(--color-green); }
+
+  /* Varianten: zeer compacte stacked rows (media links, tekst, prijs rechts) */
+  .pdp-opt { column-gap: 12px; padding: 10px 12px; grid-template-columns: 44px 1fr auto; grid-template-areas: "media name price" "media desc price"; }
+  .pdp-opt__media { width: 44px; height: 44px; border-radius: 12px; }
+  .pdp-opt__name { font-size: 1rem; }
+  .pdp-opt__desc { font-size: .76rem; }
+  .pdp-opt__price { font-size: 1.02rem; }
+
   .pdp-value__total-now { margin-left: 0; }
-  /* Garantie-zegel niet te krap op smalle schermen */
   .pdp-guarantee { gap: 12px; padding: 12px 14px; }
 }
 @media (prefers-reduced-motion: reduce) { .pdp-sticky { transition: none; } }
@@ -721,6 +741,23 @@
         thumbs.forEach(function (x) { x.classList.toggle('is-active', x === t); });
       });
     });
+
+    /* Mobiele swipe-gallery: dots synchroniseren met scroll-positie (en slide is-active meesyncen). */
+    var galMain = gallery.querySelector('[data-gallery-main]');
+    var galDots = gallery.querySelectorAll('[data-gallery-dots] .pdp-gallery__dot');
+    if (galMain && galDots.length) {
+      var syncGalleryDots = function () {
+        var w = galMain.clientWidth;
+        if (!w) return;
+        var idx = Math.round(galMain.scrollLeft / w);
+        galDots.forEach(function (d, i) { d.classList.toggle('is-active', i === idx); });
+        slides.forEach(function (s, i) { s.classList.toggle('is-active', i === idx); });
+      };
+      galMain.addEventListener('scroll', function () { window.requestAnimationFrame(syncGalleryDots); }, { passive: true });
+      galDots.forEach(function (d, i) {
+        d.addEventListener('click', function () { galMain.scrollTo({ left: i * galMain.clientWidth, behavior: 'smooth' }); });
+      });
+    }
 
     /* Klik-to-zoom lightbox */
     var lightbox = gallery.querySelector('[data-lightbox]');
