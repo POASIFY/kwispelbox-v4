@@ -14,16 +14,12 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "usp1": { "type": "usp", "settings": { "icon": "truck", "color": "green", "title": "Gratis verzending", "text": "vanaf €50" } },
-        "usp2": { "type": "usp", "settings": { "icon": "heart", "color": "pink", "title": "Met liefde", "text": "samengesteld in Nederland" } },
-        "usp3": { "type": "usp", "settings": { "icon": "heart", "color": "yellow", "title": "Met liefde", "text": "samengesteld" } },
-        "usp4": { "type": "usp", "settings": { "icon": "shield", "color": "green", "title": "Veilig betalen", "text": "met jouw favoriete betaalmethode" } },
         "col1": { "type": "menu_col", "settings": { "icon": "shop", "title": "Shop", "menu": "main-menu" } },
         "col2": { "type": "menu_col", "settings": { "icon": "heart", "title": "Klantenservice", "menu": "footer-service" } },
         "col3": { "type": "menu_col", "settings": { "icon": "paw", "title": "Kwispelclub", "menu": "menu-kwispelclub" } },
         "col4": { "type": "menu_col", "settings": { "icon": "star", "title": "Over Kwispelbox", "menu": "menu-over-ons" } }
       },
-      "block_order": ["usp1", "usp2", "usp3", "usp4", "col1", "col2", "col3", "col4"],
+      "block_order": ["col1", "col2", "col3", "col4"],
       "settings": {
         "show_payment_icons": true,
         "privacy_url": "/policies/privacy-policy",

@@ -30,6 +30,9 @@
   {%- endif -%}
 
   <div class="kbfoot__body">
+    <span class="kbfoot__doodle kbfoot__doodle--paw1" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
+    <span class="kbfoot__doodle kbfoot__doodle--paw2" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
+    <span class="kbfoot__doodle kbfoot__doodle--bone" aria-hidden="true">{%- render 'kb-icon', icon: 'bone' -%}</span>
     <div class="kbfoot__inner">
 
       <div class="kbfoot__main">
@@ -148,10 +151,17 @@
 .kbfoot__usp-text { font-family: var(--font-body); font-size: .85rem; color: var(--color-body); }
 
 /* Bruine body */
-.kbfoot__body { background: var(--foot); border-radius: 44px 44px 0 0; color: var(--foot-soft); }
-.kbfoot__inner { max-width: var(--page-width); margin: 0 auto; padding: 46px var(--page-margin) 0; }
+.kbfoot__body { position: relative; background: var(--foot); border-radius: 44px 44px 0 0; color: var(--foot-soft); overflow: hidden; }
+.kbfoot__inner { position: relative; z-index: 1; max-width: var(--page-width); margin: 0 auto; padding: 42px var(--page-margin) 0; }
 
-.kbfoot__main { display: grid; grid-template-columns: 1.4fr 2.4fr 1.5fr; gap: 40px; padding-bottom: 36px; align-items: start; }
+/* Speelse doodles (subtiel) */
+.kbfoot__doodle { position: absolute; z-index: 0; color: #f3ece0; opacity: .05; pointer-events: none; }
+.kbfoot__doodle svg { width: 100%; height: 100%; }
+.kbfoot__doodle--paw1 { top: 34px; right: 6%; width: 58px; transform: rotate(18deg); }
+.kbfoot__doodle--paw2 { bottom: 90px; left: 3%; width: 46px; transform: rotate(-14deg); }
+.kbfoot__doodle--bone { top: 46%; left: 40%; width: 60px; transform: rotate(24deg); opacity: .04; }
+
+.kbfoot__main { display: grid; grid-template-columns: 1.4fr 2.4fr 1.5fr; gap: 40px; padding-bottom: 32px; align-items: start; }
 
 /* Merk */
 .kbfoot__logo { display: inline-flex; text-decoration: none; }
@@ -227,6 +237,7 @@
 /* ── Mobiel ──────────────────────────────────────────── */
 @media (max-width: 859px) {
   .kbfoot { margin-top: 40px; }
+  .kbfoot__doodle { display: none; }
   .kbfoot__usps { grid-template-columns: 1fr 1fr; gap: 14px 10px; margin-bottom: 20px; }
   .kbfoot__usp { flex-direction: column; text-align: center; gap: 8px; }
   .kbfoot__usp + .kbfoot__usp { padding-left: 0; border-left: none; }
