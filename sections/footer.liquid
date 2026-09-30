@@ -42,7 +42,16 @@
             {%- if section.settings.logo != blank -%}
               <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}" width="200" height="{{ 200 | divided_by: section.settings.logo.aspect_ratio | round }}" loading="lazy" class="kbfoot__logo-img">
             {%- else -%}
-              <span class="kbfoot__logo-text">{{ shop.name }}</span>
+              <span class="kbfoot__logo-mark" aria-hidden="true">
+                <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="17" width="32" height="22" rx="3.5" fill="#66AA44"/>
+                  <rect x="4" y="10.5" width="36" height="8.5" rx="3" fill="#4d8833"/>
+                  <rect x="18.5" y="10.5" width="7" height="28.5" fill="#FFB8CD"/>
+                  <path d="M22 10.5c-1-2.4-3.2-4-5.2-3.2-1.6.6-2 2.6-1 4.2.5.8 1.4 1.6 2.6 2.2" stroke="#FBF6EE" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M22 10.5c1-2.4 3.2-4 5.2-3.2 1.6.6 2 2.6 1 4.2-.5.8-1.4 1.6-2.6 2.2" stroke="#FBF6EE" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </span>
+              <span class="kbfoot__logo-word">{{ shop.name | replace: '.com', '' | replace: '.nl', '' }}</span>
             {%- endif -%}
           </a>
           {%- if section.settings.tagline != blank -%}
@@ -164,9 +173,12 @@
 .kbfoot__main { display: grid; grid-template-columns: 1.15fr 2.75fr 1.5fr; gap: 30px 44px; padding-bottom: 30px; align-items: start; }
 
 /* Merk */
-.kbfoot__logo { display: inline-flex; text-decoration: none; }
+.kbfoot__logo { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; }
 .kbfoot__logo-img { height: auto; max-height: 64px; width: auto; display: block; }
-.kbfoot__logo-text { font-family: var(--font-heading); font-size: 1.8rem; color: #fff; }
+.kbfoot__logo-mark { display: inline-flex; flex-shrink: 0; }
+.kbfoot__logo-mark svg { width: 40px; height: 40px; display: block; }
+.kbfoot__logo-word { font-family: var(--font-heading); font-size: 2rem; line-height: 1; color: #FBF6EE; letter-spacing: .01em; }
+.kbfoot__logo-text { font-family: var(--font-heading); font-size: 1.8rem; color: #FBF6EE; }
 .kbfoot__tagline { font-family: var(--font-body); font-size: .86rem; line-height: 1.55; color: rgba(243,236,224,.5); margin: 14px 0 0; max-width: 30ch; }
 .kbfoot__socials { display: flex; gap: 12px; margin-top: 22px; }
 .kbfoot__social { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 50%; background: #f3ece0; color: var(--foot); box-shadow: 0 4px 12px rgba(0,0,0,.18); transition: transform 160ms, background 160ms, color 160ms; }

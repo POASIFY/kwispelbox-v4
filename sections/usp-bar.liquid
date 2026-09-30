@@ -22,28 +22,25 @@
 {%- endif -%}
 
 {% stylesheet %}
-.uspb { background: transparent; }
-.uspb__inner { max-width: var(--page-width); margin: 0 auto; padding: 18px var(--page-margin); display: flex; align-items: stretch; gap: 0; background: #fff; border: 1.5px solid var(--color-line); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
-/* de balk zelf smaller dan de rand-inner: */
-.uspb { padding: 0 var(--page-margin); }
-.uspb__inner { padding: 20px 28px; }
-.uspb__item { flex: 1; display: flex; align-items: center; gap: 12px; padding: 0 22px; border-right: 1px solid var(--color-line); }
-.uspb__item:first-child { padding-left: 0; }
-.uspb__item:last-child { border-right: none; padding-right: 0; }
-.uspb__icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.uspb__icon svg { width: 26px; height: 26px; stroke-width: 1.8; }
-.uspb__icon--green  { color: var(--color-green); }
-.uspb__icon--orange { color: var(--color-orange); }
-.uspb__icon--pink   { color: #e75480; }
-.uspb__icon--yellow { color: #d99a00; }
-.uspb__icon--ink    { color: var(--color-ink); }
-.uspb__text { display: flex; flex-direction: column; line-height: 1.32; }
-.uspb__text strong { font-family: var(--font-body); font-size: .92rem; font-weight: 700; letter-spacing: .005em; color: var(--color-ink); }
-.uspb__text span { font-family: var(--font-body); font-size: .85rem; color: var(--color-muted); }
+.uspb { background: transparent; padding: 0 var(--page-margin); }
+.uspb__inner { max-width: var(--page-width); margin: 0 auto; padding: 6px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.uspb__item { display: flex; align-items: center; gap: 13px; min-width: 0; padding: 15px 18px; background: #fffaf2; border-radius: var(--radius-lg); box-shadow: 0 5px 16px rgba(61,34,9,.05); }
+.uspb__icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 46px; height: 46px; border-radius: 50%; }
+.uspb__icon svg { width: 23px; height: 23px; stroke-width: 1.9; }
+.uspb__icon--green  { background: #e3f1d9; color: var(--color-green); }
+.uspb__icon--orange { background: #fdf0e2; color: var(--color-orange); }
+.uspb__icon--pink   { background: #fdeaf2; color: #e75480; }
+.uspb__icon--yellow { background: #fbf0d0; color: #d99a00; }
+.uspb__icon--ink    { background: #f0e8dd; color: var(--color-ink); }
+.uspb__text { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; }
+.uspb__text strong { font-family: var(--font-body); font-size: .9rem; font-weight: 700; letter-spacing: .005em; color: var(--color-ink); }
+.uspb__text span { font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); }
 
-@media (max-width: 749px) {
-  .uspb__inner { flex-wrap: wrap; padding: 18px; gap: 16px 0; }
-  .uspb__item { flex: 0 0 50%; border-right: none; padding: 0 10px; }
+@media (max-width: 989px) { .uspb__inner { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) {
+  .uspb__inner { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .uspb__item { flex-direction: column; text-align: center; gap: 8px; padding: 16px 10px; }
+  .uspb__text { align-items: center; }
 }
 {% endstylesheet %}
 
@@ -85,10 +82,10 @@
     {
       "name": "USP balk",
       "blocks": [
-        { "type": "usp", "settings": { "title": "Gratis verzending", "subtitle": "vanaf €50", "icon": "truck", "color": "ink" } },
-        { "type": "usp", "settings": { "title": "Voor 16:00 besteld", "subtitle": "morgen in huis", "icon": "clock", "color": "ink" } },
+        { "type": "usp", "settings": { "title": "Gratis verzending", "subtitle": "vanaf €50", "icon": "truck", "color": "green" } },
+        { "type": "usp", "settings": { "title": "Voor 16:00 besteld", "subtitle": "morgen in huis", "icon": "clock", "color": "orange" } },
         { "type": "usp", "settings": { "title": "Met een persoonlijk", "subtitle": "kaartje", "icon": "heart", "color": "pink" } },
-        { "type": "usp", "settings": { "title": "Duurzame en", "subtitle": "hondvriendelijke producten", "icon": "leaf", "color": "green" } }
+        { "type": "usp", "settings": { "title": "Duurzame en", "subtitle": "hondvriendelijke producten", "icon": "leaf", "color": "yellow" } }
       ]
     }
   ]

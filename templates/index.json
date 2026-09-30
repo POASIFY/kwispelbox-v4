@@ -64,10 +64,10 @@
     "usp-bar": {
       "type": "usp-bar",
       "blocks": {
-        "s1": { "type": "usp", "settings": { "title": "Gratis verzending", "subtitle": "vanaf €50", "icon": "truck", "color": "ink" } },
-        "s2": { "type": "usp", "settings": { "title": "Voor 16:00 besteld", "subtitle": "morgen in huis", "icon": "clock", "color": "ink" } },
+        "s1": { "type": "usp", "settings": { "title": "Gratis verzending", "subtitle": "vanaf €50", "icon": "truck", "color": "green" } },
+        "s2": { "type": "usp", "settings": { "title": "Voor 16:00 besteld", "subtitle": "morgen in huis", "icon": "clock", "color": "orange" } },
         "s3": { "type": "usp", "settings": { "title": "Met een persoonlijk", "subtitle": "kaartje", "icon": "heart", "color": "pink" } },
-        "s4": { "type": "usp", "settings": { "title": "Duurzame en", "subtitle": "hondvriendelijke producten", "icon": "leaf", "color": "green" } }
+        "s4": { "type": "usp", "settings": { "title": "Duurzame en", "subtitle": "hondvriendelijke producten", "icon": "leaf", "color": "yellow" } }
       },
       "block_order": ["s1", "s2", "s3", "s4"],
       "settings": {}

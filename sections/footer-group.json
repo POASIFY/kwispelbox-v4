@@ -21,7 +21,6 @@
       },
       "block_order": ["col1", "col2", "col3", "col4"],
       "settings": {
-        "logo": "shopify://shop_images/Identiek_logo_namaken_2_a5ff79b0-2e67-4df7-87c6-1a22fb2ff0eb.png",
         "show_payment_icons": true,
         "privacy_url": "/policies/privacy-policy",
         "terms_url": "/pages/algemene-voorwaarden"
