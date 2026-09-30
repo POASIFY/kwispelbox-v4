@@ -67,28 +67,29 @@
 {% stylesheet %}
 .bd { background: transparent; }
 .bd__inner { max-width: var(--page-width); margin: 0 auto; padding: clamp(16px, 2.2vw, 26px) var(--page-margin); }
-.bd__card { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 330px); align-items: center; gap: 28px; background: var(--color-yellow); border-radius: var(--radius-lg); padding: 22px 30px; overflow: hidden; }
+.bd__card { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 340px); align-items: center; gap: 24px; background: var(--color-yellow); border-radius: var(--radius-lg); padding: 18px 30px; overflow: hidden; }
 
-.bd__polaroid { background: #fff; padding: 9px 9px 22px; border-radius: 6px; box-shadow: 0 10px 22px rgba(61,34,9,.16); transform: rotate(-5deg); flex-shrink: 0; }
-.bd__polaroid-img { display: block; width: 185px; height: 138px; object-fit: cover; border-radius: 3px; }
+.bd__polaroid { background: #fff; padding: 10px 10px 24px; border-radius: 6px; box-shadow: 0 10px 22px rgba(61,34,9,.16); transform: rotate(-6deg); flex-shrink: 0; }
+.bd__polaroid-img { display: block; width: 202px; height: 150px; object-fit: cover; border-radius: 3px; }
 .bd__polaroid-ph { display: flex; align-items: center; justify-content: center; background: #fff0f5; color: var(--color-pink); }
 .bd__polaroid-ph .lucide { width: 46px; height: 46px; }
 
 .bd__text { position: relative; min-width: 0; }
-.bd__heading { font-family: var(--font-heading); font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--color-ink); line-height: 1.02; margin: 0 0 7px; }
-.bd__heading-cake { display: inline-block; vertical-align: middle; margin-left: 8px; }
-.bd__heading-cake .mom-sticker { width: 40px; height: 40px; }
-.bd__sub { font-family: var(--font-body); font-size: .98rem; font-weight: 600; color: var(--color-ink); margin: 0; max-width: 34ch; }
+.bd__heading { font-family: var(--font-heading); font-size: clamp(1.95rem, 3.3vw, 2.85rem); color: var(--color-ink); line-height: .98; margin: 0 0 4px; }
+.bd__heading-cake { display: inline-block; vertical-align: middle; margin-left: 6px; }
+.bd__heading-cake .mom-sticker { width: 38px; height: 38px; }
+.bd__sub { font-family: var(--font-body); font-size: .96rem; font-weight: 600; color: var(--color-ink); margin: 0; max-width: 34ch; }
 
 .bd__form-wrap { min-width: 0; }
-.bd__form { display: flex; flex-direction: column; gap: 8px; }
+.bd__form { display: flex; flex-direction: column; gap: 7px; }
 .bd__fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.bd__field { display: flex; flex-direction: column; gap: 3px; }
-.bd__label { font-family: var(--font-body); font-size: .74rem; font-weight: 700; color: var(--color-ink); }
-.bd__field input { width: 100%; box-sizing: border-box; height: 42px; border: 1.5px solid rgba(61,34,9,.12); border-radius: 11px; padding: 0 13px; font-family: var(--font-body); font-size: .92rem; color: var(--color-ink); background: #fff; outline: none; transition: border-color 140ms; }
+.bd__field { display: flex; flex-direction: column; gap: 2px; }
+.bd__label { font-family: var(--font-body); font-size: .72rem; font-weight: 700; color: var(--color-body); }
+.bd__field input { width: 100%; box-sizing: border-box; height: 37px; border: 1.5px solid rgba(61,34,9,.12); border-radius: 10px; padding: 0 12px; font-family: var(--font-body); font-size: .9rem; color: var(--color-ink); background: #fff; outline: none; transition: border-color 140ms; }
 .bd__field input:focus { border-color: var(--color-green); }
-.bd__field--email input { height: 38px; background: rgba(255,255,255,.72); border-color: rgba(61,34,9,.1); font-size: .88rem; }
-.bd__btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; height: 50px; margin-top: 2px; background: #e75480; color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.08rem; cursor: pointer; transition: background 140ms, transform 140ms; box-shadow: 0 8px 20px rgba(231,84,128,.26); }
+.bd__field--email input { height: 34px; background: rgba(255,255,255,.6); border-color: rgba(61,34,9,.08); font-size: .85rem; }
+.bd__field--email input::placeholder { color: var(--color-muted); }
+.bd__btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; width: 100%; height: 46px; margin-top: 3px; background: #e75480; color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.06rem; cursor: pointer; transition: background 140ms, transform 140ms; box-shadow: 0 8px 20px rgba(231,84,128,.26); }
 .bd__btn:hover { background: #d64470; transform: translateY(-1px); }
 .bd__btn-icon { display: inline-flex; }
 .bd__btn-icon svg { width: 18px; height: 18px; }
