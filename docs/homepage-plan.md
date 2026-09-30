@@ -172,7 +172,10 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
 - ⚠️ **Les:** een collectie die je via de API maakt is niet automatisch op het **Webshop**-kanaal gepubliceerd;
   een ongepubliceerde collectie lost op de storefront op als leeg (sectie toont fallback). `meest-gekozen` nu
   gepubliceerd via `publishablePublish` (Webshop). Check dit voor elke nieuwe collectie die in het thema getoond wordt.
-- ⬜ Volgende: verjaardagsblok → USP-strip → UGC-slider → footer → volledige desktop-spacing-pass → mobiele pass (met mockup).
+- ✅ **Meest gekozen**: rendert nu (collectie gepubliceerd) + card-fine-tune (lager beeldvlak, warm off-white, speelser/compacter, kleiner hart, compacte knop).
+- ✅ **Verjaardagsblok**: herontworpen — speelse gele banner, polaroid (+placeholder), grotere headline + cake-sticker,
+  compacter formulier (subtieler e-mailveld), bredere ronde roze CTA, doodles, minder hoogte.
+- ⬜ Volgende: USP-strip → UGC-slider (blije honden) → footer → volledige desktop-spacing-pass → mobiele pass (met mockup).
 - Notitie: "Meest gekozen"-leegmelding was stale; boxen zijn gepubliceerd (Webshop), collectie gekoppeld —
   4 kaarten horen te tonen (thema-productfoto's nog te uploaden).
 
