@@ -158,10 +158,17 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
 - `theme check`: schoon (alleen de 6 bestaande font-`.woff2`-meldingen).
 - ⏳ **Handmatige keyboard-only test** nog door Jasper (zie hieronder).
 
+### Pixel-match homepage (bezig, desktop; mobiel later met eigen mockup)
+- ✅ **Hero**: ratio 43/57, beeld groter/omhoog/rechts-overhang, titel line-height .98, subtekst 40ch,
+  compacte USP-chips, strakkere verticale groep, minder bottom-padding. **Body-wallpaper (hartjes/pootjes)
+  definitief verwijderd** (critical.css — was blijven hangen, re-push fixte 't; live geverifieerd).
+- ✅ **Voor elk moment**: chunky meerkleurige **sticker-SVGs** (`snippets/moment-sticker.liquid`, bruine outline);
+  kaarten breder/lager, titel direct op de tegel + wit rond pijltje (geen pill), subtiele hoek-decoraties.
+- ⬜ Volgende: **Meest gekozen** → verjaardagsblok → USP-strip → UGC-slider → footer → volledige desktop-spacing-pass.
+- Notitie: "Meest gekozen"-leegmelding was stale; boxen zijn gepubliceerd (Webshop), collectie gekoppeld —
+  4 kaarten horen te tonen (thema-productfoto's nog te uploaden).
+
 ### ⬜ Nog te doen
-- **Nu: pixel-match homepage** (desktop + mobiel apart): header/hero-verhoudingen, font-size/line-height/regelval,
-  sectie-afstanden, max-width, kleuren, radius/shadows, "Voor elk moment"-iconen, productkaart-proporties,
-  verjaardagbanner, USP-strip, UGC-slider, footer-density.
 - **Grote monoliet-split** (aparte milestone vóór livegang, mét regressietests): header/PDP/cart opsplitsen.
 
 ### ⏳ Openstaand voor Jasper
