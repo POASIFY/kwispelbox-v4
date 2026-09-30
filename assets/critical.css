@@ -192,3 +192,13 @@ main:focus {
   display: block;
   width: 100%;
 }
+
+/* iOS Safari auto-zoom voorkomen: interactieve velden >=16px op mobiel.
+   Alleen <=749px; radio/checkbox uitgezonderd (geen zoom, font-size irrelevant). */
+@media (max-width: 749px) {
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}

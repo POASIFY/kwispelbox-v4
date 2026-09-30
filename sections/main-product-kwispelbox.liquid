@@ -523,6 +523,11 @@
 .pdp-qty__input { width: 30px; border: none; text-align: center; font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); background: transparent; -moz-appearance: textfield; }
 .pdp-qty__input::-webkit-outer-spin-button, .pdp-qty__input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .pdp-qty__input:focus { outline: none; }
+@media (max-width: 749px) {
+  .pdp-qty { min-height: 44px; }
+  .pdp-qty__btn { min-width: 44px; }
+  .pdp-qty__input { min-height: 44px; }
+}
 .pdp-atc__btn { display: flex; align-items: center; justify-content: center; gap: 12px; flex: 1; min-width: 0; padding: 18px 24px; background: var(--color-green); color: #fff; border: none; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.2rem; cursor: pointer; transition: filter 160ms, transform 160ms, box-shadow 160ms; box-shadow: 0 10px 24px rgba(102,170,68,.28); }
 .pdp-atc__btn:hover:not(:disabled) { filter: brightness(.93); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(61, 34, 9, .22); }
 .pdp-atc__btn:disabled { background: var(--color-muted); cursor: not-allowed; }
