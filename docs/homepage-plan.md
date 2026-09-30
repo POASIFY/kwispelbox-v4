@@ -149,10 +149,20 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
 - Frontend-cart-JS = alleen UX (voortgang + gift toevoegen/verwijderen); de €0-prijs wordt server-side afgedwongen.
 - Aandachtspunt: houd de drempel in de cart (`kb_gift_threshold` = €89) gelijk aan de korting; wijzig je de een, pas de ander aan.
 
-### ⬜ Nog te doen (P2 → pixel)
-- **P2 refactor**: header (3538 r.), PDP (1045 r.), cart (967 r.) opsplitsen; focus-traps (drawer/filter/lightbox);
-  header-mega-menu `href="#"` opschonen.
-- **Daarna**: pixel-match homepage (section-pad, hero-ratio, moment-iconen, productcards, verjaardagblok, UGC-ratio).
+### ✅ P2 contained (gedaan)
+- **Focus-traps** via herbruikbare `snippets/focus-trap.liquid` (`window.kbTrap`): mobile drawer, filterdrawer
+  (alleen in drawer-modus) en product-lightbox — met **focus-return naar de opener** + **Escape sluit**.
+- Lightbox: `role="dialog"` + `aria-modal="true"` + label.
+- **Alle `href="#"` weg** (0 in het thema): links renderen alleen bij een geldige URL — ook het
+  (uitgeschakelde) mega-menu/drawer.
+- `theme check`: schoon (alleen de 6 bestaande font-`.woff2`-meldingen).
+- ⏳ **Handmatige keyboard-only test** nog door Jasper (zie hieronder).
+
+### ⬜ Nog te doen
+- **Nu: pixel-match homepage** (desktop + mobiel apart): header/hero-verhoudingen, font-size/line-height/regelval,
+  sectie-afstanden, max-width, kleuren, radius/shadows, "Voor elk moment"-iconen, productkaart-proporties,
+  verjaardagbanner, USP-strip, UGC-slider, footer-density.
+- **Grote monoliet-split** (aparte milestone vóór livegang, mét regressietests): header/PDP/cart opsplitsen.
 
 ### ⏳ Openstaand voor Jasper
 - `loy_77036486821.js`: check live Network-tab + App embeds/loyalty-apps; pas daarna evt. verwijderen.
