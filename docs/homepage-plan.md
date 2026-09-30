@@ -172,7 +172,9 @@ Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
 - ⚠️ **Les:** een collectie die je via de API maakt is niet automatisch op het **Webshop**-kanaal gepubliceerd;
   een ongepubliceerde collectie lost op de storefront op als leeg (sectie toont fallback). `meest-gekozen` nu
   gepubliceerd via `publishablePublish` (Webshop). Check dit voor elke nieuwe collectie die in het thema getoond wordt.
-- ✅ **Meest gekozen**: rendert nu (collectie gepubliceerd) + card-fine-tune (lager beeldvlak, warm off-white, speelser/compacter, kleiner hart, compacte knop).
+- ✅ **Meest gekozen**: rendert nu (collectie gepubliceerd) + card-fine-tune (lager beeldvlak, warm off-white, speelser/compacter, kleiner hart, compacte knop). **Bevroren** tot echte `product-*.png` erin staan.
+  Deferred (voor beeld/typografie-pass): beeldvlak niet verder verkleinen (transparante PNG's vullen het beter);
+  hart evt. 1–2px kleiner; producttitel-gewicht meenemen in de globale typografie-pass; daarna evt. media-schaal 3–5% bijstellen.
 - ✅ **Verjaardagsblok**: herontworpen — speelse gele banner, polaroid (+placeholder), grotere headline + cake-sticker,
   compacter formulier (subtieler e-mailveld), bredere ronde roze CTA, doodles, minder hoogte.
 - ⬜ Volgende: USP-strip → UGC-slider (blije honden) → footer → volledige desktop-spacing-pass → mobiele pass (met mockup).
