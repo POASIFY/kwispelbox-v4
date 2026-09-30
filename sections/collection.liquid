@@ -405,6 +405,7 @@
   var overlay = root.querySelector('[data-kbcol-overlay]');
   var form = root.querySelector('[data-kbcol-form]');
   var sortForm = root.querySelector('[data-kbcol-sort]');
+  var filterTrap = (filters && window.kbTrap) ? window.kbTrap(filters, openBtn) : null;
 
   // Auto-submit bij sorteer-wijziging
   if (sortForm) {
@@ -422,6 +423,7 @@
     if (overlay) overlay.hidden = false;
     if (openBtn) openBtn.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    if (isDrawer() && filterTrap) { filterTrap.on(); }
   }
   function closeDrawer() {
     if (!filters) return;
@@ -429,6 +431,7 @@
     if (overlay) overlay.hidden = true;
     if (openBtn) openBtn.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
+    if (filterTrap) { filterTrap.off(); }
   }
 
   if (openBtn) openBtn.addEventListener('click', openDrawer);

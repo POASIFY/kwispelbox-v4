@@ -403,8 +403,8 @@
                             </div>
 
                             <div class="dd-club__items">
-                              {%- for ci in club_item_blocks -%}{%- if ci.settings.menu_item_index == lx -%}
-                                <a href="{{ ci.settings.url | default: '#' }}" class="dd-club__item dd-club__item--{{ ci.settings.color }}" {{ ci.shopify_attributes }}>
+                              {%- for ci in club_item_blocks -%}{%- if ci.settings.menu_item_index == lx and ci.settings.url != blank -%}
+                                <a href="{{ ci.settings.url }}" class="dd-club__item dd-club__item--{{ ci.settings.color }}" {{ ci.shopify_attributes }}>
                                   <span class="dd-club__item-icon" aria-hidden="true">{%- render 'lucide', icon: ci.settings.icon -%}</span>
                                   <span class="dd-club__item-text">
                                     <strong>{{ ci.settings.title }}</strong>
@@ -501,8 +501,8 @@
                           <div class="dd-about__body">
 
                             <div class="dd-about__nav">
-                              {%- for ai in about_item_blocks -%}{%- if ai.settings.menu_item_index == lx -%}
-                                <a href="{{ ai.settings.url | default: '#' }}" class="dd-about__item dd-about__item--{{ ai.settings.color }}" {{ ai.shopify_attributes }}>
+                              {%- for ai in about_item_blocks -%}{%- if ai.settings.menu_item_index == lx and ai.settings.url != blank -%}
+                                <a href="{{ ai.settings.url }}" class="dd-about__item dd-about__item--{{ ai.settings.color }}" {{ ai.shopify_attributes }}>
                                   <span class="dd-about__item-icon" aria-hidden="true">{%- render 'lucide', icon: ai.settings.icon -%}</span>
                                   <span class="dd-about__item-text"><strong>{{ ai.settings.title }}</strong>{%- if ai.settings.description != blank -%}<span>{{ ai.settings.description }}</span>{%- endif -%}</span>
                                   <svg class="dd-about__item-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
@@ -618,9 +618,9 @@
                                   <ul class="dd-se__col" role="list">
                                     {%- for b in se_blocks -%}
                                       {%- assign se_col = b.settings.column | plus: 0 -%}
-                                      {%- if b.settings.menu_item_index == lx and se_col == colnum -%}
+                                      {%- if b.settings.menu_item_index == lx and se_col == colnum and b.settings.url != blank -%}
                                         <li {{ b.shopify_attributes }}>
-                                          <a href="{{ b.settings.url | default: '#' }}" class="dd-se__edition dd-se__edition--{{ b.settings.color }}">
+                                          <a href="{{ b.settings.url }}" class="dd-se__edition dd-se__edition--{{ b.settings.color }}">
                                             <span class="dd-se__edition-icon" aria-hidden="true">{%- render 'lucide', icon: b.settings.icon -%}</span>
                                             <span class="dd-se__edition-text">
                                               <strong>{{ b.settings.title }}</strong>
@@ -700,8 +700,8 @@
                                         {%- endfor -%}
                                       </ul>
                                     {%- endif -%}
-                                    {%- if cb.settings.cta_label != blank -%}
-                                      <a href="{{ cb.settings.cta_url | default: '#' }}" class="dd-shop__cat-cta">{{ cb.settings.cta_label }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+                                    {%- if cb.settings.cta_label != blank and cb.settings.cta_url != blank -%}
+                                      <a href="{{ cb.settings.cta_url }}" class="dd-shop__cat-cta">{{ cb.settings.cta_label }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
                                     {%- endif -%}
                                     {%- if cb.settings.image != blank -%}
                                       <div class="dd-shop__cat-photo">
@@ -921,9 +921,9 @@
             <div class="header-drawer__sub-nav header-drawer__sub-nav--se" hidden>
               <ul class="header-drawer__se-list" role="list">
                 {%- for b in se_blocks -%}
-                  {%- if b.settings.menu_item_index == nav_lx -%}
+                  {%- if b.settings.menu_item_index == nav_lx and b.settings.url != blank -%}
                     <li>
-                      <a href="{{ b.settings.url | default: '#' }}" class="header-drawer__se-link">
+                      <a href="{{ b.settings.url }}" class="header-drawer__se-link">
                         <span class="header-drawer__se-icon header-drawer__se-icon--{{ b.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: b.settings.icon -%}</span>
                         <span class="header-drawer__se-text">
                           <strong>{{ b.settings.title }}</strong>
@@ -972,8 +972,8 @@
                         {%- endfor -%}
                       </ul>
                     {%- endif -%}
-                    {%- if cb.settings.cta_label != blank -%}
-                      <a href="{{ cb.settings.cta_url | default: '#' }}" class="header-drawer__shop-cta header-drawer__shop-cta--{{ cb.settings.color }}">{{ cb.settings.cta_label }}</a>
+                    {%- if cb.settings.cta_label != blank and cb.settings.cta_url != blank -%}
+                      <a href="{{ cb.settings.cta_url }}" class="header-drawer__shop-cta header-drawer__shop-cta--{{ cb.settings.color }}">{{ cb.settings.cta_label }}</a>
                     {%- endif -%}
                   </details>
                 {%- endif -%}
@@ -1005,8 +1005,8 @@
                 </div>
               {%- endif -%}
               <ul class="header-drawer__club-items" role="list">
-                {%- for ci in club_item_blocks -%}{%- if ci.settings.menu_item_index == nav_lx -%}
-                  <li><a href="{{ ci.settings.url | default: '#' }}" class="header-drawer__club-item header-drawer__club-item--{{ ci.settings.color }}">
+                {%- for ci in club_item_blocks -%}{%- if ci.settings.menu_item_index == nav_lx and ci.settings.url != blank -%}
+                  <li><a href="{{ ci.settings.url }}" class="header-drawer__club-item header-drawer__club-item--{{ ci.settings.color }}">
                     <span class="header-drawer__club-item-icon" aria-hidden="true">{%- render 'lucide', icon: ci.settings.icon -%}</span>
                     <span class="header-drawer__club-item-text"><strong>{{ ci.settings.title }}</strong>{%- if ci.settings.description != blank -%}<span>{{ ci.settings.description }}</span>{%- endif -%}</span>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
@@ -1048,8 +1048,8 @@
                 </div>
               {%- endif -%}
               <ul class="header-drawer__club-items" role="list">
-                {%- for ai in about_item_blocks -%}{%- if ai.settings.menu_item_index == nav_lx -%}
-                  <li><a href="{{ ai.settings.url | default: '#' }}" class="header-drawer__club-item header-drawer__club-item--{{ ai.settings.color }}">
+                {%- for ai in about_item_blocks -%}{%- if ai.settings.menu_item_index == nav_lx and ai.settings.url != blank -%}
+                  <li><a href="{{ ai.settings.url }}" class="header-drawer__club-item header-drawer__club-item--{{ ai.settings.color }}">
                     <span class="header-drawer__club-item-icon" aria-hidden="true">{%- render 'lucide', icon: ai.settings.icon -%}</span>
                     <span class="header-drawer__club-item-text"><strong>{{ ai.settings.title }}</strong>{%- if ai.settings.description != blank -%}<span>{{ ai.settings.description }}</span>{%- endif -%}</span>
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
@@ -2286,6 +2286,7 @@
   var drOvrl  = document.getElementById('header-overlay');
   var burger  = document.querySelector('.site-header__burger');
   var closeBtn = document.querySelector('[data-drawer-close]');
+  var drawerTrap = (drawer && window.kbTrap) ? window.kbTrap(drawer, burger) : null;
 
   function openDrawer() {
     if (!drawer) return;
@@ -2293,7 +2294,7 @@
     drOvrl && drOvrl.setAttribute('aria-hidden','false');
     burger && burger.setAttribute('aria-expanded','true');
     document.documentElement.style.overflow = 'hidden';
-    closeBtn && closeBtn.focus();
+    if (drawerTrap) { drawerTrap.on(); } else if (closeBtn) { closeBtn.focus(); }
   }
   function closeDrawer() {
     if (!drawer) return;
@@ -2301,7 +2302,7 @@
     drOvrl && drOvrl.setAttribute('aria-hidden','true');
     burger && burger.setAttribute('aria-expanded','false');
     document.documentElement.style.overflow = '';
-    burger && burger.focus();
+    if (drawerTrap) { drawerTrap.off(); } else if (burger) { burger.focus(); }
   }
   burger   && burger.addEventListener('click', openDrawer);
   closeBtn && closeBtn.addEventListener('click', closeDrawer);

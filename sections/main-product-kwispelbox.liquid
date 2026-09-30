@@ -76,7 +76,7 @@
         <span class="pdp-gallery__deco pdp-gallery__deco--paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>
         <span class="pdp-gallery__deco pdp-gallery__deco--spark" aria-hidden="true">{%- render 'kb-icon', icon: 'sparkles' -%}</span>
 
-        <div class="pdp-lightbox" data-lightbox hidden>
+        <div class="pdp-lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="Productafbeelding groter bekijken" hidden>
           <button type="button" class="pdp-lightbox__close" data-lightbox-close aria-label="Sluiten">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
           </button>
@@ -733,6 +733,7 @@
     if (lightbox && zoomBtn) {
       var lbImg = lightbox.querySelector('[data-lightbox-img]');
       var lbClose = lightbox.querySelector('[data-lightbox-close]');
+      var lbTrap = window.kbTrap ? window.kbTrap(lightbox, zoomBtn) : null;
       var openLb = function () {
         var active = gallery.querySelector('[data-gallery-main] .pdp-gallery__slide.is-active img');
         if (!active) return;
@@ -740,9 +741,9 @@
         lbImg.alt = active.alt || '';
         lightbox.hidden = false;
         document.documentElement.style.overflow = 'hidden';
-        lbClose.focus();
+        if (lbTrap) { lbTrap.on(); } else { lbClose.focus(); }
       };
-      var closeLb = function () { lightbox.hidden = true; document.documentElement.style.overflow = ''; zoomBtn.focus(); };
+      var closeLb = function () { lightbox.hidden = true; document.documentElement.style.overflow = ''; if (lbTrap) { lbTrap.off(); } else { zoomBtn.focus(); } };
       zoomBtn.addEventListener('click', openLb);
       lbClose.addEventListener('click', closeLb);
       lightbox.addEventListener('click', function (e) { if (e.target === lightbox) closeLb(); });
