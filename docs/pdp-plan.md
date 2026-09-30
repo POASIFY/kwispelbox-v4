@@ -68,6 +68,14 @@ Accent-mapping uit `occasion` (geen per-template kleur meer): verjaardag→yello
 - ✅ **Mini-spacing-pass (na review)**: rechterkolom ~10–15% compacter; prijs steviger via `--pac-strong` (Halloween-oranje leesbaarder); smallere/rustigere qty-stepper; zachter "optioneel"-label.
 - ✅ **Batch 5** (`product-extras.liquid` + `product-related.liquid`): contextuele cross-sell — max 3 cadeau-extra's uit collectie `cadeau-extras`, occasion-gefilterd (taartje alleen bij verjaardag), alleen beschikbare producten, compacte cards met "+" quick-add via `cart/add.js` (valt terug op normale POST), additief (geen 2e checkout), header-cart-teller update. Gerelateerde boxen — max 3 Special Editions, huidige uitgesloten, compacte cards → PDP. Toegevoegd aan `product.box.json` (order: main, contents, extras, jmereviews, faq, related, cta).
 - ⏳ **Openstaand**: 30-dagen-garantie alleen terugzetten als het formeel beleid is (nu bewust weg). Assets (product-PNG's) door Jasper. Visuele check cross-sell/related door Jasper.
+
+## Finale visuele QA-pass (30-09-2026, met eerste echte packshots)
+Code-niveau fixes (geen nieuwe features, geen architectuurwijziging):
+- **PDP-gallery**: groene "Gratis verzending"-badge uit het beeldvlak verwijderd; alleen de productspecifieke (occasion-)badge blijft. Verzendclaim staat onder de CTA.
+- **Trustregels onder CTA**: van centrale wrap → nette verticale checklist (`flex-direction: column`, links uitgelijnd), voorkomt rommelige wrap op desktop.
+- **Cadeau-extra's**: `overflow-wrap: anywhere` op de titel als overflow-safety.
+- **Featured images**: 5 hoofd-packshots gekoppeld als eerste productmedia (via Admin API, met alt-tekst) → PDP-hero, "Meest gekozen", gerelateerde boxen en collectiekaarten tonen nu echte beelden. `.mg__media`/`.prel-card__media`/`.pdp-gallery__img` gebruiken `object-fit: contain` → **geen crop**; onderlinge consistentie is een beeld-/generatiekwestie (Jasper regenereert Verjaardag + Dierendag + harmoniseert de 5).
+- **Beeld-/screenshot-afhankelijk (bij Jasper)**: consistentie "Meest gekozen"-familie, polaroid-crop verjaardagsblok, UGC-crops "Blije honden", footer-logo-contrast + socials (URL's invullen), PDP-gallery-volgorde zodra open/detail-beelden (Fase 2) erin staan. Structuur/CSS hiervoor staat correct; deze punten vragen echte beelden + visuele controle.
 - ⏳ Verificatie: PDP visueel checken (kan niet screenshotten — Jasper) op box mét personalisatie + mobiel. Theme check schoon (6 bekende font-errors + 1 pre-existing HardcodedRoutes-warning).
 
 ## Openstaand / aannames

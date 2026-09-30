@@ -243,3 +243,8 @@ Gestaffeld uitgevoerd, per stap met Jasper beoordeeld:
 2. **Asset-afhankelijke finetune (Claude, na upload)**: "Meest gekozen" (productschaal in kleurvlak, kaartdichtheid, titelgewicht) · verjaardagsblok (crop/rotatie polaroid, form-polish) · "Blije honden" (warmte + pijltjes-formaat t.o.v. echte foto's).
 3. **Finale desktop-eindcheck** met echte beelden.
 4. **Mobiel** als aparte design-pass (niet enkel verkleinen — per component herbalanceren; wacht op mobiele hero + mobiele mockup).
+
+## Update 30-09-2026 — echte box-packshots + QA
+- 5 hoofd-packshots gekoppeld als featured productmedia (via Admin API, met alt-tekst) → **"Meest gekozen"** toont nu echte beelden. `.mg__media` gebruikt `object-fit: contain` (padding 9px) → geen crop; onderlinge grootte-consistentie is beeld-generatie (Jasper regenereert Verjaardag + Dierendag en harmoniseert de 5 packshots op gelijke camerahoek/schaal/doospositie).
+- Verjaardag/Dierendag hoofdbeeld worden opnieuw aangeleverd; daarna evt. per-product `object-scale`/padding finetunen indien nodig (kaart-CSS blijft ongewijzigd).
+- Verjaardagsblok-polaroid, "Blije honden"-UGC en footer-logo-contrast/socials: structuur staat, wacht op echte beelden + ingevulde social-URL's.
