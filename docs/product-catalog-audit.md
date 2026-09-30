@@ -234,4 +234,41 @@ Overige variant-hygiëne (veilig, later): weight 0 → invullen; barcodes ontbre
 
 ---
 
-_Volgende stap: na jouw akkoord op bovenstaande beslissingen voer ik de veilige verrijking in batches uit en houd ik dit document bij met wat is uitgevoerd (Fase 11 eindrapport)._
+---
+
+## FASE 11 — Uitvoeringslog (lopend)
+
+### ✅ Batch 1 — Structureel (uitgevoerd 30-09-2026, akkoord Jasper)
+Beslissingen: Handles omzetten ✅ · Legacy ZippyPaws + Inpakken archiveren ✅ · Hoofdbox archiveren + boxen herrichten ✅ · Prijzen ongemoeid ✅ · Dubbele korting opschonen ✅
+
+- **Handles omgezet** (5 boxen) met automatische redirect (`redirectNewHandle: true`):
+  - `verjaardag-box` → `verjaardag-kwispelbox`
+  - `kerst-box` → `kerst-kwispelbox`
+  - `halloween-box` → `halloween-kwispelbox`
+  - `dierendag-box` → `dierendag-kwispelbox`
+  - `valentijn-box` → `valentijn-kwispelbox`
+  - Redirects geverifieerd (5× oud→nieuw actief).
+- **Gearchiveerd** (status ARCHIVED, niet verwijderd; orderhistorie intact):
+  - `zippypaws-burrow-pinata`, `inpakken`, `kwispelbox` (generieke hoofdbox).
+  - Redirect `/products/kwispelbox` → `/collections/boxen` aangemaakt.
+- **Collectie `boxen`** herricht: smart rule → `TYPE = Special Editions` → bevat nu de 5 boxen (geverifieerd, count 5).
+- **Dubbele korting**: `DiscountAutomaticBasic` "Gratis mystery verrassing vanaf €89" gedeactiveerd. Correcte **BXGY** "Gratis verrassing vanaf €89" blijft actief.
+- **Theme-referenties bijgewerkt** (commit): `header-group.json`, `index.json`, `page.special-editions.json` → nieuwe handles; `header.liquid`, `mobile-tabbar.liquid`, `page.boxen.json` → `/products/kwispelbox` vervangen door `/collections/boxen`.
+- **`main-menu`** item "Verjaardag" → `/products/verjaardag-kwispelbox`.
+
+### ✅ Batch 2 — Metafield-definities (uitgevoerd)
+12 nieuwe `custom` product-definities aangemaakt: `short_description`, `occasion`, `gift_box_type`, `badge`, `whats_inside`, `dog_size_info`, `personalization_available`, `card_available`, `delivery_note`, `safety_note`, `homepage_featured`, `sort_priority`. `theme_accent` bewust NIET aangemaakt (hergebruik `kaart_kleur`).
+
+### ⏳ Batch 3 — Verrijking (volgende stap)
+- Tags (canoniek schema) op 5 boxen + 4 cadeau-extra's.
+- Factuele metafield-waarden: occasion, gift_box_type=special_edition, badge, delivery_note, personalization_available, card_available, homepage_featured (4× meest-gekozen), sort_priority (1–5).
+- **Valentijn** ontbrekende `kaart_kleur` (#e75480 of passend) + `kaart_tekst` invullen.
+- `whats_inside` op **categorie-niveau** (Speeltjes / Snacks / Knuffel bij grotere maten / Kaartje mogelijk) — want inhoud wordt per bestelling samengesteld (zie `curatie_richtlijn`), geen vaste items.
+- `short_description` (PDP-intro) + `safety_note` + `dog_size_info` (Mini/Happy/Mega).
+- Lange beschrijving: huidige teksten zijn al goed/on-brand → **beslissing:** uitbreiden naar volledige structuur (wat zit erin / voor welke hond / levering / veiligheid / cadeau-ervaring) of huidige behouden? (pilot op Verjaardag eerst).
+- Shopify **category** (taxonomy) op boxen/extra's.
+
+### 📌 Assets (blijft openstaan bij Jasper)
+Boxen + cadeau-extra's hebben **geen productafbeeldingen**. Transparante PNG's 1600×1600 nodig (`product-verjaardagsbox.png` etc.). Niet automatisch koppelen tot ze in Shopify staan.
+
+_Prijzen/varianten (Mini/Happy/Mega, €44,95–89,95) blijven ongemoeid — aparte commerciële beslissing._
