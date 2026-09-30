@@ -60,6 +60,7 @@
         "cta_primary_label": "Kies een box",
         "cta_primary_url": "/collections/boxen",
         "image": "shopify://shop_images/hero-home-desktop.png",
+        "image_mobile": "shopify://shop_images/hero-home-desktop.png",
         "circle_text": "Elke box voelt als een cadeautje",
         "image_priority": true
       }
@@ -148,7 +149,6 @@
     "birthday-block": {
       "type": "birthday-block",
       "settings": {
-        "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_54-1.png",
         "heading": "Wanneer is jouw hond jarig?",
         "text": "Ontvang een reminder en leuke verjaardagtips!",
         "name_label": "Naam van je hond",
@@ -215,42 +215,36 @@
         "p1": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_40_02-7.png",
             "dog_name": ""
           }
         },
         "p2": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_55-2.png",
             "dog_name": ""
           }
         },
         "p3": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_59-5.png",
             "dog_name": ""
           }
         },
         "p4": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_56-3.png",
             "dog_name": ""
           }
         },
         "p5": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_39_58-4.png",
             "dog_name": ""
           }
         },
         "p6": {
           "type": "photo",
           "settings": {
-            "image": "shopify://shop_images/ChatGPT-afbeelding_30_sep_2026_13_40_00-6.png",
             "dog_name": ""
           }
         }
