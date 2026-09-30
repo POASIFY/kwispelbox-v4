@@ -142,6 +142,33 @@
 
     </div>
 
+    {%- comment -%}
+      Ondersteunende modules onder "Wat zit erin": maat-hulp + levering + veiligheid.
+      Rich text DIRECT renderen ({{ product.metafields... }}) — een tussen-assign geeft .value (JSON).
+    {%- endcomment -%}
+    {%- if product.metafields.custom.dog_size_info != blank or product.metafields.custom.delivery_note != blank or product.metafields.custom.safety_note != blank -%}
+      <div class="kbox-support">
+        {%- if product.metafields.custom.dog_size_info != blank -%}
+          <details class="kbox-acc">
+            <summary class="kbox-acc__head"><span class="kbox-acc__icon kbox-acc__icon--green" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span><span class="kbox-acc__title">Welke maat past bij mijn hond?</span><span class="kbox-acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+            <div class="kbox-acc__body">{{ product.metafields.custom.dog_size_info }}</div>
+          </details>
+        {%- endif -%}
+        {%- if product.metafields.custom.delivery_note != blank -%}
+          <details class="kbox-acc">
+            <summary class="kbox-acc__head"><span class="kbox-acc__icon kbox-acc__icon--pink" aria-hidden="true">{%- render 'kb-icon', icon: 'truck' -%}</span><span class="kbox-acc__title">Levering</span><span class="kbox-acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+            <div class="kbox-acc__body"><p>{{ product.metafields.custom.delivery_note }}</p></div>
+          </details>
+        {%- endif -%}
+        {%- if product.metafields.custom.safety_note != blank -%}
+          <details class="kbox-acc">
+            <summary class="kbox-acc__head"><span class="kbox-acc__icon kbox-acc__icon--green" aria-hidden="true">{%- render 'kb-icon', icon: 'shield-check' -%}</span><span class="kbox-acc__title">Veiligheid</span><span class="kbox-acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+            <div class="kbox-acc__body">{{ product.metafields.custom.safety_note }}</div>
+          </details>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
   </div>
 </div>
 
@@ -228,6 +255,23 @@
   .kbox-card__text { font-size: .85rem; line-height: 1.45; }
   .kbox__deco--paw1, .kbox__deco--lines { display: none; }
 }
+/* Ondersteunende accordions (maat/levering/veiligheid) */
+.kbox-support { max-width: 760px; margin: clamp(20px, 3vw, 34px) auto 0; }
+.kbox-acc { border-bottom: 1px solid var(--color-line); }
+.kbox-acc:first-child { border-top: 1px solid var(--color-line); }
+.kbox-acc__head { list-style: none; display: flex; align-items: center; gap: 12px; padding: 16px 4px; cursor: pointer; font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); }
+.kbox-acc__head::-webkit-details-marker { display: none; }
+.kbox-acc__icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); }
+.kbox-acc__icon--pink { background: #ffe0ee; color: var(--color-pink); }
+.kbox-acc__icon svg { width: 18px; height: 18px; }
+.kbox-acc__title { flex: 1; }
+.kbox-acc__chev { display: inline-flex; color: var(--color-muted); transition: transform 200ms; }
+.kbox-acc__chev svg { width: 18px; height: 18px; }
+.kbox-acc[open] .kbox-acc__chev { transform: rotate(180deg); }
+.kbox-acc__body { padding: 0 4px 18px 52px; font-family: var(--font-body); font-size: .95rem; line-height: 1.6; color: var(--color-body); }
+.kbox-acc__body p { margin: 0 0 8px; }
+.kbox-acc__body :last-child { margin-bottom: 0; }
+@media (max-width: 749px) { .kbox-acc__body { padding-left: 4px; } }
 {% endstylesheet %}
 
 {% schema %}
