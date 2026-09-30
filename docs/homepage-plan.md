@@ -101,6 +101,35 @@ Toe te voegen iconen (SVG): ~~`clock`~~ ✅, `home`/huis, pleister (beterschap),
   de editor/preview (die kan cachen). Lokale bytes == thema `size` = zeker goed gesynct.
 - Direct schrijven naar het live/MAIN-thema via de API is geblokkeerd; git is het enige kanaal.
 
+## Audit-remediatie (na volledige code-audit, 29-9)
+Bron: `~/Downloads/kwispelbox-theme-code-audit.md` + `kwispelbox-theme-issues.csv`.
+Volgorde: functioneel → data → header/PDP/cart refactor → pixelmatch.
+
+### ✅ P0 functioneel (gedaan)
+- PDP: dubbele `name="id"` opgelost — radio's = `name="variant-choice"`, één hidden `name="id"` autoritatief (JS-selector meegepast).
+- `sections/product.liquid`: `{{ form | payment_button }}` (accelerated checkout) verwijderd.
+- `templates/gift_card.liquid`: `settings.logo` → `settings.seo_logo`.
+- `layout/theme.liquid`: `<html lang>` via `request.locale.iso_code`.
+- `snippets/seo-meta.liquid`: noindex-suffixen → echte templates (`shipping`/`returns`).
+- Demo-restanten verwijderd: `sections/hello-world.liquid`, `assets/shoppy-x-ray.svg`.
+- ⏳ `assets/loy_77036486821.js`: nergens in themecode gerefereerd; laten staan tot app-check.
+
+### ✅ P0 data centralisatie (gedaan)
+- Globale settings-groep **"Kwispelbox — beloftes"**: `kb_free_shipping` (50), `kb_order_cutoff` (16:00),
+  `kb_delivery` (morgen in huis), `kb_gift_threshold` (89), `kb_support_email` (hallo@kwispelbox.com).
+- `cart.liquid` (ladder) en `seo-meta.liquid` (description) lezen nu uit die globale settings.
+- Alle losse teksten gelijkgetrokken: **€75→€50**, **23:59→16:00**, e-mail overal **hallo@kwispelbox.com**
+  (ook `.nl`→`.com` en `hello`→`hallo`). theme-info → **KB-v4 / 4.0.0**.
+- Besliste waarden (Jasper): €50 · 16:00 · €89 · hallo@kwispelbox.com.
+
+### ⬜ Nog te doen (P1 → P2 → pixel)
+- **P1**: cart/predictive-search AJAX locale-aware (`Shopify.routes.root`); predictive results via DOM/textContent;
+  GWP betrouwbaar server-side (discount/Function) i.p.v. alleen JS; levertijd-klok tijdzone/weekenden;
+  PDP/cart `@app` blocks; footer socials één bron; NL-locale toevoegen.
+- **P2**: header (3538 r.), PDP (1045 r.), cart (967 r.) opsplitsen; focus-traps (drawer/filter/lightbox);
+  `href="#"` fallbacks; predictive-search keyboard; diverse defaults/opschoning.
+- **Daarna**: pixel-match homepage (section-pad, hero-ratio, moment-iconen, productcards, verjaardagblok, UGC-ratio).
+
 ### Aandachtspunt: fonts niet in git
 `lilita-one-*.woff2` en `karla-*.woff2` worden gerefereerd in `css-variables.liquid`/`theme.liquid` maar
 staan niet in de repo (wél op het live thema). Werkt nu, maar een verse deploy vanaf git mist ze.
