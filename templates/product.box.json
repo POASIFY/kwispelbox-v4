@@ -91,6 +91,19 @@
       "block_order": ["q1", "q2", "q3", "q4"],
       "settings": { "title": "Veelgestelde vragen" }
     },
+    "extras": {
+      "type": "product-extras",
+      "settings": {
+        "heading": "Maak er een écht cadeau van",
+        "text": "Voeg een klein extraatje toe — met één tik."
+      }
+    },
+    "related": {
+      "type": "product-related",
+      "settings": {
+        "heading": "Ook leuk voor je hond"
+      }
+    },
     "cta": {
       "type": "product-cta",
       "settings": {
@@ -101,5 +114,5 @@
       }
     }
   },
-  "order": ["main", "contents", "jmereviews", "faq", "cta"]
+  "order": ["main", "contents", "extras", "jmereviews", "faq", "related", "cta"]
 }
