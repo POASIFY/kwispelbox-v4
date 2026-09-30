@@ -128,7 +128,7 @@
             "tagline": "Een fijne kennismaking",
             "accent": "green",
             "button_label": "Kies Mini",
-            "button_url": "/products/kwispelbox"
+            "button_url": "/collections/boxen"
           }
         },
         "cb2": {
@@ -141,7 +141,7 @@
             "highlight": true,
             "accent": "pink",
             "button_label": "Kies Happy",
-            "button_url": "/products/kwispelbox"
+            "button_url": "/collections/boxen"
           }
         },
         "cb3": {
@@ -152,7 +152,7 @@
             "tagline": "Maximaal verwennen",
             "accent": "orange",
             "button_label": "Kies Mega",
-            "button_url": "/products/kwispelbox"
+            "button_url": "/collections/boxen"
           }
         },
         "cr1": {

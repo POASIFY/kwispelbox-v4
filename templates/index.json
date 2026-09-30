@@ -25,11 +25,11 @@
     "moments": {
       "type": "moments",
       "blocks": {
-        "m1": { "type": "moment", "settings": { "title": "Verjaardag", "icon": "cake", "color": "pink", "link": "/products/verjaardag-box" } },
+        "m1": { "type": "moment", "settings": { "title": "Verjaardag", "icon": "cake", "color": "pink", "link": "/products/verjaardag-kwispelbox" } },
         "m2": { "type": "moment", "settings": { "title": "Nieuwe puppy", "icon": "paw", "color": "green", "link": "/collections/puppy-favorieten" } },
         "m3": { "type": "moment", "settings": { "title": "Adoptiedag", "icon": "home", "color": "yellow", "link": "/collections/boxen" } },
         "m4": { "type": "moment", "settings": { "title": "Beterschap", "icon": "bandage", "color": "pink", "link": "/collections/boxen" } },
-        "m5": { "type": "moment", "settings": { "title": "Kerst", "icon": "tree", "color": "green", "link": "/products/kerst-box" } },
+        "m5": { "type": "moment", "settings": { "title": "Kerst", "icon": "tree", "color": "green", "link": "/products/kerst-kwispelbox" } },
         "m6": { "type": "moment", "settings": { "title": "Bedankt", "icon": "gift", "color": "orange", "link": "/collections/boxen" } }
       },
       "block_order": ["m1", "m2", "m3", "m4", "m5", "m6"],

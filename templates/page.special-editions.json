@@ -31,7 +31,7 @@
             "badge": "Populair",
             "accent": "pink",
             "icon": "cake",
-            "button_url": "/products/verjaardag-box",
+            "button_url": "/products/verjaardag-kwispelbox",
             "button_label": "Bekijk box"
           }
         },
@@ -42,7 +42,7 @@
             "tagline": "Vier 4 oktober met een feestje voor je trouwe vriend.",
             "accent": "green",
             "icon": "paw",
-            "button_url": "/products/dierendag-box",
+            "button_url": "/products/dierendag-kwispelbox",
             "button_label": "Bekijk box"
           }
         },
@@ -53,7 +53,7 @@
             "tagline": "Een feestelijke box vol warmte voor onder de boom.",
             "accent": "green",
             "icon": "tree",
-            "button_url": "/products/kerst-box",
+            "button_url": "/products/kerst-kwispelbox",
             "button_label": "Bekijk box"
           }
         },
@@ -70,7 +70,7 @@
             "tagline": "Spookgezellig speelplezier voor de griezeligste maand.",
             "accent": "orange",
             "icon": "pumpkin",
-            "button_url": "/products/halloween-box",
+            "button_url": "/products/halloween-kwispelbox",
             "button_label": "Bekijk box"
           }
         },
@@ -81,7 +81,7 @@
             "tagline": "Voor de liefste hond die je je kunt wensen.",
             "accent": "pink",
             "icon": "heart",
-            "button_url": "/products/valentijn-box",
+            "button_url": "/products/valentijn-kwispelbox",
             "button_label": "Bekijk box"
           }
         },

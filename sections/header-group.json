@@ -160,7 +160,7 @@
             "color": "pink",
             "title": "Verjaardagsbox",
             "description": "Vier de verjaardag van jouw hond",
-            "url": "/products/verjaardag-box"
+            "url": "/products/verjaardag-kwispelbox"
           }
         },
         "se2": {
@@ -172,7 +172,7 @@
             "color": "orange",
             "title": "Halloween Box",
             "description": "Spooky speelplezier voor nieuwsgierige neuzen",
-            "url": "/products/halloween-box"
+            "url": "/products/halloween-kwispelbox"
           }
         },
         "se3": {
@@ -184,7 +184,7 @@
             "color": "green",
             "title": "Kerst Box",
             "description": "Het leukste cadeautje onder de boom",
-            "url": "/products/kerst-box"
+            "url": "/products/kerst-kwispelbox"
           }
         },
         "se4": {
@@ -196,7 +196,7 @@
             "color": "pink",
             "title": "Valentijn Box",
             "description": "Voor jouw allerbeste vriend",
-            "url": "/products/valentijn-box"
+            "url": "/products/valentijn-kwispelbox"
           }
         },
         "se5": {
@@ -208,7 +208,7 @@
             "color": "green",
             "title": "Dierendag Box",
             "description": "Extra verwennerij voor jouw hond",
-            "url": "/products/dierendag-box"
+            "url": "/products/dierendag-kwispelbox"
           }
         },
         "se6": {
