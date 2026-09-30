@@ -83,6 +83,21 @@
 .pfaq__contact-mail span { display: inline-flex; color: var(--color-green); }
 .pfaq__contact-mail svg { width: 16px; height: 16px; }
 
+/* Mobiel: compactere FAQ + support-card (niet halve viewport hoog). */
+@media (max-width: 749px) {
+  .pfaq { padding: 32px 0; }
+  .pfaq__title { margin-bottom: 14px; }
+  .pfaq__item { margin-bottom: 10px; border-radius: 16px; }
+  .pfaq__q { padding: 15px 16px; font-size: 1rem; }
+  .pfaq__a { padding: 0 16px 15px; }
+  .pfaq__contact { padding-bottom: 20px; border-radius: 20px; }
+  .pfaq__contact-media { height: 96px; }
+  .pfaq__contact-ph svg { width: 40px; height: 40px; }
+  .pfaq__contact-icon { width: 44px; height: 44px; margin: -22px 0 10px; }
+  .pfaq__contact-title { font-size: 1.15rem; }
+  .pfaq__contact-text { margin: 8px 18px 14px; }
+}
+
 @media (min-width: 990px) {
   .pfaq { padding: 64px 0; }
   .pfaq__cols { flex-direction: row; align-items: flex-start; gap: 32px; }
