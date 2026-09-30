@@ -61,7 +61,7 @@
             {%- for block in col_blocks -%}
               {%- assign col_menu = block.settings.menu -%}
               {%- if col_menu.links == nil and col_menu != blank -%}{%- assign col_menu = linklists[col_menu] -%}{%- endif -%}
-              <details class="kbfoot__col" {{ block.shopify_attributes }}>
+              <details class="kbfoot__col" open {{ block.shopify_attributes }}>
                 <summary class="kbfoot__col-head">
                   {%- if block.settings.icon != blank -%}<span class="kbfoot__col-icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>{%- endif -%}
                   <span class="kbfoot__col-title">{{ block.settings.title }}</span>
@@ -283,6 +283,23 @@
   .kbfoot__legal-links { justify-content: center; }
 }
 {% endstylesheet %}
+
+{% javascript %}
+(function () {
+  var mq = window.matchMedia('(min-width: 860px)');
+  document.querySelectorAll('.kbfoot').forEach(function (foot) {
+    var cols = Array.prototype.slice.call(foot.querySelectorAll('.kbfoot__col'));
+    function sync() { cols.forEach(function (c) { c.open = mq.matches; }); }
+    sync();
+    cols.forEach(function (c) {
+      var head = c.querySelector('.kbfoot__col-head');
+      if (head) head.addEventListener('click', function (e) { if (mq.matches) e.preventDefault(); });
+    });
+    if (mq.addEventListener) { mq.addEventListener('change', sync); }
+    else if (mq.addListener) { mq.addListener(sync); }
+  });
+})();
+{% endjavascript %}
 
 {% schema %}
 {
