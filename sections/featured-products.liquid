@@ -77,26 +77,26 @@
 .mg__viewall svg { width: 15px; height: 15px; }
 
 .mg__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.mg__card { display: flex; flex-direction: column; height: 100%; background: #fff; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 24px rgba(61,34,9,.06); transition: transform 160ms, box-shadow 160ms; }
-.mg__card:hover { transform: translateY(-4px); box-shadow: var(--shadow-card-hover); }
-.mg__media { display: block; position: relative; aspect-ratio: 1 / 1; padding: 9px; }
+.mg__card { display: flex; flex-direction: column; height: 100%; background: #fffaf2; border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 5px 16px rgba(61,34,9,.05); transition: transform 160ms, box-shadow 160ms; }
+.mg__card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(61,34,9,.09); }
+.mg__media { display: block; position: relative; aspect-ratio: 1 / 0.86; padding: 9px; }
 .mg__img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .mg__img--ph { display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.7); }
 .mg__img--ph svg { width: 40%; height: 40%; }
 
-.mg__body { display: flex; flex-direction: column; gap: 4px; padding: 13px 14px 15px; flex: 1; }
-.mg__title { font-family: var(--font-heading); font-size: 1.05rem; margin: 0; }
+.mg__body { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px 12px; flex: 1; }
+.mg__title { font-family: var(--font-heading); font-size: 1.08rem; line-height: 1.02; margin: 2px 0 0; }
 .mg__title a { color: var(--color-ink); text-decoration: none; }
-.mg__text { font-family: var(--font-body); font-size: .82rem; color: var(--color-muted); line-height: 1.35; margin: 0; }
-.mg__meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 10px; }
-.mg__price { font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); }
-.mg__actions { display: inline-flex; align-items: center; gap: 7px; }
-.mg__wish { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--color-line); background: #fff; color: #e75480; cursor: pointer; transition: background 140ms, border-color 140ms; }
+.mg__text { font-family: var(--font-body); font-size: .8rem; color: var(--color-muted); line-height: 1.4; margin: 0; }
+.mg__meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: auto; padding-top: 12px; }
+.mg__price { font-family: var(--font-heading); font-size: 1.15rem; color: var(--color-ink); line-height: 1; }
+.mg__actions { display: inline-flex; align-items: center; gap: 6px; }
+.mg__wish { display: inline-flex; align-items: center; justify-content: center; width: 31px; height: 31px; border-radius: 50%; border: 1px solid var(--color-line); background: transparent; color: #e75480; cursor: pointer; transition: background 140ms, border-color 140ms; }
 .mg__wish:hover { background: #ffe0ee; border-color: #ffc2da; }
-.mg__wish svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; }
-.mg__btn { display: inline-flex; align-items: center; gap: 6px; background: var(--color-green); color: #fff; font-family: var(--font-heading); font-size: .9rem; padding: 9px 15px; border-radius: var(--radius-pill); text-decoration: none; transition: background 140ms, transform 140ms; }
+.mg__wish svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; }
+.mg__btn { display: inline-flex; align-items: center; gap: 5px; background: var(--color-green); color: #fff; font-family: var(--font-heading); font-size: .86rem; padding: 8px 13px; border-radius: var(--radius-pill); text-decoration: none; transition: background 140ms, transform 140ms; }
 .mg__btn:hover { background: #5a9a3b; transform: translateY(-1px); }
-.mg__btn svg { width: 14px; height: 14px; }
+.mg__btn svg { width: 13px; height: 13px; }
 .mg__empty { font-family: var(--font-body); color: var(--color-muted); }
 
 @media (max-width: 989px) { .mg__grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
