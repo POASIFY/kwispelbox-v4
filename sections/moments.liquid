@@ -1,6 +1,7 @@
 {%- comment -%}
   sections/moments.liquid — Kwispelbox KB-v4
-  "Voor elk moment" — gekleurde tegels met icoon + label + link, volgens docs/mockup-home.png
+  "Voor elk moment" — pasteltegels met chunky sticker-illustratie, titel op de tegel + rond pijltje.
+  Volgens docs/mockup-home.png.
 {%- endcomment -%}
 
 {%- assign tiles = section.blocks | where: 'type', 'moment' -%}
@@ -25,11 +26,10 @@
             {%- endif -%}
               <span class="mom__deco mom__deco--tl" aria-hidden="true">{%- render 'lucide', icon: 'sparkles' -%}</span>
               <span class="mom__deco mom__deco--tr" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
-              <span class="mom__deco mom__deco--br" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>
-              <span class="mom__icon" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
-              <span class="mom__label">
-                <span class="mom__label-text">{{ block.settings.title }}</span>
-                <span class="mom__label-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+              <span class="mom__ill" aria-hidden="true">{%- render 'moment-sticker', icon: block.settings.icon -%}</span>
+              <span class="mom__foot">
+                <span class="mom__title">{{ block.settings.title }}</span>
+                <span class="mom__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
               </span>
             {%- if block.settings.link != blank -%}</a>{%- else -%}</div>{%- endif -%}
           </li>
@@ -41,13 +41,13 @@
 
 {% stylesheet %}
 .mom { background: transparent; }
-.mom__inner { max-width: var(--page-width); margin: 0 auto; padding: var(--section-pad-sm) var(--page-margin); }
-.mom__heading { font-family: var(--font-heading); font-size: var(--fs-h2); color: var(--color-ink); margin: 0 0 22px; display: flex; align-items: center; gap: 10px; }
+.mom__inner { max-width: var(--page-width); margin: 0 auto; padding: clamp(20px, 3vw, 36px) var(--page-margin) var(--section-pad-sm); }
+.mom__heading { font-family: var(--font-heading); font-size: var(--fs-h2); color: var(--color-ink); margin: 0 0 20px; display: flex; align-items: center; gap: 10px; }
 .mom__heading-heart { display: inline-flex; color: var(--color-pink); }
 .mom__heading-heart svg { width: .7em; height: .7em; fill: none; stroke: currentColor; stroke-width: 2.4; }
 
 .mom__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
-.mom__tile { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 14px; aspect-ratio: 1 / 1.05; padding: 18px 12px 12px; border-radius: var(--radius-lg); text-decoration: none; overflow: hidden; transition: transform 160ms, box-shadow 160ms; }
+.mom__tile { position: relative; display: flex; flex-direction: column; aspect-ratio: 1 / 0.92; padding: 16px 16px 14px; border-radius: var(--radius-lg); text-decoration: none; overflow: hidden; transition: transform 160ms, box-shadow 160ms; }
 .mom__tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-card-hover); }
 
 .mom__tile--pink   { background: #ffe3ee; }
@@ -55,36 +55,31 @@
 .mom__tile--yellow { background: #fdeeb8; }
 .mom__tile--orange { background: #ffe1cb; }
 
-.mom__icon { display: flex; align-items: center; justify-content: center; flex: 1; }
-.mom__icon svg { width: 64px; height: 64px; stroke-width: 1.6; }
-.mom__tile--pink   .mom__icon { color: #e75480; }
-.mom__tile--green  .mom__icon { color: var(--color-green); }
-.mom__tile--yellow .mom__icon { color: #d99a00; }
-.mom__tile--orange .mom__icon { color: var(--color-orange); }
+.mom__ill { flex: 1; display: flex; align-items: center; justify-content: center; }
+.mom__ill .mom-sticker { width: 78px; height: 78px; }
+.mom__ill .lucide { width: 60px; height: 60px; color: var(--color-ink); }
 
-.mom__label { display: inline-flex; align-items: center; gap: 8px; background: #fff; border-radius: var(--radius-pill); padding: 7px 8px 7px 14px; box-shadow: 0 4px 12px rgba(61,34,9,.08); max-width: 100%; }
-.mom__label-text { font-family: var(--font-heading); font-size: .92rem; color: var(--color-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mom__label-arrow { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--color-green); color: #fff; }
-.mom__label-arrow svg { width: 13px; height: 13px; }
+.mom__foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mom__title { font-family: var(--font-heading); font-size: 1.02rem; color: var(--color-ink); line-height: 1.05; }
+.mom__arrow { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: #fff; color: var(--color-ink); box-shadow: 0 2px 6px rgba(61,34,9,.12); }
+.mom__arrow svg { width: 13px; height: 13px; }
 
-.mom__deco { position: absolute; pointer-events: none; opacity: .55; }
+.mom__deco { position: absolute; pointer-events: none; opacity: .5; }
 .mom__deco svg { width: 100%; height: 100%; }
-.mom__deco--tl { top: 10px; left: 10px; width: 16px; color: var(--color-yellow); }
-.mom__deco--tr { top: 12px; right: 10px; width: 18px; }
-.mom__deco--br { bottom: 52px; right: 12px; width: 14px; }
-.mom__tile--pink   .mom__deco--tr, .mom__tile--pink .mom__deco--br { color: #e75480; }
-.mom__tile--green  .mom__deco--tr, .mom__tile--green .mom__deco--br { color: var(--color-green); }
-.mom__tile--yellow .mom__deco--tr, .mom__tile--yellow .mom__deco--br { color: #d99a00; }
-.mom__tile--orange .mom__deco--tr, .mom__tile--orange .mom__deco--br { color: var(--color-orange); }
+.mom__deco--tl { top: 10px; left: 11px; width: 15px; color: var(--color-yellow); }
+.mom__deco--tr { top: 12px; right: 11px; width: 17px; }
+.mom__tile--pink   .mom__deco--tr { color: #e75480; }
+.mom__tile--green  .mom__deco--tr { color: var(--color-green); }
+.mom__tile--yellow .mom__deco--tr { color: #d99a00; }
+.mom__tile--orange .mom__deco--tr { color: var(--color-orange); }
 .mom__deco--tr svg { fill: none; stroke: currentColor; stroke-width: 2; }
-.mom__deco--br svg { fill: none; stroke: currentColor; stroke-width: 2.2; }
 
 @media (max-width: 989px) {
   .mom__grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
 }
 @media (max-width: 600px) {
   .mom__grid { grid-template-columns: repeat(2, 1fr); }
-  .mom__icon svg { width: 52px; height: 52px; }
+  .mom__ill .mom-sticker { width: 66px; height: 66px; }
 }
 {% endstylesheet %}
 
@@ -103,18 +98,13 @@
       "limit": 8,
       "settings": [
         { "type": "text", "id": "title", "label": "Titel", "default": "Verjaardag" },
-        { "type": "select", "id": "icon", "label": "Icoon", "default": "cake", "options": [
-          { "value": "cake", "label": "Taart" },
-          { "value": "paw", "label": "Poot" },
-          { "value": "home", "label": "Huis" },
-          { "value": "bandage", "label": "Pleister" },
+        { "type": "select", "id": "icon", "label": "Sticker", "default": "cake", "options": [
+          { "value": "cake", "label": "Taart (verjaardag)" },
+          { "value": "paw", "label": "Poot (puppy)" },
+          { "value": "home", "label": "Huis (adoptie)" },
+          { "value": "bandage", "label": "Pleister (beterschap)" },
           { "value": "tree", "label": "Kerstboom" },
-          { "value": "gift", "label": "Cadeau" },
-          { "value": "heart", "label": "Hart" },
-          { "value": "sun", "label": "Zon" },
-          { "value": "pumpkin", "label": "Pompoen" },
-          { "value": "bone", "label": "Botje" },
-          { "value": "star", "label": "Ster" }
+          { "value": "gift", "label": "Cadeau (bedankt)" }
         ]},
         { "type": "select", "id": "color", "label": "Achtergrondkleur", "default": "pink", "options": [
           { "value": "pink", "label": "Roze" },
