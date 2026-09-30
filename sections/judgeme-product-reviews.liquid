@@ -5,20 +5,38 @@
   Vereist: Judge.me app-embed AAN in Thema → App-insluitingen.
 {%- endcomment -%}
 
+{%- comment -%}
+  Review-count server-side uit het Judge.me badge-metafield. Bij 0 (of onbekend) tonen we een
+  compacte, branded empty-state met minimale hoogte i.p.v. de grote lege Judge.me-widget.
+  Zodra er reviews zijn (count > 0) rendert de echte Judge.me-widget automatisch weer.
+{%- endcomment -%}
+{%- assign jm_badge = product.metafields.judgeme.badge -%}
+{%- assign jm_count = 0 -%}
+{%- if jm_badge contains 'data-number-of-reviews=' -%}
+  {%- assign jm_count = jm_badge | split: 'data-number-of-reviews="' | last | split: '"' | first | times: 1 -%}
+{%- endif -%}
+
 <div class="jme full-width">
   <div class="jme__inner">
-    {%- if section.settings.heading != blank -%}
-      <header class="jme__head">
-        {%- if section.settings.eyebrow != blank -%}
-          <span class="jme__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ section.settings.eyebrow }}</span>
-        {%- endif -%}
-        <h2 class="jme__title">{{ section.settings.heading }}</h2>
-      </header>
-    {%- endif -%}
+    {%- if jm_count > 0 -%}
+      {%- if section.settings.heading != blank -%}
+        <header class="jme__head">
+          {%- if section.settings.eyebrow != blank -%}
+            <span class="jme__eyebrow"><span aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ section.settings.eyebrow }}</span>
+          {%- endif -%}
+          <h2 class="jme__title">{{ section.settings.heading }}</h2>
+        </header>
+      {%- endif -%}
 
-    {%- comment -%} theme-check-disable ParserBlockingJavaScript,RemoteAsset {%- endcomment -%}
-    <!-- Start of Judge.me code -->{% assign has_legacy = false %}{% if product.metafields.judgeme.widget.size > 20 %}{% assign has_legacy = true %}{% endif %}<div style='clear:both'></div><div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-product-id='{{ product.id }}' data-widget='review' data-auto-install='false' data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' data-entry-point='review_widget.js' data-entry-key='review-widget/main.js'>{% if has_legacy %}<div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>{% endif %}</div>{% if product.metafields.judgeme.review_widget_data %}<script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>{% endif %}<!-- End of Judge.me code -->
-    {%- comment -%} theme-check-enable ParserBlockingJavaScript,RemoteAsset {%- endcomment -%}
+      {%- comment -%} theme-check-disable ParserBlockingJavaScript,RemoteAsset {%- endcomment -%}
+      <!-- Start of Judge.me code -->{% assign has_legacy = false %}{% if product.metafields.judgeme.widget.size > 20 %}{% assign has_legacy = true %}{% endif %}<div style='clear:both'></div><div id='judgeme_product_reviews' class='jdgm-widget jdgm-review-widget' data-product-title='{{ product.title | escape }}' data-id='{{ product.id }}' data-product-id='{{ product.id }}' data-widget='review' data-auto-install='false' data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}' data-entry-point='review_widget.js' data-entry-key='review-widget/main.js'>{% if has_legacy %}<div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>{% endif %}</div>{% if product.metafields.judgeme.review_widget_data %}<script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>{% endif %}<!-- End of Judge.me code -->
+      {%- comment -%} theme-check-enable ParserBlockingJavaScript,RemoteAsset {%- endcomment -%}
+    {%- else -%}
+      <div class="jme__empty">
+        <span class="jme__empty-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
+        <p class="jme__empty-text"><strong>Nog geen reviews</strong> — jouw hond kan de eerste zijn die deze box uitpakt <span aria-hidden="true">🐾</span></p>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -33,6 +51,11 @@
 /* Judge.me-accent op het merk afstemmen */
 .jme .jdgm-star { color: var(--color-yellow) !important; }
 .jme .jdgm-rev-widg__summary { font-family: var(--font-body); }
+.jme__empty { display: flex; align-items: center; gap: 12px; max-width: 560px; margin: 0 auto; background: #fffaf2; border: 1.5px dashed var(--color-line); border-radius: var(--radius-lg); padding: 14px 18px; }
+.jme__empty-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 36px; height: 36px; border-radius: 50%; background: #ffe0ee; color: var(--color-pink); }
+.jme__empty-icon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; }
+.jme__empty-text { font-family: var(--font-body); font-size: .92rem; color: var(--color-body); margin: 0; }
+.jme__empty-text strong { font-family: var(--font-heading); font-weight: 400; color: var(--color-ink); }
 {% endstylesheet %}
 
 {% schema %}
