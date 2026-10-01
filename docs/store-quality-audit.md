@@ -225,4 +225,52 @@ Homepage, PDP-buybox, boxen/special-editions/kwispelclub/partners-pagina's, cart
 ### Overig voor Fase 2
 Help-hub (C) + Brand/editorial (B) + nieuwe pagina's (bestelling volgen, retour aanmelden, annuleren, bedrijfsgegevens, herroepingsformulier, toegankelijkheid, veilig spelen, onderhoud). `betaalmogelijkheden`/`contact` = POLISH, geen redesign.
 
-_Einde audit + Fase 1-log. Geen pagina's gepubliceerd/verwijderd; geen header/functionele wijziging zonder akkoord._
+_Einde audit + Fase 1-log._
+
+---
+
+## Fase 2 — Uitvoeringslog (01-10-2026)
+
+Gebouwd: **Help-hub (C)** + **Editorial/Brand (B)** families; uitgerold op bestaande + 10 nieuwe concept-pagina's. Service/Legal (bevroren) ongemoeid. Commits F2-C1, F2-B1, F2-A2, F2-D2, F2-H, F2-AUDIT.
+
+### Wishlist (F2-H) — opgelost
+Header verlanglijst-actie (`/pages/verlanglijst` = dead link, desktop-only) **verwijderd** + orphan CSS opgeruimd. Account/search/cart/layout intact; mobiel was al verborgen.
+**Resterend (gerapporteerd, niet aangeraakt):** `sections/featured-products.liquid:49` `mg__wish` hartknop (`data-wishlist-handle`) — **non-functioneel** (geen JS). Aparte card-feature → aanbeveling: in Fase 3 verwijderen of een echte wishlist bouwen. Jouw beslissing.
+
+### CONTENT REVIEW NODIG (nieuwe pagina's — niet zelf ingevuld)
+1. **Bedrijfsgegevens** — KvK- + btw-nummer ontbreken (wettelijk verplicht) → invullen. Adres/tel/e-mail overgenomen uit privacy-policy (zie Admin-data hieronder) — **verifiëren**.
+2. **Herroepingsformulier** — wettelijk **modelformulier** niet opgenomen (niet geïmproviseerd) → juridische tekst aanleveren.
+3. **Toegankelijkheid** — feitelijke verklaring zonder compliance-claim; officiële verklaring/WCAG-niveau desgewenst juridisch laten opstellen.
+4. **Wijzigen/annuleren** — operationele specifics (tot wanneer wijzigen mogelijk, wat precies) → bevestigen.
+5. **Brand-copy** (waarom-kwispelbox/veilig-spelen/onderhoud) = neutrale merktekst, geen claims — redactioneel nalezen gewenst.
+
+### Claims-audit (inventaris — geen stille correcties)
+| Claim | Belangrijkste locaties | Bron/config | Status |
+|---|---|---|---|
+| Gratis verzending vanaf €50 | shipping, cart, PDP, usp/trust-bar, footer, seo-meta, announcement | `settings.kb_free_shipping` (centraal) + hardcoded in copy | **REVIEW NODIG** (bedrag bevestigen; deels hardcoded) |
+| Voor 16:00 besteld | shipping, PDP, faq, usp-bar, announcement, index | `settings.kb_order_cutoff` + copy | **REVIEW NODIG** |
+| Morgen in huis / zelfde werkdag op de post | shipping, PDP, usp-bar, announcement, settings | `settings.kb_delivery` + copy | **REVIEW NODIG** (leverbelofte) |
+| Levering NL 1-2 / BE 2-3 werkdagen | page.shipping | hardcoded copy | **REVIEW NODIG** |
+| €4,95 verzendkosten < €50 | page.shipping | hardcoded copy | **REVIEW NODIG** |
+| 30 dagen retour/bedenktijd | returns, retour-aanmelden, voorwaarden, faq | hardcoded copy | **REVIEW NODIG** (juridisch) |
+| Terugbetaling binnen 14 dagen | returns, retour-aanmelden, voorwaarden | hardcoded copy | **REVIEW NODIG** |
+| Niet-goed-geld-terug garantie | returns, complaints, faq, PDP (`guarantee_*`), klantenservice | PDP-settings + copy | **REVIEW NODIG** (garantie-belofte) |
+| Klacht: reactie 1 werkdag / oplossing 14 dagen | complaints, voorwaarden | hardcoded copy | **REVIEW NODIG** |
+| Track & trace per e-mail | shipping, bestelling-volgen | hardcoded copy | **REVIEW NODIG** (klopt dit operationeel?) |
+
+### Privacy / legal bevindingen
+- **Privacy policy** = Shopify Policy (`/policies/...`) — bestaat, maar **body is Engels** → NL-vertaling/controle; verifieer footer-link. (Niet nagebouwd als page — correct.)
+- **Algemene voorwaarden** — dev-note in intro blijft gemarkeerd; inhoud niet zelf gefinaliseerd.
+- **Bedrijfsgegevens-data (gebruikt op de nieuwe pagina, bron = privacy-policy):** Kwispelbox · Kwakkenbergweg 150-05 · 6571 GB Berg en Dal · Nederland · +31 242 340 422 · hallo@kwispelbox.com. KvK/btw = ontbreekt.
+
+### Admin / publicatie-acties (nog door jou)
+1. **Publiceren** van de 10 nieuwe concept-pagina's zodra content akkoord is (nu draft/isPublished=false).
+2. **Menu's koppelen:** klantenservice + nieuwe service/legal/brand-pagina's toevoegen aan `footer-service` / `menu-over-ons` / `footer-shop` waar gewenst (ik heb menu's niet gewijzigd deze fase).
+3. **Content review** afhandelen (zie lijst) + privacy NL-vertaling + bedrijfsgegevens KvK/btw.
+4. **Claims bevestigen** (tabel hierboven) vóór livegang.
+5. **Wishlist mg__wish**-beslissing (verwijderen of bouwen).
+
+### Resterend voor Fase 3 (na jouw go)
+Opruimen: `info-page.liquid` (ongebruikt), orphan `product.kwispelbox.json`, lege mega-menu-menu's, lege collecties (puppy/speeltjes/snacks/knuffels), menu-duplicaat Feestdagen/Momenten, mg__wish. Menu-integratie van de nieuwe pagina's.
+
+_Einde Fase 2-log. Geen pagina's gepubliceerd, geen publicatiestatus gewijzigd, geen orphan/menu/collectie-cleanup uitgevoerd._

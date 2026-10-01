@@ -160,4 +160,25 @@ Per fase: theme check, 1 oog-check (390/1280px), kleine commits, review vóór v
 
 **Fase 2 (na akkoord op screenshots):** Help-hub (C) + Brand/editorial (B) + ontbrekende pagina's (bestelling volgen, retour aanmelden, annuleren, bedrijfsgegevens, herroepingsformulier, toegankelijkheid, veilig spelen, onderhoud).
 
-_Einde plan._
+---
+
+## Fase 2 — nieuwe families + uitrol (01-10-2026)
+
+**Nieuw gebouwd:**
+- **Familie C — Help-hub** (`sections/help-hub.liquid`): hero + topic-cards (categorie-nav, 4/3/2-kol) + populaire vragen (native `<details>`) + support-CTA + zelf-service links. Geen JS.
+- **Familie B — Editorial/Brand** (`sections/editorial-page.liquid`): story-hero (optioneel beeld) + image+text splits (graceful placeholder zonder foto) + story-cards + checklist + optionele quote + CTA. Image-picker overal optioneel. Geen JS.
+
+**Page → family mapping (volledig):**
+| Family | Pagina's |
+|---|---|
+| A Service | verzending, retourneren, klachten, **bestelling-volgen**, **retour-aanmelden**, **annuleren-of-wijzigen** |
+| B Editorial | **over-ons**, **waarom-kwispelbox**, **veilig-spelen**, **onderhoud-speeltjes-knuffels** |
+| C Help-hub | **klantenservice**, **veelgestelde-vragen (faq)** |
+| D Legal | algemene-voorwaarden, cookiebeleid, **bedrijfsgegevens**, **herroepingsformulier**, **toegankelijkheid** |
+| (eigen bespoke, ongemoeid) | betaalmogelijkheden (payment-page), contact (contact-page), boxen, special-editions, kwispelclub, partners, hoe-werkt-het, cadeau, reviews |
+
+**Nieuwe concept(draft)-pagina-records** (isPublished=false, via API): klantenservice, bestelling-volgen, retour-aanmelden, annuleren-of-wijzigen, bedrijfsgegevens, herroepingsformulier, toegankelijkheid, waarom-kwispelbox, veilig-spelen, onderhoud-speeltjes-knuffels. (over-ons + veelgestelde-vragen bestonden al → template heringericht.)
+
+**Nog ongemoeid (Fase 3):** `info-page.liquid` (nu ongebruikt), orphan `product.kwispelbox.json`, lege mega-menu-menu's, lege collecties, menu-duplicaat.
+
+_Einde plan (Fase 1 + 2)._
