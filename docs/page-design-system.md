@@ -181,4 +181,56 @@ Per fase: theme check, 1 oog-check (390/1280px), kleine commits, review vóór v
 
 **Nog ongemoeid (Fase 3):** `info-page.liquid` (nu ongebruikt), orphan `product.kwispelbox.json`, lege mega-menu-menu's, lege collecties, menu-duplicaat.
 
-_Einde plan (Fase 1 + 2)._
+---
+
+## Fase 3D — Familie E: Community / Ecosystem (01-10-2026)
+
+**Nieuw gebouwd (zonder loyalty-backend):**
+- **Familie E** — `sections/community-ecosystem-page.liquid` (+ `snippets/ce-block.liquid`), prefix `ce__` / `ce-`.
+  Eén **herbruikbare** sectie met een composable block-palette; elke pagina kiest een eigen subset/volgorde.
+  Opeenvolgende blokken van dezelfde groep worden automatisch in één grid/rij gezet (**run-grouping**,
+  statisch gebalanceerde HTML → 0 theme-check-warnings).
+
+**Block-palette (14 types):**
+| Block | Groep | Gebruik |
+|---|---|---|
+| `hero` | solo | eyebrow, H1, intro, 2 knoppen, optioneel beeld (split) + sticker |
+| `intro` | solo | tussenkop + richtext, links/gecentreerd |
+| `split` | solo | beeld + tekst + bullets + CTA (beeld links/rechts, graceful placeholder) |
+| `card` | grid | waarde-/icoonkaart (icoon, titel, tekst, accent) |
+| `partner` | grid | partner-type kaart (+ accentregel) |
+| `usecase` | grid | zakelijke use-case kaart (pastel vlak) |
+| `step` | steps | genummerde stap (CSS-counter) |
+| `gallery_item` | gallery | polaroid-foto + bijschrift |
+| `chip` | chips | label-pill met icoon |
+| `quote` | solo | testimonial (rendert alleen bij echte tekst) |
+| `faq` | faqs | native `<details>` accordeon |
+| `linkrow` | links | interne link-kaart (icoon + titel + subtekst) |
+| `cta` | solo | banner (roze gradient of zacht pastel), 2 knoppen, anchor |
+| `form` | solo | native `{% form 'contact' %}` — 3 varianten: `partner` / `business` / `contact` |
+
+**Idiom:** zelfde tokens als A–D (`--color-*`, `--font-heading/body`, `--radius-lg`, `--shadow-card`, `--section-pad`).
+Accent per blok via `data-accent` (green/pink/orange/yellow/cream → `--c` + `--c-soft`). Rijkere, beeldrijkere,
+warmere compositie dan Service/Legal (meer ritme, pastel use-case-vlakken, polaroids, gradient-CTA's) — bewust
+géén tekstkaart-wall of dashboard-look. Mobiel: grids vallen via `auto-fit minmax` terug naar 1 kolom,
+knoppen full-width, 16px inputs, 44px tap-targets, `scroll-margin-top` op anchors.
+
+**Page → family mapping (Fase 3D):**
+| Pagina | Template | Status |
+|---|---|---|
+| Partners | `page.partners` → `community-ecosystem-page` | **live** (record bestond); fictieve programma-copy verwijderd |
+| Zakelijk bestellen | `page.zakelijk` (nieuw) | **DRAFT** (Shopify-pagina unpublished, handle `zakelijk`) |
+| Community | `page.community` (nieuw) | **DRAFT** (Shopify-pagina unpublished, handle `community`) |
+| Kwispelclub | `page.kwispelclub` (`kwispelclub-page`) | **ongemoeid** — al coming-soon + brand-consistent, eigen werkende nieuwsbrief |
+
+**Formulieren:** native Shopify contact-form (mailt naar winkel-e-mail). Validatie (required), a11y-labels,
+success/error-state, toestemming-checkbox met link naar `shop.privacy_policy` indien aanwezig. Geen form-app.
+
+**Backend-afhankelijkheden:** geen. Alles editor-blocks + native forms. Toekomstige loyalty-hooks (saldo-weergave,
+rewards, referrals) horen in de gekozen loyalty-app / nieuwe customer accounts — **niet** in Family E (presentatielaag).
+
+**Bewust NIET gemigreerd:** Kwispelclub (zie boven). **Orphan achtergelaten** (cleanup = eigen go): oude
+`sections/partners-page.liquid` (niet meer gerefereerd), `sections/community.liquid` (alleen op orphan
+`product.kwispelbox.json`).
+
+_Einde plan (Fase 1 + 2 + 3D)._

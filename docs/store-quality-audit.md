@@ -309,3 +309,26 @@ _Fase 3A = read-only: niets gebouwd/geïnstalleerd/gepubliceerd/gemuteerd._
 
 ## Fase 3B — Loyalty Vendor Decision + MVP-spec (status: READ-ONLY opgeleverd)
 Vendorbeslissing in **`docs/loyalty-vendor-decision.md`**. **⚠️ Gecorrigeerd in 3B.1:** eerste 3B-aanbeveling (Rivo Scale ~$49) was onjuist — Rivo-metafields/API = **Plus ($499)** en Rivo Accounts = **apart $499**; rijke account = ~$500-1000/mnd. **Herzien: Smile = beste MVP (binnen budget, vendor-rendered), Rivo = premium-later** (Rivo Scale-lean acceptabel alternatief). MVP earning/redemption-spec, account-UX, storefront-touchpoints, family E component-spec, Partners/Zakelijk IA, Kwispels-economics-kader, **exacte pre-live copy-actielijst** en **build backlog (3C-0…3C-QA)** in `community-ecosystem-plan.md` (sectie Fase 3B). **Mystery-gift mag GWP-product niet delen** → apart loyalty-gift-product. Niets gebouwd; wacht op vendor-go + business-waarden, dan start 3C-0 (copy veilig).
+
+## Fase 3D — Community/Zakelijk/Partners gebouwd (status: opgeleverd, geen loyalty-backend) · 01-10-2026
+Nieuwe **Family E** (`community-ecosystem-page`) uitgerold op 3 pagina's (details in `page-design-system.md`
+en `community-ecosystem-plan.md` → Fase 3D). Theme check: **0 errors** (2 pre-bestaande HardcodedRoutes-warnings
+in mobile-tabbar/cart-drawer, buiten scope).
+
+**Draft Shopify-pagina's aangemaakt (unpublished):** `zakelijk` (702260445562), `community` (702260576634).
+**Partners** (702233870714) blijft `isPublished:true` → de template-rewrite gaat live bij push.
+
+**CONTENT REVIEW NODIG (operationele waarheid ontbreekt / vul aan):**
+- Zakelijk FAQ: betaling/factuur + levertijd bij grote aantallen zijn nu **neutraal** gehouden (geen SLA/staffel/prijs beloofd) → bevestig de echte werkwijze.
+- Community: polaroid-gallery staat **leeg** (placeholders) → echte hondenfoto's + optionele bijschriften toevoegen; geen verzonnen namen gebruikt.
+- Social-links (`social_instagram/facebook/tiktok`) staan op `#` → echte URL's invullen; Community "doe mee" verwijst nu naar contact i.p.v. een verzonnen handle.
+- Partners: geen "huidige partners"-logowall getoond (geen echte partnerdata) → pas toevoegen als er echte partners zijn.
+
+**MENU-/PUBLICATIE-ACTIES (later, met go):**
+- Menu "Zakelijk" wijst nu naar `/pages/partners` → **herrichten naar `/pages/zakelijk`** zodra gepubliceerd.
+- Community in footer/over-ons-groep opnemen (geen header-overload).
+- Draft-pagina's `zakelijk` + `community` **publiceren** (samen, zodat live Partners-links niet 404'en).
+- Push naar `main` = live: Partners-redesign wordt direct zichtbaar; draft-pagina's blijven onzichtbaar tot publicatie.
+
+**Niet uitgevoerd (bewust, wacht op go):** Smile/Rivo-install, loyalty/points/rewards/referral/account/metaobjects,
+Kwispelclub-migratie, orphan-cleanup, claims-centralisatie, menu/footer mass-cleanup.

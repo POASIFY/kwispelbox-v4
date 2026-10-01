@@ -512,3 +512,43 @@ Richtlijn: stuur op **effective_reward_%** binnen een door jullie gekozen marge-
 4. Mystery-gift-vs-GWP scheiding bevestigen (apart loyalty-gift-product).
 
 _Einde Fase 3B. READ-ONLY: niets gebouwd/geïnstalleerd/gepubliceerd/gemuteerd. Volgende = jullie go/no-go op vendor + §16-waarden, dan start 3C-0 (copy) + gekozen build-batches._
+
+---
+
+## Fase 3D — Community/Zakelijk/Partners gebouwd ZONDER loyalty-backend (01-10-2026)
+
+**Scope-grens:** Smile/Rivo volledig geparkeerd. Geen app geïnstalleerd, geen puntenengine, geen
+account-dashboard, geen custom loyalty-metafields, geen referral-engine, geen reward-logica. Dit is puur de
+**presentatie-/funnel-laag** (Family E, zie `page-design-system.md` → Fase 3D).
+
+**Gebouwd:**
+| Pagina | Wat | Backend |
+|---|---|---|
+| **Partners** (live record) | Eerlijke samenwerkingspagina: waarom → partnertypes (categorieën) → 3 stappen (contact→kennismaking→passende samenwerking) → partner-form → FAQ → CTA → links | native contact-form |
+| **Zakelijk** (draft) | B2B cadeau-funnel: use-cases → wat-kan-er → 4 stappen → offerte-aanvraagform → FAQ → CTA → links | native contact-form |
+| **Community** (draft) | Gecureerd: hero → (lege) polaroid-gallery → momenten → eerlijke "doe mee" + consent-zin → links | geen (statisch) |
+
+**Eerlijkheidscorrectie (belangrijk):** de oude `partners-page` beschreef een **niet-bestaand programma**
+(unieke partnercode + QR, commissie/tegoed/gratis boxen "bij resultaat", "resultaten per maand", partnerpakket,
+co-branded materiaal). Dat is verwijderd — Partners is nu een **honest contact-first** pagina. Partnertypes
+blijven als **categorie** bestaan zonder dat er aparte programma's/voorwaarden zijn (FAQ zegt dit expliciet).
+
+**Future loyalty-hooks (bewust nog leeg):**
+- Family E `linkrow`/`cta` naar Kwispelclub staan klaar; zodra de loyalty-engine er is, kan de Kwispelclub-pagina
+  van coming-soon → live, en kan een `card`/`cta` met echte voordelen worden toegevoegd (saldo blijft
+  vendor-rendered in de nieuwe customer accounts, niet in Liquid).
+- Community: ambassadeurs/UGC-inzending/referrals = **Phase 2/3** (vereisen engine + consent-flow); nu alleen
+  "volg + tag + deel via contact".
+- Zakelijk: geen quote-engine/B2B-infra; blijft form-first tot er een businesscase is.
+
+**FUTURE ENHANCEMENT — data:** partner- en communitycontent kunnen later **metaobjects** verdienen
+(partner-directory, gecureerde UGC met consent-veld). Nu bewust **niet** aangemaakt (editor-blocks volstaan,
+niet overengineeren).
+
+**Kwispelclub:** niet gemigreerd. Al coming-soon (3C-0) + brand-consistent (zelfde tokens) + werkende
+nieuwsbrief (`form 'customer'`). Migratie zou de nieuwsbrief/Judge.me-integratie riskeren zonder
+consistentiewinst. _Nit:_ de `kwispelclub-page` **schema-defaults** bevatten nog live-loyalty-copy ("Word lid",
+"Inloggen", "Welkom Luna!") die **niet rendert** (JSON overruled), maar bij een vers ingevoegde sectie zou
+terugkomen → kleine toekomstige polish.
+
+_Einde Fase 3D. Geen loyalty-app/engine. Zakelijk + Community als DRAFT. Volgende stappen vereisen nieuwe go._
