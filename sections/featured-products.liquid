@@ -35,7 +35,7 @@
             <div class="mg__card">
               <a href="{{ product.url }}" class="mg__media" style="background: {{ topbg }};">
                 {%- if product.featured_image != blank -%}
-                  {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(max-width: 749px) 50vw, 300px', alt: product.featured_image.alt | default: product.title, class: 'mg__img' }}
+                  {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(max-width: 749px) 78vw, (max-width: 989px) 50vw, 300px', alt: product.featured_image.alt | default: product.title, class: 'mg__img' }}
                 {%- else -%}
                   <span class="mg__img mg__img--ph">{%- render 'lucide', icon: 'gift' -%}</span>
                 {%- endif -%}
@@ -109,7 +109,10 @@
     margin: 0 calc(-1 * var(--page-margin)); padding: 4px var(--page-margin) 14px;
   }
   .mg__grid::-webkit-scrollbar { display: none; }
-  .mg__cell { flex: 0 0 78%; scroll-snap-align: start; }
+  /* Safari/WebKit: zonder min-width:0 floort de flex-item op de intrinsieke img-breedte
+     (600px) en negeert flex-basis:78% → slide + beeld veel te groot op echte iPhone. */
+  .mg__cell { flex: 0 0 78%; min-width: 0; scroll-snap-align: start; }
+  .mg__card { min-width: 0; }
   /* Beeldzone compacter + gegarandeerd volledig product (geen crop), gecentreerd met
      breathing room. object-fit:contain hard afgedwongen; geen scale op mobiel. */
   .mg__media { aspect-ratio: 1 / 0.74; padding: 14px; }
