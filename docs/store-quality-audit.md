@@ -197,4 +197,32 @@ Homepage, PDP-buybox, boxen/special-editions/kwispelclub/partners-pagina's, cart
 3. Bedrijfsgegevens (KvK/btw/adres) correct in Settings + facturen/e-mails.
 4. Live-verificatie van de nieuwe "Wat zit er in de box?" op echte iPhone + desktop.
 
-_Einde audit. Vervolg: zie `docs/page-design-system.md` voor de 4 page-families. Geen uitvoering zonder akkoord._
+---
+
+## Fase 1 — Uitvoeringslog (01-10-2026)
+
+**Gebouwd:** 2 herbruikbare families — `sections/service-page.liquid` (A) + `sections/legal-page.liquid` (D). Uitgerold (content **verbatim** gemigreerd, geen nieuwe claims):
+- Service: `page.shipping`, `page.returns`, `page.complaints`.
+- Legal: `page.cookiebeleid`, `page.voorwaarden`.
+- `info-page.liquid` nu ongebruikt → consolidatie-kandidaat (niet verwijderd).
+
+### CONTENT REVIEW NODIG (niet zelf ingevuld)
+1. **Algemene voorwaarden** — de intro zegt letterlijk "Laat deze tekst juridisch controleren voordat je live gaat"; artikelen zijn generiek → **juridische review + de dev-note uit de intro halen**.
+2. **Privacybeleid (Shopify Policy)** — bestaat op `/policies/...` maar **body is in het Engels** → vertalen/controleren (NL).
+3. **Cookiebeleid / retour / klachten** — teksten zijn plausibel maar bevatten **claims** (30 dagen retour, niet-goed-geld-terug, terugbetaling 14 dagen, levertijden NL 1-2/BE 2-3 dagen, gratis vanaf €50) → **bevestigen dat deze commercieel/juridisch kloppen**.
+
+### P0-bevindingen
+- **Dead link `/pages/verlanglijst`** — zit in `sections/header.liquid` (verlanglijst-actie), een **code-route buiten de service/legal-templates**. Opties: verlanglijst-pagina maken, link herrichten, of feature verwijderen. **Vereist akkoord (header/functionele wijziging) — niet in deze fase aangeraakt.**
+- **Privacybeleid** — ✅ correct als Shopify Policy (niet nagebouwd). Verifieer dat 'ie in de footer gelinkt is + NL-vertaling.
+- **Bedrijfsgegevens** — aanwezig in de privacy-policy: _Kwispelbox, Kwakkenbergweg 150-05, 6571 GB Berg en Dal · +31 242 340 422 · hallo@kwispelbox.com_. Nog **geen eigen pagina** → Fase 2 (Legal-familie), data is beschikbaar.
+- **Herroepingsformulier** — ontbreekt nog → Fase 2.
+
+### Handmatige Admin-acties (geen publicatie-status gewijzigd)
+- Juridische review voorwaarden + NL-vertaling privacy policy.
+- Bevestigen claims (retour/levertijd/garantie).
+- Beslissing dead-link verlanglijst.
+
+### Overig voor Fase 2
+Help-hub (C) + Brand/editorial (B) + nieuwe pagina's (bestelling volgen, retour aanmelden, annuleren, bedrijfsgegevens, herroepingsformulier, toegankelijkheid, veilig spelen, onderhoud). `betaalmogelijkheden`/`contact` = POLISH, geen redesign.
+
+_Einde audit + Fase 1-log. Geen pagina's gepubliceerd/verwijderd; geen header/functionele wijziging zonder akkoord._

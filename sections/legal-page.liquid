@@ -1,0 +1,147 @@
+{%- comment -%}
+  sections/legal-page.liquid — KB-v4 herbruikbare LEGAL page-family (namespace `lgl`).
+  Compacte branded hero + meta + inhoudsopgave (anchors) + rustige leescard met H2-secties
+  + optionele note-cards + contact onderaan. Rust/leesbaarheid > decoratie. Geen JS.
+  Blocktypes: section (heading + richtext, krijgt anchor), note (aside-kaart).
+{%- endcomment -%}
+
+{%- assign sections = section.blocks | where: 'type', 'section' -%}
+{%- assign notes = section.blocks | where: 'type', 'note' -%}
+
+<div class="lgl full-width">
+  <div class="lgl__inner">
+
+    <header class="lgl__hero">
+      {%- if section.settings.eyebrow != blank -%}<span class="lgl__eyebrow">{{ section.settings.eyebrow }}</span>{%- endif -%}
+      {%- if section.settings.title != blank -%}<h1 class="lgl__title">{{ section.settings.title }}</h1>{%- endif -%}
+      {%- if section.settings.intro != blank -%}<p class="lgl__intro">{{ section.settings.intro }}</p>{%- endif -%}
+      {%- if section.settings.updated != blank -%}<span class="lgl__updated">Laatst bijgewerkt: {{ section.settings.updated }}</span>{%- endif -%}
+    </header>
+
+    <div class="lgl__layout">
+
+      {%- if section.settings.show_toc and sections.size > 1 -%}
+        <nav class="lgl__toc" aria-label="Inhoudsopgave">
+          <span class="lgl__toc-title">Op deze pagina</span>
+          <ol class="lgl__toc-list">
+            {%- for b in sections -%}
+              {%- if b.settings.heading != blank -%}
+                <li><a href="#lgl-sec-{{ forloop.index }}" class="lgl__toc-link">{{ b.settings.heading }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ol>
+        </nav>
+      {%- endif -%}
+
+      <article class="lgl__doc">
+        {%- for b in sections -%}
+          <section class="lgl-sec" id="lgl-sec-{{ forloop.index }}" {{ b.shopify_attributes }}>
+            {%- if b.settings.heading != blank -%}<h2 class="lgl-sec__title">{{ b.settings.heading }}</h2>{%- endif -%}
+            {%- if b.settings.text != blank -%}<div class="lgl-sec__text">{{ b.settings.text }}</div>{%- endif -%}
+          </section>
+        {%- endfor -%}
+
+        {%- for b in notes -%}
+          <aside class="lgl-note" {{ b.shopify_attributes }}>
+            {%- if b.settings.title != blank -%}<strong class="lgl-note__title"><span class="lgl-note__ic" aria-hidden="true">{%- render 'kb-icon', icon: 'bulb' -%}</span>{{ b.settings.title }}</strong>{%- endif -%}
+            {%- if b.settings.text != blank -%}<div class="lgl-note__text">{{ b.settings.text }}</div>{%- endif -%}
+          </aside>
+        {%- endfor -%}
+
+        {%- if section.settings.contact_label != blank -%}
+          <p class="lgl__contact">{{ section.settings.contact_intro }} <a href="{{ section.settings.contact_url | default: '/pages/contact' }}">{{ section.settings.contact_label }}</a>.</p>
+        {%- endif -%}
+      </article>
+
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+.lgl { background: transparent; padding: var(--section-pad) 0; }
+.lgl__inner { max-width: 960px; margin: 0 auto; padding: 0 var(--page-margin); }
+
+/* Compacte, rustige hero */
+.lgl__hero { background: linear-gradient(150deg, #fffdf7 0%, #f6f1e6 100%); border: 1px solid rgba(61,34,9,.06); border-radius: clamp(18px, 2.2vw, 24px); padding: clamp(22px, 3vw, 34px); margin-bottom: clamp(20px, 2.6vw, 30px); }
+.lgl__eyebrow { display: inline-block; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--color-green); margin-bottom: 10px; }
+.lgl__title { font-family: var(--font-heading); font-size: calc(var(--fs-h2) * 0.92); line-height: 1.05; color: var(--color-ink); margin: 0 0 8px; }
+.lgl__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0; max-width: 62ch; }
+.lgl__updated { display: inline-block; margin-top: 12px; font-family: var(--font-body); font-size: .8rem; color: var(--color-muted); }
+
+/* Layout: TOC (sticky desktop) + document */
+.lgl__layout { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; }
+.lgl__toc { position: sticky; top: 96px; background: #fff; border: 1px solid rgba(61,34,9,.06); border-radius: 16px; padding: 16px 18px; box-shadow: 0 6px 18px rgba(61,34,9,.04); }
+.lgl__toc-title { display: block; font-family: var(--font-body); font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--color-muted); margin-bottom: 10px; }
+.lgl__toc-list { list-style: none; margin: 0; padding: 0; counter-reset: toc; display: flex; flex-direction: column; gap: 4px; }
+.lgl__toc-link { display: block; padding: 6px 8px; border-radius: 8px; font-family: var(--font-body); font-size: .9rem; line-height: 1.35; color: var(--color-body); text-decoration: none; transition: background 140ms, color 140ms; }
+.lgl__toc-link:hover { background: #eef7e8; color: var(--color-green); }
+
+/* Document */
+.lgl__doc { min-width: 0; background: #fff; border: 1px solid rgba(61,34,9,.07); border-radius: 20px; padding: clamp(22px, 3vw, 40px); box-shadow: 0 10px 30px rgba(61,34,9,.05); }
+.lgl-sec { scroll-margin-top: 100px; }
+.lgl-sec + .lgl-sec { margin-top: 28px; padding-top: 28px; border-top: 1px solid var(--color-line); }
+.lgl-sec__title { font-family: var(--font-heading); font-size: 1.28rem; line-height: 1.2; color: var(--color-ink); margin: 0 0 10px; }
+.lgl-sec__text { font-family: var(--font-body); font-size: 1rem; line-height: 1.75; color: var(--color-body); max-width: 70ch; }
+.lgl-sec__text p { margin: 0 0 12px; }
+.lgl-sec__text :last-child { margin-bottom: 0; }
+.lgl-sec__text ul, .lgl-sec__text ol { margin: 0 0 12px; padding-left: 22px; }
+.lgl-sec__text li { margin-bottom: 6px; }
+.lgl-sec__text h3 { font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); margin: 18px 0 8px; }
+.lgl-sec__text a { color: var(--color-green); font-weight: 700; }
+.lgl-sec__text strong { color: var(--color-ink); }
+
+/* Note / aside */
+.lgl-note { margin-top: 24px; background: #fff8e1; border: 1px solid rgba(217,145,0,.18); border-radius: 16px; padding: 16px 18px; }
+.lgl-note__title { display: flex; align-items: center; gap: 9px; font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); margin-bottom: 6px; }
+.lgl-note__ic { display: inline-flex; color: #d99100; }
+.lgl-note__ic svg { width: 18px; height: 18px; }
+.lgl-note__text { font-family: var(--font-body); font-size: .92rem; line-height: 1.6; color: var(--color-body); }
+.lgl-note__text :last-child { margin-bottom: 0; }
+
+.lgl__contact { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--color-line); font-family: var(--font-body); font-size: .95rem; color: var(--color-body); }
+.lgl__contact a { color: var(--color-green); font-weight: 700; }
+
+@media (max-width: 859px) {
+  .lgl__layout { grid-template-columns: 1fr; gap: 16px; }
+  .lgl__toc { position: static; top: auto; }
+  .lgl__toc-list { flex-flow: row wrap; gap: 6px; }
+  .lgl__toc-link { background: #f6f1e6; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Juridische pagina",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Juridisch" },
+    { "type": "text", "id": "title", "label": "Titel (H1)", "default": "Algemene voorwaarden" },
+    { "type": "textarea", "id": "intro", "label": "Intro / meta" },
+    { "type": "text", "id": "updated", "label": "Laatst bijgewerkt (datum)" },
+    { "type": "checkbox", "id": "show_toc", "label": "Inhoudsopgave tonen", "default": true },
+    { "type": "header", "content": "Contact onderaan" },
+    { "type": "text", "id": "contact_intro", "label": "Intro-zin", "default": "Vragen hierover? " },
+    { "type": "text", "id": "contact_label", "label": "Link-tekst", "default": "Neem contact op" },
+    { "type": "url", "id": "contact_url", "label": "Link" }
+  ],
+  "blocks": [
+    {
+      "type": "section",
+      "name": "Tekstsectie",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Kop (H2)", "default": "Artikel 1" },
+        { "type": "richtext", "id": "text", "label": "Tekst", "default": "<p>Vul hier de inhoud in.</p>" }
+      ]
+    },
+    {
+      "type": "note",
+      "name": "Aandacht-kaart",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titel", "default": "Goed om te weten" },
+        { "type": "richtext", "id": "text", "label": "Tekst", "default": "<p>Belangrijke opmerking.</p>" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Juridische pagina" } ]
+}
+{% endschema %}

@@ -135,4 +135,29 @@ Per fase: theme check, 1 oog-check (390/1280px), kleine commits, review vóór v
 - Niets publiceren/verwijderen zonder akkoord.
 - Entiteits-/bedrijfsnaam niet automatisch aanpassen (LEGAL REVIEW).
 
-_Einde plan. Wacht op akkoord + prioriteitskeuze (voorstel: start Fase 1 = Service + Legal template)._
+---
+
+## Rollout-status (Fase 1 — uitgevoerd 01-10-2026)
+
+**Gebouwd:** `sections/service-page.liquid` (familie A) + `sections/legal-page.liquid` (familie D). Beide token-based, responsive, editor-beheerd via schema/blocks, geen JS (native `<details>` + CSS anchors).
+
+**Familie A (Service) — in gebruik door:**
+| Pagina | Template | Content |
+|---|---|---|
+| Verzending & bezorging (referentie) | `page.shipping` | verbatim gemigreerd uit oude `info-page` |
+| Retourneren | `page.returns` | verbatim gemigreerd |
+| Klachten | `page.complaints` | verbatim gemigreerd |
+
+**Familie D (Legal) — in gebruik door:**
+| Pagina | Template | Content |
+|---|---|---|
+| Cookiebeleid (referentie) | `page.cookiebeleid` | verbatim gemigreerd |
+| Algemene voorwaarden | `page.voorwaarden` | verbatim gemigreerd (8 artikelen + TOC) |
+
+**Nog NIET omgezet (bewust):** `betaalmogelijkheden` (heeft eigen `payment-page` met betaalmethode-UI → POLISH, geen redesign), `contact` (`contact-page`), `faq` (→ Help-hub in Fase 2).
+
+**`info-page.liquid` = nu ongebruikt** (alle 5 gebruikers gemigreerd) → consolidatie-kandidaat, **niet verwijderd** zonder akkoord.
+
+**Fase 2 (na akkoord op screenshots):** Help-hub (C) + Brand/editorial (B) + ontbrekende pagina's (bestelling volgen, retour aanmelden, annuleren, bedrijfsgegevens, herroepingsformulier, toegankelijkheid, veilig spelen, onderhoud).
+
+_Einde plan._

@@ -1,73 +1,40 @@
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
-/*
- * ------------------------------------------------------------
- * IMPORTANT: auto-generated.
  * ------------------------------------------------------------
  */
 {
   "sections": {
     "main": {
-      "type": "info-page",
+      "type": "service-page",
       "blocks": {
-        "i1": {
-          "type": "item",
-          "settings": {
-            "icon": "chat",
-            "heading": "Een klacht? Laat het ons weten",
-            "text": "<p>Ben je ergens niet tevreden over? Dat horen we graag, want zo kunnen we het oplossen én onszelf verbeteren. We nemen elke klacht serieus.</p>"
-          }
-        },
-        "i2": {
-          "type": "item",
-          "settings": {
-            "icon": "mail",
-            "heading": "Hoe dien je een klacht in",
-            "text": "<p>Stuur een bericht via onze <a href=\"/pages/contact\">contactpagina</a> of mail naar hallo@kwispelbox.com. Beschrijf kort wat er speelt en vermeld je bestelnummer.</p>"
-          }
-        },
-        "i3": {
-          "type": "item",
-          "settings": {
-            "icon": "check",
-            "heading": "Onze afhandeling",
-            "text": "<p>Je ontvangt binnen 1 werkdag een reactie en we doen ons best je klacht binnen 14 dagen volledig op te lossen.</p>"
-          }
-        },
-        "i4": {
-          "type": "item",
-          "settings": {
-            "icon": "heart",
-            "heading": "Niet goed, geld terug",
-            "text": "<p>Komen we er samen niet uit? Dan geldt onze <a href=\"/pages/retourneren\">niet-goed-geld-terug garantie</a>. Jouw tevredenheid staat voorop.</p>"
-          }
-        }
+        "qc1": { "type": "quickcard", "settings": { "icon": "chat", "color": "green", "title": "Reactie binnen 1 werkdag", "text": "We nemen elke klacht serieus" } },
+        "qc2": { "type": "quickcard", "settings": { "icon": "heart", "color": "pink", "title": "Samen opgelost", "text": "Jouw tevredenheid voorop" } },
+        "s1": { "type": "section", "settings": { "icon": "chat", "heading": "Een klacht? Laat het ons weten", "text": "<p>Ben je ergens niet tevreden over? Dat horen we graag, want zo kunnen we het oplossen én onszelf verbeteren. We nemen elke klacht serieus.</p>" } },
+        "s2": { "type": "section", "settings": { "icon": "bulb", "heading": "Hoe dien je een klacht in", "text": "<p>Stuur een bericht via onze <a href=\"/pages/contact\">contactpagina</a> of mail naar hallo@kwispelbox.com. Beschrijf kort wat er speelt en vermeld je bestelnummer.</p>" } },
+        "s3": { "type": "section", "settings": { "icon": "check", "heading": "Onze afhandeling", "text": "<p>Je ontvangt binnen 1 werkdag een reactie en we doen ons best je klacht binnen 14 dagen volledig op te lossen.</p>" } },
+        "s4": { "type": "section", "settings": { "icon": "heart", "heading": "Niet goed, geld terug", "text": "<p>Komen we er samen niet uit? Dan geldt onze <a href=\"/pages/retourneren\">niet-goed-geld-terug garantie</a>. Jouw tevredenheid staat voorop.</p>" } },
+        "l1": { "type": "link", "settings": { "icon": "refresh", "label": "Retourneren", "url": "/pages/retourneren" } },
+        "l2": { "type": "link", "settings": { "icon": "chat", "label": "Veelgestelde vragen", "url": "/pages/veelgestelde-vragen" } },
+        "l3": { "type": "link", "settings": { "icon": "heart", "label": "Contact", "url": "/pages/contact" } }
       },
-      "block_order": [
-        "i1",
-        "i2",
-        "i3",
-        "i4"
-      ],
+      "block_order": ["qc1", "qc2", "s1", "s2", "s3", "s4", "l1", "l2", "l3"],
       "settings": {
         "eyebrow": "Klantenservice",
+        "eyebrow_icon": "chat",
         "title": "Klachten",
         "intro": "We willen dat jij en je hond blij zijn. Toch iets niet goed? Laat het ons weten.",
+        "side_icon": "chat",
+        "side_title": "We staan voor je klaar",
+        "side_text": "Een team van hondenliefhebbers dat écht helpt.",
+        "faq_title": "Veelgestelde vragen",
         "cta_title": "Liever direct contact?",
         "cta_text": "Ons team staat voor je klaar.",
         "cta_label": "Neem contact op",
-        "cta_url": "/pages/contact"
+        "cta_url": "/pages/contact",
+        "links_title": "Ook handig"
       }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }

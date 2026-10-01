@@ -1,73 +1,102 @@
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
-/*
- * ------------------------------------------------------------
- * IMPORTANT: auto-generated.
  * ------------------------------------------------------------
  */
 {
   "sections": {
     "main": {
-      "type": "info-page",
+      "type": "service-page",
       "blocks": {
-        "i1": {
-          "type": "item",
+        "qc1": {
+          "type": "quickcard",
+          "settings": {
+            "icon": "truck",
+            "color": "green",
+            "title": "Voor 16:00 besteld",
+            "text": "Zelfde werkdag op de post"
+          }
+        },
+        "qc2": {
+          "type": "quickcard",
+          "settings": {
+            "icon": "tag",
+            "color": "pink",
+            "title": "Gratis vanaf €50",
+            "text": "In Nederland en België"
+          }
+        },
+        "qc3": {
+          "type": "quickcard",
+          "settings": {
+            "icon": "package",
+            "color": "orange",
+            "title": "Track & trace",
+            "text": "Je ontvangt 'm per e-mail"
+          }
+        },
+        "s1": {
+          "type": "section",
           "settings": {
             "icon": "truck",
             "heading": "Levertijd",
             "text": "<p>Voor 16:00 besteld? Dan gaat je Kwispelbox dezelfde werkdag op de post. Levering binnen Nederland duurt daarna meestal 1 tot 2 werkdagen, naar België 2 tot 3 werkdagen.</p>"
           }
         },
-        "i2": {
-          "type": "item",
+        "s2": {
+          "type": "section",
           "settings": {
             "icon": "tag",
             "heading": "Verzendkosten",
             "text": "<p><strong>Gratis verzending vanaf €50.</strong> Bestel je voor minder, dan rekenen we €4,95 verzendkosten — in heel Nederland en België.</p>"
           }
         },
-        "i3": {
-          "type": "item",
+        "s3": {
+          "type": "section",
           "settings": {
             "icon": "package",
             "heading": "Bestelling volgen",
             "text": "<p>Zodra je box verzonden is, krijg je een track &amp; trace per e-mail. Zo weet je precies wanneer de verrassing op de mat valt.</p>"
           }
         },
-        "i4": {
-          "type": "item",
+        "s4": {
+          "type": "section",
           "settings": {
             "icon": "refresh",
             "heading": "Iets mis met je bestelling?",
             "text": "<p>Klopt er iets niet of is je box beschadigd aangekomen? Bekijk <a href=\"/pages/retourneren\">retourneren</a> of <a href=\"/pages/contact\">neem contact op</a> — we lossen het samen op.</p>"
           }
+        },
+        "l1": {
+          "type": "link",
+          "settings": { "icon": "refresh", "label": "Retourneren", "url": "/pages/retourneren" }
+        },
+        "l2": {
+          "type": "link",
+          "settings": { "icon": "chat", "label": "Veelgestelde vragen", "url": "/pages/veelgestelde-vragen" }
+        },
+        "l3": {
+          "type": "link",
+          "settings": { "icon": "heart", "label": "Contact", "url": "/pages/contact" }
         }
       },
-      "block_order": [
-        "i1",
-        "i2",
-        "i3",
-        "i4"
-      ],
+      "block_order": ["qc1", "qc2", "qc3", "s1", "s2", "s3", "s4", "l1", "l2", "l3"],
       "settings": {
         "eyebrow": "Bezorging",
+        "eyebrow_icon": "truck",
         "title": "Verzending & bezorging",
         "intro": "Alles over hoe en wanneer je Kwispelbox bij je hond aankomt.",
+        "side_icon": "package",
+        "side_title": "Met zorg ingepakt",
+        "side_text": "Elke box wordt met de hand samengesteld en stevig verpakt.",
+        "faq_title": "Veelgestelde vragen",
         "cta_title": "Vragen over je bezorging?",
-        "cta_text": "Ons team helpt je graag verder.",
+        "cta_text": "Ons team van hondenliefhebbers helpt je graag verder.",
         "cta_label": "Neem contact op",
-        "cta_url": "/pages/contact"
+        "cta_url": "/pages/contact",
+        "links_title": "Ook handig"
       }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }
