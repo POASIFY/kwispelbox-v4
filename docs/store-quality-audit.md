@@ -300,7 +300,10 @@ Alle live loyalty-copy die actieve functionaliteit suggereerde is naar **coming-
 
 **Resterende Kwispel-referenties = veilig:** allemaal coming-soon ("binnenkort/straks/komt eraan") of concept-benefits; de **newsletter "blijf op de hoogte"-form** op de Kwispelclub-pagina blijft (bestaande, toegestaan). De orphan `product.kwispelbox.json` bevat geen loyalty-claim (en wordt niet gerenderd).
 
-**Niet uitgevoerd (wacht op go):** Fase 3-cleanup (orphans/menu/collecties), claims-centralisatie, mg__wish-verwijdering, vendor-install (Smile/Rivo) én alle verdere Community-implementatie.
+## Fase 3C-0.1 — Non-functionele wishlist-UI verwijderd = **DONE** (01-10-2026)
+`mg__wish` hartknop op de "Meest gekozen"-kaarten (`featured-products.liquid`) was non-functioneel (geen JS/backend) → **markup + 3 CSS-regels verwijderd**. Kaartlayout intact (`mg__meta` space-between: prijs links, "Bekijk" rechts). Theme-brede re-grep: **geen `mg__wish`/`wishlist`/`verlanglijst`-hits meer** (header-link was al in F2-H weg). 0 nieuwe errors.
+
+**Niet uitgevoerd (wacht op go):** Fase 3-cleanup (orphans/menu/collecties), claims-centralisatie, vendor-install (Smile/Rivo) én alle verdere Community-implementatie.
 
 _Fase 3A = read-only: niets gebouwd/geïnstalleerd/gepubliceerd/gemuteerd._
 
