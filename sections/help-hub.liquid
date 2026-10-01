@@ -1,0 +1,198 @@
+{%- comment -%}
+  sections/help-hub.liquid — KB-v4 herbruikbare HELP-HUB family (namespace `hhb`).
+  Zones (vaste volgorde): hero → topic-cards (categorie-navigatie) → populaire vragen (native
+  details) → support-CTA → zelf-service links. Blocktypes: topic, faq, link.
+  Gebruikt voor Klantenservice-hub én de FAQ-pagina (zelfde familie).
+{%- endcomment -%}
+
+{%- assign topics = section.blocks | where: 'type', 'topic' -%}
+{%- assign faqs = section.blocks | where: 'type', 'faq' -%}
+{%- assign links = section.blocks | where: 'type', 'link' -%}
+
+<div class="hhb full-width">
+  <div class="hhb__inner">
+
+    <header class="hhb__hero">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="hhb__eyebrow"><span class="hhb__eyebrow-ic" aria-hidden="true">{%- render 'kb-icon', icon: 'chat' -%}</span>{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}<h1 class="hhb__title">{{ section.settings.title }}</h1>{%- endif -%}
+      {%- if section.settings.intro != blank -%}<p class="hhb__intro">{{ section.settings.intro }}</p>{%- endif -%}
+    </header>
+
+    {%- if topics.size > 0 -%}
+      <ul class="hhb__topics" role="list">
+        {%- for b in topics -%}
+          <li {{ b.shopify_attributes }}>
+            <a href="{{ b.settings.url | default: '#' }}" class="hhb-topic hhb-topic--{{ b.settings.color }}">
+              <span class="hhb-topic__ic" aria-hidden="true">{%- render 'kb-icon', icon: b.settings.icon -%}</span>
+              <span class="hhb-topic__title">{{ b.settings.title }}</span>
+              {%- if b.settings.text != blank -%}<span class="hhb-topic__text">{{ b.settings.text }}</span>{%- endif -%}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if faqs.size > 0 -%}
+      <div class="hhb__faq">
+        {%- if section.settings.faq_title != blank -%}<h2 class="hhb__faq-title">{{ section.settings.faq_title }}</h2>{%- endif -%}
+        {%- for b in faqs -%}
+          <details class="hhb-acc" {{ b.shopify_attributes }}>
+            <summary class="hhb-acc__head"><span class="hhb-acc__q">{{ b.settings.question }}</span><span class="hhb-acc__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+            <div class="hhb-acc__body">{{ b.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.cta_text != blank -%}
+      <div class="hhb__cta">
+        <span class="hhb__cta-ic" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
+        <div class="hhb__cta-body">
+          <strong>{{ section.settings.cta_title | default: 'Niet gevonden wat je zocht?' }}</strong>
+          <span>{{ section.settings.cta_text }}</span>
+        </div>
+        {%- if section.settings.cta_label != blank -%}<a href="{{ section.settings.cta_url | default: '/pages/contact' }}" class="hhb__cta-btn">{{ section.settings.cta_label }}</a>{%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if links.size > 0 -%}
+      <nav class="hhb__links" aria-label="Zelf regelen">
+        {%- if section.settings.links_title != blank -%}<span class="hhb__links-title">{{ section.settings.links_title }}</span>{%- endif -%}
+        <ul class="hhb__links-list" role="list">
+          {%- for b in links -%}
+            <li><a href="{{ b.settings.url | default: '#' }}" class="hhb__link">{%- if b.settings.icon != blank and b.settings.icon != 'none' -%}<span class="hhb__link-ic" aria-hidden="true">{%- render 'kb-icon', icon: b.settings.icon -%}</span>{%- endif -%}{{ b.settings.label }}<span class="hhb__link-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+.hhb { background: transparent; padding: var(--section-pad) 0; }
+.hhb__inner { max-width: 960px; margin: 0 auto; padding: 0 var(--page-margin); }
+
+/* Hero */
+.hhb__hero { position: relative; overflow: hidden; text-align: center; background: linear-gradient(135deg, #fff7ea 0%, #fdeef3 46%, #eef7e4 100%); border: 1px solid rgba(61,34,9,.07); border-radius: clamp(22px, 2.8vw, 30px); padding: clamp(28px, 4vw, 48px); box-shadow: 0 20px 48px rgba(61,34,9,.08); margin-bottom: clamp(22px, 3vw, 34px); }
+.hhb__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--color-green); margin-bottom: 12px; }
+.hhb__eyebrow-ic { display: inline-flex; color: var(--color-pink); }
+.hhb__eyebrow-ic svg { width: 16px; height: 16px; }
+.hhb__title { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.04; color: var(--color-ink); margin: 0 auto 10px; max-width: 18ch; }
+.hhb__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0 auto; max-width: 52ch; }
+
+/* Topic-cards */
+.hhb__topics { list-style: none; margin: 0 0 clamp(22px, 3vw, 32px); padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.hhb-topic { --c: var(--color-green); --c-soft: #eef7e8; display: flex; flex-direction: column; gap: 4px; height: 100%; background: #fff; border: 1px solid rgba(61,34,9,.06); border-radius: 16px; padding: 16px; text-decoration: none; box-shadow: 0 4px 14px rgba(61,34,9,.04); transition: transform 160ms, box-shadow 160ms, border-color 160ms; }
+.hhb-topic:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(61,34,9,.09); border-color: var(--c); }
+.hhb-topic--green  { --c: var(--color-green);  --c-soft: #eef7e8; }
+.hhb-topic--pink   { --c: var(--color-pink);   --c-soft: #fdeaf2; }
+.hhb-topic--orange { --c: var(--color-orange); --c-soft: #fdf0e2; }
+.hhb-topic--yellow { --c: #d99100;             --c-soft: #fdf6e0; }
+.hhb-topic__ic { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: var(--c-soft); color: var(--c); margin-bottom: 4px; }
+.hhb-topic__ic svg { width: 21px; height: 21px; }
+.hhb-topic__title { font-family: var(--font-heading); font-size: 1.04rem; color: var(--color-ink); line-height: 1.15; }
+.hhb-topic__text { font-family: var(--font-body); font-size: .84rem; line-height: 1.4; color: var(--color-body); }
+
+/* Populaire vragen */
+.hhb__faq { background: #fff; border: 1px solid rgba(61,34,9,.06); border-radius: 20px; box-shadow: 0 10px 28px rgba(61,34,9,.05); padding: 4px clamp(16px, 2.2vw, 26px); }
+.hhb__faq-title { font-family: var(--font-heading); font-size: 1.3rem; color: var(--color-ink); margin: 18px 2px 4px; }
+.hhb-acc { border-bottom: 1px solid var(--color-line); }
+.hhb-acc:last-child { border-bottom: none; }
+.hhb-acc__head { list-style: none; display: flex; align-items: center; gap: 12px; padding: 17px 2px; cursor: pointer; font-family: var(--font-heading); font-size: 1.06rem; color: var(--color-ink); }
+.hhb-acc__head::-webkit-details-marker { display: none; }
+.hhb-acc__q { flex: 1; min-width: 0; }
+.hhb-acc__chev { display: inline-flex; color: var(--color-muted); transition: transform 200ms; }
+.hhb-acc__chev svg { width: 18px; height: 18px; }
+.hhb-acc[open] .hhb-acc__chev { transform: rotate(180deg); }
+.hhb-acc__body { padding: 0 2px 18px; font-family: var(--font-body); font-size: .95rem; line-height: 1.65; color: var(--color-body); }
+.hhb-acc__body p { margin: 0 0 10px; }
+.hhb-acc__body :last-child { margin-bottom: 0; }
+.hhb-acc__body a { color: var(--color-green); font-weight: 700; }
+
+/* Support-CTA */
+.hhb__cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: clamp(22px, 3vw, 32px); background: linear-gradient(135deg, #fff3ea 0%, #ffe4ef 100%); border: 1px solid rgba(231,84,128,.12); border-radius: 24px; padding: clamp(20px, 2.6vw, 28px); box-shadow: 0 12px 30px rgba(231,84,128,.08); }
+.hhb__cta-ic { display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; background: #fff; color: var(--color-pink); flex-shrink: 0; box-shadow: 0 4px 12px rgba(231,84,128,.12); }
+.hhb__cta-ic svg { width: 24px; height: 24px; }
+.hhb__cta-body { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 180px; }
+.hhb__cta-body strong { font-family: var(--font-heading); font-size: 1.12rem; color: var(--color-ink); }
+.hhb__cta-body span { font-family: var(--font-body); font-size: .9rem; color: var(--color-body); }
+.hhb__cta-btn { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 24px; background: var(--color-green); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; text-decoration: none; transition: background 160ms, transform 160ms; }
+.hhb__cta-btn:hover { background: #5a9a3b; transform: translateY(-2px); }
+
+/* Zelf-service links */
+.hhb__links { margin-top: clamp(18px, 2.4vw, 26px); background: #fff; border: 1px solid rgba(61,34,9,.06); border-radius: 18px; box-shadow: 0 6px 18px rgba(61,34,9,.04); padding: 2px clamp(16px, 2vw, 22px); }
+.hhb__links-title { display: block; font-family: var(--font-body); font-size: .76rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: var(--color-muted); padding: 15px 2px 3px; }
+.hhb__links-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.hhb__link { display: flex; align-items: center; gap: 12px; padding: 14px 2px; border-top: 1px solid var(--color-line); font-family: var(--font-body); font-size: .96rem; font-weight: 700; color: var(--color-ink); text-decoration: none; transition: color 140ms; }
+.hhb__link:hover { color: var(--color-green); }
+.hhb__link-ic { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: #eef7e8; color: var(--color-green); flex-shrink: 0; }
+.hhb__link-ic svg { width: 17px; height: 17px; }
+.hhb__link-arrow { display: inline-flex; margin-left: auto; color: var(--color-muted); transition: transform 140ms; }
+.hhb__link:hover .hhb__link-arrow { transform: translateX(3px); color: var(--color-green); }
+.hhb__link-arrow svg { width: 16px; height: 16px; }
+
+@media (max-width: 989px) { .hhb__topics { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 749px) {
+  .hhb__topics { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .hhb-topic { padding: 13px; }
+  .hhb__cta-btn { flex: 1 0 100%; justify-content: center; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Help-hub",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Klantenservice" },
+    { "type": "text", "id": "title", "label": "Titel (H1)", "default": "Hoe kunnen we helpen?" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Kies een onderwerp of bekijk de meestgestelde vragen. Ons team van hondenliefhebbers staat voor je klaar." },
+    { "type": "header", "content": "Populaire vragen" },
+    { "type": "text", "id": "faq_title", "label": "Kop", "default": "Populaire vragen" },
+    { "type": "header", "content": "Support-CTA" },
+    { "type": "text", "id": "cta_title", "label": "Titel", "default": "Niet gevonden wat je zocht?" },
+    { "type": "text", "id": "cta_text", "label": "Tekst", "default": "Stuur ons een bericht — we helpen je graag persoonlijk verder." },
+    { "type": "text", "id": "cta_label", "label": "Knoptekst", "default": "Neem contact op" },
+    { "type": "url", "id": "cta_url", "label": "Knop link" },
+    { "type": "header", "content": "Zelf-service links" },
+    { "type": "text", "id": "links_title", "label": "Titel", "default": "Zelf regelen" }
+  ],
+  "blocks": [
+    {
+      "type": "topic",
+      "name": "Onderwerp-kaart",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icoon", "default": "tag", "options": [
+          { "value": "tag", "label": "Betalen" }, { "value": "truck", "label": "Verzending" }, { "value": "refresh", "label": "Retour" }, { "value": "package", "label": "Volgen" }, { "value": "shield", "label": "Klachten/garantie" }, { "value": "users", "label": "Account" }, { "value": "chat", "label": "FAQ/contact" }, { "value": "heart", "label": "Hart" }, { "value": "gift", "label": "Cadeau" }, { "value": "calendar", "label": "Wijzigen" } ]},
+        { "type": "select", "id": "color", "label": "Accent", "default": "green", "options": [ { "value": "green", "label": "Groen" }, { "value": "pink", "label": "Roze" }, { "value": "orange", "label": "Oranje" }, { "value": "yellow", "label": "Geel" } ]},
+        { "type": "text", "id": "title", "label": "Titel", "default": "Onderwerp" },
+        { "type": "text", "id": "text", "label": "Subline" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    },
+    {
+      "type": "faq",
+      "name": "Vraag",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Vraag", "default": "Veelgestelde vraag" },
+        { "type": "richtext", "id": "answer", "label": "Antwoord", "default": "<p>Antwoord.</p>" }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Zelf-service link",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icoon", "default": "package", "options": [
+          { "value": "none", "label": "Geen" }, { "value": "package", "label": "Volgen" }, { "value": "refresh", "label": "Retour" }, { "value": "calendar", "label": "Wijzigen" }, { "value": "users", "label": "Account" }, { "value": "truck", "label": "Verzending" }, { "value": "chat", "label": "Contact" } ]},
+        { "type": "text", "id": "label", "label": "Label", "default": "Bestelling volgen" },
+        { "type": "url", "id": "url", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Help-hub" } ]
+}
+{% endschema %}

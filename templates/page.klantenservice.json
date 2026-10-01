@@ -1,0 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "help-hub",
+      "blocks": {
+        "t1": { "type": "topic", "settings": { "icon": "tag", "color": "green", "title": "Bestellen & betalen", "text": "Betaalmethoden en bestellen", "url": "/pages/betaalmogelijkheden" } },
+        "t2": { "type": "topic", "settings": { "icon": "truck", "color": "pink", "title": "Verzending & bezorging", "text": "Levertijd en kosten", "url": "/pages/verzenden-en-bezorgen" } },
+        "t3": { "type": "topic", "settings": { "icon": "refresh", "color": "orange", "title": "Retourneren", "text": "Retour & geld terug", "url": "/pages/retourneren" } },
+        "t4": { "type": "topic", "settings": { "icon": "package", "color": "yellow", "title": "Bestelling volgen", "text": "Waar is mijn box?", "url": "/pages/bestelling-volgen" } },
+        "t5": { "type": "topic", "settings": { "icon": "calendar", "color": "green", "title": "Wijzigen of annuleren", "text": "Iets aanpassen", "url": "/pages/annuleren-of-wijzigen" } },
+        "t6": { "type": "topic", "settings": { "icon": "shield", "color": "pink", "title": "Klachten & garantie", "text": "We lossen het op", "url": "/pages/klachten" } },
+        "t7": { "type": "topic", "settings": { "icon": "users", "color": "orange", "title": "Mijn account", "text": "Bestellingen & gegevens", "url": "/account" } },
+        "t8": { "type": "topic", "settings": { "icon": "chat", "color": "yellow", "title": "Veelgestelde vragen", "text": "Snel een antwoord", "url": "/pages/veelgestelde-vragen" } },
+        "f1": { "type": "faq", "settings": { "question": "Wanneer wordt mijn box bezorgd?", "answer": "<p>Voor 16:00 besteld? Dan gaat je box dezelfde werkdag op de post. Levering duurt daarna meestal 1–2 werkdagen. Bekijk <a href=\"/pages/verzenden-en-bezorgen\">verzending &amp; bezorging</a> voor details.</p>" } },
+        "f2": { "type": "faq", "settings": { "question": "Hoe volg ik mijn bestelling?", "answer": "<p>Zodra je box verzonden is, ontvang je een track &amp; trace per e-mail. Meer hierover lees je bij <a href=\"/pages/bestelling-volgen\">bestelling volgen</a>.</p>" } },
+        "f3": { "type": "faq", "settings": { "question": "Wat als een product niet bevalt?", "answer": "<p>Niet blij? Bekijk <a href=\"/pages/retourneren\">retourneren</a> of <a href=\"/pages/contact\">neem contact op</a> — we lossen het samen op.</p>" } },
+        "l1": { "type": "link", "settings": { "icon": "package", "label": "Bestelling volgen", "url": "/pages/bestelling-volgen" } },
+        "l2": { "type": "link", "settings": { "icon": "refresh", "label": "Retour aanmelden", "url": "/pages/retour-aanmelden" } },
+        "l3": { "type": "link", "settings": { "icon": "users", "label": "Mijn account", "url": "/account" } }
+      },
+      "block_order": ["t1","t2","t3","t4","t5","t6","t7","t8","f1","f2","f3","l1","l2","l3"],
+      "settings": {
+        "eyebrow": "Klantenservice",
+        "title": "Hoe kunnen we helpen?",
+        "intro": "Kies een onderwerp of bekijk de meestgestelde vragen. Ons team van hondenliefhebbers staat voor je klaar.",
+        "faq_title": "Populaire vragen",
+        "cta_title": "Niet gevonden wat je zocht?",
+        "cta_text": "Stuur ons een bericht — we helpen je graag persoonlijk verder.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact",
+        "links_title": "Zelf regelen"
+      }
+    }
+  },
+  "order": ["main"]
+}

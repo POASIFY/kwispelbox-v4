@@ -1,102 +1,37 @@
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
-/*
- * ------------------------------------------------------------
- * IMPORTANT: auto-generated.
  * ------------------------------------------------------------
  */
 {
   "sections": {
-    "intro": {
-      "type": "page-intro",
-      "settings": {
-        "icon": "heart",
-        "eyebrow": "We helpen je graag",
-        "heading": "Veelgestelde vragen over Kwispelbox",
-        "intro": "<p>Alles wat je wilt weten over de Kwispelbox: hoe het werkt, wanneer je box wordt bezorgd, personaliseren, retourneren en de Kwispelclub. Staat je vraag er niet bij? <a href=\"/pages/contact\">Neem gerust contact op</a> — we denken graag met je mee.</p>"
-      }
-    },
     "main": {
-      "type": "product-faq",
+      "type": "help-hub",
       "blocks": {
-        "q1": {
-          "type": "faq",
-          "settings": {
-            "question": "Hoe werkt een Kwispelbox?",
-            "answer": "<p>Je kiest een box (Mini, Happy of Mega), vertelt iets over je hond, en wij stellen met liefde een verrassing samen vol speeltjes, snacks en knuffels.</p>"
-          }
-        },
-        "q2": {
-          "type": "faq",
-          "settings": {
-            "question": "Wanneer wordt mijn box bezorgd?",
-            "answer": "<p>Voor 16:00 besteld? Dan gaat je box dezelfde werkdag op de post. Levering duurt daarna meestal 1–2 werkdagen.</p>"
-          }
-        },
-        "q3": {
-          "type": "faq",
-          "settings": {
-            "question": "Kan ik de box personaliseren?",
-            "answer": "<p>Zeker! Op de productpagina kun je de naam van je hond, formaat, favoriete speeltjes en allergieën doorgeven, plus een persoonlijk berichtje.</p>"
-          }
-        },
-        "q4": {
-          "type": "faq",
-          "settings": {
-            "question": "Wat als een product niet bevalt?",
-            "answer": "<p>Niet blij? Je hebt 30 dagen niet-goed-geld-terug garantie. Neem contact op en we lossen het op.</p>"
-          }
-        },
-        "q5": {
-          "type": "faq",
-          "settings": {
-            "question": "Zijn de speeltjes en snacks veilig?",
-            "answer": "<p>Ja. We selecteren alleen stevige, geteste speeltjes en natuurlijke, gezonde snacks waar honden dol op zijn.</p>"
-          }
-        },
-        "q7": {
-          "type": "faq",
-          "settings": {
-            "question": "Wat is de Kwispelclub?",
-            "answer": "<p>De Kwispelclub is onze gratis club: spaar Kwispels, ontvang extra verrassingen en doe mee met leuke acties zoals \"Hond van de maand\".</p>"
-          }
-        },
-        "q8": {
-          "type": "faq",
-          "settings": {
-            "question": "Kan ik een box cadeau geven?",
-            "answer": "<p>Absoluut — een Kwispelbox is het perfecte cadeau voor een hond (of hun baasje). Voeg een persoonlijk kaartje toe in de winkelwagen.</p>"
-          }
-        }
+        "q1": { "type": "faq", "settings": { "question": "Hoe werkt een Kwispelbox?", "answer": "<p>Je kiest een box (Mini, Happy of Mega), vertelt iets over je hond, en wij stellen met liefde een verrassing samen vol speeltjes en lekkers.</p>" } },
+        "q2": { "type": "faq", "settings": { "question": "Wanneer wordt mijn box bezorgd?", "answer": "<p>Voor 16:00 besteld? Dan gaat je box dezelfde werkdag op de post. Levering duurt daarna meestal 1–2 werkdagen.</p>" } },
+        "q3": { "type": "faq", "settings": { "question": "Kan ik de box personaliseren?", "answer": "<p>Zeker! Op de productpagina kun je de naam van je hond, formaat, favoriete speeltjes en allergieën doorgeven, plus een persoonlijk kaartje.</p>" } },
+        "q4": { "type": "faq", "settings": { "question": "Wat als een product niet bevalt?", "answer": "<p>Niet blij? Je hebt 30 dagen niet-goed-geld-terug garantie. Neem contact op en we lossen het op.</p>" } },
+        "q5": { "type": "faq", "settings": { "question": "Zijn de speeltjes en snacks veilig?", "answer": "<p>Ja. We selecteren alleen stevige, geteste speeltjes en natuurlijke, gezonde snacks waar honden dol op zijn.</p>" } },
+        "q6": { "type": "faq", "settings": { "question": "Wat is de Kwispelclub?", "answer": "<p>De Kwispelclub is onze gratis club: spaar Kwispels, ontvang extra verrassingen en doe mee met leuke acties zoals \"Hond van de maand\".</p>" } },
+        "q7": { "type": "faq", "settings": { "question": "Kan ik een box cadeau geven?", "answer": "<p>Absoluut — een Kwispelbox is het perfecte cadeau voor een hond (of hun baasje). Voeg een persoonlijk kaartje toe in de winkelwagen.</p>" } },
+        "l1": { "type": "link", "settings": { "icon": "chat", "label": "Klantenservice", "url": "/pages/klantenservice" } },
+        "l2": { "type": "link", "settings": { "icon": "truck", "label": "Verzending & bezorging", "url": "/pages/verzenden-en-bezorgen" } },
+        "l3": { "type": "link", "settings": { "icon": "refresh", "label": "Retourneren", "url": "/pages/retourneren" } }
       },
-      "block_order": [
-        "q1",
-        "q2",
-        "q3",
-        "q4",
-        "q5",
-        "q7",
-        "q8"
-      ],
+      "block_order": ["q1","q2","q3","q4","q5","q6","q7","l1","l2","l3"],
       "settings": {
-        "title": "Vragen & antwoorden",
-        "contact_title": "Geen antwoord gevonden?",
-        "contact_text": "Ons team helpt je graag persoonlijk verder.",
-        "contact_cta_label": "Neem contact op",
-        "contact_cta_url": "/pages/contact",
-        "contact_email": "hallo@kwispelbox.com"
+        "eyebrow": "Veelgestelde vragen",
+        "title": "Antwoord op je vraag",
+        "intro": "De meestgestelde vragen over de Kwispelbox, bezorging, personalisatie en meer.",
+        "faq_title": "Alle vragen",
+        "cta_title": "Staat je vraag er niet bij?",
+        "cta_text": "Ons team helpt je graag persoonlijk verder.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact",
+        "links_title": "Ook handig"
       }
     }
   },
-  "order": [
-    "intro",
-    "main"
-  ]
+  "order": ["main"]
 }
