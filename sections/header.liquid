@@ -1353,7 +1353,6 @@
 @media(max-width:989px){
   .site-header__action-label{display:none;}
   .site-header__action--wish{display:none;}
-  .site-header__cart-pill{padding:0;width:46px;height:46px;justify-content:center;border-radius:50%;}
 }
 .site-header__icon-btn--cart:hover{border-color:var(--color-pink);}
 .site-header__icon-btn svg{width:22px;height:22px;}
@@ -1534,12 +1533,13 @@
   .site-header__action{color:var(--color-ink);}
   .site-header__action--search{display:inline-flex;}
   .site-header__action-icon svg{width:23px;height:23px;}
-  /* Winkelwagen: plat icoon met badge i.p.v. pill.
-     Expliciete on-brand kleur (niet de geërfde #fff → anders wit-op-wit onzichtbaar).
-     44×44 tap-target, icoon gecentreerd, badge rechtsboven zonder icoon af te dekken. */
-  .site-header__cart-pill{padding:0;width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:none;background:none;box-shadow:none;border-radius:0;color:#e75480;}
-  .site-header__cart-pill svg{width:24px;height:24px;}
-  .site-header__cart-pill .site-header__cart-count{top:1px;right:1px;min-width:18px;height:18px;font-size:.6rem;}
+  /* Winkelwagen = primaire actie: subtiele gevulde cirkel (zacht roze) met dark-pink
+     icoon → duidelijk zichtbaar en in balans naast de platte zoek/account-iconen,
+     valt niet weg tegen de lichte header. 44×44 tap-target, icoon gecentreerd. */
+  .site-header__cart-pill{padding:0;width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border:none;background:#ffe6f0;box-shadow:none;border-radius:50%;color:#e75480;}
+  .site-header__cart-pill svg{width:22px;height:22px;}
+  /* Teller op de cirkelrand, bruin met witte rand → leesbaar, dekt icoon niet af. */
+  .site-header__cart-pill .site-header__cart-count{top:-3px;right:-3px;min-width:18px;height:18px;font-size:.6rem;}
   .site-header__search-bar{grid-area:search;display:flex;max-width:none;margin:0;}
   .site-header__search-bar-field{height:50px;box-shadow:0 3px 12px rgba(61,34,9,.05);border-color:var(--color-line);padding:0 6px 0 18px;}
   .site-header__search-bar-icon svg{width:19px;height:19px;}
@@ -1638,8 +1638,11 @@
 .header-drawer__market-chev{position:absolute;right:12px;display:inline-flex;color:var(--color-muted);pointer-events:none;}
 .header-drawer__market-chev svg{width:16px;height:16px;}
 /* Statische indicator bij precies 1 actieve markt (geen dropdown-affordance) */
-.header-drawer__market-control--static{cursor:default;}
-.header-drawer__market-current{font-family:var(--font-body);font-size:.9rem;font-weight:700;color:var(--color-ink);}
+/* Eén-markt indicator: compacte, verfijnde chip (hugt de inhoud) i.p.v. een lompe
+   volle balk. Zachte witte pill, subtiele border + lichte schaduw, globe in merkgroen. */
+.header-drawer__market-control--static{cursor:default;display:inline-flex;width:auto;height:36px;gap:9px;padding:0 14px 0 12px;background:#fff;border:1px solid rgba(61,34,9,.08);box-shadow:0 2px 8px rgba(61,34,9,.04);}
+.header-drawer__market-control--static .header-drawer__market-icon{color:var(--color-green);}
+.header-drawer__market-current{font-family:var(--font-body);font-size:.88rem;font-weight:700;color:var(--color-ink);letter-spacing:.005em;}
 
 /* Subtiele merkregel (duidelijk secundair; categorieën blijven dominant) */
 .header-drawer__tagline{display:flex;align-items:center;gap:6px;margin:0 16px 4px;padding:0 2px;font-family:var(--font-body);font-size:.76rem;font-weight:500;color:rgba(61,34,9,.42);flex-shrink:0;}
