@@ -13,7 +13,7 @@
         "q3": { "type": "faq", "settings": { "question": "Kan ik de box personaliseren?", "answer": "<p>Zeker! Op de productpagina kun je de naam van je hond, formaat, favoriete speeltjes en allergieën doorgeven, plus een persoonlijk kaartje.</p>" } },
         "q4": { "type": "faq", "settings": { "question": "Wat als een product niet bevalt?", "answer": "<p>Niet blij? Je hebt 30 dagen niet-goed-geld-terug garantie. Neem contact op en we lossen het op.</p>" } },
         "q5": { "type": "faq", "settings": { "question": "Zijn de speeltjes en snacks veilig?", "answer": "<p>Ja. We selecteren alleen stevige, geteste speeltjes en natuurlijke, gezonde snacks waar honden dol op zijn.</p>" } },
-        "q6": { "type": "faq", "settings": { "question": "Wat is de Kwispelclub?", "answer": "<p>De Kwispelclub is onze gratis club: spaar Kwispels, ontvang extra verrassingen en doe mee met leuke acties zoals \"Hond van de maand\".</p>" } },
+        "q6": { "type": "faq", "settings": { "question": "Wat is de Kwispelclub?", "answer": "<p>De Kwispelclub lanceert binnenkort. Straks kun je als lid sparen voor leuke extra's. Hou onze pagina in de gaten!</p>" } },
         "q7": { "type": "faq", "settings": { "question": "Kan ik een box cadeau geven?", "answer": "<p>Absoluut — een Kwispelbox is het perfecte cadeau voor een hond (of hun baasje). Voeg een persoonlijk kaartje toe in de winkelwagen.</p>" } },
         "l1": { "type": "link", "settings": { "icon": "chat", "label": "Klantenservice", "url": "/pages/klantenservice" } },
         "l2": { "type": "link", "settings": { "icon": "truck", "label": "Verzending & bezorging", "url": "/pages/verzenden-en-bezorgen" } },

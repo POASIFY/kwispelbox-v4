@@ -1,10 +1,6 @@
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
 {
@@ -26,8 +22,8 @@
           "settings": {
             "icon": "coins",
             "color": "yellow",
-            "title": "Spaar Kwispels",
-            "text": "Verzamel Kwispels en wissel ze in voor leuke beloningen."
+            "title": "Binnenkort: Kwispels sparen",
+            "text": "Straks spaar je als lid Kwispels voor leuke beloningen."
           }
         },
         "b3": {
@@ -36,7 +32,7 @@
             "icon": "camera",
             "color": "orange",
             "title": "Hond van de maand",
-            "text": "Stuur jouw foto in en maak kans op de spotlight."
+            "text": "Binnenkort maak je kans op de spotlight."
           }
         },
         "b4": {
@@ -53,8 +49,8 @@
           "settings": {
             "icon": "user-round",
             "color": "green",
-            "title": "Word gratis lid",
-            "text": "Meld je in een paar seconden gratis aan."
+            "title": "Word straks gratis lid",
+            "text": "Straks meld je je in een paar seconden gratis aan."
           }
         },
         "s2": {
@@ -62,8 +58,8 @@
           "settings": {
             "icon": "coins",
             "color": "yellow",
-            "title": "Verzamel Kwispels",
-            "text": "Spaar bij aankopen, reviews en acties."
+            "title": "Binnenkort sparen",
+            "text": "Straks verdien je Kwispels bij aankopen en acties."
           }
         },
         "s3": {
@@ -71,8 +67,8 @@
           "settings": {
             "icon": "gift",
             "color": "orange",
-            "title": "Wissel in voor beloningen",
-            "text": "Ruil je Kwispels in voor leuke cadeautjes."
+            "title": "Leuke beloningen",
+            "text": "Straks ruil je je Kwispels in voor cadeautjes."
           }
         },
         "s4": {
@@ -126,29 +122,29 @@
         "m4"
       ],
       "settings": {
-        "hero_eyebrow": "Word lid van de",
-        "hero_title": "Kwispelclub",
-        "hero_text": "Als lid ontvang je exclusieve voordelen, verrassingen en leuke momenten voor jouw hond. Want samen uitpakken is het leukst — helemaal gratis.",
-        "hero_primary_label": "Word gratis lid",
+        "hero_eyebrow": "Binnenkort",
+        "hero_title": "De Kwispelclub komt eraan",
+        "hero_text": "Binnenkort kun je als lid van de Kwispelclub sparen en profiteren van leuke extra's voor jouw hond. Hou deze pagina in de gaten!",
+        "hero_primary_label": "",
         "hero_primary_url": "",
-        "hero_secondary_label": "Inloggen",
+        "hero_secondary_label": "",
         "hero_secondary_url": "",
-        "hero_members_text": "Word lid van de Kwispelclub",
+        "hero_members_text": "",
         "hero_image": "shopify://shop_images/ChatGPT_Image_11_jun_2026_20_21_09.png",
-        "show_badge": true,
-        "hero_badge_text": "Welkom Luna! Fijn dat je erbij bent!",
+        "show_badge": false,
+        "hero_badge_text": "Binnenkort",
         "show_decorations": true,
-        "benefits_title": "Dit krijg je als Kwispelclub lid",
-        "spotlight_title": "Maak kans op Kwispelaar van de maand",
+        "benefits_title": "Dit kun je binnenkort verwachten",
+        "spotlight_title": "Binnenkort: Kwispelaar van de maand",
         "spotlight_image": "shopify://shop_images/ChatGPT_Image_11_jun_2026_10_08_40.png",
-        "spotlight_name": "Luna",
-        "spotlight_label": "Kwispelaar van de maand",
-        "spotlight_text": "Elke maand zetten we één bijzondere kwispelaar in de spotlight. Stuur een foto van jouw hond in en maak kans op een plekje hier — plus een leuke verrassing!",
-        "spotlight_cta_label": "Stuur jouw hond in",
+        "spotlight_name": "",
+        "spotlight_label": "Binnenkort",
+        "spotlight_text": "Straks zetten we elke maand een bijzondere kwispelaar in de spotlight. Hou deze pagina in de gaten!",
+        "spotlight_cta_label": "",
         "spotlight_cta_url": "",
         "steps_title": "Zo werkt het",
         "news_title": "Mis geen enkele verrassing!",
-        "news_text": "Als clublid hoor jij als eerste van nieuwe boxen, acties en exclusieve verrassingen. Meld je aan en blijf op de hoogte!",
+        "news_text": "Meld je aan en hoor als eerste wanneer de Kwispelclub live gaat.",
         "news_placeholder": "Jouw e-mailadres",
         "news_button_label": "Aanmelden"
       }

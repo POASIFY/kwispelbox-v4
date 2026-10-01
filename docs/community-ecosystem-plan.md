@@ -487,7 +487,9 @@ Richtlijn: stuur op **effective_reward_%** binnen een door jullie gekozen marge-
 | `sections/main-product-kwispelbox.liquid` | Kwispels op PDP | punten per aankoop | **VERIFY + HIDE** | verbergen tot engine |
 | `templates/page.faq.json` | "Kwispelclub: spaar Kwispels…" | werkend programma | **REWRITE COMING SOON** | "De Kwispelclub lanceert binnenkort…" |
 
-**Classificatie-legenda:** HIDE (verbergen) · COMING SOON (herschrijven, geen actieve belofte) · SAFE (mag blijven) · ACTIVATE WITH ENGINE (pas tonen als engine live). Uitvoering = **3C-0** (eigen batch, niet nu).
+**Classificatie-legenda:** HIDE (verbergen) · COMING SOON (herschrijven, geen actieve belofte) · SAFE (mag blijven) · ACTIVATE WITH ENGINE (pas tonen als engine live).
+
+> **✅ 3C-0 UITGEVOERD (01-10-2026):** alle bovenstaande actieve loyalty-copy is naar **coming-soon** gezet (geen engine). Theme-breed geverifieerd: geen actieve earning/reward-claims meer. Detail-tabel in `store-quality-audit.md` (Fase 3C-0). PDP/cart/GWP ongemoeid. Reversibel via git (commit-log).
 
 ## 3B.12 Build backlog (toekomst, na vendor-go)
 

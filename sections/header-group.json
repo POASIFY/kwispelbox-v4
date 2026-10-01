@@ -51,10 +51,10 @@
             "club_intro_text": "",
             "club_check_1": "Gratis lidmaatschap",
             "club_check_2": "Exclusieve kortingen",
-            "club_check_3": "Sparen voor beloningen",
+            "club_check_3": "Binnenkort meer",
             "club_check_4": "Verrassingen & acties",
             "club_check_5": "Hond van de maand",
-            "club_rewards_title": "Spaar Kwispels!",
+            "club_rewards_title": "De Kwispelclub komt eraan",
             "club_motm_title": "Hond van de maand",
             "club_motm_name": "",
             "club_motm_quote": "",
@@ -63,8 +63,8 @@
             "club_intro_highlight": "Kwispelclub",
             "club_intro_note": "Het is zo geregeld!",
             "campaign_title": "Extra verrassing voor nieuwe leden!",
-            "campaign_text": "Meld je vandaag aan en ontvang 50 Kwispels cadeau. Dat is goed voor een leuke beloning!",
-            "campaign_highlight": "50 Kwispels cadeau",
+            "campaign_text": "Binnenkort kun je als lid sparen en profiteren van leuke extra's.",
+            "campaign_highlight": "Binnenkort meer",
             "campaign_cta_label": "Meld je gratis aan",
             "campaign_cta_url": "",
             "about_tagline": "Samen maken we honden blij!",
@@ -125,10 +125,10 @@
             "club_intro_text": "",
             "club_check_1": "Gratis lidmaatschap",
             "club_check_2": "Exclusieve kortingen",
-            "club_check_3": "Sparen voor beloningen",
+            "club_check_3": "Binnenkort meer",
             "club_check_4": "Verrassingen & acties",
             "club_check_5": "Hond van de maand",
-            "club_rewards_title": "Spaar Kwispels!",
+            "club_rewards_title": "De Kwispelclub komt eraan",
             "club_motm_title": "Hond van de maand",
             "club_motm_name": "",
             "club_motm_quote": "",
@@ -137,8 +137,8 @@
             "club_intro_highlight": "Kwispelclub",
             "club_intro_note": "Het is zo geregeld!",
             "campaign_title": "Extra verrassing voor nieuwe leden!",
-            "campaign_text": "Meld je vandaag aan en ontvang 50 Kwispels cadeau. Dat is goed voor een leuke beloning!",
-            "campaign_highlight": "50 Kwispels cadeau",
+            "campaign_text": "Binnenkort kun je als lid sparen en profiteren van leuke extra's.",
+            "campaign_highlight": "Binnenkort meer",
             "campaign_cta_label": "Meld je gratis aan",
             "campaign_cta_url": "",
             "about_tagline": "Samen maken we honden blij!",
@@ -337,10 +337,10 @@
             "club_intro_text": "",
             "club_check_1": "Gratis lidmaatschap",
             "club_check_2": "Exclusieve kortingen",
-            "club_check_3": "Sparen voor beloningen",
+            "club_check_3": "Binnenkort meer",
             "club_check_4": "Verrassingen & acties",
             "club_check_5": "Hond van de maand",
-            "club_rewards_title": "Spaar Kwispels!",
+            "club_rewards_title": "De Kwispelclub komt eraan",
             "club_motm_title": "Hond van de maand",
             "club_motm_name": "",
             "club_motm_quote": "",
@@ -349,8 +349,8 @@
             "club_intro_highlight": "Kwispelclub",
             "club_intro_note": "Het is zo geregeld!",
             "campaign_title": "Extra verrassing voor nieuwe leden!",
-            "campaign_text": "Meld je vandaag aan en ontvang 50 Kwispels cadeau. Dat is goed voor een leuke beloning!",
-            "campaign_highlight": "50 Kwispels cadeau",
+            "campaign_text": "Binnenkort kun je als lid sparen en profiteren van leuke extra's.",
+            "campaign_highlight": "Binnenkort meer",
             "campaign_cta_label": "Meld je gratis aan",
             "campaign_cta_url": "",
             "about_tagline": "Samen maken we honden blij!",
@@ -469,7 +469,7 @@
             "col1_desc": "",
             "links_heading": "Zo werkt het",
             "link_list": "",
-            "view_all_label": "Bekijk alle beloningen",
+            "view_all_label": "Lees meer",
             "view_all_url": "/pages/kwispelclub",
             "banner_badge": "",
             "banner_title": "Ontdek onze boxen",
@@ -480,11 +480,11 @@
             "club_intro_text": "Meer plezier, meer voordelen voor jou en je hond.",
             "club_check_1": "Gratis lidmaatschap",
             "club_check_2": "Exclusieve kortingen",
-            "club_check_3": "Sparen voor beloningen",
+            "club_check_3": "Binnenkort meer",
             "club_check_4": "Verrassingen & acties",
             "club_check_5": "Hond van de maand",
             "club_intro_image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_17_56_23.png",
-            "club_rewards_title": "Spaar Kwispels en kies je beloning!",
+            "club_rewards_title": "De Kwispelclub komt eraan",
             "club_motm_title": "Hond van de maand",
             "club_motm_name": "Luna ♡",
             "club_motm_quote": "Luna is dol op haar Kwispelbox! Vooral het nieuwe speeltje is favoriet.",
@@ -493,8 +493,8 @@
             "club_intro_highlight": "Kwispelclub",
             "club_intro_note": "Het is zo geregeld!",
             "campaign_title": "Extra verrassing voor nieuwe leden!",
-            "campaign_text": "Meld je vandaag aan en ontvang 50 Kwispels cadeau. Dat is goed voor een leuke beloning!",
-            "campaign_highlight": "50 Kwispels cadeau",
+            "campaign_text": "Binnenkort kun je als lid sparen en profiteren van leuke extra's.",
+            "campaign_highlight": "Binnenkort meer",
             "campaign_cta_label": "Meld je gratis aan",
             "campaign_cta_url": "/pages/kwispelclub",
             "about_tagline": "Samen maken we honden blij!",
@@ -525,7 +525,7 @@
           "type": "club_benefit",
           "settings": {
             "menu_item_index": 4,
-            "text": "Sparen voor leuke beloningen"
+            "text": "Binnenkort meer"
           }
         },
         "cb4": {
@@ -559,8 +559,8 @@
             "menu_item_index": 4,
             "icon": "coins",
             "color": "yellow",
-            "title": "Kwispels sparen",
-            "description": "Spaar Kwispels bij elke bestelling en wissel ze in voor leuke beloningen",
+            "title": "Binnenkort sparen",
+            "description": "De Kwispelclub lanceert binnenkort",
             "url": "/pages/kwispelclub#zo-werkt-het"
           }
         },
@@ -612,28 +612,28 @@
           "type": "club_reward",
           "settings": {
             "menu_item_index": 4,
-            "points": "200 Kwispels"
+            "points": "Binnenkort"
           }
         },
         "crw2": {
           "type": "club_reward",
           "settings": {
             "menu_item_index": 4,
-            "points": "400 Kwispels"
+            "points": "Binnenkort"
           }
         },
         "crw3": {
           "type": "club_reward",
           "settings": {
             "menu_item_index": 4,
-            "points": "600 Kwispels"
+            "points": "Binnenkort"
           }
         },
         "crw4": {
           "type": "club_reward",
           "settings": {
             "menu_item_index": 4,
-            "points": "1000 Kwispels"
+            "points": "Binnenkort"
           }
         },
         "cu1": {
@@ -692,10 +692,10 @@
             "club_intro_text": "",
             "club_check_1": "Gratis lidmaatschap",
             "club_check_2": "Exclusieve kortingen",
-            "club_check_3": "Sparen voor beloningen",
+            "club_check_3": "Binnenkort meer",
             "club_check_4": "Verrassingen & acties",
             "club_check_5": "Hond van de maand",
-            "club_rewards_title": "Spaar Kwispels!",
+            "club_rewards_title": "De Kwispelclub komt eraan",
             "club_motm_title": "Hond van de maand",
             "club_motm_name": "",
             "club_motm_quote": "",
@@ -704,8 +704,8 @@
             "club_intro_highlight": "Kwispelclub",
             "club_intro_note": "Het is zo geregeld!",
             "campaign_title": "Extra verrassing voor nieuwe leden!",
-            "campaign_text": "Meld je vandaag aan en ontvang 50 Kwispels cadeau. Dat is goed voor een leuke beloning!",
-            "campaign_highlight": "50 Kwispels cadeau",
+            "campaign_text": "Binnenkort kun je als lid sparen en profiteren van leuke extra's.",
+            "campaign_highlight": "Binnenkort meer",
             "campaign_cta_label": "Meld je gratis aan",
             "campaign_cta_url": "",
             "about_tagline": "Samen maken we honden blij!",
@@ -1001,7 +1001,7 @@
         "nav_chip_url": "",
         "drawer_stat_text": "Met liefde samengesteld in Nederland",
         "drawer_banner_title": "Lid van de Kwispelclub?",
-        "drawer_banner_text": "Spaar Kwispels en ontvang leuke beloningen & verrassingen!",
+        "drawer_banner_text": "De Kwispelclub komt eraan — binnenkort meer!",
         "drawer_banner_cta": "Word gratis lid",
         "drawer_banner_url": "/pages/kwispelclub",
         "drawer_banner_image": "shopify://shop_images/ChatGPT_Image_10_jun_2026_17_56_23.png"

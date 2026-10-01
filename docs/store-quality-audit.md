@@ -285,7 +285,22 @@ Volledig architectuur-/UX-/designplan in **`docs/community-ecosystem-plan.md`** 
 
 **⚠️ Pre-live copy-risico (nieuw, zie plan §21):** bestaande "Spaar Kwispels"/tier-copy suggereert niet-bestaande functionaliteit → HIDE/COMING-SOON of engine live maken vóór publicatie.
 
-**Niet uitgevoerd (wacht op go):** Fase 3-cleanup (orphans/menu/collecties), claims-centralisatie, mg__wish-verwijdering, én alle Community-implementatie.
+## Fase 3C-0 — Pre-live loyalty copy safety = **DONE** (01-10-2026)
+Alle live loyalty-copy die actieve functionaliteit suggereerde is naar **coming-soon** gezet (geen engine gebouwd). Theme-breed geverifieerd: **geen actieve earning/reward-claims meer** (alleen "binnenkort/straks/komt eraan"). PDP/cart/GWP ongemoeid (die bevatten geen loyalty-claim — "Bespaar" = compare-at, "Beloningsladder" = gratis-verzending/GWP).
+
+| Locatie | Oude copy | Nieuwe copy | Status |
+|---|---|---|---|
+| `header-group.json` (mega-menu + drawer) | "Spaar Kwispels!" / "…50 Kwispels cadeau…" / "Spaar Kwispels en ontvang leuke beloningen…" | "De Kwispelclub komt eraan" / "Binnenkort kun je als lid sparen…" / "De Kwispelclub komt eraan — binnenkort meer!" | DONE |
+| `header-group.json` (reward-tiers) | "200/400/600/1000 Kwispels", "Bekijk alle beloningen" | "Binnenkort" / "Lees meer" | DONE |
+| `page.kwispelclub.json` (hero) | "Word lid… / Word gratis lid / Inloggen / Welkom Luna!" | eyebrow "Binnenkort", titel "De Kwispelclub komt eraan", CTA's verborgen, fake-welkom-badge uit | DONE |
+| `page.kwispelclub.json` (benefits/steps) | "Spaar Kwispels", "Verzamel Kwispels", "Wissel in voor beloningen", "Spaar bij aankopen, reviews en acties" | "Binnenkort: Kwispels sparen" + "straks…"-formuleringen | DONE |
+| `page.kwispelclub.json` (spotlight) | "Maak kans op Kwispelaar vd maand" + winnaar "Luna" + "Stuur jouw hond in" | "Binnenkort: Kwispelaar van de maand", naam leeg, submit-CTA verborgen | DONE |
+| `page.faq.json` (q6) | "De Kwispelclub is onze gratis club: spaar Kwispels…" | "De Kwispelclub lanceert binnenkort. Straks kun je als lid sparen…" | DONE |
+| schema-defaults (`header.liquid`, `kwispelclub-page.liquid`) | idem loyalty-claims | coming-soon (future-proof) | DONE |
+
+**Resterende Kwispel-referenties = veilig:** allemaal coming-soon ("binnenkort/straks/komt eraan") of concept-benefits; de **newsletter "blijf op de hoogte"-form** op de Kwispelclub-pagina blijft (bestaande, toegestaan). De orphan `product.kwispelbox.json` bevat geen loyalty-claim (en wordt niet gerenderd).
+
+**Niet uitgevoerd (wacht op go):** Fase 3-cleanup (orphans/menu/collecties), claims-centralisatie, mg__wish-verwijdering, vendor-install (Smile/Rivo) én alle verdere Community-implementatie.
 
 _Fase 3A = read-only: niets gebouwd/geïnstalleerd/gepubliceerd/gemuteerd._
 
