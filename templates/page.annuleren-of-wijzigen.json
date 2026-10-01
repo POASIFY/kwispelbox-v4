@@ -1,0 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "service-page",
+      "blocks": {
+        "qc1": { "type": "quickcard", "settings": { "icon": "chat", "color": "green", "title": "Contact eerst", "text": "Zo snel mogelijk na bestellen" } },
+        "qc2": { "type": "quickcard", "settings": { "icon": "calendar", "color": "pink", "title": "Hoe eerder, hoe beter", "text": "Voor de box verzonden is" } },
+        "s1": { "type": "section", "settings": { "icon": "chat", "heading": "Iets wijzigen of annuleren", "text": "<p>Wil je je bestelling aanpassen of annuleren? Neem dan <a href=\"/pages/contact\">zo snel mogelijk contact op</a> met je bestelnummer. Dan kijken we samen wat nog mogelijk is.</p>" } },
+        "s2": { "type": "section", "settings": { "icon": "package", "heading": "Al verzonden?", "text": "<p>Is je box al onderweg? Dan kun je gebruikmaken van je herroepingsrecht. Bekijk <a href=\"/pages/retourneren\">retourneren</a> voor de werkwijze.</p>" } },
+        "l1": { "type": "link", "settings": { "icon": "package", "label": "Bestelling volgen", "url": "/pages/bestelling-volgen" } },
+        "l2": { "type": "link", "settings": { "icon": "refresh", "label": "Retourneren", "url": "/pages/retourneren" } },
+        "l3": { "type": "link", "settings": { "icon": "heart", "label": "Contact", "url": "/pages/contact" } }
+      },
+      "block_order": ["qc1", "qc2", "s1", "s2", "l1", "l2", "l3"],
+      "settings": {
+        "eyebrow": "Wijzigen of annuleren",
+        "eyebrow_icon": "chat",
+        "title": "Bestelling wijzigen of annuleren",
+        "intro": "Verandering van plan? Laat het ons snel weten, dan doen we ons best.",
+        "side_icon": "chat",
+        "side_title": "Even snel schakelen",
+        "side_text": "Hoe eerder je het doorgeeft, hoe meer we kunnen betekenen.",
+        "faq_title": "Veelgestelde vragen",
+        "cta_title": "Doorgeven maar",
+        "cta_text": "Houd je bestelnummer bij de hand, dan pakken we het snel op.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact",
+        "links_title": "Ook handig"
+      }
+    }
+  },
+  "order": ["main"]
+}

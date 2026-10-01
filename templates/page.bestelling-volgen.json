@@ -1,0 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "service-page",
+      "blocks": {
+        "qc1": { "type": "quickcard", "settings": { "icon": "package", "color": "green", "title": "Track & trace", "text": "Per e-mail na verzending" } },
+        "qc2": { "type": "quickcard", "settings": { "icon": "users", "color": "pink", "title": "In je account", "text": "Bekijk je bestellingen" } },
+        "qc3": { "type": "quickcard", "settings": { "icon": "chat", "color": "orange", "title": "Hulp nodig?", "text": "We zoeken 't voor je uit" } },
+        "s1": { "type": "section", "settings": { "icon": "package", "heading": "Track & trace per e-mail", "text": "<p>Zodra je box verzonden is, ontvang je een track &amp; trace per e-mail. Zo weet je precies wanneer de verrassing op de mat valt. Controleer ook je spam- of reclamemap als je niets ziet.</p>" } },
+        "s2": { "type": "section", "settings": { "icon": "users", "heading": "Via je account", "text": "<p>Heb je een account? Dan vind je je bestellingen terug onder <a href=\"/account\">mijn account</a>.</p>" } },
+        "s3": { "type": "section", "settings": { "icon": "chat", "heading": "Nog niets ontvangen?", "text": "<p>Is je bestelling er langer onderweg dan verwacht? <a href=\"/pages/contact\">Neem contact op</a> met je bestelnummer, dan zoeken we het samen uit.</p>" } },
+        "l1": { "type": "link", "settings": { "icon": "truck", "label": "Verzending & bezorging", "url": "/pages/verzenden-en-bezorgen" } },
+        "l2": { "type": "link", "settings": { "icon": "refresh", "label": "Retourneren", "url": "/pages/retourneren" } },
+        "l3": { "type": "link", "settings": { "icon": "heart", "label": "Contact", "url": "/pages/contact" } }
+      },
+      "block_order": ["qc1", "qc2", "qc3", "s1", "s2", "s3", "l1", "l2", "l3"],
+      "settings": {
+        "eyebrow": "Bestelling volgen",
+        "eyebrow_icon": "package",
+        "title": "Waar is mijn box?",
+        "intro": "Zo houd je je bestelling in de gaten, van verzending tot op de mat.",
+        "side_icon": "package",
+        "side_title": "Onderweg naar je hond",
+        "side_text": "Je ontvangt een track & trace zodra de box is verzonden.",
+        "faq_title": "Veelgestelde vragen",
+        "cta_title": "Vraag over je bestelling?",
+        "cta_text": "Houd je bestelnummer bij de hand, dan helpen we je snel.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact",
+        "links_title": "Ook handig"
+      }
+    }
+  },
+  "order": ["main"]
+}

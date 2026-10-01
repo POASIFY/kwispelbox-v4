@@ -1,0 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "service-page",
+      "blocks": {
+        "qc1": { "type": "quickcard", "settings": { "icon": "calendar", "color": "green", "title": "30 dagen", "text": "Bedenktijd vanaf ontvangst" } },
+        "qc2": { "type": "quickcard", "settings": { "icon": "chat", "color": "pink", "title": "Mail ons", "text": "Met je bestelnummer" } },
+        "qc3": { "type": "quickcard", "settings": { "icon": "refresh", "color": "orange", "title": "Terugbetaling", "text": "Binnen 14 dagen na ontvangst" } },
+        "s1": { "type": "section", "settings": { "icon": "chat", "heading": "Zo meld je een retour aan", "text": "<p>Mail naar <a href=\"/pages/contact\">onze klantenservice</a> met je bestelnummer en wat je wilt retourneren. Wij sturen je de retourinstructies.</p>" } },
+        "s2": { "type": "section", "settings": { "icon": "refresh", "heading": "Wat gebeurt er daarna?", "text": "<p>Je ontvangt de retourinstructies per e-mail. Na ontvangst van je retour betalen we binnen 14 dagen het aankoopbedrag terug via dezelfde betaalmethode.</p>" } },
+        "s3": { "type": "section", "settings": { "icon": "shield", "heading": "Goed om te weten", "text": "<p>Geopende snacks kunnen om hygiënische redenen niet retour. Is je box beschadigd aangekomen? Dan vinden we altijd een oplossing — neem contact op.</p>" } },
+        "l1": { "type": "link", "settings": { "icon": "refresh", "label": "Retourvoorwaarden", "url": "/pages/retourneren" } },
+        "l2": { "type": "link", "settings": { "icon": "shield", "label": "Klachten & garantie", "url": "/pages/klachten" } },
+        "l3": { "type": "link", "settings": { "icon": "heart", "label": "Contact", "url": "/pages/contact" } }
+      },
+      "block_order": ["qc1", "qc2", "qc3", "s1", "s2", "s3", "l1", "l2", "l3"],
+      "settings": {
+        "eyebrow": "Retour aanmelden",
+        "eyebrow_icon": "refresh",
+        "title": "Een retour aanmelden",
+        "intro": "In een paar stappen geregeld — we helpen je graag.",
+        "side_icon": "refresh",
+        "side_title": "Simpel per mail",
+        "side_text": "Eén bericht met je bestelnummer en wij regelen de rest.",
+        "faq_title": "Veelgestelde vragen",
+        "cta_title": "Hulp nodig bij je retour?",
+        "cta_text": "Mail ons je bestelnummer, dan pakken we het snel op.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact",
+        "links_title": "Ook handig"
+      }
+    }
+  },
+  "order": ["main"]
+}
