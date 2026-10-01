@@ -1,0 +1,260 @@
+{%- comment -%}
+  snippets/ce-block.liquid — renders één Family E-blok (zie sections/community-ecosystem-page.liquid).
+  Vereist: `block`. Elke case geeft één compleet, gebalanceerd element terug; grid-wrappers worden
+  door de sectie zelf geplaatst (run-grouping), zodat de HTML statisch gebalanceerd blijft.
+{%- endcomment -%}
+{%- assign ac = block.settings.accent | default: 'green' -%}
+{%- case block.type -%}
+
+  {%- when 'hero' -%}
+    {%- assign has_img = false -%}
+    {%- if block.settings.image != blank -%}{%- assign has_img = true -%}{%- endif -%}
+    <header class="ce-hero{% if block.settings.align == 'split' and has_img %} ce-hero--split{% else %} ce-hero--center{% endif %}" data-accent="{{ ac }}" {{ block.shopify_attributes }}>
+      <div class="ce-hero__text">
+        {%- if block.settings.eyebrow != blank -%}
+          <span class="ce-eyebrow"><span class="ce-eyebrow__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.eyebrow_icon -%}</span>{{ block.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if block.settings.title != blank -%}<h1 class="ce-hero__title">{{ block.settings.title }}</h1>{%- endif -%}
+        {%- if block.settings.intro != blank -%}<p class="ce-hero__intro">{{ block.settings.intro }}</p>{%- endif -%}
+        {%- if block.settings.primary_label != blank or block.settings.secondary_label != blank -%}
+          <div class="ce-hero__actions">
+            {%- if block.settings.primary_label != blank -%}
+              <a href="{{ block.settings.primary_url | default: '#' }}" class="ce-btn ce-btn--solid">{{ block.settings.primary_label }}<span class="ce-btn__paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span></a>
+            {%- endif -%}
+            {%- if block.settings.secondary_label != blank -%}
+              <a href="{{ block.settings.secondary_url | default: '#' }}" class="ce-btn ce-btn--ghost">{{ block.settings.secondary_label }}</a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+      {%- if has_img -%}
+        <div class="ce-hero__media">
+          {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '400,600,900,1200', sizes: '(max-width: 859px) 92vw, 44vw', alt: block.settings.image.alt | default: block.settings.title, class: 'ce-hero__img' }}
+          {%- if block.settings.badge_text != blank -%}<span class="ce-hero__badge">{{ block.settings.badge_text }}</span>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </header>
+
+  {%- when 'intro' -%}
+    <div class="ce-intro ce-intro--{{ block.settings.align }}" {{ block.shopify_attributes }}>
+      {%- if block.settings.eyebrow != blank -%}<span class="ce-eyebrow"><span class="ce-eyebrow__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.eyebrow_icon -%}</span>{{ block.settings.eyebrow }}</span>{%- endif -%}
+      {%- if block.settings.heading != blank -%}<h2 class="ce-intro__title">{{ block.settings.heading }}</h2>{%- endif -%}
+      {%- if block.settings.text != blank -%}<div class="ce-intro__text rte">{{ block.settings.text }}</div>{%- endif -%}
+    </div>
+
+  {%- when 'split' -%}
+    <div class="ce-split{% if block.settings.image_side == 'left' %} ce-split--flip{% endif %}" data-accent="{{ ac }}" {{ block.shopify_attributes }}>
+      <div class="ce-split__media">
+        {%- if block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(max-width: 859px) 92vw, 46vw', alt: block.settings.image.alt | default: block.settings.heading, class: 'ce-split__img' }}
+        {%- else -%}
+          <div class="ce-split__img ce-split__img--ph">{%- render 'kb-icon', icon: 'paw' -%}</div>
+        {%- endif -%}
+      </div>
+      <div class="ce-split__body">
+        {%- if block.settings.eyebrow != blank -%}<span class="ce-eyebrow"><span class="ce-eyebrow__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.eyebrow_icon -%}</span>{{ block.settings.eyebrow }}</span>{%- endif -%}
+        {%- if block.settings.heading != blank -%}<h2 class="ce-split__title">{{ block.settings.heading }}</h2>{%- endif -%}
+        {%- if block.settings.text != blank -%}<div class="ce-split__text rte">{{ block.settings.text }}</div>{%- endif -%}
+        {%- if block.settings.bullets != blank -%}
+          <ul class="ce-split__list" role="list">
+            {%- assign blines = block.settings.bullets | newline_to_br | split: '<br />' -%}
+            {%- for line in blines -%}
+              {%- assign li = line | strip_newlines | strip -%}
+              {%- if li != blank -%}<li><span class="ce-split__check" aria-hidden="true">{%- render 'kb-icon', icon: 'check' -%}</span><span>{{ li }}</span></li>{%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+        {%- if block.settings.cta_label != blank -%}
+          <a href="{{ block.settings.cta_url | default: '#' }}" class="ce-btn ce-btn--solid ce-split__cta">{{ block.settings.cta_label }}<span class="ce-btn__paw" aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span></a>
+        {%- endif -%}
+      </div>
+    </div>
+
+  {%- when 'card' -%}
+    <article class="ce-card" data-accent="{{ ac }}" {{ block.shopify_attributes }}>
+      {%- if block.settings.icon != blank -%}<span class="ce-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>{%- endif -%}
+      {%- if block.settings.title != blank -%}<h3 class="ce-card__title">{{ block.settings.title }}</h3>{%- endif -%}
+      {%- if block.settings.text != blank -%}<p class="ce-card__text">{{ block.settings.text }}</p>{%- endif -%}
+    </article>
+
+  {%- when 'partner' -%}
+    <article class="ce-card ce-card--partner" data-accent="{{ ac }}" {{ block.shopify_attributes }}>
+      {%- if block.settings.icon != blank -%}<span class="ce-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>{%- endif -%}
+      {%- if block.settings.title != blank -%}<h3 class="ce-card__title">{{ block.settings.title }}</h3>{%- endif -%}
+      {%- if block.settings.text != blank -%}<p class="ce-card__text">{{ block.settings.text }}</p>{%- endif -%}
+      {%- if block.settings.meta != blank -%}<span class="ce-card__meta"><span aria-hidden="true">{%- render 'kb-icon', icon: 'sparkles' -%}</span>{{ block.settings.meta }}</span>{%- endif -%}
+    </article>
+
+  {%- when 'usecase' -%}
+    <article class="ce-card ce-card--usecase" data-accent="{{ ac }}" {{ block.shopify_attributes }}>
+      {%- if block.settings.icon != blank -%}<span class="ce-card__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>{%- endif -%}
+      {%- if block.settings.title != blank -%}<h3 class="ce-card__title">{{ block.settings.title }}</h3>{%- endif -%}
+      {%- if block.settings.text != blank -%}<p class="ce-card__text">{{ block.settings.text }}</p>{%- endif -%}
+    </article>
+
+  {%- when 'step' -%}
+    <li class="ce-step" data-accent="{{ ac }}" {{ block.shopify_attributes }}>
+      <span class="ce-step__num" aria-hidden="true"></span>
+      <div class="ce-step__body">
+        {%- if block.settings.title != blank -%}<strong class="ce-step__title">{{ block.settings.title }}</strong>{%- endif -%}
+        {%- if block.settings.text != blank -%}<span class="ce-step__text">{{ block.settings.text }}</span>{%- endif -%}
+      </div>
+    </li>
+
+  {%- when 'gallery_item' -%}
+    <figure class="ce-polaroid" {{ block.shopify_attributes }}>
+      {%- if block.settings.image != blank -%}
+        {{ block.settings.image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '300,450,600', sizes: '(max-width: 749px) 44vw, 22vw', alt: block.settings.image.alt | default: block.settings.caption, class: 'ce-polaroid__img' }}
+      {%- else -%}
+        <div class="ce-polaroid__img ce-polaroid__img--ph">{%- render 'kb-icon', icon: 'camera' -%}</div>
+      {%- endif -%}
+      {%- if block.settings.caption != blank -%}<figcaption class="ce-polaroid__cap">{{ block.settings.caption }}</figcaption>{%- endif -%}
+    </figure>
+
+  {%- when 'chip' -%}
+    <span class="ce-chip" data-accent="{{ ac }}" {{ block.shopify_attributes }}>
+      {%- if block.settings.icon != blank -%}<span class="ce-chip__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>{%- endif -%}
+      {{ block.settings.label }}
+    </span>
+
+  {%- when 'quote' -%}
+    {%- if block.settings.text != blank -%}
+      <figure class="ce-quote" {{ block.shopify_attributes }}>
+        <span class="ce-quote__mark" aria-hidden="true">{%- render 'kb-icon', icon: 'chat' -%}</span>
+        <blockquote class="ce-quote__text">{{ block.settings.text }}</blockquote>
+        {%- if block.settings.author != blank -%}<figcaption class="ce-quote__author">{{ block.settings.author }}</figcaption>{%- endif -%}
+      </figure>
+    {%- endif -%}
+
+  {%- when 'faq' -%}
+    <details class="ce-faq" {{ block.shopify_attributes }}>
+      <summary class="ce-faq__q">{{ block.settings.question }}<span class="ce-faq__chev" aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span></summary>
+      {%- if block.settings.answer != blank -%}<div class="ce-faq__a rte">{{ block.settings.answer }}</div>{%- endif -%}
+    </details>
+
+  {%- when 'linkrow' -%}
+    <a class="ce-link" href="{{ block.settings.url | default: '#' }}" data-accent="{{ ac }}" {{ block.shopify_attributes }}>
+      <span class="ce-link__icon" aria-hidden="true">{%- render 'kb-icon', icon: block.settings.icon -%}</span>
+      <span class="ce-link__body">
+        <strong class="ce-link__title">{{ block.settings.label }}</strong>
+        {%- if block.settings.text != blank -%}<span class="ce-link__text">{{ block.settings.text }}</span>{%- endif -%}
+      </span>
+      <span class="ce-link__chev" aria-hidden="true">{%- render 'kb-icon', icon: 'arrow' -%}</span>
+    </a>
+
+  {%- when 'cta' -%}
+    <div class="ce-cta ce-cta--{{ block.settings.style }}" data-accent="{{ ac }}" id="{{ block.settings.anchor_id }}" {{ block.shopify_attributes }}>
+      <div class="ce-cta__body">
+        {%- if block.settings.heading != blank -%}<h2 class="ce-cta__title">{{ block.settings.heading }}</h2>{%- endif -%}
+        {%- if block.settings.text != blank -%}<p class="ce-cta__text">{{ block.settings.text }}</p>{%- endif -%}
+      </div>
+      {%- if block.settings.button_label != blank or block.settings.secondary_label != blank -%}
+        <div class="ce-cta__actions">
+          {%- if block.settings.button_label != blank -%}<a href="{{ block.settings.button_url | default: '#' }}" class="ce-btn ce-btn--solid">{{ block.settings.button_label }}<span class="ce-btn__paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span></a>{%- endif -%}
+          {%- if block.settings.secondary_label != blank -%}<a href="{{ block.settings.secondary_url | default: '#' }}" class="ce-btn ce-btn--ghost">{{ block.settings.secondary_label }}</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+  {%- when 'form' -%}
+    <div class="ce-form-wrap" id="{{ block.settings.anchor_id | default: 'aanvraag' }}" {{ block.shopify_attributes }}>
+      {%- if block.settings.heading != blank -%}<h2 class="ce-form__heading">{{ block.settings.heading }}</h2>{%- endif -%}
+      {%- if block.settings.text != blank -%}<p class="ce-form__lead">{{ block.settings.text }}</p>{%- endif -%}
+      <div class="ce-form__card">
+        {%- form 'contact', class: 'ce-form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="ce-form__success">
+              <span class="ce-form__success-icon" aria-hidden="true">{%- render 'kb-icon', icon: 'check' -%}</span>
+              <strong>{{ block.settings.success_title | default: 'Bedankt voor je aanvraag!' }}</strong>
+              <span>{{ block.settings.success_text | default: 'We nemen zo snel mogelijk contact met je op.' }}</span>
+            </div>
+          {%- else -%}
+            {%- if form.errors -%}<div class="ce-form__errors">{{ form.errors | default_errors }}</div>{%- endif -%}
+            <input type="hidden" name="contact[Soort aanvraag]" value="{{ block.settings.kind }}">
+
+            {%- case block.settings.kind -%}
+              {%- when 'partner' -%}
+                <div class="ce-form__row">
+                  <label class="ce-field"><span class="ce-field__lbl">Bedrijfs- of merknaam</span><input type="text" name="contact[Bedrijf of merk]" placeholder="Bijv. Trimsalon Bella" required></label>
+                  <label class="ce-field"><span class="ce-field__lbl">Contactpersoon</span><input type="text" name="contact[name]" value="{{ form.name }}" placeholder="Je naam" required></label>
+                </div>
+                <div class="ce-form__row">
+                  <label class="ce-field"><span class="ce-field__lbl">E-mailadres</span><input type="email" name="contact[email]" value="{{ form.email }}" placeholder="jij@voorbeeld.nl" required></label>
+                  <label class="ce-field"><span class="ce-field__lbl">Website of social <span class="ce-field__opt">optioneel</span></span><input type="text" name="contact[Website of social]" placeholder="@jouwmerk of www…"></label>
+                </div>
+                <label class="ce-field"><span class="ce-field__lbl">Type samenwerking</span>
+                  <select name="contact[Type samenwerking]" required>
+                    <option value="">Kies…</option>
+                    <option>Merk of leverancier</option>
+                    <option>Creator of ambassadeur</option>
+                    <option>Retail of verkooppartner</option>
+                    <option>Maatschappelijke samenwerking</option>
+                    <option>Anders</option>
+                  </select>
+                </label>
+                <label class="ce-field"><span class="ce-field__lbl">Vertel kort over je idee</span><textarea name="contact[body]" rows="4" placeholder="Wat voor samenwerking zie je voor je?">{{ form.body }}</textarea></label>
+
+              {%- when 'business' -%}
+                <div class="ce-form__row">
+                  <label class="ce-field"><span class="ce-field__lbl">Bedrijfsnaam</span><input type="text" name="contact[Bedrijfsnaam]" placeholder="Bijv. Jansen B.V." required></label>
+                  <label class="ce-field"><span class="ce-field__lbl">Contactpersoon</span><input type="text" name="contact[name]" value="{{ form.name }}" placeholder="Je naam" required></label>
+                </div>
+                <div class="ce-form__row">
+                  <label class="ce-field"><span class="ce-field__lbl">E-mailadres</span><input type="email" name="contact[email]" value="{{ form.email }}" placeholder="jij@bedrijf.nl" required></label>
+                  <label class="ce-field"><span class="ce-field__lbl">Telefoon <span class="ce-field__opt">optioneel</span></span><input type="tel" name="contact[Telefoon]" placeholder="06…"></label>
+                </div>
+                <div class="ce-form__row">
+                  <label class="ce-field"><span class="ce-field__lbl">Waarvoor is het cadeau?</span>
+                    <select name="contact[Gelegenheid]" required>
+                      <option value="">Kies…</option>
+                      <option>Personeelscadeaus</option>
+                      <option>Klant- of relatiegeschenken</option>
+                      <option>Event of beurs</option>
+                      <option>Onboarding / welkomstcadeau</option>
+                      <option>Anders</option>
+                    </select>
+                  </label>
+                  <label class="ce-field"><span class="ce-field__lbl">Indicatie aantal boxen</span>
+                    <select name="contact[Indicatie aantal]">
+                      <option value="">Kies…</option>
+                      <option>1–10</option>
+                      <option>10–25</option>
+                      <option>25–50</option>
+                      <option>50–100</option>
+                      <option>100+</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="ce-form__row">
+                  <label class="ce-field"><span class="ce-field__lbl">Gewenste leverdatum <span class="ce-field__opt">optioneel</span></span><input type="date" name="contact[Gewenste leverdatum]"></label>
+                  <label class="ce-field"><span class="ce-field__lbl">Land</span>
+                    <select name="contact[Land]">
+                      <option>Nederland</option>
+                      <option>België</option>
+                      <option>Anders</option>
+                    </select>
+                  </label>
+                </div>
+                <label class="ce-field ce-field--check"><input type="checkbox" name="contact[Interesse personalisatie]" value="Ja"><span>Ik heb interesse in personalisatie (kaartje, boodschap of logo)</span></label>
+                <label class="ce-field"><span class="ce-field__lbl">Opmerkingen <span class="ce-field__opt">optioneel</span></span><textarea name="contact[body]" rows="4" placeholder="Vertel kort wat je zoekt…">{{ form.body }}</textarea></label>
+
+              {%- else -%}
+                <div class="ce-form__row">
+                  <label class="ce-field"><span class="ce-field__lbl">Naam</span><input type="text" name="contact[name]" value="{{ form.name }}" placeholder="Je naam" required></label>
+                  <label class="ce-field"><span class="ce-field__lbl">E-mailadres</span><input type="email" name="contact[email]" value="{{ form.email }}" placeholder="jij@voorbeeld.nl" required></label>
+                </div>
+                <label class="ce-field"><span class="ce-field__lbl">Je bericht</span><textarea name="contact[body]" rows="4" placeholder="Waarmee kunnen we je helpen?" required>{{ form.body }}</textarea></label>
+            {%- endcase -%}
+
+            {%- if block.settings.show_consent -%}
+              <label class="ce-field ce-field--check ce-field--consent"><input type="checkbox" name="contact[Toestemming]" value="Ja" required><span>Ik ga ermee akkoord dat Kwispelbox mijn gegevens gebruikt om contact op te nemen{%- if shop.privacy_policy != blank %} (zie het <a href="{{ shop.privacy_policy.url }}" target="_blank" rel="noopener">privacybeleid</a>){%- endif -%}.</span></label>
+            {%- endif -%}
+
+            <button type="submit" class="ce-btn ce-btn--solid ce-form__submit">{{ block.settings.submit_label | default: 'Versturen' }}<span class="ce-btn__paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span></button>
+            {%- if block.settings.note != blank -%}<p class="ce-form__note">{{ block.settings.note }}</p>{%- endif -%}
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+
+{%- endcase -%}

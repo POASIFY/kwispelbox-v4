@@ -1,37 +1,111 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
-      "type": "partners-page",
+      "type": "community-ecosystem-page",
       "blocks": {
-        "t1": { "type": "ptype", "settings": { "icon": "sparkles", "title": "Trimsalons", "text": "Terugkerend klantcontact met baasjes die al in hun hond investeren.", "moment": "Na elke trimbeurt" } },
-        "t2": { "type": "ptype", "settings": { "icon": "star", "title": "Puppytrainers & hondenscholen", "text": "Nieuwe eigenaren met hoge koopintentie en veel vertrouwen in jouw advies.", "moment": "Start of einde puppycursus" } },
-        "t3": { "type": "ptype", "settings": { "icon": "shield-check", "title": "Dierenartsen", "text": "Maximaal vertrouwen en het eerste contactmoment bij een nieuwe pup.", "moment": "Eerste consult of puppycheck" } },
-        "t4": { "type": "ptype", "settings": { "icon": "heart", "title": "Opvang & uitlaatservice", "text": "Frequent contact met betrokken baasjes die hun hond verwennen.", "moment": "Intake of verjaardag hond" } },
-        "t5": { "type": "ptype", "settings": { "icon": "dog", "title": "Fokkers & asielen", "text": "Het allereerste moment van eigenaarschap — perfect voor een warm welkom.", "moment": "Bij ophalen pup of adoptie" } },
-        "t6": { "type": "ptype", "settings": { "icon": "camera", "title": "Hondenfotografen", "text": "Ideaal rond verjaardagen, cadeaus en social content.", "moment": "Fotoshoot of verjaardag" } },
-        "s1": { "type": "step", "settings": { "title": "Meld je aan", "text": "Vul het formulier in. We nemen contact op en kiezen samen het best passende model." } },
-        "s2": { "type": "step", "settings": { "title": "Ontvang je partnerpakket", "text": "Je krijgt een unieke code & QR-link, co-branded kaartjes en kant-en-klare teksten." } },
-        "s3": { "type": "step", "settings": { "title": "Deel & verras", "text": "Jouw klanten krijgen een gratis extra voor hun hond. Jij ziet de resultaten per maand." } },
-        "p1": { "type": "perk", "settings": { "text": "Een gratis extra voor jouw klant — geen korting, wél cadeaugevoel" } },
-        "p2": { "type": "perk", "settings": { "text": "Een unieke partnercode en QR-link" } },
-        "p3": { "type": "perk", "settings": { "text": "Co-branded kaartjes en/of een baliedisplay" } },
-        "p4": { "type": "perk", "settings": { "text": "Social media visuals en voorbeeldteksten" } },
-        "p5": { "type": "perk", "settings": { "text": "Commissie, tegoed of gratis boxen bij resultaat" } },
-        "p6": { "type": "perk", "settings": { "text": "Mogelijke vermelding op de Kwispelbox-site" } },
-        "p7": { "type": "perk", "settings": { "text": "Eventueel een samplebox op locatie" } },
-        "p8": { "type": "perk", "settings": { "text": "Deelname aan winacties en lokale campagnes" } }
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "eyebrow": "Samenwerken",
+            "eyebrow_icon": "heart",
+            "title": "Samenwerken met Kwispelbox",
+            "intro": "We maken hondenbaasjes blij met verrassingsboxen vol liefde. Heb jij een merk, kanaal of idee dat daarbij past? Dan gaan we graag met je in gesprek.",
+            "align": "center",
+            "accent": "green",
+            "primary_label": "Samenwerken? Neem contact op",
+            "primary_url": "#aanmelden",
+            "secondary_label": "Naar contact",
+            "secondary_url": "/pages/contact"
+          }
+        },
+        "why_intro": {
+          "type": "intro",
+          "settings": {
+            "eyebrow": "Waarom samen",
+            "eyebrow_icon": "paw",
+            "heading": "Waarom samenwerken met Kwispelbox?",
+            "text": "<p>We geloven in échte cadeaumomenten voor honden. Een samenwerking met ons voelt persoonlijk en past bij wat jij al doet.</p>",
+            "align": "center"
+          }
+        },
+        "why1": { "type": "card", "settings": { "icon": "bulb", "title": "Dezelfde liefde voor honden", "text": "We spreken dezelfde taal: blije honden en gelukkige baasjes staan voorop.", "accent": "green" } },
+        "why2": { "type": "card", "settings": { "icon": "gift", "title": "Een cadeau, geen korting", "text": "We geven hondenbaasjes iets leuks in plaats van zomaar een kortingscode.", "accent": "pink" } },
+        "why3": { "type": "card", "settings": { "icon": "users", "title": "Persoonlijk contact", "text": "Korte lijnen. We denken mee en kijken samen wat bij jou past.", "accent": "orange" } },
+        "why4": { "type": "card", "settings": { "icon": "paw", "title": "Samen groeien", "text": "We bouwen stap voor stap aan iets moois voor honden in Nederland en België.", "accent": "yellow" } },
+        "types_intro": {
+          "type": "intro",
+          "settings": {
+            "eyebrow": "Voor wie",
+            "eyebrow_icon": "users",
+            "heading": "Met wie werken we samen?",
+            "text": "<p>Dit zijn de soorten samenwerkingen waar we voor openstaan. Staat jouw idee er niet bij? Laat het ons vooral weten.</p>",
+            "align": "center"
+          }
+        },
+        "t1": { "type": "partner", "settings": { "icon": "package", "title": "Merken & leveranciers", "text": "Maak je iets moois voor honden? We kijken graag of het bij onze boxen past.", "accent": "green" } },
+        "t2": { "type": "partner", "settings": { "icon": "camera", "title": "Creators & ambassadeurs", "text": "Deel je jouw hond met een community? We denken graag mee over een samenwerking.", "accent": "pink" } },
+        "t3": { "type": "partner", "settings": { "icon": "shop", "title": "Retail & verkooppartners", "text": "Verkoop je aan hondenbaasjes? Een Kwispelbox kan een leuke aanvulling zijn.", "accent": "orange" } },
+        "t4": { "type": "partner", "settings": { "icon": "heart", "title": "Maatschappelijke samenwerkingen", "text": "Zet je je in voor honden, bijvoorbeeld via een asiel of goed doel? We horen het graag.", "accent": "yellow" } },
+        "how_intro": {
+          "type": "intro",
+          "settings": { "eyebrow": "Zo werkt het", "eyebrow_icon": "sparkles", "heading": "Hoe het werkt", "text": "<p>Simpel en zonder verplichtingen. We beginnen altijd met een kennismaking.</p>", "align": "center" }
+        },
+        "s1": { "type": "step", "settings": { "title": "Neem contact op", "text": "Vul het formulier in of mail ons. Vertel kort wie je bent en wat je voor je ziet.", "accent": "green" } },
+        "s2": { "type": "step", "settings": { "title": "Kennismaking", "text": "We plannen een kennismaking en kijken samen of en hoe een samenwerking past.", "accent": "pink" } },
+        "s3": { "type": "step", "settings": { "title": "Een passende samenwerking", "text": "Past het? Dan maken we samen concrete afspraken die voor jullie allebei kloppen.", "accent": "orange" } },
+        "form": {
+          "type": "form",
+          "settings": {
+            "kind": "partner",
+            "anchor_id": "aanmelden",
+            "heading": "Samenwerken? Laat het ons weten",
+            "text": "Laat je gegevens achter — we nemen contact met je op om kennis te maken.",
+            "submit_label": "Verstuur aanvraag",
+            "success_title": "Bedankt voor je bericht!",
+            "success_text": "We nemen contact met je op om de samenwerking te bespreken.",
+            "show_consent": true,
+            "note": "We gebruiken je gegevens alleen om contact met je op te nemen over een mogelijke samenwerking."
+          }
+        },
+        "faq_intro": {
+          "type": "intro",
+          "settings": { "eyebrow": "Veelgestelde vragen", "eyebrow_icon": "chat", "heading": "Goed om te weten", "align": "center" }
+        },
+        "faq1": { "type": "faq", "settings": { "question": "Zit er een vast partnerprogramma aan vast?", "answer": "<p>Nee. We kijken per samenwerking wat past — er is (nog) geen vast programma met vaste voorwaarden. Alles bespreken we persoonlijk.</p>" } },
+        "faq2": { "type": "faq", "settings": { "question": "Wat kost het om een aanvraag te doen?", "answer": "<p>Een aanvraag indienen is gratis en vrijblijvend. Concrete afspraken maken we altijd samen.</p>" } },
+        "faq3": { "type": "faq", "settings": { "question": "Ik heb een ander idee voor een samenwerking.", "answer": "<p>Leuk! Ook als je idee niet in de lijst past, horen we het graag via het formulier hierboven.</p>" } },
+        "cta": {
+          "type": "cta",
+          "settings": {
+            "heading": "Liever even persoonlijk overleggen?",
+            "text": "Stuur ons een bericht — we denken graag met je mee.",
+            "button_label": "Naar contact",
+            "button_url": "/pages/contact",
+            "secondary_label": "Direct aanmelden",
+            "secondary_url": "#aanmelden",
+            "style": "gradient",
+            "accent": "pink"
+          }
+        },
+        "l1": { "type": "linkrow", "settings": { "icon": "dog", "label": "Over Kwispelbox", "text": "Lees ons verhaal", "url": "/pages/over-ons", "accent": "green" } },
+        "l2": { "type": "linkrow", "settings": { "icon": "gift", "label": "Zakelijk bestellen", "text": "Cadeaus voor je team of klanten", "url": "/pages/zakelijk", "accent": "orange" } },
+        "l3": { "type": "linkrow", "settings": { "icon": "mail", "label": "Contact", "text": "Een vraag? Neem contact op", "url": "/pages/contact", "accent": "pink" } }
       },
-      "block_order": ["t1", "t2", "t3", "t4", "t5", "t6", "s1", "s2", "s3", "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"],
-      "settings": {}
+      "block_order": [
+        "hero",
+        "why_intro", "why1", "why2", "why3", "why4",
+        "types_intro", "t1", "t2", "t3", "t4",
+        "how_intro", "s1", "s2", "s3",
+        "form",
+        "faq_intro", "faq1", "faq2", "faq3",
+        "cta",
+        "l1", "l2", "l3"
+      ],
+      "settings": {
+        "max_width": "narrow",
+        "bg": "transparent",
+        "show_decorations": true
+      }
     }
   },
   "order": ["main"]
