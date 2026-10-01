@@ -274,3 +274,17 @@ Header verlanglijst-actie (`/pages/verlanglijst` = dead link, desktop-only) **ve
 Opruimen: `info-page.liquid` (ongebruikt), orphan `product.kwispelbox.json`, lege mega-menu-menu's, lege collecties (puppy/speeltjes/snacks/knuffels), menu-duplicaat Feestdagen/Momenten, mg__wish. Menu-integratie van de nieuwe pagina's.
 
 _Einde Fase 2-log. Geen pagina's gepubliceerd, geen publicatiestatus gewijzigd, geen orphan/menu/collectie-cleanup uitgevoerd._
+
+---
+
+## Fase 3A — Community & Ecosystem (status: READ-ONLY plan opgeleverd)
+
+Volledig architectuur-/UX-/designplan in **`docs/community-ecosystem-plan.md`** (Kwispelclub, Kwispels/loyalty, rijk account, hondprofielen, UGC, referrals, Partners, Zakelijk, design family E, datamodel, marketing-vs-backend-matrix, loyalty-app-vergelijking, roadmap, open business-decisions).
+
+**Kernpunten:** loyalty/Kwispels zijn nu 100% marketing-fictie (geen engine, geen customer-metafields/metaobjects); new customer accounts zijn Shopify-hosted (account-UI niet in Liquid). Aanbeveling = **hybride** (loyalty-app als engine/account-hub + Shopify-metaobjects voor hond-/UGC-/partner-data + theme-presentatielaag). **Gate:** engine-keuze + business-decisions (§15/§16 van het plan) vóór implementatie.
+
+**⚠️ Pre-live copy-risico (nieuw, zie plan §21):** bestaande "Spaar Kwispels"/tier-copy suggereert niet-bestaande functionaliteit → HIDE/COMING-SOON of engine live maken vóór publicatie.
+
+**Niet uitgevoerd (wacht op go):** Fase 3-cleanup (orphans/menu/collecties), claims-centralisatie, mg__wish-verwijdering, én alle Community-implementatie.
+
+_Fase 3A = read-only: niets gebouwd/geïnstalleerd/gepubliceerd/gemuteerd._

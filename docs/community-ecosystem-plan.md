@@ -1,0 +1,367 @@
+# Kwispelbox — Community & Ecosystem Plan (Fase 3A)
+
+_Opgesteld: 01-10-2026 · **READ-ONLY** audit + architectuur + designplan. Er is niets gebouwd, geïnstalleerd, gepubliceerd of gemuteerd._
+_Scope: hoe Kwispelbox doorgroeit van webshop naar merkplatform: Kwispelclub/loyalty, Kwispels, rijk account, hondprofielen, community/UGC, referrals/ambassadeurs, Partners, Zakelijk, lifecycle._
+
+---
+
+## 1. Executive summary
+
+De storefront ziet er al uit als een merk met een loyaltyprogramma — maar **onder de motorkap bestaat er niets van**. "Kwispels", tiers, "50 Kwispels cadeau", ledenvoordelen: allemaal **statische marketingcopy** zonder ledger, zonder earning/redemption, zonder accountkoppeling. De customer-accounts zijn Shopify's **nieuwe (gehoste)** variant; er zijn **geen** customer-metafields, company-metafields of metaobjects. Er is dus een **schone lei** én een **compliance-risico** (we suggereren functionaliteit die niet bestaat).
+
+**Kernaanbeveling:** bouw de loyalty-/account-laag **niet zelf** in Liquid. Kies een **hybride model**: een **loyalty-app als engine** (ledger, earning rules, rewards, referrals, account-hub in de nieuwe customer accounts) + **Shopify metaobjects/metafields als bron van waarheid voor hond-identiteit/verjaardag** + **een theme-presentatielaag** (Kwispelclub-pagina, nieuwe design family E) die het verhaal vertelt. Zakelijk en Partners worden **form-first funnels** (geen B2B-engine / geen aparte programma-infra bij launch). UGC en ambassadeurs zijn **Phase 2/3**.
+
+**Grootste gate:** het loyalty-engine-besluit (app vs. custom) moet vallen **vóór** er ook maar één punten-UI wordt gebouwd, want de nieuwe customer accounts kun je niet vanuit het theme vullen — dat kan alleen de gekozen app (of een custom app met account-UI-extensions).
+
+---
+
+## 2. Current-state audit
+
+| Onderdeel | Status nu | Backend? |
+|---|---|---|
+| Kwispels / punten | Statische copy in `header-group.json` (nav-dropdown: "Spaar Kwispels!", "50 Kwispels cadeau", tiers 200/400/600/1000), `kwispelclub-page` (benefit/step-blocks), `cart.liquid`, PDP `main-product-kwispelbox` | **Geen** |
+| Kwispelclub | `page.kwispelclub` (`kwispelclub-page`: hero, 4 benefits, 5 steps, spotlight "Hond van de maand", 4 lege `member`-blocks, nieuwsbrief) | Marketing-only |
+| Customer accounts | Shopify **new customer accounts** (gehost; geen `templates/customers/` in theme; `/account` op shopify.com) | Shopify-hosted |
+| Customer data | **0** customer-metafield-definities, **0** company-metafields, **0** metaobjecten | Leeg |
+| Hond-/verjaardagdata | Homepage `birthday-block`: `form 'customer'` → `contact[first_name]` (hondnaam) + `contact[note]` (datum) + tag `kwispelkalender` | Ongestructureerd (zit in klant-notitie/tag) |
+| `loy_77036486821.js` | Wees-asset, zet enkel `ba_msg_active` in localStorage, nergens gerefereerd | Dood |
+| Partners | `page.partners` (`partners-page`: perk/ptype/step) — marketing | Geen aanmeld-backend |
+| Zakelijk | `main-menu "Zakelijk"` → `/pages/partners` (= **zelfde als Partners**) | Geen eigen funnel |
+| Community/UGC | Homepage "Blije honden, blije baasjes" (statische foto-blocks) | Geen inzend/consent-flow |
+| Loyalty-app | Geen integratie zichtbaar in theme | **Admin-check nodig** |
+
+**Conclusie:** alles community/loyalty-gerelateerd is **presentatie zonder systeem**. Niets hoeft "ontward" te worden; alles moet nog worden **ontworpen en gekoppeld**.
+
+---
+
+## 3. Kwispelclub — propositie (herontworpen)
+
+De club mag niet "een pagina die zegt dat je spaart" zijn, maar een **lidmaatschap dat commerce + community bindt**: *"Word gratis lid van de Kwispelclub — spaar Kwispels, vier de verjaardag van je hond, en krijg als eerste toegang tot nieuwe boxen."*
+
+**Pijlers:** (1) sparen & belonen (Kwispels), (2) verjaardag van je hond, (3) ledenvoordelen (early access special editions), (4) community (Hond van de maand, verhalen), (5) referrals.
+
+**Member lifecycle:** ontdekken → gratis lid (account) → welkomstbonus → sparen bij aankoop/acties → inwisselen → verjaardag-reward → ambassadeur/referral.
+
+- **LAUNCH MVP:** gratis lid = account; echte Kwispels (engine); welkomstbonus; punten bij aankoop; 2-3 redemptions; verjaardag-capture gekoppeld; geloofwaardige clubpagina die alléén belooft wat live is.
+- **PHASE 2:** hondprofielen, verjaardag-reward-automation, referrals, review/UGC-earning, "Hond van de maand" echt.
+- **PHASE 3:** tiers/VIP, ambassadeursprogramma, challenges/campagnes, segmentatie.
+
+**Anti-overengineering:** geen tiers, geen gamification-dashboard, geen ambassadeurs bij launch.
+
+---
+
+## 4. Naamgeving — "Kwispels" vs "Kwispelpunten"
+
+**Aanbeveling: "Kwispels"** als valutanaam + **"Kwispelclub"** als programma. "Kwispels" is speelser, merkbaarder en al in gebruik. "Kwispelpunten" is beschrijvender maar redundant naast "Kwispels" → **niet** beide gebruiken.
+
+**Uitlegbehoefte opvangen** met hybride taal bij eerste gebruik / in de UI-tooltip: *"Spaar Kwispels — de punten van de Kwispelclub."* Daarna consequent "Kwispels". In cart/checkout/account: "Kwispels" + waarde-equivalent tonen ("250 Kwispels = €5"). Caveat: of de gekozen app de currency vrij laat hernoemen is een **selectiecriterium** (zie §15).
+
+---
+
+## 5. Loyalty-architectuur — opties
+
+**A. Loyalty-app** (Smile / Rivo / LoyaltyLion): engine + ledger + rewards + referrals + **account-hub in de nieuwe customer accounts** out-of-the-box. Snel, onderhoudsarm; minder design-vrijheid, maandkosten, enige lock-in.
+
+**B. Custom Shopify-stack:** customer-metafields (balance) + Shopify **Functions** (korting/redemption) + **Flow** (earning-triggers) + **Customer Account UI extensions** (een custom app voor de account-UI) + webhooks. Maximale controle/branding, geen app-fee — maar **substantiële build + onderhoud**, en de account-UI vereist hoe dan ook een **custom app** (new customer accounts zijn niet vanuit Liquid te vullen).
+
+**C. Hybride (aanbevolen):** app als **ledger/earning/redemption/referral-engine + account-hub**, met een **eigen Kwispelbox-presentatielaag** in het theme (clubpagina, "zo werkt het", rewards-showcase via family E) en **Shopify metaobjects/metafields als bron van waarheid voor hond-identiteit/verjaardag**, die via Flow/e-mail (Klaviyo later) verjaardag-rewards triggeren.
+
+**Beoordeling nieuwe customer accounts:** Liquid-themepagina's kunnen **geen** account-dashboard renderen. Verrijking kan alleen via **Customer Account UI extensions** (app) of de **Loyalty Hub** die moderne loyalty-apps daar injecteren. Dit maakt optie A/C praktisch noodzakelijk tenzij we een custom app bouwen.
+
+---
+
+## 6. Aanbevolen technische architectuur
+
+**HYBRIDE:**
+1. **Loyalty-engine = app.** Shortlist Smile.io of Rivo (zie §15). App levert: points-ledger, earning rules, redemption→Shopify-korting, referrals, en de **Loyalty Hub binnen de nieuwe customer accounts** (zodat "Mijn account" punten/rewards toont zonder custom build).
+2. **Hond-identiteit = Shopify-native.** `metaobject` "dog" (naam, geboortedatum, optioneel formaat/foto) + `customer`-metafield-referentie (1→n honden). Dit is **onze** bron van waarheid (geen lock-in bij de app).
+3. **Verjaardag-automation.** Shopify **Flow** (of Klaviyo later) leest dog-geboortedatum → triggert verjaardag-reward via de app-API / kortingscode.
+4. **Presentatielaag = theme (family E).** Clubpagina, "zo werkt het", rewards-showcase, referral-uitleg — marketing, linkt naar de app-hub/account.
+5. **Zakelijk & Partners = Shopify forms** (lead/offerte), geen engine.
+
+**WHY:** snelste geloofwaardige launch, account-UI opgelost door de app, hond-data in eigen hand (portabel), theme behoudt merkgevoel. **RISKS:** app-fee, enige lock-in op de ledger, app-branding-limieten. **EXIT:** omdat hond-data in Shopify-metaobjecten staat en punten-saldo via de app-API exporteerbaar is, is migratie naar een andere app of custom-stack mogelijk (zie §23).
+
+---
+
+## 7. Account-architectuur
+
+| Laag | Nu mogelijk | Hoe |
+|---|---|---|
+| Login, bestellingen, NAW | ✅ standaard | Shopify new customer accounts (hosted) |
+| Kwispels-saldo, earning-historie, rewards, referralcode | ⚠️ niet in Liquid | **Loyalty-app Loyalty Hub** in customer accounts, óf custom app met **Customer Account UI extensions** |
+| Hond(en): naam/verjaardag/voorkeuren | ⚠️ data wel native, UI niet in Liquid | metaobject + customer-metafield als bron; **beheer-UI** via account-UI-extension (app) of (MVP) via een theme-formulier dat metafields schrijft met een klein custom app-endpoint |
+| Member/community-status | Phase 2/3 | App/segmenten |
+
+**Belangrijk:** "Mijn account = alleen bestellingen" blijft prima voor launch. De rijke "Mijn Kwispelbox" ontstaat zodra de loyalty-app live is (die levert de hub). Een volledig custom account-dashboard = **custom app**, niet verstandig vóór tractie.
+
+---
+
+## 8. Hondprofiel / birthday-datamodel
+
+**Bewust minimalistisch (privacy-by-design):**
+
+`metaobject: dog`
+- `name` (single_line)
+- `birthdate` (date) — alléén dag/maand nodig voor verjaardag; jaar optioneel
+- `size` (enum Mini/Happy/Mega-relevant) — optioneel, alleen als het personalisatie/aanbeveling voedt
+- `photo` (file) — optioneel, Phase 2
+- `owner` → `customer` referentie
+
+`customer`-metafield `custom.dogs` = list.metaobject_reference (meerdere honden).
+
+**Keuze metaobject (niet losse metafields):** herbruikbaar, meerdere honden, relateerbaar, en los van de loyalty-app (portabel). **Birthday automation:** Flow/Klaviyo op `birthdate`. **Let op:** dit is **hond**-verjaardag, geen klant-verjaardag — loyalty-apps hebben native vaak alleen *customer* birthday; hond-birthday = **custom data + custom automation** (selectiecriterium §15). **Migratie bestaande capture:** de homepage `birthday-block` schrijft nu naar klant-notitie/tag; later ombouwen naar metaobject (Phase 2, niet nu).
+
+**Geen** onnodige data (ras alleen als het echt iets voedt; geen medische data). Consent bij foto/UGC (§18).
+
+---
+
+## 9. Rewards / earning framework
+
+**Earning-acties — beoordeeld (⟢ = MVP-kandidaat):**
+| Actie | Waarde klant | Fraude/risico | Oordeel |
+|---|---|---|---|
+| ⟢ Aankoop (per €) | Hoog | Laag | MVP |
+| ⟢ Account aanmaken (welkomstbonus) | Hoog | Laag (1×/klant) | MVP |
+| ⟢ Eerste bestelling | Midden | Laag | MVP |
+| Verjaardag hond toevoegen | Midden | Laag-midden (nep-honden) → cap | Phase 2 |
+| Verjaardag hond (jaarlijkse reward) | Hoog (emotioneel) | Midden → 1×/jaar/hond cap | Phase 2 |
+| Review achterlaten | Midden | Midden (Judge.me-koppeling, verify-only) | Phase 2 |
+| UGC/foto insturen | Midden | Midden (moderatie) | Phase 2/3 |
+| Nieuwsbrief opt-in | Laag | Laag (double opt-in, 1×) | Phase 2 (juridisch correct) |
+| Referral | Hoog | Midden-hoog (self-referral) → engine-fraudecheck | Phase 2 |
+
+**Redemption-types:** vaste korting (€/%); gratis cadeau-extra (bestaande `cadeau-extras`-producten!); gratis kaartje; mystery gift (sluit aan op bestaande GWP); early access special edition; verjaardag-reward. **Geen puntenwaarden** vastgelegd (zie §16).
+
+---
+
+## 10. Referral-architectuur
+
+**Concept:** lid deelt unieke link → nieuwe klant krijgt welkomskorting → referrer krijgt Kwispels/korting **na geldige (niet-geretourneerde) eerste order**. **Engine:** de gekozen loyalty-app (Smile/Rivo/LoyaltyLion hebben referrals native, inclusief fraudepreventie + reward-afhandeling) — **niet** zelf bouwen. **Scheiding:**
+- **Customer referral** (vriend-werft-vriend) = app-feature, Phase 2.
+- **Creator/ambassador program** (influencers/retail met codes, hogere beloning, afspraken) = **aparte** business rules/affiliate-tooling, Phase 3 — **niet samenvoegen** met customer-referral.
+
+---
+
+## 11. UGC / community-architectuur
+
+**Aanbeveling: gecureerd, niet een live social-feed.** Een ingebedde Instagram-feed = performance- + privacy- + afhankelijkheidsrisico. Beter:
+- **Nu:** handmatig gecureerde "Blije honden"-sectie (bestaat al).
+- **Phase 2:** inzend-flow (formulier: foto-upload + **expliciete consent-checkbox** voor gebruik) → opslag als `metaobject: ugc_submission` (status: pending/approved) → gecureerde gallery rendert approved items. Moderatie handmatig.
+- **Phase 3:** "Hond van de maand", member stories, challenges, koppeling met Kwispels (earning voor approved UGC).
+
+**Rechten/consent:** UGC alleen gebruiken met vastgelegde toestemming (checkbox + bewaarde timestamp); minderjarigen/identificeerbare personen vermijden; recht op verwijdering.
+
+---
+
+## 12. Partners — strategie
+
+**Eén centrale partnerhub** (`page.partners`, family E later), categoriseerbaar maar niet gefragmenteerd in 4 programma's bij launch:
+- **"Onze partners"** (logo-/kaart-grid, social proof) + **"Samenwerken met Kwispelbox"** (waarom + verwachtingen + selectiecriteria) + **aanvraagflow** (formulier).
+- **Partner-types** als dataveld (merk/leverancier · creator/ambassadeur · retail/verkooppartner · maatschappelijk) → één `metaobject: partner` met `type`-enum; zo kun je later splitsen **zonder** nu aparte infra.
+- **Aanvraag** = `metaobject: partner_application` of simpel e-mail/Shopify-form (MVP). Cases/testimonials = Phase 2.
+
+**Partners ≠ Zakelijk** (zie §13) — menu-item "Zakelijk" moet losgekoppeld worden van `/pages/partners` (IA, §15/§12 → nav).
+
+---
+
+## 13. Zakelijk bestellen — strategie (los van Partners)
+
+**Eigen warme commerciële funnel** (geen corporate uitstraling), **form-first** bij launch:
+
+Funnel: (1) use-case (personeel/klant/relatie/event/onboarding) → (2) aantal boxen → (3) gelegenheid → (4) gewenste box/budgetrange → (5) personalisatie → (6) gewenste leverdatum → (7) bedrijfsgegevens → (8) contact → (9) opmerkingen → (10) **aanvraag/offerte versturen**.
+
+- **LAUNCH:** nette aanvraag-/offerteflow via **formulier** (→ e-mail/lead). Geen prijzen/staffels.
+- **LATER (alleen bij volume):** echte **quote-engine**, **Shopify B2B** (company accounts, catalogus, betalingsvoorwaarden), staffelprijzen, bulk-checkout. **Wanneer zinvol:** bij herhaalde grote orders (indicatief >25-50 boxen) of terugkerende zakelijke klanten die zelf willen bestellen/factureren. **Geen staffelprijzen verzinnen.**
+
+---
+
+## 14. Community design family (E) — specificatie (niet bouwen)
+
+**`sections/*` family E — Community/Ecosystem**, zelfde tokens (crème/chocolade/groen/roze/geel-oranje, Lilita display + Karla, rounded, layered, premium-speels — **geen kinderachtig dashboard**).
+
+Componenten (editor-blocks):
+- **membership hero** (propositie + CTA "word gratis lid")
+- **points/progress summary** (presentatie; echte data via app-hub)
+- **benefit cards** / **reward cards** (icoon + titel + kosten-in-Kwispels)
+- **"zo werkt het"** stappen (sparen→inwisselen)
+- **member journey / badge-status** (Phase 2/3)
+- **partner cards / logo-grid**
+- **B2B use-case cards** + **quote/request CTA**
+- **referral module** (deel-je-link, presentatie)
+- **community gallery** (gecureerd) + **UGC-submission CTA**
+- **FAQ** (hergebruik help-hub-accordion-stijl)
+- **proof/metrics** (Phase 2, alleen echte cijfers)
+
+Bouwprincipe gelijk aan A/B/C/D: één sectie, vaste zones, typed blocks, geen JS tenzij nodig.
+
+---
+
+## 15. Loyalty-app vs build — vergelijking
+
+_Actueel onderzoek okt 2026 (zie bronnen onderaan). Exacte prijzen/limieten = **verifiëren in-app vóór keuze**._
+
+| Criterium | **Smile.io** | **Rivo** | **LoyaltyLion** | **Custom Shopify-stack** |
+|---|---|---|---|---|
+| New customer accounts | ✅ Loyalty Hub in accounts | ✅ compatibel + 8 checkout-extensies | ✅ | ⚠️ zelf bouwen (UI-extensions) |
+| UI-extensibility/branding | Midden | Midden-hoog (native theme) | Hoog | Volledig |
+| Referrals | ✅ | ✅ | ✅ | zelf bouwen |
+| Rewards/redemption → Shopify-korting | ✅ | ✅ | ✅ | Functions |
+| Customer birthday | ✅ | ✅ | ✅ | metafield+Flow |
+| **Hond**-birthday (custom event/data) | ⚠️ custom data/API | ⚠️ custom data/API | ⚠️ custom data/API | ✅ (eigen model) |
+| API/webhooks/export | ✅ | ✅ | ✅ (sterk) | n.v.t. |
+| Flow-integratie | ✅ | ✅ | ✅ | ✅ |
+| Markets / NL-BE | ✅ (verify valuta/locale) | ✅ | ✅ | ✅ |
+| GDPR | app-DPA (verify) | app-DPA (verify) | app-DPA (verify) | eigen beheer |
+| Kostenklasse | gratis start → $$ schaalt | vanaf ~$49/mnd | $$$ (enterprise/multi-store) | geen fee, hoge build |
+| Implementatiecomplexiteit | Laag | Laag | Midden | Hoog |
+| Vendor lock-in | Midden | Midden | Midden-hoog | Geen |
+| Best voor | grootste ecosystem, snelle start | Shopify-exclusive, referrals+checkout, lage instap | multi-store/enterprise analytics | maximale controle, later |
+
+**RECOMMENDED ARCHITECTURE:** **Hybride met Smile.io óf Rivo** als engine (NL-SMB-schaal): **Smile** als je het grootste/bewezen ecosystem + gratis start wilt; **Rivo** als je Shopify-exclusieve native integratie + sterke referrals/checkout-extensies + voorspelbare instapprijs wilt. **LoyaltyLion** pas bij enterprise/multi-store ambitie. Hond-data **altijd** in eigen Shopify-metaobjecten. **WHY/RISKS/EXIT:** zie §6/§23.
+
+---
+
+## 16. Open business-decisions (waarden door jullie, niet door mij)
+
+| Beslissing | Waarom nodig | Wanneer | Impact |
+|---|---|---|---|
+| Waarde van 1 Kwispel (bijv. x Kwispels = €1) | Fundament economics | Vóór engine-config | Hoog |
+| Earn-ratio (Kwispels per €) | Marge vs. aantrekkelijkheid | Vóór launch | Hoog |
+| Reward-drempels | Redemption-aanbod | Vóór launch | Hoog |
+| Welkomstbonus (ja/hoeveel) | Aanmeld-incentive | Vóór launch | Midden |
+| Vervaldatum punten (ja/nee) | Liability + activatie | Vóór launch | Midden |
+| Punten bij refunds (intrekken?) | Fraude/marge | Vóór launch | Midden |
+| Verjaardag-reward (type/waarde) | Signature-feature | Phase 2 | Midden |
+| Referral-reward (beide zijden) | Groei vs. kosten | Phase 2 | Hoog |
+| Retroactieve punten bestaande klanten | Goodwill | Bij launch | Midden |
+| Meerdere honden/klant (max?) | Datamodel/fraude | Phase 2 | Laag |
+| Tiering ja/nee | Complexiteit | Phase 3 | Midden |
+| Zakelijk minimum-aantal | Funnel-kwalificatie | Vóór Zakelijk-launch | Midden |
+| Partner-acceptatiecriteria | Kwaliteit/merk | Vóór Partner-launch | Midden |
+| UGC-incentive (Kwispels voor foto?) | Misbruik vs. groei | Phase 2/3 | Laag |
+
+**Geen waarden ingevuld.**
+
+---
+
+## 17. Marketing-only vs backend — matrix
+
+| Feature | Marketing-only kan | Backend nodig | Techniek | MVP? |
+|---|---|---|---|---|
+| Kwispelclub-landingspagina | ✅ | — | theme (family E) | ✅ |
+| Points balance (tonen) | — | ✅ | loyalty-app hub | ✅ |
+| Points earning | — | ✅ | app rules/Flow | ✅ |
+| Redemption | — | ✅ | app → Shopify-korting | ✅ |
+| Welkomstbonus | — | ✅ | app | ✅ |
+| Birthday reward (hond) | deels (capture) | ✅ | metaobject + Flow + app | V2 |
+| Dog profile (1) | capture ✅ | ✅ voor opslag/UI | metaobject + account-ext | V2 |
+| Multiple dogs | — | ✅ | metaobject-list | V2 |
+| Referral | uitleg ✅ | ✅ | app | V2 |
+| Ambassador | uitleg ✅ | ✅ | aparte tooling | V3 |
+| UGC gallery (gecureerd) | ✅ | optioneel | theme + metaobject | V1/V2 |
+| UGC submission | — | ✅ | form + metaobject + consent | V2 |
+| Partner application | formulier ✅ | licht | Shopify form/metaobject | V1 |
+| Zakelijke aanvraag | ✅ | licht | Shopify form | V1 |
+| Business quote-engine | — | ✅ | B2B/custom | V3 |
+| Reward history | — | ✅ | app hub | V1/V2 |
+| Account dashboard (rijk) | — | ✅ | app hub / custom app | V2 |
+
+---
+
+## 18. Datamodel (conceptueel)
+
+| Entity | Data | Shopify-native opslag | Externe app/DB? | Source of truth | Privacy |
+|---|---|---|---|---|---|
+| Customer | NAW, login | Shopify customer | — | Shopify | standaard |
+| Dog | naam, geboortedatum, (size/foto) | **metaobject** + customer-metafield-ref | nee | **Kwispelbox (Shopify)** | minimaal; foto=consent |
+| LoyaltyAccount | saldo, status | — | **loyalty-app** | app | app-DPA |
+| PointsTransaction | earn/redeem ledger | — | **loyalty-app** | app | app-DPA |
+| Reward | catalogus/kosten | app (evt. mirror in metaobject voor presentatie) | app | app | laag |
+| Redemption | ingewisseld → korting | app → Shopify discount | app | app | laag |
+| Referral | code, status, payout | — | **loyalty-app** | app | midden |
+| UGCSubmission | foto, consent, status | **metaobject** | nee | Kwispelbox | **consent vereist** |
+| Partner | naam, type, logo, status | **metaobject** | nee | Kwispelbox | laag |
+| PartnerApplication | aanvraag-velden | metaobject of e-mail/form | nee | Kwispelbox | zakelijk |
+| BusinessLead | funnel-velden | Shopify form/e-mail (evt. metaobject) | nee | Kwispelbox | zakelijk |
+
+**Principe:** identiteit/content die van óns is (hond, UGC, partner, lead) → **Shopify metaobjects** (portabel); loyalty-ledger → **app** (gespecialiseerd, exporteerbaar).
+
+---
+
+## 19. Privacy / GDPR
+
+- **Dataminimalisatie:** alleen hond-naam + verjaardag (dag/maand); geen jaar/ras tenzij functioneel; geen medische data.
+- **Consent:** foto/UGC alleen met expliciete, gelogde toestemming + intrekbaar; nieuwsbrief-earning via **double opt-in**.
+- **Verwerkers:** loyalty-app = subverwerker → **DPA** nodig + opnemen in privacy-policy; data-locatie (EU) verifiëren.
+- **Privacy-policy** nu Engels → NL + loyalty/UGC-verwerking toevoegen (hangt samen met Fase 2 legal-cleanup).
+- **Kinderen:** UGC met identificeerbare personen vermijden.
+- **Recht op verwijdering:** hond/UGC/punten moeten verwijderbaar zijn (Shopify GDPR-webhooks + app-ondersteuning).
+
+---
+
+## 20. Gefaseerde roadmap
+
+**COMMUNITY MVP (V1)** — echte Kwispelclub-propositie; **gekozen loyalty-engine** live; basis earning (aankoop + welkomstbonus) + 2-3 redemptions; account toont punten (app-hub); Kwispelclub-pagina + family E (presentatie); Zakelijk **lead-form**; Partner-pagina + **aanvraagformulier**; **statische loyalty-copy veilig maken** (§21).
+**COMMUNITY V2** — hondprofielen (metaobject) + verjaardag-reward-automation; referrals (app); UGC-submission + gecureerde gallery; rijkere rewards; review-earning (Judge.me).
+**COMMUNITY V3** — ambassadeursprogramma; tiers/VIP; segmentatie; Zakelijk B2B/quote-engine; challenges/campagnes.
+
+---
+
+## 21. Huidige misleidende/static copy — audit (vóór live)
+
+| Copy | Locatie | Impliceert | Echt actief? | Actie |
+|---|---|---|---|---|
+| "Spaar Kwispels!" / "50 Kwispels cadeau" | `header-group.json` (nav-dropdown, meerdere) | Werkend spaarsysteem + welkomstbonus | **Nee** | **REWRITE ALS "BINNENKORT"** of **HIDE BEFORE LIVE** tot engine live |
+| Tiers "200/400/600/1000 Kwispels" | `header-group.json` | Reward-catalogus | **Nee** | HIDE/COMING SOON tot waarden bepaald |
+| "Spaar Kwispels" benefit + "Verzamel Kwispels (aankopen, reviews, acties)" step | `kwispelclub-page` | Earning-rules | **Nee** | REWRITE ALS "BINNENKORT" tot MVP live |
+| "Wissel in voor beloningen" | `kwispelclub-page` | Redemption | **Nee** | COMING SOON |
+| Kwispels-referentie in cart | `cart.liquid` | Sparen bij checkout | **Nee** | Verify + HIDE/COMING SOON |
+| Kwispels op PDP | `main-product-kwispelbox` | Punten per aankoop | **Nee** | Verify + HIDE/COMING SOON |
+| "Hond van de maand" spotlight | `kwispelclub-page` | Lopende community-actie | **Nee** | KEEP FOR LATER / COMING SOON |
+| FAQ "Kwispelclub: spaar Kwispels…" | `page.faq` | Werkend programma | **Nee** | REWRITE ALS "BINNENKORT" |
+
+**Regel:** op live **geen** niet-bestaande loyalty-functionaliteit suggereren. Aanbevolen launch-tactiek: Kwispelclub positioneren als **"gratis lid worden — sparen start binnenkort"** tot de engine live is, óf de engine in de MVP meteen live zetten en de copy waarmaken. (Uitvoering = latere batch, niet nu.)
+
+---
+
+## 22. Dependencies / risks
+
+- **Gate:** engine-keuze blokkeert alle punten-UI. Beslis §15 + §16 eerst.
+- **New customer accounts** beperken theme-UI → afhankelijk van app-hub of custom app.
+- **Hond-birthday ≠ customer-birthday** → custom data/automation (niet native in apps).
+- **App-kosten/lock-in** + DPA/EU-datalocatie.
+- **Copy-risico nú live** (§21) — grootste korte-termijnrisico.
+- **Zakelijk/Partners menu-koppeling** verwart nu (zelfde pagina).
+- **Fraude** (referrals/nep-honden/UGC) → caps + app-fraudecheck + moderatie.
+
+---
+
+## 23. Exit / migratie-strategie
+
+- **Hond/UGC/partner/lead** staan in **Shopify metaobjects** → blijven bij ons, los van elke app.
+- **Punten-ledger** bij de app → kies een app met **export/API** (Smile/Rivo/LoyaltyLion bieden dit) zodat saldi te migreren zijn naar een andere app of custom-stack.
+- **Rewards = Shopify-kortingen** → engine-agnostisch.
+- **Presentatielaag (family E)** is theme-eigen → onafhankelijk van de engine.
+- Zo blijft de **lock-in beperkt tot de ledger**, en is een latere overstap (app↔app of app→custom) uitvoerbaar.
+
+---
+
+## Informatie-architectuur (IA) — voorstel (§12 nav-impact)
+
+**Header:** Boxen · Verjaardag · Feestdagen · Momenten · **Kwispelclub** (evt. submenu: Zo werkt het / Voordelen / Mijn Kwispels) · **Zakelijk** (eigen funnel, **loskoppelen van Partners**). **Partners** → verplaatsen naar **footer** (+ evt. "Over ons"-submenu), niet in hoofd-nav bij launch.
+**Footer-groepen:** Shop · Klantenservice · **Kwispelclub** · **Zakelijk & Partners** · Over Kwispelbox · Juridisch.
+**Account:** ontdekking van punten/hond/rewards/referral loopt via de **app-hub** in new customer accounts (+ CTA's vanaf Kwispelclub-pagina).
+**Mobile drawer:** compact houden — Kwispelclub als hoofd-item, Partners/Zakelijk onder een "Meer/Over"-groep.
+**Bottom-nav:** Home / Boxen / Shop / Club — **beoordeling:** "Club" is verdedigbaar als Kwispelclub een kernpijler wordt; **niet nu wijzigen** (bevestigen zodra club-MVP live is).
+
+---
+
+## Bronnen (actueel onderzoek, okt 2026)
+- Smile.io — loyalty apps / VIP / Plus overzichten (smile.io/learn)
+- Rivo — vergelijkingen & customer-accounts/checkout-extensies (rivo.io/blog)
+- LoyaltyLion-positionering (via vergelijkingen) + diverse 2026-marktoverzichten
+_Exacte features/prijzen/limieten en EU-datalocatie: **in-app/Admin verifiëren vóór keuze**._
+
+---
+
+_Einde Fase 3A-plan. READ-ONLY: niets gebouwd/geïnstalleerd/gepubliceerd/gemuteerd. Volgende stap = jullie business-decisions (§16) + engine-keuze (§15), daarna pas implementatie-fasering (§20)._
