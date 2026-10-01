@@ -370,7 +370,9 @@ _Einde Fase 3A-plan._
 
 # FASE 3B — Loyalty Vendor Decision + Community MVP Specification
 
-_01-10-2026 · READ-ONLY. Vendorkeuze-onderbouwing staat apart in **`docs/loyalty-vendor-decision.md`** (aanbeveling: **Rivo** Scale ~$49/mnd, hybride; Smile tweede; LoyaltyLion niet voor MVP). Hieronder de uitvoerbare MVP-spec. Geen harde waarden, niets gebouwd._
+_01-10-2026 · READ-ONLY. Vendorkeuze-onderbouwing staat apart in **`docs/loyalty-vendor-decision.md`**. Hieronder de uitvoerbare MVP-spec. Geen harde waarden, niets gebouwd._
+
+> **⚠️ CORRECTIE (3B.1, 01-10-2026):** de oorspronkelijke 3B-aanbeveling (**Rivo Scale ~$49 + Rivo Accounts + Liquid-metafields**) is **materieel gecorrigeerd** na verificatie tegen officiële Rivo-bronnen. Rivo-**metafields/Developer Toolkit** zitten op **Plus ($499)** (UNCLEAR, leunt Plus) en **"Rivo Accounts" is een apart product ($499)** — níét in Scale. De rijke/branded "Mijn Kwispelbox" kost dus **~$500-1000/mnd**, buiten budget. **Herziene aanbeveling: Smile voor de MVP (Essential $15 / Standard $79, vendor-rendered account-hub), Rivo als premium-later.** Zie `loyalty-vendor-decision.md` §3B.1. Waar hieronder "balance via metafield" of "Rivo Accounts op Scale" staat → geldt de 3B.1-correctie: in de **lean MVP géén custom Liquid-balance**, alleen een **vendor-rendered** account-widget + Kwispelclub-marketingpagina.
 
 ## 3B.1 MVP earning-spec (functioneel, zonder waarden)
 

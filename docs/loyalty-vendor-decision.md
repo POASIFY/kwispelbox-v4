@@ -5,9 +5,87 @@ _Onderzoeksdatum vendordata: 01-10-2026 (bronnen onderaan). Vendor-marketingclai
 
 ---
 
-## 0. Samenvatting / aanbeveling
+## ⚠️ 3B.1 — ENTITLEMENT REALITY CHECK (CORRECTIE, 01-10-2026)
 
-**RECOMMENDED (MVP): Rivo** — hybride: Rivo = engine (ledger/earning/redemption/referrals) + Rivo Accounts-extensie als interactieve "Mijn Kwispelbox"-hub in de nieuwe customer accounts + Rivo Liquid-metafields voor onze eigen storefront-presentatie; hond-/UGC-/partner-/lead-data blijft in **Shopify-metaobjects**. Scale-plan **~$49/mnd**, month-to-month. Past in budget en in de rijke-account-ambitie.
+> **Deze sectie corrigeert §0 en §6 hieronder.** Verificatie tegen officiële Rivo-bronnen toont een **materiële fout** in de oorspronkelijke 3B-conclusie: de aanname "Rivo Scale (~$49) + Rivo Accounts + Liquid-metafields als eigen presentatielaag" is **onjuist**. Scale levert dat **niet**; die features zitten op **Plus ($499)** en/of in het **aparte Rivo Accounts-product ($499)**.
+
+### Entitlement-matrix (officiële bronnen)
+| Feature | Scale ($49+) | Plus ($499) | Rivo Accounts (**apart** $499) | Bron |
+|---|---|---|---|---|
+| Points earning | CONFIRMED | CONFIRMED | — | pricing |
+| Vaste/percentage korting-rewards | CONFIRMED | CONFIRMED | — | pricing |
+| Free-product rewards | UNCLEAR / SALES | CONFIRMED | — | pricing (tier onduidelijk) |
+| Referrals | CONFIRMED | CONFIRMED | — | pricing |
+| Shopify Flow | Basic | Advanced | — | pricing-vergelijking |
+| Checkout-extensies | UNCLEAR / SALES | CONFIRMED | — | pricing |
+| **Shopify Metafields / Liquid points-balance** | **NOT INCLUDED / Plus-only (UNCLEAR, leunt Plus)** | **CONFIRMED** | — | dev-docs + pricing (tegenstrijdig; help: "hangt van plan af") |
+| **REST API / JS API / Webhooks / Developer Toolkit** | **Plus (UNCLEAR op Scale)** | **CONFIRMED** | — | dev-docs: toolkit = Plus-narratief |
+| Custom actions (API-driven) | NOT op Scale (UNCLEAR) | CONFIRMED | — | dev-docs |
+| **Volledige "Rivo Accounts" (branded account-hub)** | **NOT INCLUDED** | **NOT INCLUDED** | **apart product, $499/mnd** | pricing (eigen sectie) |
+| Embedded account-widget (basis) in New Customer Accounts | UNCLEAR / SALES | UNCLEAR / SALES | CONFIRMED (volledig) | pricing (onduidelijk voor Scale) |
+| Data-export | UNCLEAR / SALES | UNCLEAR / SALES | — | — |
+
+**Tegenstrijdigheid gevonden:** de pricing-vergelijkingstabel lijkt "Metafields Access" bij Scale **én** Plus te tonen, terwijl de **developer-docs/Developer-Toolkit-narratief** metafields/API aan **Plus** koppelen; de help-pagina zegt "hangt van je plan af — vraag je CSM". → **Status: UNCLEAR, waarschijnlijk Plus. Alleen Rivo Sales kan dit hard bevestigen.**
+
+### Hero-use-case test
+| Use case | Werkt op Scale? | Vendor- of custom-rendered | Min. tier/product | Nodig | Bron-status |
+|---|---|---|---|---|---|
+| 1. Klant ziet Kwispels in New Customer Accounts | **UNCLEAR** (basis-widget?) / volledig = Accounts | vendor | Scale(?) of **Rivo Accounts $499** | account-widget | SALES |
+| 2. Kwispelbox toont zelf "Je hebt 420 Kwispels" op /pages/kwispelclub | **NEE op Scale (waarschijnlijk)** | custom (Liquid) | **Plus $499** (metafields) | `customer.metafields.custom.rivo.value.points_balance` | dev-docs → Plus |
+| 3. Custom **hond-verjaardag**-reward triggeren | **NEE op Scale (waarschijnlijk)** | custom | **Plus $499** (API/webhook) of Flow-actie (UNCLEAR) | API/Flow | dev-docs → Plus |
+| 4. Reward kiezen/inwisselen | **JA** | vendor | Scale | base loyalty | CONFIRMED |
+| 5. Referral-programma | **JA** | vendor | Scale | referrals | CONFIRMED |
+
+**Kernconclusie:** op **Scale ($49)** krijg je een **vendor-rendered** loyalty-ervaring (punten/rewards/referrals) — **geen** eigen Kwispelbox-balance in Liquid, **geen** API-gedreven hond-verjaardag, **geen** volledige branded account-hub. Die "rijke, gebrande Mijn Kwispelbox" uit 3B vereist **Plus ($499) + mogelijk Rivo Accounts ($499) = ~$500-1000/mnd** → **ruim buiten** het €40-60-budget.
+
+### Kostenscenario's
+| Scenario | Tier/producten | Startkosten/mnd | Ontbreekt |
+|---|---|---|---|
+| A. **Rivo Lean MVP** | Scale ($49) | ~$49 | custom Liquid-balance, API/dog-birthday, volledige Accounts-hub |
+| B. **Rivo Branded MVP** | Plus ($499) (+ evt. Accounts $499) | ~$499-998 | niets wezenlijks, maar **budget-breuk** |
+| C. **Full Rivo Ecosystem** | Plus + Accounts (+ Enterprise) | ~$998+ | — |
+
+### Cost-adjusted re-score
+**A. BEST TECHNICAL FIT (budget genegeerd):** **Rivo (Plus + Accounts)** — rijkst gebrande account + metafields + API; daarna LoyaltyLion; dan Smile. _Maar $499-998/mnd._
+**B. BEST MVP FIT onder ~€60-100/mnd:**
+| Vendor | MVP-config | /mnd | Custom balance (Liquid) | Free-product | Flow | Account-hub | Cost-adj. score |
+|---|---|---|---|---|---|---|---|
+| **Smile** | Essential $15 → Standard $79 | $15-79 | ⚠️ "points op productpagina" (Standard) | ✅ Essential | ✅ Essential | ✅ Loyalty Hub | **hoogste** |
+| **Rivo (lean)** | Scale $49 | $49 | ❌ (Plus-only) | ⚠️ verify | Basic | vendor-widget (UNCLEAR) | midden |
+| **LoyaltyLion** | paid $199 | $199 | widgets/API | ✅ | ⚠️ | ✅ | buiten budget |
+
+Onder budget verschuift de winst naar **Smile** (free-product + Flow al op $15; Loyalty Hub in accounts; Standard $79 geeft points-embed) omdat de equivalente Rivo-capaciteiten pas op **$499** zitten.
+
+### HERZIENE AANBEVELING
+**→ "SMILE BETTER MVP, RIVO LATER"** (met Rivo Scale-lean als verdedigbaar alternatief).
+- **MVP (binnen budget): Smile** — Essential $15 of Standard $79: echte engine + free-product rewards + Flow + branded Loyalty Hub in de nieuwe customer accounts, **zonder** de $499-sprong. Geen custom Liquid-balance nodig voor een geloofwaardige MVP (vendor-rendered account + Kwispelclub-marketingpagina volstaan).
+- **Rivo = premium/later:** zodra de rijke, volledig gebrande "Mijn Kwispelbox" + custom Liquid-balance + API-gedreven hond-verjaardag commercieel te rechtvaardigen zijn (Plus + Accounts, ~$500-1000/mnd).
+- **Rivo Scale-lean ($49)** blijft acceptabel **als** je Shopify-exclusieve native-accounts prioriteert én accepteert dat alles vendor-rendered is (geen eigen balance/geen API-dog-birthday bij launch). Beslis in trial.
+- **LoyaltyLion:** niet voor MVP (budget).
+
+### Lean MVP-account (herzien)
+Shopify New Customer Accounts + **vendor loyalty-block/widget** (Smile Loyalty Hub) + **Kwispelclub-marketingpagina** (family E, uitleg + join/login-CTA) + **géén** custom balance in Liquid. Custom balance/dog-birthday/API = **LATER** (Smile Standard+ of Rivo Plus). Dit is aanzienlijk rationeler binnen budget.
+
+### Open vragen — alleen Rivo (resp. Smile) Sales kan bevestigen
+1. Rivo: zit **een** account-widget (New Customer Accounts) in **Scale**, of vereist élke in-account-weergave het **Accounts-product ($499)**?
+2. Rivo: zijn **metafields/Developer Toolkit** écht Plus-only (pricing-tabel suggereert anders)?
+3. Rivo: free-product-rewards + data-export op welk tier?
+4. Smile: exacte metafield/Liquid-exposure + EU-datalocatie/DPA op Essential/Standard?
+5. Beide: NL/BE-valuta/locale + DPA/EU-datalocatie.
+
+### Gecorrigeerde 3B-claims
+- ❌ "Rivo Scale + Rivo Accounts" → Rivo Accounts is **apart $499**, niet in Scale.
+- ❌ "Scale + Liquid-metafields als eigen presentatielaag" → metafields = **Plus ($499)/UNCLEAR**, niet Scale.
+- ❌ "~$49/mnd dekt de rijke-account-ambitie" → rijke/branded account = **$499-998/mnd**.
+- ✅ Hybride-filosofie blijft; **vendorkeuze + kostenverwachting gecorrigeerd** (Smile MVP, Rivo premium-later).
+
+_§0 en §6 hieronder = **oorspronkelijke 3B-versie, gedeeltelijk achterhaald door 3B.1**. Bewust niet verwijderd (geen stille rewrite)._
+
+---
+
+## 0. Samenvatting / aanbeveling _(ORIGINEEL 3B — zie ⚠️ 3B.1 voor correctie)_
+
+**RECOMMENDED (MVP): Rivo** — hybride: Rivo = engine (ledger/earning/redemption/referrals) + Rivo Accounts-extensie als interactieve "Mijn Kwispelbox"-hub in de nieuwe customer accounts + Rivo Liquid-metafields voor onze eigen storefront-presentatie; hond-/UGC-/partner-/lead-data blijft in **Shopify-metaobjects**. Scale-plan **~$49/mnd**, month-to-month. Past in budget en in de rijke-account-ambitie. _(**ACHTERHAALD:** zie 3B.1 — Scale levert dit niet; Smile = betere MVP, Rivo = premium-later.)_
 
 **SECOND CHOICE: Smile.io** — sterkste prijs/eenvoud (Free→Essential $15→Standard $79). Kies dit als budget/simpliciteit zwaarder weegt dan een maximaal gebrande account-UX, of als Rivo's account-ervaring in de trial tegenvalt.
 
