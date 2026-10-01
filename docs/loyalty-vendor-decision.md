@@ -240,3 +240,8 @@ Flow: `Customer → metaobject dog → birthdate → automation → loyalty-engi
 - Smile.io: [pricing](https://smile.io/pricing) · [App Store](https://apps.shopify.com/smile-io) · [Capterra pricing](https://www.capterra.com/p/169446/Smile-io/pricing/)
 - LoyaltyLion: [Capterra](https://www.capterra.com/p/140592/LoyaltyLion/) · [GetApp](https://www.getapp.com/customer-management-software/a/loyaltylion/)
 _Prijzen/tiers/feature-beschikbaarheid + EU-datalocatie: in-app/trial verifiëren vóór definitieve keuze._
+
+---
+
+## 3C-1 status (01-10-2026)
+Trial-protocol + lege test-matrix + scoremodel + install-runbook staan in **`docs/loyalty-trial-results.md`**. **Assistent kan apps/orders niet zelf uitvoeren → gestopt vóór installatie; geen fictieve resultaten.** Provisionele lean: Smile-first trialen, Rivo-lean parallel; definitieve winnaar ná ingevulde matrix.
