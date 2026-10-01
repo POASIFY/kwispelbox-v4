@@ -1,0 +1,29 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "legal-page",
+      "blocks": {
+        "s1": { "type": "section", "settings": { "heading": "Onze inzet", "text": "<p>We willen dat iedereen prettig gebruik kan maken van onze website. Daarom besteden we aandacht aan leesbaarheid, duidelijke navigatie en bediening met toetsenbord.</p>" } },
+        "s2": { "type": "section", "settings": { "heading": "Iets niet toegankelijk?", "text": "<p>Loop je tegen een drempel aan of lukt iets niet? Laat het ons weten via <a href=\"/pages/contact\">contact</a>, dan kijken we hoe we het kunnen verbeteren.</p>" } },
+        "n1": { "type": "note", "settings": { "title": "CONTENT REVIEW NODIG", "text": "<p>Dit is een beknopte, feitelijke verklaring zonder formele compliance-claim. Als je een officiële toegankelijkheidsverklaring of een specifiek nalevingsniveau (bijv. WCAG) wilt vermelden, laat die tekst dan juridisch/vakinhoudelijk opstellen.</p>" } }
+      },
+      "block_order": ["s1", "s2", "n1"],
+      "settings": {
+        "eyebrow": "Toegankelijkheid",
+        "title": "Toegankelijkheid",
+        "intro": "Hoe we werken aan een site die voor iedereen prettig werkt.",
+        "updated": "",
+        "show_toc": false,
+        "contact_intro": "Een probleem melden? ",
+        "contact_label": "Neem contact op",
+        "contact_url": "/pages/contact"
+      }
+    }
+  },
+  "order": ["main"]
+}

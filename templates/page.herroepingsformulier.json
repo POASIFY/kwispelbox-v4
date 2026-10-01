@@ -1,0 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "legal-page",
+      "blocks": {
+        "s1": { "type": "section", "settings": { "heading": "Herroepingsrecht", "text": "<p>Je hebt het recht je bestelling binnen de wettelijke bedenktijd te herroepen. Hoe je een retour aanmeldt lees je bij <a href=\"/pages/retour-aanmelden\">retour aanmelden</a>; de voorwaarden staan in onze <a href=\"/pages/algemene-voorwaarden\">algemene voorwaarden</a>.</p>" } },
+        "n1": { "type": "note", "settings": { "title": "CONTENT REVIEW NODIG", "text": "<p>Het wettelijke <strong>modelformulier voor herroeping</strong> (EU-bijlage) is hier nog niet opgenomen. Laat de exacte juridische tekst van het modelformulier controleren/aanleveren en plaats die hieronder vóór livegang. Niet zelf improviseren.</p>" } }
+      },
+      "block_order": ["s1", "n1"],
+      "settings": {
+        "eyebrow": "Juridisch",
+        "title": "Herroepingsformulier",
+        "intro": "Gebruik dit formulier als je gebruik wilt maken van je herroepingsrecht.",
+        "updated": "",
+        "show_toc": false,
+        "contact_intro": "Hulp nodig bij een retour? ",
+        "contact_label": "Neem contact op",
+        "contact_url": "/pages/contact"
+      }
+    }
+  },
+  "order": ["main"]
+}

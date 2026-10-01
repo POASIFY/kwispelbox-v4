@@ -1,0 +1,28 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "legal-page",
+      "blocks": {
+        "s1": { "type": "section", "settings": { "heading": "Contactgegevens", "text": "<p><strong>Kwispelbox</strong><br>Kwakkenbergweg 150-05<br>6571 GB Berg en Dal<br>Nederland</p><p>Telefoon: +31 242 340 422<br>E-mail: <a href=\"mailto:hallo@kwispelbox.com\">hallo@kwispelbox.com</a></p>" } },
+        "n1": { "type": "note", "settings": { "title": "CONTENT REVIEW NODIG", "text": "<p>KvK-nummer en btw-identificatienummer zijn nog niet bevestigd en moeten hier worden ingevuld vóór livegang (wettelijk verplicht voor webshops). Controleer ook of bovenstaande adres-/contactgegevens kloppen.</p>" } }
+      },
+      "block_order": ["s1", "n1"],
+      "settings": {
+        "eyebrow": "Bedrijfsgegevens",
+        "title": "Bedrijfsgegevens",
+        "intro": "Officiële gegevens van Kwispelbox.",
+        "updated": "",
+        "show_toc": false,
+        "contact_intro": "Vragen? ",
+        "contact_label": "Neem contact op",
+        "contact_url": "/pages/contact"
+      }
+    }
+  },
+  "order": ["main"]
+}
