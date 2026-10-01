@@ -233,4 +233,14 @@ rewards, referrals) horen in de gekozen loyalty-app / nieuwe customer accounts �
 `sections/partners-page.liquid` (niet meer gerefereerd), `sections/community.liquid` (alleen op orphan
 `product.kwispelbox.json`).
 
+### Fase 3D — visuele refinement pass (01-10-2026)
+Geen architectuur/contentflow/functionaliteit gewijzigd; alleen visueel sterker + onderscheidender:
+- **Grouping per type:** `card`→`.ce__values`, `partner`→`.ce__tiles`, `usecase`→`.ce__usecases` (eigen wrappers i.p.v. één `.ce__grid`), zodat elke kaart-familie een eigen behandeling krijgt.
+- **Minder white-card-stack:** waarde-items staan nu in **één zachte gradient-band** (roze→crème→groen), partnertypes zijn **2×2 editorial tegels** met zachte tint + weinig chrome (mobiel gestapeld), use-cases luchtige pastel-tegels.
+- **Family E-atmosfeer:** subtiele roze/groene radiale wash (`.ce::before`), hero-gloed, grotere whitespace, zwevende merkvormen.
+- **Stappen** open/luchtig (zachte accent-nummers, geen dozen). **Interne links** rustig (transparant, dunne rand) zodat de **roze CTA** de visuele afsluiting blijft. **Form** in branded container (gradient + roze→groen accentrand), compacte privacytekst.
+- **Hero-CTA Partners** ontdubbeld (1 primaire CTA naar `#aanmelden`). **Copy:** "Een cadeau, geen korting" → "Samen iets bijzonders maken".
+- **Mobiel** compacter (flow-gap 34px, kleinere paddings op band/tegels/stappen/FAQ/form).
+- **Desktop-QA 1280/1440:** inhoud is `max-width:1060px` gecentreerd → bij ≥1060px alleen bredere crème-marge, identieke layout, geen clipping/overflow. (De randindruk in de vorige preview was de frame-rand van het artifact, niet de sectie.)
+
 _Einde plan (Fase 1 + 2 + 3D)._

@@ -12,10 +12,8 @@
             "intro": "We maken hondenbaasjes blij met verrassingsboxen vol liefde. Heb jij een merk, kanaal of idee dat daarbij past? Dan gaan we graag met je in gesprek.",
             "align": "center",
             "accent": "green",
-            "primary_label": "Samenwerken? Neem contact op",
-            "primary_url": "#aanmelden",
-            "secondary_label": "Naar contact",
-            "secondary_url": "/pages/contact"
+            "primary_label": "Samenwerken? Laat het weten",
+            "primary_url": "#aanmelden"
           }
         },
         "why_intro": {
@@ -29,7 +27,7 @@
           }
         },
         "why1": { "type": "card", "settings": { "icon": "bulb", "title": "Dezelfde liefde voor honden", "text": "We spreken dezelfde taal: blije honden en gelukkige baasjes staan voorop.", "accent": "green" } },
-        "why2": { "type": "card", "settings": { "icon": "gift", "title": "Een cadeau, geen korting", "text": "We geven hondenbaasjes iets leuks in plaats van zomaar een kortingscode.", "accent": "pink" } },
+        "why2": { "type": "card", "settings": { "icon": "gift", "title": "Samen iets bijzonders maken", "text": "We bedenken samen iets dat past bij jouw merk én bij onze boxen.", "accent": "pink" } },
         "why3": { "type": "card", "settings": { "icon": "users", "title": "Persoonlijk contact", "text": "Korte lijnen. We denken mee en kijken samen wat bij jou past.", "accent": "orange" } },
         "why4": { "type": "card", "settings": { "icon": "paw", "title": "Samen groeien", "text": "We bouwen stap voor stap aan iets moois voor honden in Nederland en België.", "accent": "yellow" } },
         "types_intro": {
