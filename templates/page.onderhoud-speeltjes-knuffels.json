@@ -1,0 +1,32 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "editorial-page",
+      "blocks": {
+        "s1": { "type": "split", "settings": { "heading": "Langer plezier van elk speeltje", "media_side": "right", "ph_icon": "heart", "text": "<p>Met een beetje onderhoud blijven knuffels en speeltjes langer leuk, schoon en fijn om mee te spelen. Een paar algemene richtlijnen:</p>" } },
+        "k1": { "type": "checkitem", "settings": { "title": "Knuffels wassen", "text": "Volg het wasvoorschrift op het label; een waszak beschermt zachte knuffels." } },
+        "k2": { "type": "checkitem", "settings": { "title": "Goed laten drogen", "text": "Laat alles volledig drogen voordat je hond er weer mee speelt." } },
+        "k3": { "type": "checkitem", "settings": { "title": "Controleer op losse delen", "text": "Check knuffels op losse oogjes, naden of vulling en herstel of verwijder waar nodig." } },
+        "k4": { "type": "checkitem", "settings": { "title": "Rubber & touw schoonmaken", "text": "Spoel rubberen speeltjes en touwtjes af en laat ze drogen." } },
+        "k5": { "type": "checkitem", "settings": { "title": "Beschadigd? Vervangen", "text": "Versleten of kapot speelgoed kun je beter weghalen." } }
+      },
+      "block_order": ["s1", "k1", "k2", "k3", "k4", "k5"],
+      "settings": {
+        "eyebrow": "Onderhoud",
+        "title": "Onderhoud van speeltjes & knuffels",
+        "intro": "Algemene tips om de speeltjes en knuffels uit je Kwispelbox mooi en schoon te houden.",
+        "check_title": "Onderhoudstips",
+        "cta_title": "Tijd voor iets nieuws?",
+        "cta_text": "Verras je hond met een verse box vol speelplezier.",
+        "cta_label": "Bekijk de boxen",
+        "cta_url": "/collections/boxen"
+      }
+    }
+  },
+  "order": ["main"]
+}

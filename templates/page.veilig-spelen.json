@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "editorial-page",
+      "blocks": {
+        "s1": { "type": "split", "settings": { "heading": "Samen veilig spelen", "media_side": "right", "ph_icon": "paw", "text": "<p>Spelen is het leukste wat er is — en met een paar simpele gewoontes blijft het ook ontspannen. Hieronder onze algemene tips om samen veilig van de speeltjes te genieten.</p>" } },
+        "k1": { "type": "checkitem", "settings": { "title": "Kies passend bij je hond", "text": "Stem het speeltje af op de grootte en speelstijl van je hond." } },
+        "k2": { "type": "checkitem", "settings": { "title": "Houd toezicht", "text": "Speel het leukst samen — zeker bij een nieuw speeltje." } },
+        "k3": { "type": "checkitem", "settings": { "title": "Controleer regelmatig", "text": "Check speeltjes op slijtage, scheurtjes of losse delen." } },
+        "k4": { "type": "checkitem", "settings": { "title": "Vervang beschadigd speelgoed", "text": "Is een speeltje stuk of versleten? Haal het dan weg." } },
+        "k5": { "type": "checkitem", "settings": { "title": "Snacks met mate", "text": "Geef lekkers als aanvulling, passend bij het dagelijkse rantsoen." } },
+        "k6": { "type": "checkitem", "settings": { "title": "Berg op na het spelen", "text": "Opgeruimd speelgoed gaat langer mee en blijft schoner." } }
+      },
+      "block_order": ["s1", "k1", "k2", "k3", "k4", "k5", "k6"],
+      "settings": {
+        "eyebrow": "Veilig spelen",
+        "title": "Zo spelen jullie veilig samen",
+        "intro": "Praktische, algemene tips om onbezorgd te genieten van de speeltjes uit je Kwispelbox.",
+        "check_title": "Onze speeltips",
+        "cta_title": "Vragen over een speeltje?",
+        "cta_text": "We denken graag met je mee.",
+        "cta_label": "Neem contact op",
+        "cta_url": "/pages/contact"
+      }
+    }
+  },
+  "order": ["main"]
+}

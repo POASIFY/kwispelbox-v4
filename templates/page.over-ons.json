@@ -1,72 +1,31 @@
 /*
  * ------------------------------------------------------------
  * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
-/*
- * ------------------------------------------------------------
- * IMPORTANT: auto-generated.
  * ------------------------------------------------------------
  */
 {
   "sections": {
     "main": {
-      "type": "about-page",
+      "type": "editorial-page",
       "blocks": {
-        "v1": {
-          "type": "value",
-          "settings": {
-            "icon": "heart",
-            "color": "pink",
-            "title": "Met liefde samengesteld",
-            "text": "Elke box vullen we met zorg, alsof we 'm voor onze eigen hond maken."
-          }
-        },
-        "v2": {
-          "type": "value",
-          "settings": {
-            "icon": "shield",
-            "color": "green",
-            "title": "Veilige kwaliteit",
-            "text": "Alleen stevige, geteste speeltjes en gezonde, natuurlijke snacks."
-          }
-        },
-        "v3": {
-          "type": "value",
-          "settings": {
-            "icon": "paw",
-            "color": "orange",
-            "title": "De hond staat voorop",
-            "text": "Alles draait om die ene blije kwispel als de box opengaat."
-          }
-        },
-        "v4": {
-          "type": "value",
-          "settings": {
-            "icon": "leaf",
-            "color": "green",
-            "title": "Bewuste keuzes",
-            "text": "We kiezen zo duurzaam mogelijk — voor jouw hond én de wereld."
-          }
-        }
+        "s1": { "type": "split", "settings": { "heading": "Ons verhaal", "media_side": "right", "ph_icon": "gift", "text": "<p>Het idee ontstond toen we zagen hoe blij honden worden van iets nieuws: een speeltje, een snack, een moment van aandacht. Dat gevoel wilden we vangen in een box.</p><p>Sindsdien stellen we met zorg een verrassing samen, van de <a href=\"/pages/alle-boxen\">Mini, Happy en Mega</a> tot onze <a href=\"/pages/special-editions\">Special Editions</a> voor bijzondere momenten. Geen massaproduct, maar een cadeautje dat met liefde is uitgezocht. Want elke hond verdient zijn eigen moment vlak voor het uitpakken — daar doen we het voor.</p>" } },
+        "c1": { "type": "card", "settings": { "icon": "heart", "color": "pink", "title": "Met liefde samengesteld", "text": "Elke box vullen we met zorg, alsof we 'm voor onze eigen hond maken." } },
+        "c2": { "type": "card", "settings": { "icon": "shield", "color": "green", "title": "Veilige kwaliteit", "text": "Alleen stevige, geteste speeltjes en gezonde, natuurlijke snacks." } },
+        "c3": { "type": "card", "settings": { "icon": "paw", "color": "orange", "title": "De hond staat voorop", "text": "Alles draait om die ene blije kwispel als de box opengaat." } },
+        "c4": { "type": "card", "settings": { "icon": "leaf", "color": "green", "title": "Bewuste keuzes", "text": "We kiezen zo duurzaam mogelijk — voor jouw hond én de wereld." } }
       },
-      "block_order": [
-        "v1",
-        "v2",
-        "v3",
-        "v4"
-      ],
+      "block_order": ["s1", "c1", "c2", "c3", "c4"],
       "settings": {
-        "story_text": "<p>Het idee ontstond toen we zagen hoe blij honden worden van iets nieuws: een speeltje, een snack, een moment van aandacht. Dat gevoel wilden we vangen in een box.</p><p>Sindsdien stellen we met zorg een verrassing samen, van de <a href=\"/pages/alle-boxen\">Mini, Happy en Mega</a> tot onze <a href=\"/pages/special-editions\">Special Editions</a> voor bijzondere momenten. Geen massaproduct, maar een cadeautje dat met liefde is uitgezocht. Want elke hond verdient zijn eigen moment vlak voor het uitpakken — daar doen we het voor.</p>",
-        "cta_url": "/pages/alle-boxen"
+        "eyebrow": "Over Kwispelbox",
+        "title": "Een cadeautje voor elke hond",
+        "intro": "Kwispelbox maakt van een gewoon moment een feestje — met een box vol speelplezier, lekkers en aandacht.",
+        "cards_title": "Waar we voor staan",
+        "cta_title": "Verras je hond",
+        "cta_text": "Kies een box en maak er samen een moment van.",
+        "cta_label": "Bekijk de boxen",
+        "cta_url": "/collections/boxen"
       }
     }
   },
-  "order": [
-    "main"
-  ]
+  "order": ["main"]
 }

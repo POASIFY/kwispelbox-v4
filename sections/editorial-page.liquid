@@ -1,0 +1,240 @@
+{%- comment -%}
+  sections/editorial-page.liquid — KB-v4 herbruikbare BRAND/EDITORIAL family (namespace `edi`).
+  Zones (vaste volgorde): story-hero (optioneel beeld) → image+text splits → story-cards →
+  checklist (veilig spelen/onderhoud) → quote (optioneel) → CTA.
+  Blocktypes: split, card, checkitem. Alles werkt graceful zonder foto's (image-picker optioneel).
+{%- endcomment -%}
+
+{%- assign splits = section.blocks | where: 'type', 'split' -%}
+{%- assign cards = section.blocks | where: 'type', 'card' -%}
+{%- assign checks = section.blocks | where: 'type', 'checkitem' -%}
+
+<div class="edi full-width">
+  <div class="edi__inner">
+
+    <header class="edi__hero{% if section.settings.hero_image != blank %} edi__hero--img{% endif %}">
+      <div class="edi__hero-text">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="edi__eyebrow"><span class="edi__eyebrow-ic" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.title != blank -%}<h1 class="edi__title">{{ section.settings.title }}</h1>{%- endif -%}
+        {%- if section.settings.intro != blank -%}<p class="edi__intro">{{ section.settings.intro }}</p>{%- endif -%}
+      </div>
+      {%- if section.settings.hero_image != blank -%}
+        <div class="edi__hero-media">
+          {{ section.settings.hero_image | image_url: width: 900 | image_tag: loading: 'eager', widths: '500,700,900', sizes: '(max-width: 859px) 92vw, 46vw', alt: section.settings.hero_image.alt | default: section.settings.title, class: 'edi__hero-img' }}
+        </div>
+      {%- else -%}
+        <div class="edi__hero-deco" aria-hidden="true"><span class="edi__hero-gift">{%- render 'kb-icon', icon: 'gift' -%}</span></div>
+      {%- endif -%}
+    </header>
+
+    {%- if splits.size > 0 -%}
+      <div class="edi__splits">
+        {%- for b in splits -%}
+          <section class="edi-split{% if b.settings.media_side == 'right' %} edi-split--right{% endif %}" {{ b.shopify_attributes }}>
+            <div class="edi-split__text">
+              {%- if b.settings.heading != blank -%}<h2 class="edi-split__title">{{ b.settings.heading }}</h2>{%- endif -%}
+              {%- if b.settings.text != blank -%}<div class="edi-split__body">{{ b.settings.text }}</div>{%- endif -%}
+            </div>
+            <div class="edi-split__media">
+              {%- if b.settings.image != blank -%}
+                {{ b.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '400,600,800', sizes: '(max-width: 859px) 92vw, 44vw', alt: b.settings.image.alt | default: b.settings.heading, class: 'edi-split__img' }}
+              {%- else -%}
+                <div class="edi-split__ph" aria-hidden="true">{%- render 'kb-icon', icon: b.settings.ph_icon -%}</div>
+              {%- endif -%}
+            </div>
+          </section>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if cards.size > 0 -%}
+      {%- if section.settings.cards_title != blank -%}<h2 class="edi__zone-title">{{ section.settings.cards_title }}</h2>{%- endif -%}
+      <ul class="edi__cards" role="list">
+        {%- for b in cards -%}
+          <li class="edi-card edi-card--{{ b.settings.color }}" {{ b.shopify_attributes }}>
+            <span class="edi-card__ic" aria-hidden="true">{%- render 'kb-icon', icon: b.settings.icon -%}</span>
+            {%- if b.settings.title != blank -%}<h3 class="edi-card__title">{{ b.settings.title }}</h3>{%- endif -%}
+            {%- if b.settings.text != blank -%}<p class="edi-card__text">{{ b.settings.text }}</p>{%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    {%- if checks.size > 0 -%}
+      <div class="edi__check">
+        {%- if section.settings.check_title != blank -%}<h2 class="edi__zone-title">{{ section.settings.check_title }}</h2>{%- endif -%}
+        <ul class="edi__check-list" role="list">
+          {%- for b in checks -%}
+            <li class="edi-check" {{ b.shopify_attributes }}>
+              <span class="edi-check__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <div class="edi-check__body">
+                {%- if b.settings.title != blank -%}<strong class="edi-check__title">{{ b.settings.title }}</strong>{%- endif -%}
+                {%- if b.settings.text != blank -%}<span class="edi-check__text">{{ b.settings.text }}</span>{%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.quote != blank -%}
+      <figure class="edi__quote">
+        <span class="edi__quote-mark" aria-hidden="true">{%- render 'kb-icon', icon: 'heart' -%}</span>
+        <blockquote>{{ section.settings.quote }}</blockquote>
+        {%- if section.settings.quote_author != blank -%}<figcaption>{{ section.settings.quote_author }}</figcaption>{%- endif -%}
+      </figure>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <div class="edi__cta">
+        {%- if section.settings.cta_title != blank -%}<strong class="edi__cta-title">{{ section.settings.cta_title }}</strong>{%- endif -%}
+        {%- if section.settings.cta_text != blank -%}<p class="edi__cta-text">{{ section.settings.cta_text }}</p>{%- endif -%}
+        <a href="{{ section.settings.cta_url | default: '/collections/boxen' }}" class="edi__cta-btn"><span class="edi__cta-paw" aria-hidden="true">{%- render 'kb-icon', icon: 'paw' -%}</span>{{ section.settings.cta_label }}</a>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% stylesheet %}
+.edi { background: transparent; padding: var(--section-pad) 0; }
+.edi__inner { max-width: 1000px; margin: 0 auto; padding: 0 var(--page-margin); }
+
+/* Story-hero */
+.edi__hero { position: relative; overflow: hidden; background: linear-gradient(135deg, #fff7ea 0%, #fdeef3 46%, #eef7e4 100%); border: 1px solid rgba(61,34,9,.07); border-radius: clamp(24px, 3vw, 34px); padding: clamp(28px, 4vw, 52px); box-shadow: 0 20px 48px rgba(61,34,9,.08); margin-bottom: clamp(26px, 3.4vw, 42px); }
+.edi__hero--img { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 46%); gap: clamp(20px, 3vw, 40px); align-items: center; }
+.edi__hero-text { position: relative; z-index: 1; min-width: 0; }
+.edi__eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--color-pink); margin-bottom: 12px; }
+.edi__eyebrow-ic { display: inline-flex; }
+.edi__eyebrow-ic svg { width: 16px; height: 16px; }
+.edi__title { font-family: var(--font-heading); font-size: clamp(2.2rem, 4.6vw, 3.4rem); line-height: 1.02; color: var(--color-ink); margin: 0 0 12px; max-width: 18ch; }
+.edi__intro { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.65; color: var(--color-body); margin: 0; max-width: 56ch; }
+.edi__hero-media { position: relative; z-index: 1; }
+.edi__hero-img { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; box-shadow: 0 18px 40px rgba(61,34,9,.14); aspect-ratio: 4 / 3; }
+.edi__hero-deco { position: absolute; right: -40px; bottom: -40px; opacity: .5; }
+.edi__hero-gift { display: inline-flex; color: rgba(102,170,68,.28); }
+.edi__hero-gift svg { width: 180px; height: 180px; }
+
+/* Image + text splits */
+.edi__splits { display: flex; flex-direction: column; gap: clamp(22px, 3.2vw, 44px); margin-bottom: clamp(26px, 3.4vw, 42px); }
+.edi-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: center; }
+.edi-split--right .edi-split__text { order: 2; }
+.edi-split__title { font-family: var(--font-heading); font-size: clamp(1.5rem, 2.6vw, 2rem); line-height: 1.1; color: var(--color-ink); margin: 0 0 12px; }
+.edi-split__body { font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.75; color: var(--color-body); }
+.edi-split__body p { margin: 0 0 12px; }
+.edi-split__body :last-child { margin-bottom: 0; }
+.edi-split__body a { color: var(--color-green); font-weight: 700; }
+.edi-split__img { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; box-shadow: 0 16px 38px rgba(61,34,9,.12); aspect-ratio: 4 / 3; }
+.edi-split__ph { display: flex; align-items: center; justify-content: center; aspect-ratio: 4 / 3; border-radius: 22px; background: radial-gradient(120% 120% at 30% 20%, #fff 0%, #ffe9f2 42%, #e8f5e2 100%); color: rgba(102,170,68,.5); box-shadow: inset 0 0 0 1px rgba(61,34,9,.05); }
+.edi-split__ph svg { width: 72px; height: 72px; }
+
+/* Zone-titels */
+.edi__zone-title { font-family: var(--font-heading); font-size: clamp(1.5rem, 2.6vw, 2rem); color: var(--color-ink); text-align: center; margin: 0 0 18px; }
+
+/* Story-cards */
+.edi__cards { list-style: none; margin: 0 0 clamp(26px, 3.4vw, 42px); padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.edi-card { --c: var(--color-green); --c-soft: #eef7e8; background: #fff; border: 1px solid rgba(61,34,9,.06); border-radius: 20px; padding: 22px 20px; box-shadow: 0 8px 22px rgba(61,34,9,.05); }
+.edi-card--green  { --c: var(--color-green);  --c-soft: #eef7e8; }
+.edi-card--pink   { --c: var(--color-pink);   --c-soft: #fdeaf2; }
+.edi-card--orange { --c: var(--color-orange); --c-soft: #fdf0e2; }
+.edi-card--yellow { --c: #d99100;             --c-soft: #fdf6e0; }
+.edi-card__ic { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--c-soft); color: var(--c); margin-bottom: 12px; }
+.edi-card__ic svg { width: 24px; height: 24px; }
+.edi-card__title { font-family: var(--font-heading); font-size: 1.14rem; color: var(--color-ink); line-height: 1.15; margin: 0 0 5px; }
+.edi-card__text { font-family: var(--font-body); font-size: .92rem; line-height: 1.55; color: var(--color-body); margin: 0; }
+
+/* Checklist */
+.edi__check { background: #fff; border: 1px solid rgba(61,34,9,.06); border-radius: 22px; box-shadow: 0 10px 28px rgba(61,34,9,.05); padding: clamp(22px, 3vw, 34px); margin-bottom: clamp(26px, 3.4vw, 42px); }
+.edi__check .edi__zone-title { text-align: left; }
+.edi__check-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px 24px; }
+.edi-check { display: flex; align-items: flex-start; gap: 13px; }
+.edi-check__ic { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%; background: #eef7e8; color: var(--color-green); margin-top: 2px; }
+.edi-check__ic svg { width: 16px; height: 16px; }
+.edi-check__body { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.edi-check__title { font-family: var(--font-heading); font-size: 1.02rem; color: var(--color-ink); line-height: 1.2; }
+.edi-check__text { font-family: var(--font-body); font-size: .9rem; line-height: 1.55; color: var(--color-body); }
+
+/* Quote */
+.edi__quote { position: relative; text-align: center; max-width: 680px; margin: 0 auto clamp(26px, 3.4vw, 42px); padding: clamp(22px, 3vw, 32px); background: #fff0f5; border-radius: 22px; }
+.edi__quote-mark { display: inline-flex; color: var(--color-pink); margin-bottom: 8px; }
+.edi__quote-mark svg { width: 28px; height: 28px; }
+.edi__quote blockquote { font-family: var(--font-heading); font-size: clamp(1.3rem, 2.4vw, 1.75rem); line-height: 1.25; color: var(--color-ink); margin: 0; }
+.edi__quote figcaption { margin-top: 12px; font-family: var(--font-body); font-size: .9rem; font-weight: 700; color: var(--color-pink); }
+
+/* CTA */
+.edi__cta { text-align: center; background: linear-gradient(135deg, #eef7e4 0%, #e8f5e2 100%); border: 1px solid rgba(102,170,68,.16); border-radius: 24px; padding: clamp(26px, 3.4vw, 40px); }
+.edi__cta-title { display: block; font-family: var(--font-heading); font-size: clamp(1.4rem, 2.6vw, 2rem); color: var(--color-ink); margin-bottom: 6px; }
+.edi__cta-text { font-family: var(--font-body); font-size: var(--fs-lead); color: var(--color-body); margin: 0 auto 18px; max-width: 48ch; }
+.edi__cta-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 13px 30px; background: var(--color-green); color: #fff; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.15rem; text-decoration: none; box-shadow: 0 12px 28px rgba(102,170,68,.3); transition: background 160ms, transform 160ms; }
+.edi__cta-btn:hover { background: #5a9a3b; transform: translateY(-2px); }
+.edi__cta-paw { display: inline-flex; }
+.edi__cta-paw svg { width: 20px; height: 20px; }
+
+@media (max-width: 859px) {
+  .edi__hero--img { grid-template-columns: 1fr; }
+  .edi__hero--img .edi__hero-media { order: -1; }
+  .edi-split { grid-template-columns: 1fr; gap: 16px; }
+  .edi-split--right .edi-split__text { order: 0; }
+  .edi-split__media { order: -1; }
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Merkpagina",
+  "tag": "section",
+  "settings": [
+    { "type": "header", "content": "Story-hero" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Over Kwispelbox" },
+    { "type": "text", "id": "title", "label": "Titel (H1)", "default": "Een feestje voor elke hond" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero-afbeelding (optioneel)" },
+    { "type": "header", "content": "Story-cards zone" },
+    { "type": "text", "id": "cards_title", "label": "Kop boven cards (optioneel)" },
+    { "type": "header", "content": "Checklist zone" },
+    { "type": "text", "id": "check_title", "label": "Kop boven checklist (optioneel)" },
+    { "type": "header", "content": "Quote (optioneel)" },
+    { "type": "textarea", "id": "quote", "label": "Quote" },
+    { "type": "text", "id": "quote_author", "label": "Naam/attributie" },
+    { "type": "header", "content": "CTA" },
+    { "type": "text", "id": "cta_title", "label": "Titel", "default": "Klaar om je hond te verrassen?" },
+    { "type": "textarea", "id": "cta_text", "label": "Tekst" },
+    { "type": "text", "id": "cta_label", "label": "Knoptekst", "default": "Bekijk de boxen" },
+    { "type": "url", "id": "cta_url", "label": "Knop link" }
+  ],
+  "blocks": [
+    {
+      "type": "split",
+      "name": "Beeld + tekst",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Kop", "default": "Ons verhaal" },
+        { "type": "richtext", "id": "text", "label": "Tekst", "default": "<p>Vul hier je verhaal in.</p>" },
+        { "type": "image_picker", "id": "image", "label": "Afbeelding (optioneel)" },
+        { "type": "select", "id": "media_side", "label": "Beeld aan", "default": "right", "options": [ { "value": "left", "label": "Links" }, { "value": "right", "label": "Rechts" } ]},
+        { "type": "select", "id": "ph_icon", "label": "Placeholder-icoon (zonder foto)", "default": "gift", "options": [ { "value": "gift", "label": "Cadeau" }, { "value": "heart", "label": "Hart" }, { "value": "paw", "label": "Poot" }, { "value": "bone", "label": "Botje" }, { "value": "sparkles", "label": "Sparkles" } ]}
+      ]
+    },
+    {
+      "type": "card",
+      "name": "Story-card",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icoon", "default": "heart", "options": [ { "value": "heart", "label": "Hart" }, { "value": "shield", "label": "Schild" }, { "value": "paw", "label": "Poot" }, { "value": "leaf", "label": "Blad" }, { "value": "gift", "label": "Cadeau" }, { "value": "sparkles", "label": "Sparkles" }, { "value": "package", "label": "Pakket" }, { "value": "star", "label": "Ster" } ]},
+        { "type": "select", "id": "color", "label": "Accent", "default": "green", "options": [ { "value": "green", "label": "Groen" }, { "value": "pink", "label": "Roze" }, { "value": "orange", "label": "Oranje" }, { "value": "yellow", "label": "Geel" } ]},
+        { "type": "text", "id": "title", "label": "Titel", "default": "Met liefde samengesteld" },
+        { "type": "textarea", "id": "text", "label": "Tekst" }
+      ]
+    },
+    {
+      "type": "checkitem",
+      "name": "Checklist-punt",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titel", "default": "Controleer regelmatig" },
+        { "type": "textarea", "id": "text", "label": "Tekst" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Merkpagina" } ]
+}
+{% endschema %}

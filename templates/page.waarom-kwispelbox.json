@@ -1,0 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "editorial-page",
+      "blocks": {
+        "s1": { "type": "split", "settings": { "heading": "Een box vol momenten", "media_side": "right", "ph_icon": "gift", "text": "<p>Een Kwispelbox is geen gewone bestelling, maar een cadeau-moment. We stellen met de hand een verrassing samen rond speelplezier en lekkers, afgestemd op de gelegenheid — van een verjaardag tot zomaar een dag die je samen bijzonder maakt.</p>" } },
+        "c1": { "type": "card", "settings": { "icon": "gift", "color": "pink", "title": "Samengesteld met zorg", "text": "Met de hand ingepakt, zodat elke box als een echt cadeautje voelt." } },
+        "c2": { "type": "card", "settings": { "icon": "sparkles", "color": "orange", "title": "Voor elk moment", "text": "Verjaardag, feestdag of zomaar — er is altijd een reden voor een feestje." } },
+        "c3": { "type": "card", "settings": { "icon": "heart", "color": "green", "title": "Maak het persoonlijk", "text": "Voeg de naam van je hond en een kaartje toe op de productpagina." } },
+        "c4": { "type": "card", "settings": { "icon": "paw", "color": "yellow", "title": "Draait om je hond", "text": "Alles is gericht op die ene blije kwispel bij het uitpakken." } }
+      },
+      "block_order": ["s1", "c1", "c2", "c3", "c4"],
+      "settings": {
+        "eyebrow": "Waarom Kwispelbox",
+        "title": "Waarom een Kwispelbox?",
+        "intro": "Omdat elke hond een moment verdient dat helemaal om hem draait.",
+        "cards_title": "Wat een Kwispelbox bijzonder maakt",
+        "cta_title": "Klaar om te verrassen?",
+        "cta_text": "Kies de box die bij jouw moment past.",
+        "cta_label": "Bekijk de boxen",
+        "cta_url": "/collections/boxen"
+      }
+    }
+  },
+  "order": ["main"]
+}
