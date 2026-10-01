@@ -199,12 +199,14 @@
 .hero__deco--squiggle { bottom: 8%; left: 6%; width: 40px; height: 16px; color: var(--color-green); }
 
 @media (min-width: 990px) {
-  .hero__inner { grid-template-columns: 45fr 55fr; column-gap: clamp(28px, 3.2vw, 56px); }
-  /* Tekstkolom begrenzen → rustiger, beter geproportioneerd, minder "los" naast het beeld. */
+  /* Kleinere gap + beeld iets naar links → tekst en beeld vormen één compositie
+     i.p.v. "plaat rechts naast losse tekst links". */
+  .hero__inner { grid-template-columns: 45fr 55fr; column-gap: clamp(16px, 2vw, 36px); }
+  /* Tekstkolom begrenzen → rustiger, beter geproportioneerd. */
   .hero__intro { max-width: 34rem; }
-  /* Beeld blijft dominant en vult de crème-ruimte rechtsboven, maar landt rustiger
-     (minder omhoog-zweven) zodat tekst + beeld als één geheel voelen. */
-  .hero__img { transform: translate(6px, -40px) scale(1.07); transform-origin: bottom right; }
+  /* Beeld dominant en vult de crème-ruimte rechtsboven, iets naar links getrokken
+     en rustig gelandet zodat het bij de tekst "aansluit". */
+  .hero__img { transform: translate(-8px, -40px) scale(1.07); transform-origin: bottom right; }
 }
 
 @media (max-width: 989px) {
@@ -215,10 +217,11 @@
   .hero__title { font-size: clamp(2.2rem, 9.5vw, 3.1rem); margin-bottom: 14px; }
   .hero__text { max-width: 40ch; margin-bottom: 18px; }
   .hero__btn--primary { display: flex; width: 100%; justify-content: center; }
-  .hero__usps { grid-template-columns: 1fr; gap: 9px; margin-top: 18px; max-width: none; }
+  .hero__usps { grid-template-columns: 1fr; gap: 9px; margin-top: 16px; max-width: none; }
   .hero__circle { top: 1%; right: 1%; width: 96px; height: 96px; padding: 10px; }
   .hero__circle-text { font-size: .72rem; }
-  .hero__deco--paws, .hero__deco--t-squiggle { display: none; }
+  /* Roze hartje boven de headline weg op mobiel (concurreerde met "Een feestje"). */
+  .hero__deco--paws, .hero__deco--t-squiggle, .hero__deco--t-heart { display: none; }
 }
 {% endstylesheet %}
 
