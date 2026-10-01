@@ -1,0 +1,102 @@
+{
+  "sections": {
+    "main": {
+      "type": "community-ecosystem-page",
+      "blocks": {
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "eyebrow": "Zakelijk bestellen",
+            "eyebrow_icon": "gift",
+            "title": "Zakelijk een Kwispelbox cadeau doen?",
+            "intro": "Verras medewerkers, klanten of relaties (en hun honden) met een vrolijk cadeau dat echt opvalt. Vertel ons wat je zoekt — we maken graag een passend voorstel.",
+            "align": "center",
+            "accent": "orange",
+            "primary_label": "Vraag een voorstel aan",
+            "primary_url": "#aanvraag",
+            "secondary_label": "Bekijk de boxen",
+            "secondary_url": "/collections/boxen"
+          }
+        },
+        "uc_intro": {
+          "type": "intro",
+          "settings": { "eyebrow": "Voor welk moment", "eyebrow_icon": "partyhat", "heading": "Voor elk zakelijk cadeaumoment", "text": "<p>Of het nu om één moment gaat of een vaste gewoonte wordt — we denken met je mee.</p>", "align": "center" }
+        },
+        "uc1": { "type": "usecase", "settings": { "icon": "gift", "title": "Personeelscadeaus", "text": "Verras je team (en hun honden) met een vrolijk cadeau dat gewaardeerd wordt.", "accent": "orange" } },
+        "uc2": { "type": "usecase", "settings": { "icon": "package", "title": "Klant- & relatiegeschenken", "text": "Blijf top-of-mind met een origineel cadeau dat anders is dan anders.", "accent": "green" } },
+        "uc3": { "type": "usecase", "settings": { "icon": "partyhat", "title": "Events & beurzen", "text": "Een leuke give-away of standcadeau waar bezoekers blij van worden.", "accent": "pink" } },
+        "uc4": { "type": "usecase", "settings": { "icon": "star", "title": "Onboarding & welkom", "text": "Heet nieuwe klanten of medewerkers warm welkom met een glimlach.", "accent": "yellow" } },
+        "cando_intro": {
+          "type": "intro",
+          "settings": { "eyebrow": "Wat er kan", "eyebrow_icon": "sparkles", "heading": "Wat er mogelijk is", "text": "<p>Vertel ons je wensen in de aanvraag, dan stemmen we het samen af.</p>", "align": "center" }
+        },
+        "c1": { "type": "card", "settings": { "icon": "package", "title": "Aantal boxen", "text": "Van een handjevol tot een grotere oplage — er is geen hard minimum.", "accent": "green" } },
+        "c2": { "type": "card", "settings": { "icon": "calendar", "title": "Gelegenheid", "text": "Afgestemd op jouw moment, event of feestdag.", "accent": "orange" } },
+        "c3": { "type": "card", "settings": { "icon": "envelope", "title": "Kaartje of boodschap", "text": "Een persoonlijk woordje bij het cadeau is mogelijk.", "accent": "pink" } },
+        "c4": { "type": "card", "settings": { "icon": "truck", "title": "Levermoment", "text": "We stemmen de levering af op jouw planning.", "accent": "yellow" } },
+        "how_intro": {
+          "type": "intro",
+          "settings": { "eyebrow": "Zo werkt het", "eyebrow_icon": "paw", "heading": "Hoe het werkt", "align": "center" }
+        },
+        "s1": { "type": "step", "settings": { "title": "Aanvraag", "text": "Vul het formulier in met je wensen en een indicatie van het aantal.", "accent": "orange" } },
+        "s2": { "type": "step", "settings": { "title": "Afstemming", "text": "We nemen contact op om je wensen scherp te krijgen.", "accent": "green" } },
+        "s3": { "type": "step", "settings": { "title": "Voorstel", "text": "Je ontvangt een passend voorstel dat aansluit op je budget en moment.", "accent": "pink" } },
+        "s4": { "type": "step", "settings": { "title": "Levering", "text": "Akkoord? Dan zorgen we dat de boxen op tijd klaarstaan.", "accent": "yellow" } },
+        "form": {
+          "type": "form",
+          "settings": {
+            "kind": "business",
+            "anchor_id": "aanvraag",
+            "heading": "Vraag een voorstel aan",
+            "text": "Laat je gegevens en wensen achter. We nemen contact met je op met een passend voorstel.",
+            "submit_label": "Verstuur aanvraag",
+            "success_title": "Bedankt voor je aanvraag!",
+            "success_text": "We nemen zo snel mogelijk contact met je op met een passend voorstel.",
+            "show_consent": true,
+            "note": "We gebruiken je gegevens alleen om je aanvraag te behandelen en contact met je op te nemen."
+          }
+        },
+        "faq_intro": {
+          "type": "intro",
+          "settings": { "eyebrow": "Veelgestelde vragen", "eyebrow_icon": "chat", "heading": "Goed om te weten", "align": "center" }
+        },
+        "faq1": { "type": "faq", "settings": { "question": "Is er een minimum aantal?", "answer": "<p>Er is geen hard minimum. Vertel in je aanvraag wat je zoekt, dan kijken we wat past.</p>" } },
+        "faq2": { "type": "faq", "settings": { "question": "Is personalisatie mogelijk?", "answer": "<p>Vaak wel. Vertel wat je zoekt — zoals een kaartje of persoonlijke boodschap — dan kijken we wat we kunnen doen.</p>" } },
+        "faq3": { "type": "faq", "settings": { "question": "Hoe zit het met betalen en een factuur?", "answer": "<p>Geef in je aanvraag aan hoe je graag wilt betalen en of je een factuur nodig hebt, dan stemmen we dat samen af.</p>" } },
+        "faq4": { "type": "faq", "settings": { "question": "Wat is de levertijd bij grotere aantallen?", "answer": "<p>Dat hangt af van het aantal en het moment. Vraag het aan, dan geven we je een realistische inschatting.</p>" } },
+        "cta": {
+          "type": "cta",
+          "settings": {
+            "heading": "Een cadeau op maat nodig?",
+            "text": "Vertel ons je wensen — we denken graag met je mee.",
+            "button_label": "Vraag een voorstel aan",
+            "button_url": "#aanvraag",
+            "secondary_label": "Liever even bellen of mailen?",
+            "secondary_url": "/pages/contact",
+            "style": "gradient",
+            "accent": "pink"
+          }
+        },
+        "l1": { "type": "linkrow", "settings": { "icon": "gift", "label": "Bekijk de boxen", "text": "Ontdek ons assortiment", "url": "/collections/boxen", "accent": "orange" } },
+        "l2": { "type": "linkrow", "settings": { "icon": "mail", "label": "Contact", "text": "Een vraag? Neem contact op", "url": "/pages/contact", "accent": "pink" } },
+        "l3": { "type": "linkrow", "settings": { "icon": "users", "label": "Samenwerken", "text": "Word partner van Kwispelbox", "url": "/pages/partners", "accent": "green" } }
+      },
+      "block_order": [
+        "hero",
+        "uc_intro", "uc1", "uc2", "uc3", "uc4",
+        "cando_intro", "c1", "c2", "c3", "c4",
+        "how_intro", "s1", "s2", "s3", "s4",
+        "form",
+        "faq_intro", "faq1", "faq2", "faq3", "faq4",
+        "cta",
+        "l1", "l2", "l3"
+      ],
+      "settings": {
+        "max_width": "narrow",
+        "bg": "transparent",
+        "show_decorations": true
+      }
+    }
+  },
+  "order": ["main"]
+}
