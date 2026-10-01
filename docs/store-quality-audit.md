@@ -288,3 +288,6 @@ Volledig architectuur-/UX-/designplan in **`docs/community-ecosystem-plan.md`** 
 **Niet uitgevoerd (wacht op go):** Fase 3-cleanup (orphans/menu/collecties), claims-centralisatie, mg__wish-verwijdering, én alle Community-implementatie.
 
 _Fase 3A = read-only: niets gebouwd/geïnstalleerd/gepubliceerd/gemuteerd._
+
+## Fase 3B — Loyalty Vendor Decision + MVP-spec (status: READ-ONLY opgeleverd)
+Vendorbeslissing in **`docs/loyalty-vendor-decision.md`** (aanbeveling **Rivo** Scale ~$49/mnd hybride; Smile 2e; LoyaltyLion niet voor MVP — scorecard 4,36/4,01/3,71). MVP earning/redemption-spec, account-UX, storefront-touchpoints, family E component-spec, Partners/Zakelijk IA, Kwispels-economics-kader, **exacte pre-live copy-actielijst** en **build backlog (3C-0…3C-QA)** in `community-ecosystem-plan.md` (sectie Fase 3B). **Mystery-gift mag GWP-product niet delen** → apart loyalty-gift-product. Niets gebouwd; wacht op vendor-go + business-waarden, dan start 3C-0 (copy veilig).

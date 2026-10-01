@@ -364,4 +364,147 @@ _Exacte features/prijzen/limieten en EU-datalocatie: **in-app/Admin verifiëren 
 
 ---
 
-_Einde Fase 3A-plan. READ-ONLY: niets gebouwd/geïnstalleerd/gepubliceerd/gemuteerd. Volgende stap = jullie business-decisions (§16) + engine-keuze (§15), daarna pas implementatie-fasering (§20)._
+_Einde Fase 3A-plan._
+
+---
+
+# FASE 3B — Loyalty Vendor Decision + Community MVP Specification
+
+_01-10-2026 · READ-ONLY. Vendorkeuze-onderbouwing staat apart in **`docs/loyalty-vendor-decision.md`** (aanbeveling: **Rivo** Scale ~$49/mnd, hybride; Smile tweede; LoyaltyLion niet voor MVP). Hieronder de uitvoerbare MVP-spec. Geen harde waarden, niets gebouwd._
+
+## 3B.1 MVP earning-spec (functioneel, zonder waarden)
+
+**Purchase** — earned op **order PAID** (niet fulfilled), zodat annulering vóór betaling niets toekent. **Refund/cancel:** earned Kwispels **terugboeken** pro rata (webhook-driven). **Grondslag:** over **productsubtotaal excl. verzending/btw** en **ná** reeds toegepaste kortingen (geen punten over verzendkosten/btw/korting-deel). **Gift cards:** geen earning op gift-card-aankoop. **Guest checkout:** geen earning (vereist account/enrollment); evt. retroactief toekennen bij latere account-aanmaak met zelfde e-mail (vendor-afhankelijk, V2).
+
+**Welcome** — bij **programma-enrollment** (gratis lid), **1×/klant**, fraudepreventie via account-uniek + e-mailverificatie. Niet per login herhaalbaar.
+
+**Dog birthday (V2, technisch voorbereiden)** — vereist `metaobject dog.birthdate`; **lead time** (reward enkele dagen vóór de datum beschikbaar); **1×/jaar/hond** cap; dubbele honden → dedupe/cap; **birthdate-wijziging vlak vóór datum** → cooldown om misbruik te voorkomen. Trigger via Flow/Klaviyo → vendor-API (zie vendor-doc §5).
+
+_Geen numerieke waarden (zie §16 open decisions + §3B.8 economics-kader)._
+
+## 3B.2 MVP redemption-spec (beste 2-3 types)
+
+Aanbevolen MVP-set: **(1) vaste korting**, **(2) gratis cadeau-extra**, **(3) gratis mystery-gift** — allen via de vendor als Shopify-korting/free-product.
+
+| Reward | Mechanisme | Cart/checkout-UX | Voorraad | Refund | Combineerbaar | Misbruik |
+|---|---|---|---|---|---|---|
+| Vaste korting | vendor → Shopify discount-code/automatic | code/auto in cart | n.v.t. | punten terug bij refund | **niet** stapelen op GWP/andere promo zonder test | 1 actieve redemption/cart |
+| Gratis cadeau-extra | free-product reward uit bestaande `cadeau-extras` | product toegevoegd à €0 | **echte voorraad** nodig (tracked) | retour → punten terug | los van GWP houden | cap per order |
+| Gratis mystery-gift | **apart** loyalty-gift-product (zie ⚠️) | product à €0 | aparte variant | idem | **nooit** met GWP-product delen | 1×/redemption |
+
+**⚠️ Conflict met bestaande GWP (gratis verrassing vanaf €89):** de huidige BXGY-korting voegt automatisch `gratis-mystery-verrassing` toe bij ≥€89. Een loyalty-mystery-reward mag **niet hetzelfde product/variant** gebruiken, anders botsen twee mechanismen (dubbel toevoegen / prijsconflict / `window.kbGwp`-sync raakt in de war). **Oplossing:** aparte **"Kwispelclub-verrassing"** als eigen product/variant, uitsluitend door de loyalty-engine toegekend; GWP-product blijft exclusief voor de €89-BXGY. Zo blijven de twee reward-mechanismen gescheiden.
+
+**Combinability-regel (MVP):** één loyalty-redemption per order; loyalty-korting **niet** stapelen op de €89-GWP of gratis-verzending-drempel zonder expliciete test (anders margelek + verwarrende cart).
+
+## 3B.3 Account-UX — "Mijn Kwispelbox" (toekomst, geen code)
+
+```
+LOGIN → MIJN KWISPELBOX
+  [Welkom / member-status]      ← vendor hub (Shopify native shell)
+  [Kwispels-balance]            ← LOYALTY APP (metafield ook op storefront)
+  [Volgende reward / progress]  ← LOYALTY APP
+  [Beschikbare rewards]         ← LOYALTY APP (inwisselen = app-UI)
+  [Rewards-historie]            ← LOYALTY APP (API)
+  [Mijn bestellingen]           ← SHOPIFY NATIVE
+  [Mijn hond(en) + verjaardag]  ← CUSTOM (metaobject; beheer-UI = account-extension/LATER)
+  [Referral-link]               ← LOYALTY APP (V2)
+  [Profiel/instellingen/consent]← SHOPIFY NATIVE
+```
+Per module source: **native** (orders, profiel), **loyalty app** (balance, rewards, referral), **custom** (honden), **LATER** (rijke hond-beheer-UI). **Mobiel:** balance + volgende reward bovenaan (samenvatting-first), daarna rewards, honden, bestellingen; **desktop:** 2-koloms (samenvatting/rewards links, honden/bestellingen rechts). Géén fictief dashboard dat technisch niet kan.
+
+## 3B.4 Storefront loyalty-touchpoints
+
+| Touchpoint | Weergave | Fase |
+|---|---|---|
+| Header | **géén** constante balance (rommelig); evt. subtiele "Kwispelclub"/account-indicator | MVP (indicator) |
+| Kwispelclub-pagina | programma-intro + (ingelogd) balance via metafield + earning-uitleg + rewards + join/login-CTA | **MVP** |
+| PDP | "verdien X Kwispels" | **LATER** (alleen als engine realtime betrouwbaar) |
+| Cart | punten-indicatie / redemption | LATER (voorkom GWP/gratis-verzending-conflict) |
+| Cart-drawer | niet overladen | NIET aanbevolen |
+| Post-purchase (thank-you/e-mail) | "je verdiende … Kwispels" / status | MVP (indien vendor-tier) |
+
+## 3B.5 Family E — component-spec
+
+| Component | Doel | Databron | Ingelogd/uit | Mobiel | Backend | Fase |
+|---|---|---|---|---|---|---|
+| Club-hero | propositie + join-CTA | theme | beide | stack | — | MVP |
+| Points-balance | saldo tonen | loyalty-metafield | ingelogd (uit: join-CTA) | compact top | app | MVP |
+| Progress-module | volgende reward | app | ingelogd | bar | app | V2 |
+| Reward-cards | inwisselbare rewards | app/theme | beide | grid→stack | app | MVP |
+| Earning-cards | zo verdien je | theme | beide | grid | — | MVP |
+| Benefit-cards | ledenvoordelen | theme | beide | grid | — | MVP |
+| Birthday-block | hond-verjaardag capture | metaobject/form | ingelogd | stack | custom | V2 |
+| Dog-profile-teaser | honden tonen | metaobject | ingelogd | stack | custom | V2 |
+| Referral-module | deel-je-link | app | ingelogd | stack | app | V2 |
+| Partner-cards | partners/logo's | metaobject | beide | grid→scroll | native | V1/V2 |
+| Business-usecase-cards | zakelijk | theme | beide | grid | — | MVP |
+| Community-gallery | UGC (gecureerd) | metaobject | beide | carousel | native | V1/V2 |
+| CTA/support | contact/join | theme | beide | — | — | MVP |
+| FAQ | help (hergebruik help-hub-accordion) | theme | beide | accordion | — | MVP |
+
+## 3B.6 Partners IA (definitief)
+
+**Pagina "Partners"** (family E/editorial), secties: hero → waarom samenwerken → **partnercategorieën** (merken/leveranciers · creators/ambassadeurs · retail/verkoop · maatschappelijk-optioneel) → huidige partners (logo-grid, LATER) → voordelen → hoe de samenwerking werkt → **aanvraag-CTA** → FAQ. **Geen** aparte sites per type in MVP; type = dataveld op `metaobject partner`. **Aanvraagformulier-velden (minimaal):** bedrijf/naam, type (select), website/social, contactpersoon, e-mail, korte toelichting, consent. (Geen onnodige data.)
+
+## 3B.7 Zakelijk IA (los van Partners)
+
+**Pagina "Zakelijk bestellen"** (service/editorial), user-flow: landing → use-cases → mogelijkheden/voorbeelden → **aanvraag/offerte** → success/follow-up. **Lead-/offerteformulier-velden:** bedrijf · contactpersoon · e-mail · telefoon (optioneel) · use-case (select) · aantal-indicatie · budgetrange (optioneel) · gelegenheid · personalisatie-interesse · gewenste leverdatum · land (NL/BE) · opmerkingen · **consent/privacy**. **Geen** quote-engine/staffels in MVP (B2B/Shopify-B2B pas bij volume — zie 3A §13).
+
+## 3B.8 Kwispels economics-kader (variabelen, geen cijfers)
+
+Besliskader om later met échte data te vullen:
+```
+earn_rate           = kwispels_per_euro            (keuze)
+redemption_value    = euro_per_reward / kwispels_cost_reward
+effective_reward_%  = redeemed_reward_value / eligible_revenue     ← kerngetal marge-impact
+breakage            = (earned_points - redeemed_points) / earned_points
+reward_cost_impact  = effective_reward_% + free_gift_COGS% + extra_shipping%
+welcome_liability   = new_members × welcome_points × redemption_value_per_point
+birthday_liability  = active_dogs × birthday_reward_value × redemption_rate
+margin_after_loyalty= gross_margin% − reward_cost_impact
+```
+Richtlijn: stuur op **effective_reward_%** binnen een door jullie gekozen marge-plafond; houd rekening met **breakage** (niet alle punten worden ingewisseld) en **free-gift COGS + verzendimpact**. **Geen verzonnen Kwispelbox-getallen** — invullen bij 3C met AOV/herhaalaankoop/marge-data.
+
+## 3B.9 Community / UGC MVP
+**MVP = gecureerd** (bestaande "Blije honden"-sectie blijft). **V2 = submission-flow** (`metaobject ugc_submission`: foto + **expliciete consent** + status pending/approved; handmatige moderatie; recht op verwijdering; retentie-afspraak; attributie @handle optioneel). **Geen** live Instagram-feed als default (performance/privacy/afhankelijkheid).
+
+## 3B.10 Referrals
+**V2** (tenzij vendor het vrijwel gratis/veilig maakt — Rivo/Smile hebben native referrals). Spec: referrer-link → referred-customer → **reward pas na geldige (niet-geretourneerde) eerste order** → refund draait reward terug → **self-referral/duplicate-account-blokkades** via engine. **Customer-referral ≠ creator/ambassador** (laatste = aparte business rules, V3). Geen rewardwaarden.
+
+## 3B.11 Pre-live static-copy actielijst (exact)
+
+**Regel:** zolang de engine niet live/getest is (earning + refunds + redemption), **geen** actieve spaarbelofte op live.
+
+| Locatie | Huidige copy | Impliceert | Status | Aanbevolen pre-live |
+|---|---|---|---|---|
+| `sections/header-group.json` (nav-dropdown, meerdere) | "Spaar Kwispels!", "50 Kwispels cadeau", campaign-highlight | werkend sparen + welkomstbonus | **HIDE / COMING SOON** | verberg club-dropdown-rewards of herschrijf "Kwispelclub — binnenkort sparen" |
+| `sections/header-group.json` | tiers "200/400/600/1000 Kwispels" | reward-catalogus | **HIDE** | verbergen tot waarden + engine live |
+| `templates/page.kwispelclub.json` | benefit "Spaar Kwispels" + step "Verzamel Kwispels (aankopen, reviews, acties)" + "Wissel in voor beloningen" | earning + redemption | **COMING SOON** | herschrijf naar "Word gratis lid — sparen start binnenkort" |
+| `templates/page.kwispelclub.json` | spotlight "Hond van de maand" | lopende actie | **COMING SOON / KEEP FOR LATER** | als niet actief: "binnenkort" |
+| `sections/cart.liquid` | Kwispels-referentie | sparen bij checkout | **VERIFY + HIDE** | verbergen tot engine |
+| `sections/main-product-kwispelbox.liquid` | Kwispels op PDP | punten per aankoop | **VERIFY + HIDE** | verbergen tot engine |
+| `templates/page.faq.json` | "Kwispelclub: spaar Kwispels…" | werkend programma | **REWRITE COMING SOON** | "De Kwispelclub lanceert binnenkort…" |
+
+**Classificatie-legenda:** HIDE (verbergen) · COMING SOON (herschrijven, geen actieve belofte) · SAFE (mag blijven) · ACTIVATE WITH ENGINE (pas tonen als engine live). Uitvoering = **3C-0** (eigen batch, niet nu).
+
+## 3B.12 Build backlog (toekomst, na vendor-go)
+
+| Batch | Inhoud | Dependency | Risk | Test | Rollback |
+|---|---|---|---|---|---|
+| **3C-0** | pre-live loyalty-copy veilig (HIDE/COMING SOON) | geen | laag | visuele check live/concept | git revert (theme) |
+| 3C-1 | vendor install + config (earning/redemption/referral rules) | vendorkeuze + §16-waarden | midden | sandbox-orders | app uninstall |
+| 3C-2 | Kwispelclub MVP-redesign + family E (presentatie) | 3C-1 | midden | breakpoints + metafield-render | git revert |
+| 3C-3 | customer-account-integratie (Rivo Accounts-extensie) | 3C-1 | midden | login→hub flow | extensie uit |
+| 3C-4 | earning/redemption end-to-end (incl. refund/cancel + GWP-scheiding) | 3C-1..3 | **hoog** | paid/refund/redeem/GWP-samenloop | rules uit |
+| 3C-5 | Zakelijk-pagina + lead-form | geen (parallel) | laag | form-submit | unpublish |
+| 3C-6 | Partners-pagina + application-form | geen (parallel) | laag | form-submit | unpublish |
+| 3C-7 | dog-data foundation (metaobject + capture-sync) | geen | midden | create/read dog | metaobject verwijderen |
+| 3C-QA | end-to-end QA (earning/redemption/account/mobiel/Markets) | alle | hoog | volledige regressie | per-batch revert |
+
+## 3B.13 Open blockers (herhaald, beslis vóór 3C)
+1. Vendorkeuze bevestigen (Rivo vs Smile; trial-criteria in vendor-doc §7).
+2. Business-waarden (§16).
+3. Pre-live copy-aanpak (coming-soon nu vs engine-in-MVP).
+4. Mystery-gift-vs-GWP scheiding bevestigen (apart loyalty-gift-product).
+
+_Einde Fase 3B. READ-ONLY: niets gebouwd/geïnstalleerd/gepubliceerd/gemuteerd. Volgende = jullie go/no-go op vendor + §16-waarden, dan start 3C-0 (copy) + gekozen build-batches._
