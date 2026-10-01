@@ -1,0 +1,78 @@
+{
+  "sections": {
+    "main": {
+      "type": "community-ecosystem-page",
+      "blocks": {
+        "hero": {
+          "type": "hero",
+          "settings": {
+            "eyebrow": "Community",
+            "eyebrow_icon": "heart",
+            "title": "De Kwispelbox community",
+            "intro": "Achter elke box zit een blije hond en een trots baasje. Hier vieren we die kwispelmomenten samen.",
+            "align": "center",
+            "accent": "pink",
+            "primary_label": "Doe je mee?",
+            "primary_url": "#doe-mee",
+            "secondary_label": "Ontdek de boxen",
+            "secondary_url": "/collections/boxen"
+          }
+        },
+        "gal_intro": {
+          "type": "intro",
+          "settings": {
+            "eyebrow": "Blije snuiten",
+            "eyebrow_icon": "camera",
+            "heading": "Onze kwispelaars",
+            "text": "<p>Een plekje voor de mooiste hondenmomenten uit de community. Binnenkort vullen we dit met echte foto's van jullie honden.</p>",
+            "align": "center"
+          }
+        },
+        "g1": { "type": "gallery_item", "settings": { "caption": "" } },
+        "g2": { "type": "gallery_item", "settings": { "caption": "" } },
+        "g3": { "type": "gallery_item", "settings": { "caption": "" } },
+        "g4": { "type": "gallery_item", "settings": { "caption": "" } },
+        "g5": { "type": "gallery_item", "settings": { "caption": "" } },
+        "g6": { "type": "gallery_item", "settings": { "caption": "" } },
+        "mom_intro": {
+          "type": "intro",
+          "settings": { "eyebrow": "Samen vieren", "eyebrow_icon": "sparkles", "heading": "Momenten om te vieren", "text": "<p>Van verjaardag tot zomaar — elk moment is er één om je hond te verwennen.</p>", "align": "center" }
+        },
+        "m1": { "type": "card", "settings": { "icon": "cake", "title": "Verjaardag", "text": "Een echt feestje voor de jarige hond, inclusief traktatie.", "accent": "pink" } },
+        "m2": { "type": "card", "settings": { "icon": "tree", "title": "Feestdagen", "text": "Samen genieten van de gezelligste dagen van het jaar.", "accent": "green" } },
+        "m3": { "type": "card", "settings": { "icon": "gift", "title": "Zomaar verrassen", "text": "Omdat elke dag een goede dag is om je hond blij te maken.", "accent": "orange" } },
+        "m4": { "type": "card", "settings": { "icon": "camera", "title": "Unboxing", "text": "Dat ene moment als de doos opengaat en de staart begint te kwispelen.", "accent": "yellow" } },
+        "join": {
+          "type": "cta",
+          "settings": {
+            "anchor_id": "doe-mee",
+            "heading": "Doe je mee?",
+            "text": "Volg Kwispelbox op social media en tag je hond in je foto's — wie weet zie je 'm hier terug. Heb je een mooi verhaal of foto? Deel het met ons via contact. Door je foto te delen geef je ons toestemming om 'm te tonen.",
+            "button_label": "Deel je moment",
+            "button_url": "/pages/contact",
+            "secondary_label": "Over de Kwispelclub",
+            "secondary_url": "/pages/kwispelclub",
+            "style": "gradient",
+            "accent": "pink"
+          }
+        },
+        "l1": { "type": "linkrow", "settings": { "icon": "paw", "label": "De Kwispelclub", "text": "Binnenkort: sparen & extra's", "url": "/pages/kwispelclub", "accent": "green" } },
+        "l2": { "type": "linkrow", "settings": { "icon": "gift", "label": "Bekijk de boxen", "text": "Ontdek onze verrassingsboxen", "url": "/collections/boxen", "accent": "orange" } },
+        "l3": { "type": "linkrow", "settings": { "icon": "dog", "label": "Over Kwispelbox", "text": "Lees ons verhaal", "url": "/pages/over-ons", "accent": "pink" } }
+      },
+      "block_order": [
+        "hero",
+        "gal_intro", "g1", "g2", "g3", "g4", "g5", "g6",
+        "mom_intro", "m1", "m2", "m3", "m4",
+        "join",
+        "l1", "l2", "l3"
+      ],
+      "settings": {
+        "max_width": "narrow",
+        "bg": "transparent",
+        "show_decorations": true
+      }
+    }
+  },
+  "order": ["main"]
+}
