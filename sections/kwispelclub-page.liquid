@@ -1,133 +1,118 @@
 {%- comment -%}
-  sections/kwispelclub-page.liquid — Kwispelbox KB-v4
-  Premium Kwispelclub-pagina: hero · voordelen · kwispelaar v/d maand ·
-  zo werkt het (tijdlijn) · nieuwsbrief · trustbar.
-  Mobiel-first, volledig instelbaar via settings + blocks
-  (benefit / step / trust / member).
+  sections/kwispelclub-page.liquid — Kwispelbox KB-v4 · Kwispelclub (premium coming-soon)
+  ------------------------------------------------------------------------------------------
+  EERLIJKE coming-soon club-pagina. De loyalty-engine bestaat nog NIET:
+  geen saldo, geen tiers, geen earning/redemption, geen referral, geen fake social proof.
+  Alle copy is toekomstgericht ("binnenkort", "straks", "zodra de club opent").
+  Nieuwsbrief/waitlist = echte Shopify {% form 'customer' %} met tags newsletter, kwispelclub.
+  Prefix: kc / kc-.
 {%- endcomment -%}
 
-{%- assign benefit_blocks = section.blocks | where: 'type', 'benefit' -%}
-{%- assign step_blocks    = section.blocks | where: 'type', 'step' -%}
-{%- assign trust_blocks   = section.blocks | where: 'type', 'trust' -%}
-{%- assign member_blocks  = section.blocks | where: 'type', 'member' -%}
+{%- assign benefits = section.blocks | where: 'type', 'benefit' -%}
+{%- assign steps    = section.blocks | where: 'type', 'step' -%}
+{%- assign chips    = section.blocks | where: 'type', 'chip' -%}
+{%- assign links    = section.blocks | where: 'type', 'link' -%}
 
 <div class="kc full-width">
+  {%- if section.settings.show_decorations -%}
+    <div class="kc__deco" aria-hidden="true">
+      <span class="kc__deco-item kc__deco--paw">{%- render 'lucide', icon: 'paw' -%}</span>
+      <span class="kc__deco-item kc__deco--heart">{%- render 'lucide', icon: 'heart' -%}</span>
+      <span class="kc__deco-item kc__deco--spark">{%- render 'lucide', icon: 'sparkles' -%}</span>
+    </div>
+  {%- endif -%}
+
   <div class="kc__inner">
 
     {%- comment -%} ── HERO ─────────────────────────────── {%- endcomment -%}
-    <section class="kc-hero kc-anchor" id="word-lid">
+    <section class="kc-hero">
       <div class="kc-hero__text">
         {%- if section.settings.hero_eyebrow != blank -%}
-          <span class="kc-hero__eyebrow">{{ section.settings.hero_eyebrow }}<span class="kc-hero__eyebrow-icon" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span></span>
+          <span class="kc-eyebrow"><span class="kc-eyebrow__icon" aria-hidden="true">{%- render 'lucide', icon: 'crown' -%}</span>{{ section.settings.hero_eyebrow }}</span>
         {%- endif -%}
-        {%- if section.settings.hero_title != blank -%}<h1 class="kc-hero__title">{{ section.settings.hero_title }}</h1>{%- endif -%}
-        {%- if section.settings.hero_text != blank -%}<p class="kc-hero__intro">{{ section.settings.hero_text }}</p>{%- endif -%}
-        <div class="kc-hero__buttons">
-          {%- if section.settings.hero_primary_label != blank -%}
-            {%- if section.settings.hero_primary_label != blank and section.settings.hero_primary_url != blank -%}<a href="{{ section.settings.hero_primary_url }}" class="kc-btn kc-btn--pink">{{ section.settings.hero_primary_label }}<span aria-hidden="true">{{- 'icon-paw.svg' | inline_asset_content -}}</span></a>{%- endif -%}
+        <h1 class="kc-hero__title">{{ section.settings.hero_title_1 }}{% if section.settings.hero_title_2 != blank %} <span class="kc-hero__title-em">{{ section.settings.hero_title_2 }}</span>{% endif %}</h1>
+        {%- if section.settings.hero_body != blank -%}<p class="kc-hero__body">{{ section.settings.hero_body }}</p>{%- endif -%}
+        <div class="kc-hero__actions">
+          {%- if section.settings.hero_cta1 != blank -%}
+            <a href="#kc-waitlist" class="kc-btn kc-btn--primary">{{ section.settings.hero_cta1 }}<span class="kc-btn__arw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></a>
           {%- endif -%}
-          {%- if section.settings.hero_secondary_label != blank -%}
-            <a href="{{ section.settings.hero_secondary_url | default: routes.account_login_url }}" class="kc-btn kc-btn--light">{{ section.settings.hero_secondary_label }}</a>
+          {%- if section.settings.hero_cta2 != blank -%}
+            <a href="#kc-benefits" class="kc-btn kc-btn--ghost">{{ section.settings.hero_cta2 }}</a>
           {%- endif -%}
         </div>
-        <div class="kc-hero__social">
-          {%- if member_blocks.size > 0 -%}
-            <div class="kc-hero__avatars">
-              {%- for block in member_blocks limit: 5 -%}
-                <span class="kc-hero__avatar" {{ block.shopify_attributes }}>
-                  {%- if block.settings.image != blank -%}
-                    <img src="{{ block.settings.image | image_url: width: 96 }}" alt="{{ block.settings.image.alt | escape }}" width="44" height="44" loading="lazy">
-                  {%- else -%}
-                    <span class="kc-hero__avatar-ph" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
-                  {%- endif -%}
-                </span>
+      </div>
+
+      <div class="kc-hero__visual">
+        <div class="kc-hero__stage">
+          {%- if section.settings.hero_image != blank -%}
+            {{ section.settings.hero_image | image_url: width: 900 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '400,600,900,1200', sizes: '(max-width: 989px) 92vw, 46vw', alt: section.settings.hero_image.alt | default: 'Kwispelclub', class: 'kc-hero__img' }}
+          {%- else -%}
+            <div class="kc-hero__fallback">
+              <span class="kc-hero__glyph" aria-hidden="true">{%- render 'lucide', icon: 'dog' -%}</span>
+              <div class="kc-card" aria-hidden="true">
+                <span class="kc-card__paw">{%- render 'lucide', icon: 'paw' -%}</span>
+                <span class="kc-card__name">{{ section.settings.card_name | default: 'Kwispelclub' }}</span>
+                <span class="kc-card__tag">{{ section.settings.card_tag | default: 'Voor blije honden' }}</span>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if chips.size > 0 -%}
+            <div class="kc-hero__chips">
+              {%- for block in chips limit: 4 -%}
+                <span class="kc-chip" {{ block.shopify_attributes }}><span class="kc-chip__icon" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>{{ block.settings.label }}</span>
               {%- endfor -%}
             </div>
           {%- endif -%}
-          <div class="kc-hero__social-text">
-            {%- render 'judgeme-rating', show: 'score', size: 'sm' -%}
-            {%- if section.settings.hero_members_text != blank -%}<span class="kc-hero__members">{{ section.settings.hero_members_text }}</span>{%- endif -%}
-          </div>
         </div>
-      </div>
-      <div class="kc-hero__media">
-        {%- if section.settings.hero_image != blank -%}
-          <img src="{{ section.settings.hero_image | image_url: width: 1100 }}"
-               srcset="{{ section.settings.hero_image | image_url: width: 700 }} 700w, {{ section.settings.hero_image | image_url: width: 1100 }} 1100w"
-               sizes="(max-width: 989px) 92vw, 48vw"
-               alt="{{ section.settings.hero_image.alt | default: section.settings.hero_title | escape }}"
-               width="560" height="480" loading="eager" fetchpriority="high" class="kc-hero__img">
-        {%- else -%}
-          <div class="kc-hero__img kc-hero__img--ph">{%- render 'lucide', icon: 'dog' -%}</div>
-        {%- endif -%}
-        {%- if section.settings.show_badge and section.settings.hero_badge_text != blank -%}
-          <span class="kc-hero__badge">
-            <span class="kc-hero__badge-icon" aria-hidden="true">{%- render 'lucide', icon: 'crown' -%}</span>
-            {{ section.settings.hero_badge_text }}
-          </span>
-        {%- endif -%}
-        {%- if section.settings.show_decorations -%}
-          <span class="kc-deco kc-hero__deco--crown" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"/></svg></span>
-          <span class="kc-deco kc-hero__deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
-          <span class="kc-deco kc-hero__deco--paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
-        {%- endif -%}
       </div>
     </section>
 
-    {%- comment -%} ── VOORDELEN ────────────────────────── {%- endcomment -%}
-    {%- if benefit_blocks.size > 0 -%}
-      <section class="kc-benefits kc-anchor" id="voordelen">
-        {%- if section.settings.benefits_title != blank -%}<h2 class="kc-benefits__title">{{ section.settings.benefits_title }}</h2>{%- endif -%}
+    {%- comment -%} ── BENEFITS ─────────────────────────── {%- endcomment -%}
+    {%- if benefits.size > 0 -%}
+      <section class="kc-benefits kc-anchor" id="kc-benefits">
+        {%- if section.settings.benefits_title != blank -%}<h2 class="kc-h2">{{ section.settings.benefits_title }}</h2>{%- endif -%}
         <div class="kc-benefits__grid">
-          {%- for block in benefit_blocks -%}
-            <div class="kc-benefit kc-benefit--{{ block.settings.color }}" {{ block.shopify_attributes }}>
+          {%- for block in benefits -%}
+            <article class="kc-benefit kc-benefit--{{ block.settings.color }}" {{ block.shopify_attributes }}>
               <span class="kc-benefit__icon" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
-              {%- if block.settings.title != blank -%}<strong class="kc-benefit__title">{{ block.settings.title }}</strong>{%- endif -%}
-              {%- if block.settings.text != blank -%}<span class="kc-benefit__text">{{ block.settings.text }}</span>{%- endif -%}
-            </div>
+              <h3 class="kc-benefit__title">{{ block.settings.title }}</h3>
+              {%- if block.settings.text != blank -%}<p class="kc-benefit__text">{{ block.settings.text }}</p>{%- endif -%}
+            </article>
           {%- endfor -%}
         </div>
       </section>
     {%- endif -%}
 
-    {%- comment -%} ── KWISPELAAR VAN DE MAAND ──────────── {%- endcomment -%}
-    {%- if section.settings.spotlight_name != blank or section.settings.spotlight_text != blank -%}
-      <section class="kc-spotlight kc-anchor" id="hond-van-de-maand">
-        <span class="kc-deco kc-spotlight__deco--paw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM4 8a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm7 5a6 6 0 0 0-5.91 5.04A2.4 2.4 0 0 0 7.45 21c.86 0 1.62-.45 2.3-.86.43-.26.83-.5 1.25-.5s.82.24 1.25.5c.68.41 1.44.86 2.3.86a2.4 2.4 0 0 0 2.36-2.96A6 6 0 0 0 11 13Z"/></svg></span>
-        <span class="kc-deco kc-spotlight__deco--heart" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>
-        <div class="kc-spotlight__photo">
-          <div class="kc-polaroid">
-            <span class="kc-polaroid__tape" aria-hidden="true"></span>
-            {%- if section.settings.spotlight_image != blank -%}
-              <img src="{{ section.settings.spotlight_image | image_url: width: 480 }}" alt="{{ section.settings.spotlight_name | escape }}" width="240" height="200" loading="lazy">
-            {%- else -%}
-              <span class="kc-polaroid__ph" aria-hidden="true">{%- render 'lucide', icon: 'dog' -%}</span>
-            {%- endif -%}
-            {%- if section.settings.spotlight_name != blank -%}<span class="kc-polaroid__name">{{ section.settings.spotlight_name }}</span>{%- endif -%}
-            {%- if section.settings.spotlight_label != blank -%}<span class="kc-polaroid__label">{{ section.settings.spotlight_label }}</span>{%- endif -%}
-          </div>
-        </div>
-        <div class="kc-spotlight__body">
-          {%- if section.settings.spotlight_title != blank -%}<strong class="kc-spotlight__title">{{ section.settings.spotlight_title }}</strong>{%- endif -%}
-          {%- if section.settings.spotlight_text != blank -%}<p class="kc-spotlight__text">{{ section.settings.spotlight_text }}</p>{%- endif -%}
-          {%- if section.settings.spotlight_cta_label != blank -%}
-            {%- if section.settings.spotlight_cta_label != blank and section.settings.spotlight_cta_url != blank -%}<a href="{{ section.settings.spotlight_cta_url }}" class="kc-btn kc-btn--pink">{{ section.settings.spotlight_cta_label }}<span aria-hidden="true">{%- render 'lucide', icon: 'camera' -%}</span></a>{%- endif -%}
+    {%- comment -%} ── SPOTLIGHT ────────────────────────── {%- endcomment -%}
+    {%- if section.settings.spot_title != blank -%}
+      <section class="kc-spot">
+        <figure class="kc-spot__media">
+          {%- if section.settings.spot_image != blank -%}
+            {{ section.settings.spot_image | image_url: width: 640 | image_tag: loading: 'lazy', widths: '320,480,640', sizes: '(max-width: 859px) 80vw, 320px', alt: section.settings.spot_image.alt | default: section.settings.spot_title, class: 'kc-spot__img' }}
+          {%- else -%}
+            <div class="kc-spot__img kc-spot__img--ph">{%- render 'lucide', icon: 'camera' -%}</div>
           {%- endif -%}
+          {%- if section.settings.spot_badge != blank -%}<figcaption class="kc-spot__badge">{{ section.settings.spot_badge }}</figcaption>{%- endif -%}
+        </figure>
+        <div class="kc-spot__body">
+          {%- if section.settings.spot_eyebrow != blank -%}<span class="kc-eyebrow kc-eyebrow--pink"><span class="kc-eyebrow__icon" aria-hidden="true">{%- render 'lucide', icon: 'sparkles' -%}</span>{{ section.settings.spot_eyebrow }}</span>{%- endif -%}
+          <h2 class="kc-spot__title">{{ section.settings.spot_title }}</h2>
+          {%- if section.settings.spot_text != blank -%}<p class="kc-spot__text">{{ section.settings.spot_text }}</p>{%- endif -%}
         </div>
       </section>
     {%- endif -%}
 
-    {%- comment -%} ── ZO WERKT HET (tijdlijn) ──────────── {%- endcomment -%}
-    {%- if step_blocks.size > 0 -%}
-      <section class="kc-steps kc-anchor" id="zo-werkt-het">
-        {%- if section.settings.steps_title != blank -%}<h2 class="kc-steps__title">{{ section.settings.steps_title }}</h2>{%- endif -%}
+    {%- comment -%} ── ZO WERKT HET STRAKS ──────────────── {%- endcomment -%}
+    {%- if steps.size > 0 -%}
+      <section class="kc-steps">
+        {%- if section.settings.steps_title != blank -%}<h2 class="kc-h2">{{ section.settings.steps_title }}</h2>{%- endif -%}
         <ol class="kc-steps__list">
-          {%- for block in step_blocks -%}
+          {%- for block in steps -%}
             <li class="kc-step" {{ block.shopify_attributes }}>
-              <span class="kc-step__icon kc-step__icon--{{ block.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
               <span class="kc-step__num">{{ forloop.index }}</span>
               <div class="kc-step__body">
-                {%- if block.settings.title != blank -%}<strong class="kc-step__title">{{ block.settings.title }}</strong>{%- endif -%}
+                <strong class="kc-step__title">{{ block.settings.title }}</strong>
                 {%- if block.settings.text != blank -%}<span class="kc-step__text">{{ block.settings.text }}</span>{%- endif -%}
               </div>
             </li>
@@ -136,29 +121,25 @@
       </section>
     {%- endif -%}
 
-    {%- comment -%} ── NIEUWSBRIEF ──────────────────────── {%- endcomment -%}
+    {%- comment -%} ── WAITLIST (primaire conversie) ────── {%- endcomment -%}
     {%- if section.settings.news_title != blank -%}
-      <section class="kc-news kc-anchor" id="clubnieuws">
-        <div class="kc-news__illu" aria-hidden="true">
-          {%- if section.settings.news_image != blank -%}
-            <img src="{{ section.settings.news_image | image_url: width: 320 }}" alt="" width="120" height="120" loading="lazy">
-          {%- else -%}
-            <span class="kc-news__illu-ph">{%- render 'lucide', icon: 'mail' -%}</span>
-          {%- endif -%}
+      <section class="kc-wait kc-anchor" id="kc-waitlist">
+        <div class="kc-wait__intro">
+          <span class="kc-wait__icon" aria-hidden="true">{%- render 'lucide', icon: 'mail' -%}</span>
+          <div>
+            <strong class="kc-wait__title">{{ section.settings.news_title }}</strong>
+            {%- if section.settings.news_text != blank -%}<p class="kc-wait__text">{{ section.settings.news_text }}</p>{%- endif -%}
+          </div>
         </div>
-        <div class="kc-news__body">
-          <strong class="kc-news__title">{{ section.settings.news_title }}</strong>
-          {%- if section.settings.news_text != blank -%}<p class="kc-news__text">{{ section.settings.news_text }}</p>{%- endif -%}
-        </div>
-        <div class="kc-news__form">
+        <div class="kc-wait__form">
           {%- form 'customer' -%}
             {%- if form.posted_successfully? -%}
-              <p class="kc-news__success">Gelukt — welkom in de Kwispelclub!</p>
+              <p class="kc-wait__success"><span aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>{{ section.settings.news_success | default: 'Gelukt — je staat op de lijst! We laten je weten zodra de Kwispelclub opent.' }}</p>
             {%- else -%}
               <input type="hidden" name="contact[tags]" value="newsletter, kwispelclub">
-              <div class="kc-news__field">
+              <div class="kc-wait__field">
                 <input type="email" name="contact[email]" placeholder="{{ section.settings.news_placeholder | default: 'Jouw e-mailadres' }}" aria-label="E-mailadres" required>
-                <button type="submit" class="kc-btn kc-btn--pink">{{ section.settings.news_button_label | default: 'Aanmelden' }}</button>
+                <button type="submit" class="kc-btn kc-btn--primary">{{ section.settings.news_button_label | default: 'Hou me op de hoogte' }}</button>
               </div>
             {%- endif -%}
           {%- endform -%}
@@ -166,350 +147,314 @@
       </section>
     {%- endif -%}
 
-    {%- comment -%} ── TRUSTBAR ─────────────────────────── {%- endcomment -%}
-    {%- if trust_blocks.size > 0 -%}
-      <section class="kc-trust">
-        {%- for block in trust_blocks -%}
-          <div class="kc-trust__item" {{ block.shopify_attributes }}>
-            <span class="kc-trust__icon kc-trust__icon--{{ block.settings.color }}" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
-            <div class="kc-trust__text">
-              {%- if block.settings.title != blank -%}<strong>{{ block.settings.title }}</strong>{%- endif -%}
-              {%- if block.settings.text != blank -%}<span>{{ block.settings.text }}</span>{%- endif -%}
-            </div>
-          </div>
-        {%- endfor -%}
+    {%- comment -%} ── COMMUNITY BRIDGE ─────────────────── {%- endcomment -%}
+    {%- if section.settings.bridge_title != blank -%}
+      <section class="kc-bridge">
+        {%- if section.settings.bridge_eyebrow != blank -%}<span class="kc-eyebrow"><span class="kc-eyebrow__icon" aria-hidden="true">{%- render 'lucide', icon: 'heart' -%}</span>{{ section.settings.bridge_eyebrow }}</span>{%- endif -%}
+        <h2 class="kc-bridge__title">{{ section.settings.bridge_title }}</h2>
+        {%- if section.settings.bridge_text != blank -%}<p class="kc-bridge__text">{{ section.settings.bridge_text }}</p>{%- endif -%}
+        <div class="kc-bridge__actions">
+          {%- if section.settings.bridge_cta1 != blank -%}<a href="{{ section.settings.bridge_cta1_url | default: '/pages/community' }}" class="kc-btn kc-btn--primary">{{ section.settings.bridge_cta1 }}<span class="kc-btn__arw" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span></a>{%- endif -%}
+          {%- if section.settings.bridge_cta2 != blank -%}<a href="{{ section.settings.bridge_cta2_url | default: '/collections/boxen' }}" class="kc-btn kc-btn--ghost">{{ section.settings.bridge_cta2 }}</a>{%- endif -%}
+        </div>
       </section>
+    {%- endif -%}
+
+    {%- comment -%} ── INTERNE LINKS ────────────────────── {%- endcomment -%}
+    {%- if links.size > 0 -%}
+      <div class="kc-links">
+        {%- for block in links -%}
+          <a class="kc-link" href="{{ block.settings.url | default: '#' }}" {{ block.shopify_attributes }}>
+            <span class="kc-link__icon" aria-hidden="true">{%- render 'lucide', icon: block.settings.icon -%}</span>
+            <span class="kc-link__body">
+              <strong class="kc-link__title">{{ block.settings.label }}</strong>
+              {%- if block.settings.text != blank -%}<span class="kc-link__text">{{ block.settings.text }}</span>{%- endif -%}
+            </span>
+            <span class="kc-link__chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+          </a>
+        {%- endfor -%}
+      </div>
     {%- endif -%}
 
   </div>
 </div>
 
 {% stylesheet %}
+/* ══ KWISPELCLUB · coming-soon sub-brand ══════════════════════════════════ */
+.kc { position: relative; background: var(--color-cream); overflow: hidden; padding: clamp(28px, 4vw, 44px) 0 clamp(52px, 6vw, 76px); }
+.kc::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(42% 34% at 10% 2%, rgba(231, 84, 128, .10), transparent 70%),
+    radial-gradient(46% 40% at 98% 30%, rgba(102, 170, 68, .10), transparent 72%); }
+.kc__inner { position: relative; z-index: 1; max-width: 1160px; margin: 0 auto; padding: 0 var(--page-margin); display: flex; flex-direction: column; gap: clamp(56px, 7vw, 80px); }
 
-/* Anker-secties: offset zodat de sticky header de sectie niet bedekt bij #-links */
-.kc-anchor { scroll-margin-top: clamp(90px, 13vw, 150px); }
-.kc { background: var(--color-cream); padding: 40px 0 72px; }
-.kc__inner { max-width: var(--page-width); margin: 0 auto; padding: 0 var(--page-margin); display: flex; flex-direction: column; gap: 44px; }
-.kc-deco { position: absolute; pointer-events: none; }
-.kc-deco svg { display: block; width: 100%; height: 100%; }
+/* Doodles */
+.kc__deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.kc__deco-item { position: absolute; display: block; opacity: .5; }
+.kc__deco-item svg { width: 100%; height: 100%; }
+.kc__deco--paw   { top: 24px; left: 3%;  width: 30px; height: 30px; color: var(--color-green); transform: rotate(-12deg); }
+.kc__deco--heart { top: 54px; right: 4%; width: 26px; height: 26px; color: var(--color-pink); }
+.kc__deco--spark { bottom: 40px; left: 6%; width: 26px; height: 26px; color: var(--color-yellow); }
 
-/* ── Knoppen ──────────────────────────────────────────── */
-.kc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 14px 26px; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1rem; text-decoration: none; transition: background 160ms, transform 160ms, box-shadow 160ms; }
-.kc-btn span { display: inline-flex; }
-.kc-btn svg, .kc-btn span svg { width: 17px; height: 17px; }
-.kc-btn--pink { background: var(--color-pink); color: #fff; }
-.kc-btn--pink:hover { background: #e85b8a; transform: translateY(-1px); box-shadow: 0 8px 20px rgba(255, 107, 154, .3); }
-.kc-btn--light { background: #fff; color: var(--color-ink); border: 1.5px solid var(--color-line); }
-.kc-btn--light:hover { background: var(--color-cream); transform: translateY(-1px); }
+/* Eyebrow */
+.kc-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--color-green); margin-bottom: 12px; }
+.kc-eyebrow--pink { color: var(--color-pink); }
+.kc-eyebrow__icon { display: inline-flex; }
+.kc-eyebrow__icon svg { width: 16px; height: 16px; }
 
-/* ── HERO ─────────────────────────────────────────────── */
-.kc-hero { position: relative; background: #fff; border-radius: 32px; box-shadow: 0 24px 60px rgba(61, 34, 9, .10); display: flex; flex-direction: column; overflow: hidden; }
-.kc-hero__text { padding: 36px 28px 8px; }
-.kc-hero__eyebrow { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .09em; color: var(--color-pink); margin-bottom: 12px; }
-.kc-hero__eyebrow-icon { display: inline-flex; }
-.kc-hero__eyebrow-icon .lucide { width: 15px; height: 15px; }
-.kc-hero__title { font-family: var(--font-heading); font-size: clamp(2.6rem, 11vw, 4.2rem); line-height: 1; color: var(--color-green); margin: 0; }
-.kc-hero__intro { font-family: var(--font-body); font-size: 1.02rem; line-height: 1.6; color: var(--color-body); margin: 16px 0 24px; max-width: 44ch; }
-.kc-hero__buttons { display: flex; flex-wrap: wrap; gap: 12px; }
-.kc-hero__social { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
-.kc-hero__avatars { display: flex; }
-.kc-hero__avatar { width: 44px; height: 44px; border-radius: 50%; border: 2.5px solid #fff; overflow: hidden; margin-left: -12px; background: #e8f5e2; box-shadow: 0 2px 6px rgba(61, 34, 9, .12); }
-.kc-hero__avatar:first-child { margin-left: 0; }
-.kc-hero__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.kc-hero__avatar-ph { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: var(--color-green); }
-.kc-hero__avatar-ph .lucide { width: 20px; height: 20px; }
-.kc-hero__social-text { display: flex; flex-direction: column; line-height: 1.3; }
-.kc-hero__rating { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: .9rem; font-weight: 800; color: var(--color-ink); }
-.kc-hero__stars { color: var(--color-yellow); letter-spacing: 1px; }
-.kc-hero__members { font-family: var(--font-body); font-size: .8rem; color: var(--color-muted); }
-.kc-hero__media { position: relative; padding: 12px 28px 28px; }
-.kc-hero__img { width: 100%; height: 280px; object-fit: cover; border-radius: 24px; display: block; }
-.kc-hero__img--ph { display: flex; align-items: center; justify-content: center; background: #e8f5e2; color: var(--color-green); }
-.kc-hero__img--ph .lucide { width: 80px; height: 80px; }
-.kc-hero__badge { position: absolute; top: 22px; left: 40px; display: inline-flex; align-items: center; gap: 7px; max-width: 180px; background: #fff; color: var(--color-ink); font-family: var(--font-heading); font-size: .82rem; line-height: 1.2; padding: 10px 14px; border-radius: 18px; box-shadow: 0 10px 26px rgba(61, 34, 9, .18); transform: rotate(-3deg); }
-.kc-hero__badge-icon { display: inline-flex; color: var(--color-yellow); flex-shrink: 0; }
-.kc-hero__badge-icon .lucide { width: 17px; height: 17px; }
-.kc-hero__deco--crown { top: 4px; right: 40px; width: 30px; height: 30px; color: var(--color-yellow); transform: rotate(10deg); }
-.kc-hero__deco--heart { bottom: 50px; right: 18px; width: 26px; height: 26px; color: var(--color-pink); transform: rotate(-10deg); }
-.kc-hero__deco--paw { bottom: 18px; left: 16px; width: 28px; height: 28px; color: var(--color-orange); opacity: .55; transform: rotate(-14deg); }
+/* Koppen */
+.kc-h2 { font-family: var(--font-heading); font-size: var(--fs-h2); line-height: 1.05; color: var(--color-ink); text-align: center; margin: 0 0 clamp(22px, 3vw, 34px); }
 
-/* ── VOORDELEN ────────────────────────────────────────── */
-.kc-benefits__title { text-align: center; font-family: var(--font-heading); font-size: clamp(1.7rem, 5vw, 2.5rem); color: var(--color-ink); margin: 0 0 28px; }
-.kc-benefits__grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-.kc-benefit { --cc: var(--color-green); --cc-soft: #e8f5e2; background: var(--cc-soft); border-radius: 24px; padding: 24px 22px; transition: transform 220ms ease, box-shadow 220ms ease; }
-.kc-benefit:hover { transform: translateY(-6px); box-shadow: 0 18px 38px rgba(61, 34, 9, .12); }
-.kc-benefit--green { --cc: var(--color-green); --cc-soft: #e8f5e2; }
-.kc-benefit--pink { --cc: var(--color-pink); --cc-soft: #ffe0ee; }
-.kc-benefit--orange { --cc: var(--color-orange); --cc-soft: #fff0e4; }
-.kc-benefit--yellow { --cc: #d99100; --cc-soft: #fffae0; }
-.kc-benefit__icon { display: flex; align-items: center; justify-content: center; width: 54px; height: 54px; border-radius: 50%; background: #fff; color: var(--cc); margin-bottom: 14px; }
-.kc-benefit__icon .lucide { width: 27px; height: 27px; }
-.kc-benefit__title { display: block; font-family: var(--font-heading); font-size: 1.2rem; color: var(--color-ink); line-height: 1.15; margin-bottom: 6px; }
-.kc-benefit__text { font-family: var(--font-body); font-size: .88rem; line-height: 1.55; color: var(--color-body); }
+/* Knoppen */
+.kc-btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 26px; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.06rem; letter-spacing: var(--ls-button); text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: transform 160ms, background 160ms, border-color 160ms, color 160ms, filter 160ms; }
+.kc-btn--primary { background: var(--color-green); color: #fff; box-shadow: 0 12px 26px rgba(102,170,68,.26); }
+.kc-btn--primary:hover { background: #5a9a3b; transform: translateY(-2px); }
+.kc-btn--ghost { background: #fff; color: var(--color-ink); border-color: var(--color-line); }
+.kc-btn--ghost:hover { border-color: var(--color-green); color: var(--color-green); transform: translateY(-2px); }
+.kc-btn__arw svg { width: 18px; height: 18px; }
 
-/* ── KWISPELAAR VAN DE MAAND ──────────────────────────── */
-.kc-spotlight { position: relative; display: flex; flex-direction: column; gap: 20px; align-items: center; background: #ffeef5; border: 1.5px solid rgba(255, 107, 154, .18); border-radius: 28px; padding: 32px 24px; overflow: hidden; }
-.kc-spotlight__deco--paw { top: 18px; right: 20px; width: 30px; height: 30px; color: var(--color-pink); opacity: .25; }
-.kc-spotlight__deco--heart { bottom: 18px; left: 20px; width: 24px; height: 24px; color: var(--color-pink); opacity: .3; transform: rotate(-12deg); }
-.kc-polaroid { position: relative; background: #fff; padding: 12px 12px 0; border-radius: 6px; box-shadow: 0 14px 30px rgba(61, 34, 9, .18); transform: rotate(-3deg); }
-.kc-polaroid__tape { position: absolute; top: -11px; left: 50%; transform: translateX(-50%) rotate(-4deg); width: 64px; height: 20px; background: rgba(255, 224, 113, .75); border-radius: 2px; }
-.kc-polaroid img, .kc-polaroid__ph { width: 220px; height: 180px; object-fit: cover; display: block; border-radius: 3px; }
-.kc-polaroid__ph { display: flex; align-items: center; justify-content: center; background: #ffe0ee; color: var(--color-pink); }
-.kc-polaroid__ph .lucide { width: 60px; height: 60px; }
-.kc-polaroid__name { display: block; text-align: center; font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-ink); padding: 8px 0 2px; }
-.kc-polaroid__label { display: block; text-align: center; font-family: var(--font-body); font-size: .72rem; font-weight: 700; color: var(--color-pink); padding-bottom: 10px; }
-.kc-spotlight__body { position: relative; z-index: 1; text-align: center; }
-.kc-spotlight__title { display: block; font-family: var(--font-heading); font-size: clamp(1.5rem, 4vw, 2rem); color: var(--color-ink); margin-bottom: 10px; }
-.kc-spotlight__text { font-family: var(--font-body); font-size: .95rem; line-height: 1.6; color: var(--color-body); margin: 0 0 20px; max-width: 46ch; }
+/* ── HERO ── */
+.kc-hero { display: grid; grid-template-columns: 45fr 55fr; gap: clamp(24px, 4vw, 56px); align-items: center;
+  background:
+    radial-gradient(60% 80% at 10% 8%, #fde7f0, transparent 60%),
+    radial-gradient(70% 90% at 96% 92%, #e8f5e2, transparent 62%),
+    #fffaf2;
+  border: 1.5px solid var(--color-line); border-radius: 32px; padding: clamp(24px, 3.4vw, 50px); }
+.kc-hero__text { min-width: 0; }
+.kc-hero__title { font-family: var(--font-heading); font-size: clamp(2.3rem, 5vw, 3.6rem); line-height: 1.02; color: var(--color-ink); margin: 0 0 16px; text-wrap: balance; }
+.kc-hero__title-em { color: var(--color-green); display: inline-block; }
+.kc-hero__body { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0 0 26px; max-width: 42ch; }
+.kc-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* ── ZO WERKT HET (tijdlijn) ──────────────────────────── */
-.kc-steps__title { text-align: center; font-family: var(--font-heading); font-size: clamp(1.7rem, 5vw, 2.5rem); color: var(--color-ink); margin: 0 0 30px; }
-.kc-steps__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 22px; position: relative; }
-.kc-step { position: relative; display: grid; grid-template-columns: 60px 1fr; align-items: start; gap: 16px; padding-left: 4px; }
-.kc-steps__list::before { content: ""; position: absolute; left: 29px; top: 20px; bottom: 20px; width: 3px; border-radius: 3px; background: repeating-linear-gradient(to bottom, rgba(102,170,68,.4) 0 8px, transparent 8px 16px); }
-.kc-step__icon { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%; background: #e8f5e2; color: var(--color-green); }
-.kc-step__icon--green { background: #e8f5e2; color: var(--color-green); }
-.kc-step__icon--pink { background: #ffe0ee; color: var(--color-pink); }
-.kc-step__icon--orange { background: #fff0e4; color: var(--color-orange); }
-.kc-step__icon--yellow { background: #fffae0; color: #d99100; }
-.kc-step__icon .lucide { width: 28px; height: 28px; }
-.kc-step__num { position: absolute; top: -2px; left: 44px; z-index: 2; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--color-ink); color: #fff; font-family: var(--font-heading); font-size: .7rem; }
+.kc-hero__visual { min-width: 0; }
+.kc-hero__stage { position: relative; }
+.kc-hero__img { width: 100%; height: auto; display: block; border-radius: 24px; }
+.kc-hero__fallback { position: relative; aspect-ratio: 1 / 0.82; border-radius: 24px; overflow: hidden;
+  background: radial-gradient(70% 70% at 70% 30%, #eef7e8, #fff6ea 70%); display: flex; align-items: center; justify-content: center; }
+.kc-hero__glyph { position: absolute; right: -6%; bottom: -6%; color: rgba(102,170,68,.18); }
+.kc-hero__glyph svg { width: 68%; height: 68%; min-width: 220px; }
+.kc-card { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; background: #d9efc8; border: 2px solid #fff; border-radius: 20px; padding: 26px 34px; box-shadow: 0 16px 36px rgba(61,34,9,.14); transform: rotate(-4deg); }
+.kc-card__paw { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: #fff; color: var(--color-pink); margin-bottom: 2px; }
+.kc-card__paw svg { width: 26px; height: 26px; }
+.kc-card__name { font-family: var(--font-heading); font-size: 1.35rem; color: var(--color-ink); line-height: 1; }
+.kc-card__tag { font-family: var(--font-body); font-size: .82rem; font-weight: 700; color: var(--color-green); }
+
+/* Floating chips */
+.kc-chip { display: inline-flex; align-items: center; gap: 7px; background: #fff; color: var(--color-ink); font-family: var(--font-body); font-weight: 700; font-size: .84rem; padding: 8px 14px; border-radius: var(--radius-pill); box-shadow: 0 8px 20px rgba(61,34,9,.12); white-space: nowrap; }
+.kc-chip__icon { display: inline-flex; color: var(--color-pink); }
+.kc-chip__icon svg { width: 15px; height: 15px; }
+.kc-hero__chips { position: absolute; inset: 0; pointer-events: none; }
+.kc-hero__chips .kc-chip { position: absolute; }
+.kc-hero__chips .kc-chip:nth-child(1) { top: 4%; left: -2%; }
+.kc-hero__chips .kc-chip:nth-child(1) .kc-chip__icon { color: var(--color-pink); }
+.kc-hero__chips .kc-chip:nth-child(2) { top: 10%; right: -3%; }
+.kc-hero__chips .kc-chip:nth-child(2) .kc-chip__icon { color: #d99100; }
+.kc-hero__chips .kc-chip:nth-child(3) { bottom: 16%; right: -2%; }
+.kc-hero__chips .kc-chip:nth-child(3) .kc-chip__icon { color: var(--color-orange); }
+.kc-hero__chips .kc-chip:nth-child(4) { bottom: 6%; left: -1%; }
+.kc-hero__chips .kc-chip:nth-child(4) .kc-chip__icon { color: var(--color-green); }
+
+/* ── BENEFITS ── */
+.kc-benefits__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.kc-benefit { --c: var(--color-pink); --c-soft: #fde7f0; background: var(--c-soft); border-radius: 26px; padding: clamp(20px, 2.2vw, 26px); display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.kc-benefit--pink   { --c: var(--color-pink);   --c-soft: #fde7f0; }
+.kc-benefit--yellow { --c: #d99100;             --c-soft: #fdf3d2; }
+.kc-benefit--orange { --c: var(--color-orange); --c-soft: #fde8d4; }
+.kc-benefit--green  { --c: var(--color-green);  --c-soft: #e3f1d9; }
+.kc-benefit__icon { display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; background: #fff; color: var(--c); box-shadow: 0 5px 14px rgba(61,34,9,.07); }
+.kc-benefit__icon svg { width: 25px; height: 25px; }
+.kc-benefit__title { font-family: var(--font-heading); font-size: 1.14rem; line-height: 1.12; color: var(--color-ink); margin: 4px 0 0; }
+.kc-benefit__text { font-family: var(--font-body); font-size: .9rem; line-height: 1.5; color: var(--color-body); margin: 0; }
+
+/* ── SPOTLIGHT ── */
+.kc-spot { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: clamp(22px, 4vw, 48px); align-items: center; background: linear-gradient(130deg, #fde7f0, #fff3f7); border-radius: 28px; padding: clamp(22px, 3vw, 40px); }
+.kc-spot__media { position: relative; margin: 0; background: #fff; padding: 12px 12px 16px; border-radius: 12px; box-shadow: 0 14px 34px rgba(61,34,9,.12); transform: rotate(-2deg); }
+.kc-spot__img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 6px; display: block; }
+.kc-spot__img--ph { display: flex; align-items: center; justify-content: center; background: linear-gradient(140deg, #fff, #fde7f0); color: var(--color-pink); }
+.kc-spot__img--ph svg { width: 44px; height: 44px; }
+.kc-spot__badge { position: absolute; top: 2px; right: 2px; background: var(--color-pink); color: #fff; font-family: var(--font-heading); font-size: .8rem; padding: 5px 12px; border-radius: var(--radius-pill); transform: rotate(4deg); box-shadow: var(--shadow-pop); }
+.kc-spot__body { min-width: 0; }
+.kc-spot__title { font-family: var(--font-heading); font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.08; color: var(--color-ink); margin: 0 0 10px; }
+.kc-spot__text { font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.6; color: var(--color-body); margin: 0; max-width: 54ch; }
+
+/* ── STEPS ── */
+.kc-steps__list { counter-reset: none; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(18px, 3vw, 34px); position: relative; }
+.kc-steps__list::before { content: ""; position: absolute; top: 26px; left: 16%; right: 16%; border-top: 2px dashed var(--color-line); z-index: 0; }
+.kc-step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; min-width: 0; }
+.kc-step__num { display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; border-radius: 50%; background: #fff; border: 2px solid var(--color-green); color: var(--color-green); font-family: var(--font-heading); font-size: 1.5rem; }
 .kc-step__body { min-width: 0; }
-.kc-step__title { display: block; font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-ink); line-height: 1.15; margin-top: 4px; }
-.kc-step__text { font-family: var(--font-body); font-size: .86rem; line-height: 1.5; color: var(--color-body); }
+.kc-step__title { display: block; font-family: var(--font-heading); font-size: 1.12rem; color: var(--color-ink); margin-bottom: 4px; }
+.kc-step__text { display: block; font-family: var(--font-body); font-size: .92rem; line-height: 1.5; color: var(--color-body); max-width: 30ch; margin: 0 auto; }
 
-/* ── NIEUWSBRIEF ──────────────────────────────────────── */
-.kc-news { position: relative; display: flex; flex-direction: column; gap: 18px; align-items: center; text-align: center; background: #e8f5e2; border: 1.5px solid rgba(102, 170, 68, .2); border-radius: 28px; padding: 32px 24px; }
-.kc-news__illu { flex-shrink: 0; width: 84px; height: 84px; border-radius: 22px; background: #fff; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.kc-news__illu img { width: 100%; height: 100%; object-fit: cover; }
-.kc-news__illu-ph { display: flex; color: var(--color-green); }
-.kc-news__illu-ph .lucide { width: 40px; height: 40px; }
-.kc-news__title { display: block; font-family: var(--font-heading); font-size: clamp(1.5rem, 4vw, 2rem); color: var(--color-ink); line-height: 1.1; }
-.kc-news__text { font-family: var(--font-body); font-size: .92rem; line-height: 1.55; color: var(--color-body); margin: 8px 0 0; max-width: 44ch; }
-.kc-news__form { width: 100%; max-width: 420px; }
-.kc-news__field { display: flex; flex-direction: column; gap: 10px; }
-.kc-news__field input { flex: 1; height: 52px; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill); padding: 0 20px; font-family: var(--font-body); font-size: .95rem; color: var(--color-ink); background: #fff; outline: none; transition: border-color 160ms; }
-.kc-news__field input:focus { border-color: var(--color-green); }
-.kc-news__field .kc-btn { height: 52px; }
-.kc-news__success { font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-green); margin: 0; }
+/* ── WAITLIST ── */
+.kc-wait { display: grid; grid-template-columns: 1fr minmax(0, 420px); gap: clamp(20px, 3vw, 40px); align-items: center; background: linear-gradient(130deg, #e3f1d9, #eef7e8); border-radius: 28px; padding: clamp(24px, 3.2vw, 44px); scroll-margin-top: clamp(80px, 12vw, 130px); }
+.kc-wait__intro { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.kc-wait__icon { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 58px; height: 58px; border-radius: 50%; background: #fff; color: var(--color-green); box-shadow: 0 8px 20px rgba(61,34,9,.08); }
+.kc-wait__icon svg { width: 28px; height: 28px; }
+.kc-wait__title { display: block; font-family: var(--font-heading); font-size: clamp(1.3rem, 2.4vw, 1.9rem); line-height: 1.1; color: var(--color-ink); }
+.kc-wait__text { font-family: var(--font-body); font-size: var(--fs-body); line-height: 1.5; color: var(--color-body); margin: 6px 0 0; }
+.kc-wait__field { display: flex; gap: 10px; }
+.kc-wait__field input { flex: 1 1 auto; min-width: 0; min-height: 50px; padding: 0 18px; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill); font-family: var(--font-body); font-size: 1rem; color: var(--color-ink); background: #fff; outline: none; transition: border-color 160ms; }
+.kc-wait__field input:focus-visible { border-color: var(--color-green); }
+.kc-wait__field .kc-btn { flex-shrink: 0; white-space: nowrap; }
+.kc-wait__success { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-size: 1.1rem; color: var(--color-green); margin: 0; }
+.kc-wait__success svg { width: 22px; height: 22px; }
 
-/* ── TRUSTBAR ─────────────────────────────────────────── */
-.kc-trust { display: grid; grid-template-columns: 1fr; gap: 14px; }
-.kc-trust__item { display: flex; align-items: center; gap: 14px; background: #fff; border: 1.5px solid var(--color-line); border-radius: 20px; padding: 18px 20px; }
-.kc-trust__icon { display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; border-radius: 50%; flex-shrink: 0; background: #e8f5e2; color: var(--color-green); }
-.kc-trust__icon--green { background: #e8f5e2; color: var(--color-green); }
-.kc-trust__icon--pink { background: #ffe0ee; color: var(--color-pink); }
-.kc-trust__icon--orange { background: #fff0e4; color: var(--color-orange); }
-.kc-trust__icon--yellow { background: #fffae0; color: #d99100; }
-.kc-trust__icon .lucide { width: 24px; height: 24px; }
-.kc-trust__text { display: flex; flex-direction: column; }
-.kc-trust__text strong { font-family: var(--font-heading); font-size: 1.05rem; color: var(--color-ink); line-height: 1.15; }
-.kc-trust__text span { font-family: var(--font-body); font-size: .8rem; color: var(--color-muted); }
+/* ── COMMUNITY BRIDGE ── */
+.kc-bridge { text-align: center; max-width: 680px; margin: 0 auto; }
+.kc-bridge .kc-eyebrow { justify-content: center; }
+.kc-bridge__title { font-family: var(--font-heading); font-size: clamp(1.6rem, 3vw, 2.3rem); line-height: 1.06; color: var(--color-ink); margin: 0 0 12px; }
+.kc-bridge__text { font-family: var(--font-body); font-size: var(--fs-lead); line-height: 1.6; color: var(--color-body); margin: 0 0 22px; }
+.kc-bridge__actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
 
-/* ── Tablet ───────────────────────────────────────────── */
-@media (min-width: 750px) {
-  .kc { padding: 48px 0 88px; }
-  .kc__inner { gap: 56px; }
-  .kc-hero { flex-direction: row; align-items: center; }
-  .kc-hero__text { flex: 1.05; padding: 52px 8px 52px 48px; }
-  .kc-hero__media { flex: 1; padding: 28px; }
-  .kc-hero__img, .kc-hero__img--ph { height: 400px; }
-  .kc-benefits__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  .kc-spotlight { flex-direction: row; gap: 36px; align-items: center; padding: 36px; }
-  .kc-spotlight__body { text-align: left; flex: 1; }
-  .kc-news { flex-direction: row; text-align: left; gap: 24px; padding: 32px 40px; }
-  .kc-news__body { flex: 1; }
-  .kc-news__text { margin-left: 0; margin-right: 0; }
-  .kc-news__field { flex-direction: row; }
-  .kc-news__field input { width: auto; }
-  .kc-trust { grid-template-columns: repeat(2, 1fr); }
+/* ── INTERNE LINKS ── */
+.kc-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px; }
+.kc-link { --c: var(--color-green); --c-soft: #e8f5e2; display: flex; align-items: center; gap: 13px; background: transparent; border: 1px solid var(--color-line); border-radius: var(--radius-md); padding: 13px 16px; text-decoration: none; min-width: 0; transition: background 160ms, border-color 160ms; }
+.kc-link:hover { background: var(--c-soft); border-color: transparent; }
+.kc-link__icon { flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 10px; background: var(--c-soft); color: var(--c); }
+.kc-link:hover .kc-link__icon { background: #fff; }
+.kc-link__icon svg { width: 19px; height: 19px; }
+.kc-link__body { min-width: 0; display: flex; flex-direction: column; }
+.kc-link__title { font-family: var(--font-heading); font-size: 1rem; color: var(--color-ink); }
+.kc-link__text { font-family: var(--font-body); font-size: .84rem; color: var(--color-muted); }
+.kc-link__chev { margin-left: auto; flex-shrink: 0; display: inline-flex; color: var(--color-muted); }
+.kc-link__chev svg { width: 17px; height: 17px; }
+
+/* ── Tablet ── */
+@media (max-width: 989px) {
+  .kc-hero { grid-template-columns: 1fr; text-align: center; }
+  .kc-hero__body { margin-left: auto; margin-right: auto; }
+  .kc-hero__actions { justify-content: center; }
+  .kc-hero__visual { order: -1; max-width: 460px; margin: 0 auto; width: 100%; }
+  .kc-benefits__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── Desktop ──────────────────────────────────────────── */
-@media (min-width: 990px) {
-  .kc-benefits__grid { grid-template-columns: repeat(4, 1fr); }
-  .kc-trust { grid-template-columns: repeat(4, 1fr); }
-  .kc-steps__list { flex-direction: row; gap: 14px; }
-  .kc-step { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 12px; padding: 0; flex: 1; }
-  .kc-steps__list::before { left: 12%; right: 12%; top: 30px; bottom: auto; width: auto; height: 3px; background: repeating-linear-gradient(to right, rgba(102,170,68,.4) 0 8px, transparent 8px 16px); }
-  .kc-step__num { position: static; margin-top: -2px; }
-  .kc-step__title { margin-top: 8px; }
-}
-
-/* ── Mobiel ───────────────────────────────────────────── */
+/* ── Mobiel ── */
 @media (max-width: 749px) {
-  /* Lange koppen als "Kwispelclub" mogen niet over de schermrand lopen */
-  .kc-hero__title { font-size: clamp(2.2rem, 10vw, 3.4rem); overflow-wrap: anywhere; }
-  .kc-hero__buttons .kc-btn { flex: 1 1 auto; }
+  .kc__inner { gap: clamp(44px, 10vw, 56px); }
+  .kc-benefits__grid { grid-template-columns: 1fr; gap: 12px; }
+  .kc-benefit { flex-direction: row; align-items: flex-start; }
+  .kc-benefit__icon { flex-shrink: 0; width: 44px; height: 44px; }
+  .kc-benefit__icon svg { width: 22px; height: 22px; }
+  .kc-spot { grid-template-columns: 1fr; gap: 18px; }
+  .kc-spot__media { order: -1; max-width: 300px; margin: 0 auto; }
+  .kc-steps__list { grid-template-columns: 1fr; gap: 0; }
+  .kc-steps__list::before { top: 0; bottom: 0; left: 26px; right: auto; border-top: 0; border-left: 2px dashed var(--color-line); }
+  .kc-step { flex-direction: row; align-items: flex-start; text-align: left; gap: 16px; padding: 10px 0; }
+  .kc-step__num { flex-shrink: 0; width: 48px; height: 48px; font-size: 1.3rem; }
+  .kc-step__text { margin: 0; max-width: none; }
+  .kc-wait { grid-template-columns: 1fr; gap: 18px; }
+  .kc-wait__field { flex-direction: column; }
+  .kc-wait__field .kc-btn { width: 100%; }
+  .kc-hero__actions .kc-btn, .kc-bridge__actions .kc-btn { width: 100%; }
+  .kc__deco { display: none; }
+  /* chips: niet meer absoluut zweven, maar nette rij onder de visual */
+  .kc-hero__chips { position: static; inset: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; pointer-events: auto; }
+  .kc-hero__chips .kc-chip { position: static; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .kc-benefit, .kc-btn { transition: none; }
+  .kc-btn, .kc-link { transition: none; }
+  .kc-btn:hover, .kc-link:hover { transform: none; }
+  .kc-card, .kc-spot__media { transform: none; }
 }
-
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "Kwispelclub pagina",
   "tag": "section",
+  "disabled_on": { "groups": ["header", "footer"] },
   "settings": [
     { "type": "header", "content": "Hero" },
-    { "type": "text", "id": "hero_eyebrow", "label": "Eyebrow", "default": "Word lid van de" },
-    { "type": "text", "id": "hero_title", "label": "Headline", "default": "Kwispelclub" },
-    { "type": "textarea", "id": "hero_text", "label": "Beschrijving", "default": "Als lid ontvang je exclusieve voordelen, verrassingen en leuke momenten voor jouw hond. Helemaal gratis — en zo geregeld!" },
-    { "type": "text", "id": "hero_primary_label", "label": "Knop 1 (roze)", "default": "Word gratis lid" },
-    { "type": "url", "id": "hero_primary_url", "label": "Knop 1 link" },
-    { "type": "text", "id": "hero_secondary_label", "label": "Knop 2 (licht)", "default": "Inloggen" },
-    { "type": "url", "id": "hero_secondary_url", "label": "Knop 2 link" },
-    { "type": "paragraph", "content": "De beoordeling komt automatisch uit Judge.me en verschijnt zodra er echte reviews zijn." },
-    { "type": "text", "id": "hero_members_text", "label": "Leden tekst", "default": "Word lid van de Kwispelclub" },
-    { "type": "image_picker", "id": "hero_image", "label": "Hero afbeelding" },
-    { "type": "checkbox", "id": "show_badge", "label": "Welkomstbadge tonen", "default": true },
-    { "type": "text", "id": "hero_badge_text", "label": "Welkomstbadge tekst", "default": "Welkom Luna! Fijn dat je erbij bent!" },
-    { "type": "checkbox", "id": "show_decorations", "label": "Decoratieve accenten tonen", "default": true },
+    { "type": "text", "id": "hero_eyebrow", "label": "Eyebrow", "default": "De Kwispelclub · Binnenkort" },
+    { "type": "text", "id": "hero_title_1", "label": "Titel deel 1 (bruin)", "default": "De Kwispelclub" },
+    { "type": "text", "id": "hero_title_2", "label": "Titel deel 2 (groen)", "default": "komt eraan!" },
+    { "type": "textarea", "id": "hero_body", "label": "Introtekst", "default": "Een plek voor extra verrassingen, bijzondere momenten en alles rondom jouw hond. De club opent binnenkort." },
+    { "type": "text", "id": "hero_cta1", "label": "Knop 1 (naar waitlist)", "default": "Ik wil als eerste op de hoogte zijn" },
+    { "type": "text", "id": "hero_cta2", "label": "Knop 2 (naar voordelen)", "default": "Bekijk wat je kunt verwachten" },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero-afbeelding (optioneel)", "info": "Leeg = gebrande fallback met clubkaart." },
+    { "type": "text", "id": "card_name", "label": "Clubkaart naam", "default": "Kwispelclub" },
+    { "type": "text", "id": "card_tag", "label": "Clubkaart ondertekst", "default": "Voor blije honden" },
     { "type": "header", "content": "Voordelen" },
-    { "type": "text", "id": "benefits_title", "label": "Titel", "default": "Dit krijg je als Kwispelclub lid" },
-    { "type": "header", "content": "Kwispelaar van de maand" },
-    { "type": "text", "id": "spotlight_title", "label": "Titel", "default": "Maak kans op Kwispelaar van de maand" },
-    { "type": "image_picker", "id": "spotlight_image", "label": "Foto winnaar" },
-    { "type": "text", "id": "spotlight_name", "label": "Naam hond", "default": "Luna" },
-    { "type": "text", "id": "spotlight_label", "label": "Polaroid label", "default": "Kwispelaar van de maand" },
-    { "type": "textarea", "id": "spotlight_text", "label": "Tekst", "default": "Elke maand zetten we één bijzondere kwispelaar in de spotlight. Stuur een foto van jouw hond in en maak kans op een plekje hier — plus een leuke verrassing!" },
-    { "type": "text", "id": "spotlight_cta_label", "label": "Knoptekst", "default": "Stuur jouw hond in" },
-    { "type": "url", "id": "spotlight_cta_url", "label": "Knop link" },
-    { "type": "header", "content": "Zo werkt het" },
-    { "type": "text", "id": "steps_title", "label": "Titel", "default": "Zo werkt het" },
-    { "type": "header", "content": "Nieuwsbrief" },
-    { "type": "image_picker", "id": "news_image", "label": "Illustratie" },
-    { "type": "text", "id": "news_title", "label": "Titel", "default": "Mis geen enkele verrassing!" },
-    { "type": "textarea", "id": "news_text", "label": "Tekst", "default": "Als clublid hoor jij als eerste van nieuwe boxen, acties en exclusieve verrassingen. Meld je aan en blijf op de hoogte!" },
-    { "type": "text", "id": "news_placeholder", "label": "Placeholder e-mailveld", "default": "Jouw e-mailadres" },
-    { "type": "text", "id": "news_button_label", "label": "Knoptekst", "default": "Aanmelden" }
+    { "type": "text", "id": "benefits_title", "label": "Titel", "default": "Dit kun je straks verwachten" },
+    { "type": "header", "content": "Spotlight" },
+    { "type": "text", "id": "spot_eyebrow", "label": "Eyebrow", "default": "Binnenkort in de spotlight" },
+    { "type": "text", "id": "spot_title", "label": "Titel", "default": "Kwispelaar van de maand" },
+    { "type": "textarea", "id": "spot_text", "label": "Tekst", "default": "Straks zetten we regelmatig een bijzondere hond uit de Kwispelbox-community in het zonnetje." },
+    { "type": "image_picker", "id": "spot_image", "label": "Foto (optioneel)" },
+    { "type": "text", "id": "spot_badge", "label": "Badge op foto", "default": "Binnenkort" },
+    { "type": "header", "content": "Zo werkt het straks" },
+    { "type": "text", "id": "steps_title", "label": "Titel", "default": "Zo werkt het straks" },
+    { "type": "header", "content": "Waitlist / nieuwsbrief" },
+    { "type": "text", "id": "news_title", "label": "Titel", "default": "Als eerste weten wanneer de Kwispelclub opent?" },
+    { "type": "textarea", "id": "news_text", "label": "Tekst", "default": "Laat je e-mailadres achter en we houden je op de hoogte." },
+    { "type": "text", "id": "news_placeholder", "label": "Placeholder", "default": "Jouw e-mailadres" },
+    { "type": "text", "id": "news_button_label", "label": "Knoptekst", "default": "Hou me op de hoogte" },
+    { "type": "textarea", "id": "news_success", "label": "Succes-bericht", "default": "Gelukt — je staat op de lijst! We laten je weten zodra de Kwispelclub opent." },
+    { "type": "header", "content": "Community-brug" },
+    { "type": "text", "id": "bridge_eyebrow", "label": "Eyebrow", "default": "Samen kwispelen" },
+    { "type": "text", "id": "bridge_title", "label": "Titel", "default": "Meer dan alleen een club" },
+    { "type": "textarea", "id": "bridge_text", "label": "Tekst", "default": "De Kwispelclub wordt onderdeel van de bredere Kwispelbox-community: een plek voor mooie hondenmomenten, verrassingen en verhalen van baasjes." },
+    { "type": "text", "id": "bridge_cta1", "label": "Knop 1 tekst", "default": "Bekijk de community" },
+    { "type": "url", "id": "bridge_cta1_url", "label": "Knop 1 link" },
+    { "type": "text", "id": "bridge_cta2", "label": "Knop 2 tekst", "default": "Ontdek de boxen" },
+    { "type": "url", "id": "bridge_cta2_url", "label": "Knop 2 link" },
+    { "type": "header", "content": "Overig" },
+    { "type": "checkbox", "id": "show_decorations", "label": "Decoratieve accenten tonen", "default": true }
   ],
   "blocks": [
     {
       "type": "benefit",
-      "name": "Voordeelkaart",
-      "limit": 6,
+      "name": "Voordeel",
+      "limit": 4,
       "settings": [
-        {
-          "type": "select", "id": "icon", "label": "Icoon", "default": "sparkles",
-          "options": [
-            { "value": "sparkles", "label": "Sparkles" },
-            { "value": "coins", "label": "Munten" },
-            { "value": "camera", "label": "Camera" },
-            { "value": "gift", "label": "Cadeau" },
-            { "value": "heart", "label": "Hart" },
-            { "value": "star", "label": "Ster" },
-            { "value": "crown", "label": "Kroon" },
-            { "value": "party", "label": "Feest" }
-          ]
-        },
-        {
-          "type": "select", "id": "color", "label": "Accentkleur", "default": "pink",
-          "options": [
-            { "value": "green", "label": "Groen" },
-            { "value": "pink", "label": "Roze" },
-            { "value": "orange", "label": "Oranje" },
-            { "value": "yellow", "label": "Geel" }
-          ]
-        },
-        { "type": "text", "id": "title", "label": "Titel", "default": "Exclusieve acties" },
-        { "type": "text", "id": "text", "label": "Tekst", "default": "Profiteer van ledenacties en leuke verrassingen door het jaar heen." }
+        { "type": "select", "id": "color", "label": "Kleur", "default": "pink", "options": [
+          { "value": "pink", "label": "Roze" }, { "value": "yellow", "label": "Geel" }, { "value": "orange", "label": "Oranje" }, { "value": "green", "label": "Groen" }
+        ] },
+        { "type": "select", "id": "icon", "label": "Icoon", "default": "gift", "options": [
+          { "value": "gift", "label": "Cadeau" }, { "value": "coins", "label": "Munten" }, { "value": "sparkles", "label": "Sterretjes" }, { "value": "crown", "label": "Kroon" }, { "value": "heart", "label": "Hart" }, { "value": "users", "label": "Community" }, { "value": "paw", "label": "Poot" }, { "value": "star", "label": "Ster" }
+        ] },
+        { "type": "text", "id": "title", "label": "Titel", "default": "Voordeel" },
+        { "type": "textarea", "id": "text", "label": "Tekst" }
       ]
     },
     {
       "type": "step",
       "name": "Stap",
-      "limit": 6,
-      "settings": [
-        {
-          "type": "select", "id": "icon", "label": "Icoon", "default": "user-round",
-          "options": [
-            { "value": "user-round", "label": "Profiel" },
-            { "value": "coins", "label": "Sparen" },
-            { "value": "gift", "label": "Cadeau" },
-            { "value": "sparkles", "label": "Verrassing" },
-            { "value": "heart", "label": "Hart" },
-            { "value": "party", "label": "Feest" },
-            { "value": "star", "label": "Ster" }
-          ]
-        },
-        {
-          "type": "select", "id": "color", "label": "Accentkleur", "default": "green",
-          "options": [
-            { "value": "green", "label": "Groen" },
-            { "value": "pink", "label": "Roze" },
-            { "value": "orange", "label": "Oranje" },
-            { "value": "yellow", "label": "Geel" }
-          ]
-        },
-        { "type": "text", "id": "title", "label": "Titel", "default": "Word gratis lid" },
-        { "type": "text", "id": "text", "label": "Tekst", "default": "Meld je in een paar seconden gratis aan." }
-      ]
-    },
-    {
-      "type": "trust",
-      "name": "Trust item",
       "limit": 4,
       "settings": [
-        {
-          "type": "select", "id": "icon", "label": "Icoon", "default": "paw",
-          "options": [
-            { "value": "paw", "label": "Poot" },
-            { "value": "star", "label": "Ster" },
-            { "value": "heart", "label": "Hart" },
-            { "value": "shield-check", "label": "Schild" },
-            { "value": "leaf", "label": "Blad" },
-            { "value": "gift", "label": "Cadeau" }
-          ]
-        },
-        {
-          "type": "select", "id": "color", "label": "Accentkleur", "default": "green",
-          "options": [
-            { "value": "green", "label": "Groen" },
-            { "value": "pink", "label": "Roze" },
-            { "value": "orange", "label": "Oranje" },
-            { "value": "yellow", "label": "Geel" }
-          ]
-        },
-        { "type": "text", "id": "title", "label": "Titel", "default": "Voor honden, door hondenliefhebbers" },
-        { "type": "text", "id": "text", "label": "Tekst", "default": "Een groeiende community" }
+        { "type": "text", "id": "title", "label": "Titel", "default": "Stap" },
+        { "type": "textarea", "id": "text", "label": "Tekst" }
       ]
     },
     {
-      "type": "member",
-      "name": "Lid (avatar)",
-      "limit": 6,
+      "type": "chip",
+      "name": "Hero-chip",
+      "limit": 4,
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Foto hond" }
+        { "type": "text", "id": "label", "label": "Tekst", "default": "Extra verrassingen" },
+        { "type": "select", "id": "icon", "label": "Icoon", "default": "gift", "options": [
+          { "value": "gift", "label": "Cadeau" }, { "value": "sparkles", "label": "Sterretjes" }, { "value": "heart", "label": "Hart" }, { "value": "users", "label": "Community" }, { "value": "crown", "label": "Kroon" }, { "value": "paw", "label": "Poot" }
+        ] }
+      ]
+    },
+    {
+      "type": "link",
+      "name": "Interne link",
+      "limit": 4,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icoon", "default": "paw", "options": [
+          { "value": "paw", "label": "Poot" }, { "value": "users", "label": "Community" }, { "value": "gift", "label": "Cadeau" }, { "value": "dog", "label": "Hond" }, { "value": "heart", "label": "Hart" }
+        ] },
+        { "type": "text", "id": "label", "label": "Titel", "default": "Lees verder" },
+        { "type": "text", "id": "text", "label": "Subtekst" },
+        { "type": "url", "id": "url", "label": "Link" }
       ]
     }
   ],
   "presets": [
-    {
-      "name": "Kwispelclub pagina",
-      "blocks": [
-        { "type": "benefit", "settings": { "icon": "sparkles", "color": "pink", "title": "Exclusieve acties & verrassingen", "text": "Profiteer van ledenacties en leuke verrassingen het hele jaar door." } },
-        { "type": "benefit", "settings": { "icon": "coins", "color": "yellow", "title": "Binnenkort: Kwispels sparen", "text": "Straks spaar je als lid Kwispels voor leuke beloningen." } },
-        { "type": "benefit", "settings": { "icon": "camera", "color": "orange", "title": "Hond van de maand", "text": "Stuur jouw foto in en maak kans op de spotlight." } },
-        { "type": "benefit", "settings": { "icon": "crown", "color": "green", "title": "Ledenvoordelen", "text": "Voorrang op special editions en verrassingscadeautjes." } },
-        { "type": "step", "settings": { "icon": "user-round", "color": "green", "title": "Word gratis lid", "text": "Meld je in een paar seconden gratis aan." } },
-        { "type": "step", "settings": { "icon": "coins", "color": "yellow", "title": "Binnenkort sparen", "text": "Straks verdien je Kwispels bij aankopen en acties." } },
-        { "type": "step", "settings": { "icon": "gift", "color": "orange", "title": "Leuke beloningen", "text": "Straks ruil je je Kwispels in voor cadeautjes." } },
-        { "type": "step", "settings": { "icon": "sparkles", "color": "pink", "title": "Ontvang exclusieve acties", "text": "Leden krijgen toegang tot speciale acties." } },
-        { "type": "step", "settings": { "icon": "heart", "color": "pink", "title": "Word deel van de familie", "text": "Jouw hond hoort er helemaal bij!" } },
-        { "type": "trust", "settings": { "icon": "paw", "color": "green", "title": "Voor honden, door hondenliefhebbers", "text": "Een groeiende community" } },
-        { "type": "trust", "settings": { "icon": "heart", "color": "yellow", "title": "Een echt cadeautje", "text": "Iedere box met liefde samengesteld" } },
-        { "type": "trust", "settings": { "icon": "heart", "color": "pink", "title": "Met liefde samengesteld", "text": "Iedere box met zorg" } },
-        { "type": "trust", "settings": { "icon": "shield-check", "color": "green", "title": "Veilig en betrouwbaar", "text": "Veilig betalen & lid worden" } },
-        { "type": "member" },
-        { "type": "member" },
-        { "type": "member" },
-        { "type": "member" }
-      ]
-    }
+    { "name": "Kwispelclub pagina" }
   ]
 }
 {% endschema %}
