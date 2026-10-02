@@ -814,19 +814,25 @@
           </ul>
         </nav>
 
-        {%- if section.settings.nav_chip_title != blank -%}
-          <a href="{{ section.settings.nav_chip_url | default: '/collections/boxen' }}" class="site-header__navchip">
-            <span class="site-header__navchip-text">
-              <strong>{{ section.settings.nav_chip_title }}</strong>
-              {%- if section.settings.nav_chip_subtitle != blank -%}<span>{{ section.settings.nav_chip_subtitle }}</span>{%- endif -%}
-            </span>
-            {%- if section.settings.nav_chip_image != blank -%}
-              <img src="{{ section.settings.nav_chip_image | image_url: width: 120 }}" alt="" width="54" height="46" loading="lazy" class="site-header__navchip-img">
-            {%- else -%}
-              <span class="site-header__navchip-ph" aria-hidden="true">{%- render 'lucide', icon: 'gift' -%}</span>
-            {%- endif -%}
-            <span class="site-header__navchip-arrow" aria-hidden="true">›</span>
-          </a>
+        {%- comment -%} Utility rechts: reviews-reputatie + klantenservice {%- endcomment -%}
+        {%- if section.settings.show_nav_utils -%}
+          {%- assign kb_jm_count = shop.metafields.judgeme.all_reviews_count | plus: 0 -%}
+          <div class="site-header__nav-utils">
+            <span class="site-header__nav-sep" aria-hidden="true"></span>
+            <a href="{{ section.settings.reviews_url | default: '/pages/reviews' }}" class="site-header__reviews"{% if kb_jm_count == 0 %} aria-label="Lees onze reviews"{% endif %}>
+              {%- if kb_jm_count > 0 -%}
+                {%- render 'judgeme-rating', show: 'score', size: 'sm' -%}
+              {%- else -%}
+                <span class="site-header__stars" aria-hidden="true">{%- for i in (1..5) -%}{%- render 'lucide', icon: 'star' -%}{%- endfor -%}</span>
+                <span class="site-header__reviews-label">{{ section.settings.reviews_label | default: 'Bekijk reviews' }}</span>
+              {%- endif -%}
+            </a>
+            <span class="site-header__nav-sep" aria-hidden="true"></span>
+            <a href="{{ section.settings.service_url | default: '/pages/veelgestelde-vragen' }}" class="site-header__service">
+              <span class="site-header__service-icon" aria-hidden="true">{%- render 'lucide', icon: 'help' -%}</span>
+              {{ section.settings.service_label | default: 'Klantenservice' }}
+            </a>
+          </div>
         {%- endif -%}
 
       </div>
@@ -1407,11 +1413,10 @@
   position:relative;
   max-width:var(--page-width);
   margin:0 auto;
-  padding:6px var(--page-margin) 16px;
+  padding:8px var(--page-margin) 10px;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:16px;
+  gap:10px;
 }
 /* Promo-chip rechts in de nav */
 .site-header__navchip{display:inline-flex;align-items:center;gap:12px;background:#ffe0ee;border-radius:var(--radius-pill);padding:6px 14px 6px 18px;text-decoration:none;flex-shrink:0;transition:transform 160ms,box-shadow 160ms;}
@@ -1432,34 +1437,64 @@
 .site-header__nav-deco-2{top:20px;left:22%;width:13px;height:13px;color:var(--color-pink);opacity:.22;}
 .site-header__nav-deco-3{top:12px;right:22%;width:15px;height:15px;color:var(--color-yellow);opacity:.55;transform:rotate(10deg);}
 .site-header__nav-deco-4{bottom:6px;right:6%;width:42px;height:18px;color:var(--color-orange);opacity:.28;}
-.site-header__nav{position:relative;z-index:1;display:flex;align-items:center;}
+.site-header__nav{position:relative;z-index:1;display:flex;align-items:center;margin-inline:auto;}
 .site-header__chips{display:flex;align-items:center;gap:0;list-style:none;margin:0;padding:0;}
+/* Utility rechts: reviews + klantenservice */
+.site-header__nav-utils{position:relative;z-index:1;display:flex;align-items:center;gap:4px;flex-shrink:0;}
+.site-header__nav-sep{flex:0 0 auto;width:1px;height:24px;background:var(--color-line);margin:0 8px;}
+.site-header__reviews{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:5px 14px;border:1.5px solid var(--color-line);border-radius:var(--radius-pill);background:#fffdf8;text-decoration:none;transition:border-color 160ms,background 160ms;}
+.site-header__reviews:hover{border-color:rgba(102,170,68,.45);background:#fff;}
+.site-header__reviews:focus-visible{outline:2px solid var(--color-green);outline-offset:2px;}
+.site-header__stars{display:inline-flex;gap:1px;}
+.site-header__stars .lucide{width:15px;height:15px;fill:#f5b301;stroke:#f5b301;}
+.site-header__reviews-label{font-family:var(--font-body);font-weight:700;font-size:.85rem;color:var(--color-ink);}
+.site-header__service{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:5px 12px;border-radius:10px;text-decoration:none;color:var(--color-ink);font-family:var(--font-body);font-weight:600;font-size:.92rem;transition:color 160ms,background 160ms;}
+.site-header__service:hover{color:var(--color-green);background:rgba(102,170,68,.08);}
+.site-header__service:focus-visible{outline:2px solid var(--color-green);outline-offset:2px;}
+.site-header__service-icon{display:inline-flex;color:var(--color-muted);}
+.site-header__service:hover .site-header__service-icon{color:var(--color-green);}
+.site-header__service-icon .lucide{width:18px;height:18px;}
+/* Nav rustiger houden: geen doodles in de functionele menuzone */
+.site-header__nav-deco-2,.site-header__nav-deco-3{display:none;}
+/* Compactere desktop-breedtes: niets mag wrappen */
+@media(max-width:1300px){
+  .site-header__chip{padding:9px 13px;}
+  .site-header__nav-sep{margin:0 5px;}
+  .site-header__reviews-label{display:none;}
+}
+@media(max-width:1120px) and (min-width:990px){
+  .site-header__chip{padding:8px 10px;font-size:.9rem;}
+  .site-header__chip-item + .site-header__chip-item::before{display:none;}
+  .site-header__service{padding:5px 9px;}
+  .site-header__nav-sep{margin:0 3px;}
+}
 .site-header__chip-item{position:static;display:flex;align-items:center;}
 .site-header__chip-item + .site-header__chip-item::before{content:"";flex:0 0 auto;width:1px;height:20px;background:var(--color-line);}
 .site-header__chip{
+  position:relative;
   display:inline-flex;align-items:center;gap:8px;
-  padding:10px 18px;
-  border-radius:var(--radius-pill);
+  padding:9px 16px;
+  min-height:44px;
+  border-radius:10px;
   font-family:var(--font-body);
-  font-size:.92rem;
+  font-size:.94rem;
   font-weight:600;
   letter-spacing:.01em;
   text-decoration:none;
   white-space:nowrap;
   color:var(--color-ink);
   background:none;
-  border:1.5px solid transparent;
+  border:0;
   cursor:pointer;
-  transition:background 180ms,color 180ms,border-color 180ms,transform 180ms;
+  transition:background 160ms,color 160ms;
 }
-.site-header__chip:hover{transform:translateY(-1px);}
-.site-header__chip:hover,.site-header__chip[aria-expanded="true"]{background:var(--color-cream);}
-.site-header__chip[aria-current="page"]{background:#e8f5e2;color:var(--color-green);border-color:rgba(102,170,68,.28);}
-.site-header__chip--green{color:var(--color-green);}
-.site-header__chip--green:hover,.site-header__chip--green[aria-expanded="true"]{background:#e8f5e2;}
-.site-header__chip--pink{color:var(--color-pink);}.site-header__chip--pink:hover,.site-header__chip--pink[aria-expanded="true"]{background:#ffe0ee;}
-.site-header__chip--orange{color:var(--color-orange);}.site-header__chip--orange:hover,.site-header__chip--orange[aria-expanded="true"]{background:#fff0e4;}
-.site-header__chip--yellow{color:var(--color-yellow);}.site-header__chip--yellow:hover,.site-header__chip--yellow[aria-expanded="true"]{background:#fffae0;}
+/* Hover/open = zeer lichte groen-wash, geen gevulde pill */
+.site-header__chip:hover,.site-header__chip[aria-expanded="true"]{background:rgba(102,170,68,.08);color:var(--color-ink);}
+/* Actief = premium navigatie-indicator (groene tekst + 2px underline), geen CTA-pill */
+.site-header__chip[aria-current="page"]{color:var(--color-green);font-weight:700;background:none;}
+.site-header__chip[aria-current="page"]::after{content:"";position:absolute;left:16px;right:16px;bottom:4px;height:2px;border-radius:2px;background:var(--color-green);}
+.site-header__chip[aria-current="page"]:hover{background:rgba(102,170,68,.08);}
+.site-header__chip:focus-visible{outline:2px solid var(--color-green);outline-offset:2px;}
 .site-header__chip-icon{display:inline-flex;align-items:center;flex-shrink:0;}
 .site-header__chip-icon svg{width:17px;height:17px;}
 .site-header__chip-icon--green{color:var(--color-green);}
@@ -3438,6 +3473,38 @@
       "type": "image_picker",
       "id": "nav_chip_image",
       "label": "Chip afbeelding (box)"
+    },
+    {
+      "type": "header",
+      "content": "Nav utility (reviews + klantenservice)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_nav_utils",
+      "label": "Reviews + klantenservice tonen",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "reviews_label",
+      "label": "Reviews-label (als er nog geen echte rating is)",
+      "default": "Bekijk reviews"
+    },
+    {
+      "type": "url",
+      "id": "reviews_url",
+      "label": "Reviews link"
+    },
+    {
+      "type": "text",
+      "id": "service_label",
+      "label": "Klantenservice label",
+      "default": "Klantenservice"
+    },
+    {
+      "type": "url",
+      "id": "service_url",
+      "label": "Klantenservice link"
     },
     {
       "type": "header",
