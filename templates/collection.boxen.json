@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main": {
+      "type": "collection",
+      "settings": {
+        "eyebrow": "Voor blije honden",
+        "heading": "Boxen voor elk kwispelmoment",
+        "body": "Verjaardag, feestdagen of gewoon zomaar — kies de verrassing die bij jouw hond past.",
+        "count_noun": "boxen",
+        "hide_availability": true,
+        "card_button_label": "Bekijk",
+        "show_cta": true,
+        "cta_eyebrow": "Hulp bij kiezen",
+        "cta_title": "Niet zeker welke box bij jouw moment past?",
+        "cta_body": "Elke hond is uniek. Ontdek welk moment het beste past bij jouw viervoeter en bekijk al onze themaboxen.",
+        "cta_btn1_label": "Bekijk de momenten",
+        "cta_btn1_url": "/collections/special-editions",
+        "cta_btn2_label": "Hulp bij kiezen",
+        "cta_btn2_url": "/pages/hoe-werkt-het"
+      }
+    }
+  },
+  "order": ["main"]
+}
