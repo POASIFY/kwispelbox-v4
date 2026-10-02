@@ -47,9 +47,13 @@
     <!-- ── Reviews: ECHTE Judge.me reviews of nette lege staat ── -->
     {%- assign jm_count = shop.metafields.judgeme.all_reviews_count | plus: 0 -%}
     {%- assign jm_carousel = shop.metafields.judgeme.featured_carousel -%}
+    {%- assign show_cards = false -%}
+    {%- if review_blocks.size > 0 -%}
+      {%- if jm_count > 0 or section.settings.show_sample -%}{%- assign show_cards = true -%}{%- endif -%}
+    {%- endif -%}
     {%- if jm_count > 0 and jm_carousel != blank -%}
       <div class="rev__jm">{{ jm_carousel }}</div>
-    {%- elsif jm_count > 0 and review_blocks.size > 0 -%}
+    {%- elsif show_cards -%}
       <div class="rev__cards">
         {%- for block in review_blocks -%}
           {%- assign rating = block.settings.rating | default: 5 -%}
@@ -290,7 +294,8 @@
     { "type": "text", "id": "highlight_word", "label": "Woord in oranje accent", "default": "Kwispelbox" },
     { "type": "textarea", "id": "empty_text", "label": "Tekst als er nog geen reviews zijn", "default": "Onze eerste boxen zijn net onderweg. Wees een van de eersten om een review achter te laten!" },
     { "type": "checkbox", "id": "show_decorations", "label": "Decoratieve accenten bij titel tonen", "default": true },
-    { "type": "paragraph", "content": "Zodra er echte Judge.me-reviews binnenkomen, verschijnt hier automatisch de recente-reviews carousel. Tot die tijd zie je een nette lege staat — geen verzonnen reviews." }
+    { "type": "checkbox", "id": "show_sample", "label": "Voorbeeldreviews tonen tot er echte zijn", "default": false, "info": "Toont de onderstaande reviewkaarten als placeholder. Zet uit zodra er echte Judge.me-reviews binnenkomen (die krijgen dan voorrang)." },
+    { "type": "paragraph", "content": "Zodra er echte Judge.me-reviews binnenkomen, verschijnt hier automatisch de recente-reviews carousel. Tot die tijd zie je een nette lege staat — of, als je 'Voorbeeldreviews tonen' aanzet, de kaarten hieronder." }
   ],
   "blocks": [
     {

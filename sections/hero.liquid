@@ -63,13 +63,26 @@
       {%- if section.settings.text != blank -%}
         <p class="hero__text">{{ section.settings.text }}</p>
       {%- endif -%}
+      {%- if section.settings.tagline != blank -%}
+        <p class="hero__tagline">{{ section.settings.tagline }}</p>
+      {%- endif -%}
 
-      {%- if section.settings.cta_primary_label != blank -%}
-        <a href="{{ section.settings.cta_primary_url }}" class="hero__btn hero__btn--primary">
-          <span class="hero__btn-paw" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
-          {{ section.settings.cta_primary_label }}
-          <span class="hero__btn-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-        </a>
+      {%- if section.settings.cta_primary_label != blank or section.settings.cta_secondary_label != blank -%}
+        <div class="hero__ctas">
+          {%- if section.settings.cta_primary_label != blank -%}
+            <a href="{{ section.settings.cta_primary_url }}" class="hero__btn hero__btn--primary">
+              <span class="hero__btn-paw" aria-hidden="true">{%- render 'lucide', icon: 'paw' -%}</span>
+              {{ section.settings.cta_primary_label }}
+              <span class="hero__btn-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+            </a>
+          {%- endif -%}
+          {%- if section.settings.cta_secondary_label != blank -%}
+            <a href="{{ section.settings.cta_secondary_url }}" class="hero__btn hero__btn--secondary">
+              <span class="hero__btn-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m10 8.5 5.5 3.5-5.5 3.5Z" fill="currentColor" stroke="none"/></svg></span>
+              {{ section.settings.cta_secondary_label }}
+            </a>
+          {%- endif -%}
+        </div>
       {%- endif -%}
 
       {%- if usp_blocks.size > 0 -%}
@@ -152,14 +165,20 @@
 .hero__title-heart svg { width: .58em; height: .58em; fill: none; stroke: currentColor; stroke-width: 2.4; }
 
 .hero__text { font-family: var(--font-body); font-size: clamp(1rem, 1.3vw, 1.15rem); color: var(--color-body); line-height: 1.5; margin: 0 0 20px; max-width: 40ch; }
+.hero__tagline { font-family: var(--font-body); font-weight: 700; font-size: clamp(.95rem, 1.15vw, 1.08rem); color: var(--color-green); line-height: 1.4; margin: -10px 0 20px; max-width: 40ch; }
 
-.hero__btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 30px; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: var(--ls-button); text-decoration: none; transition: transform 160ms, box-shadow 160ms, background 160ms; }
+.hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.hero__btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 30px; border-radius: var(--radius-pill); font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: var(--ls-button); text-decoration: none; transition: transform 160ms, box-shadow 160ms, background 160ms, border-color 160ms, color 160ms; }
 .hero__btn--primary { background: var(--color-green); color: #fff; box-shadow: 0 12px 28px rgba(102,170,68,.32); }
 .hero__btn--primary:hover { background: #5a9a3b; transform: translateY(-2px); }
+.hero__btn--secondary { background: #fff; color: var(--color-ink); border: 1.5px solid var(--color-line); box-shadow: 0 6px 18px rgba(61,34,9,.05); }
+.hero__btn--secondary:hover { border-color: var(--color-green); color: var(--color-green); transform: translateY(-2px); }
 .hero__btn-paw { display: inline-flex; }
 .hero__btn-paw svg { width: 20px; height: 20px; }
 .hero__btn-arrow { display: inline-flex; }
 .hero__btn-arrow svg { width: 18px; height: 18px; }
+.hero__btn-play { display: inline-flex; color: var(--color-green); }
+.hero__btn-play svg { width: 22px; height: 22px; }
 
 .hero__usps { list-style: none; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 500px; }
 .hero__usp { display: flex; align-items: center; gap: 9px; background: #fffdf8; border: 1px solid rgba(61,34,9,.07); border-radius: 14px; padding: 10px 12px; box-shadow: 0 3px 10px rgba(61,34,9,.04); }
@@ -216,7 +235,8 @@
   .hero__badge { margin-bottom: 14px; }
   .hero__title { font-size: clamp(2.2rem, 9.5vw, 3.1rem); margin-bottom: 14px; }
   .hero__text { max-width: 40ch; margin-bottom: 18px; }
-  .hero__btn--primary { display: flex; width: 100%; justify-content: center; }
+  .hero__ctas { flex-direction: column; align-items: stretch; }
+  .hero__btn { display: flex; width: 100%; justify-content: center; }
   .hero__usps { grid-template-columns: 1fr; gap: 9px; margin-top: 16px; max-width: none; }
   .hero__circle { top: 1%; right: 1%; width: 96px; height: 96px; padding: 10px; }
   .hero__circle-text { font-size: .72rem; }
@@ -257,10 +277,13 @@
     { "type": "select", "id": "line3_b_color", "label": "Kleur 3B", "default": "orange", "options": [
       { "value": "ink", "label": "Bruin" }, { "value": "green", "label": "Groen" }, { "value": "pink", "label": "Roze" }, { "value": "orange", "label": "Oranje" }, { "value": "yellow", "label": "Geel" }
     ]},
-    { "type": "header", "content": "Tekst & knop" },
+    { "type": "header", "content": "Tekst & knoppen" },
     { "type": "textarea", "id": "text", "label": "Subtekst", "default": "Cadeauboxen vol speeltjes en snacks voor elke verjaardag, feestdag en elk moment." },
-    { "type": "text", "id": "cta_primary_label", "label": "Knoptekst", "default": "Kies een box" },
-    { "type": "url", "id": "cta_primary_url", "label": "Knop link" },
+    { "type": "text", "id": "tagline", "label": "Merkregel onder subtekst (optioneel)", "default": "Met liefde samengesteld voor blije honden" },
+    { "type": "text", "id": "cta_primary_label", "label": "Knop 1 (primair)", "default": "Kies een box" },
+    { "type": "url", "id": "cta_primary_url", "label": "Knop 1 link" },
+    { "type": "text", "id": "cta_secondary_label", "label": "Knop 2 (secundair, optioneel)", "default": "Bekijk hoe het werkt" },
+    { "type": "url", "id": "cta_secondary_url", "label": "Knop 2 link" },
     { "type": "header", "content": "Afbeelding" },
     { "type": "image_picker", "id": "image", "label": "Hero afbeelding — desktop (hond + box)" },
     { "type": "image_picker", "id": "image_mobile", "label": "Hero afbeelding — mobiel (optioneel)", "info": "Laat leeg om dezelfde afbeelding als desktop te gebruiken." },

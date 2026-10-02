@@ -57,8 +57,11 @@
         "line3_b": "",
         "line3_b_color": "orange",
         "text": "Cadeauboxen vol speeltjes en snacks voor elke verjaardag, feestdag en elk moment.",
+        "tagline": "Met liefde samengesteld voor blije honden",
         "cta_primary_label": "Kies een box",
         "cta_primary_url": "/collections/boxen",
+        "cta_secondary_label": "Bekijk hoe het werkt",
+        "cta_secondary_url": "/pages/hoe-werkt-het",
         "image": "shopify://shop_images/hero-home-desktop.png",
         "image_mobile": "shopify://shop_images/hero-home-desktop.png",
         "circle_text": "Elke box voelt als een cadeautje",
@@ -168,37 +171,41 @@
         "s1": {
           "type": "usp",
           "settings": {
-            "title": "Gratis verzending",
-            "subtitle": "vanaf €50",
-            "icon": "truck",
-            "color": "green"
+            "title": "Met liefde samengesteld",
+            "subtitle": "",
+            "text": "Elke box wordt met zorg gevuld met leuke, hondvriendelijke verrassingen.",
+            "icon": "gift",
+            "color": "orange"
           }
         },
         "s2": {
           "type": "usp",
           "settings": {
-            "title": "Voor 16:00 besteld",
-            "subtitle": "morgen in huis",
-            "icon": "clock",
-            "color": "orange"
+            "title": "Alleen fijne producten",
+            "subtitle": "",
+            "text": "Een mix van snacks, speeltjes en cadeautjes die passen bij het Kwispelbox-gevoel.",
+            "icon": "shield-check",
+            "color": "green"
           }
         },
         "s3": {
           "type": "usp",
           "settings": {
-            "title": "Met een persoonlijk",
-            "subtitle": "kaartje",
-            "icon": "heart",
-            "color": "pink"
+            "title": "Snel verzonden",
+            "subtitle": "",
+            "text": "Voor 16:00 besteld? Dan doen we ons best om je box snel op weg te sturen.",
+            "icon": "truck",
+            "color": "green"
           }
         },
         "s4": {
           "type": "usp",
           "settings": {
-            "title": "Duurzame en",
-            "subtitle": "hondvriendelijke producten",
-            "icon": "leaf",
-            "color": "yellow"
+            "title": "Met een persoonlijk kaartje",
+            "subtitle": "",
+            "text": "Maak het extra speciaal met een lieve boodschap voor hond of baasje.",
+            "icon": "heart",
+            "color": "pink"
           }
         }
       },
@@ -208,7 +215,67 @@
         "s3",
         "s4"
       ],
-      "settings": {}
+      "settings": {
+        "heading": "Waarom Kwispelbox?",
+        "intro": "Alles voor een vrolijk cadeaumoment voor hond én baasje."
+      }
+    },
+    "reviews": {
+      "type": "reviews",
+      "blocks": {
+        "r1": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Sanne & Moos",
+            "breed": "",
+            "badge": "",
+            "rating": 5,
+            "review_title": "Echt een feestje om te geven",
+            "review_text": "Onze hond was meteen enthousiast. Superleuk samengesteld en heel mooi verpakt.",
+            "verified_text": "",
+            "accent": "pink"
+          }
+        },
+        "r2": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Lotte & Puck",
+            "breed": "",
+            "badge": "",
+            "rating": 5,
+            "review_title": "Perfect als verjaardagscadeau",
+            "review_text": "De box zag er vrolijk uit en het persoonlijke kaartje maakte het extra leuk.",
+            "verified_text": "",
+            "accent": "orange"
+          }
+        },
+        "r3": {
+          "type": "review",
+          "settings": {
+            "dog_name": "Milan & Bowie",
+            "breed": "",
+            "badge": "",
+            "rating": 5,
+            "review_title": "Snelle levering en leuke inhoud",
+            "review_text": "Fijn assortiment en echt een origineel cadeau voor hondenliefhebbers.",
+            "verified_text": "",
+            "accent": "green"
+          }
+        }
+      },
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "eyebrow": "Blije baasjes",
+        "title": "Wat hondenbaasjes zeggen",
+        "subtitle": "Een paar lieve woorden van onze klanten.",
+        "highlight_word": "",
+        "show_decorations": true,
+        "show_sample": true
+      }
     },
     "happy-dogs": {
       "type": "happy-dogs",
@@ -274,8 +341,9 @@
     "hero",
     "moments",
     "featured-products",
-    "birthday-block",
     "usp-bar",
+    "birthday-block",
+    "reviews",
     "happy-dogs"
   ]
 }
