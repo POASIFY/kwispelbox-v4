@@ -18,7 +18,7 @@
   assign bg = section.settings.bg
 -%}
 
-<section class="ce ce--bg-{{ bg }} full-width" data-width="{{ w }}">
+<section class="ce ce--bg-{{ bg }}{% if section.settings.variant == 'business' %} ce--business{% endif %} full-width" data-width="{{ w }}">
   {%- if section.settings.show_decorations -%}
     <div class="ce__deco" aria-hidden="true">
       <span class="ce__deco-item ce__deco--paw">{%- render 'kb-icon', icon: 'paw' -%}</span>
@@ -148,6 +148,16 @@
 .ce__deco--paw   { top: 30px;  left: 3%;  width: 34px; height: 34px; color: var(--color-green); transform: rotate(-14deg); }
 .ce__deco--heart { top: 54px;  right: 4%; width: 28px; height: 28px; color: var(--color-pink); }
 .ce__deco--bone  { bottom: 36px; left: 6%; width: 32px; height: 32px; color: var(--color-orange); opacity: .4; transform: rotate(18deg); }
+
+/* ── ZAKELIJK-variant (warm cadeau-business) — alleen actief bij .ce--business; raakt Partners niet ── */
+.ce--business::before { background:
+  radial-gradient(55% 45% at 8% -4%, rgba(247, 160, 72, .13), transparent 70%),
+  radial-gradient(52% 42% at 104% 16%, rgba(255, 224, 113, .16), transparent 72%),
+  radial-gradient(46% 40% at 94% 104%, rgba(247, 160, 72, .08), transparent 72%); }
+.ce--business .ce-hero--center::before { background: radial-gradient(60% 60% at 50% 40%, rgba(247, 160, 72, .17), transparent 70%); }
+.ce--business .ce__usecases { gap: 12px; }
+.ce--business .ce__usecases .ce-card--usecase { padding: 18px 20px; }
+.ce--business .ce__usecases .ce-card__icon { width: 44px; height: 44px; }
 
 /* Eyebrow */
 .ce-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: var(--fs-eyebrow); font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--c, var(--color-pink)); margin-bottom: 12px; }
@@ -400,6 +410,10 @@
     { "type": "select", "id": "bg", "label": "Achtergrond", "default": "transparent", "options": [
       { "value": "transparent", "label": "Transparant (crème pagina)" },
       { "value": "cream", "label": "Crème vlak" }
+    ] },
+    { "type": "select", "id": "variant", "label": "Variant", "default": "default", "options": [
+      { "value": "default", "label": "Standaard (community/partners)" },
+      { "value": "business", "label": "Zakelijk (warm, cadeau-funnel)" }
     ] },
     { "type": "checkbox", "id": "show_decorations", "label": "Decoratieve merkaccenten tonen", "default": true }
   ],

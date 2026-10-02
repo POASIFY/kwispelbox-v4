@@ -204,13 +204,13 @@
                   <label class="ce-field"><span class="ce-field__lbl">Telefoon <span class="ce-field__opt">optioneel</span></span><input type="tel" name="contact[Telefoon]" placeholder="06…"></label>
                 </div>
                 <div class="ce-form__row">
-                  <label class="ce-field"><span class="ce-field__lbl">Waarvoor is het cadeau?</span>
-                    <select name="contact[Gelegenheid]" required>
+                  <label class="ce-field"><span class="ce-field__lbl">Use case</span>
+                    <select name="contact[Use case]" required>
                       <option value="">Kies…</option>
                       <option>Personeelscadeaus</option>
-                      <option>Klant- of relatiegeschenken</option>
-                      <option>Event of beurs</option>
-                      <option>Onboarding / welkomstcadeau</option>
+                      <option>Klant- &amp; relatiegeschenken</option>
+                      <option>Events &amp; beurzen</option>
+                      <option>Onboarding &amp; welkom</option>
                       <option>Anders</option>
                     </select>
                   </label>
@@ -226,7 +226,17 @@
                   </label>
                 </div>
                 <div class="ce-form__row">
+                  <label class="ce-field"><span class="ce-field__lbl">Gelegenheid <span class="ce-field__opt">optioneel</span></span><input type="text" name="contact[Gelegenheid]" placeholder="Bijv. kerst, jubileum, bedankje"></label>
                   <label class="ce-field"><span class="ce-field__lbl">Gewenste leverdatum <span class="ce-field__opt">optioneel</span></span><input type="date" name="contact[Gewenste leverdatum]"></label>
+                </div>
+                <div class="ce-form__row">
+                  <label class="ce-field"><span class="ce-field__lbl">Budgetrange <span class="ce-field__opt">optioneel</span></span>
+                    <select name="contact[Budgetrange]">
+                      <option value="">Kies…</option>
+                      <option>Nog niet bepaald</option>
+                      <option>Ik wil graag overleggen</option>
+                    </select>
+                  </label>
                   <label class="ce-field"><span class="ce-field__lbl">Land</span>
                     <select name="contact[Land]">
                       <option>Nederland</option>
