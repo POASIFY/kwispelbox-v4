@@ -21,9 +21,13 @@
     {%- paginate collection.products by 24 -%}
       {%- liquid
         assign has_filters = false
-        if collection.filters.size > 0
+        for filter in collection.filters
+          if section.settings.hide_availability and filter.param_name == 'filter.v.availability'
+            continue
+          endif
           assign has_filters = true
-        endif
+          break
+        endfor
       -%}
 
       {%- comment -%} ── Toolbar: filteren-knop (mobiel) · resultaten · sorteren ── {%- endcomment -%}
