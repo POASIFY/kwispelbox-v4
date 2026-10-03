@@ -263,7 +263,19 @@
               {%- endfor -%}
 
               {%- if section.settings.show_cta and paginate.current_page == paginate.pages and section.settings.cta_title != blank -%}
-                <li class="kbcol__cta-cell">
+                {%- comment -%}
+                  Responsieve span: vul de resterende kolommen van de laatste rij.
+                  empty = (kolommen - (aantal % kolommen)) % kolommen.
+                  empty >= 2 → naast de laatste producten; anders volledige rij eronder.
+                  Per breakpoint (4-kol desktop, 3-kol tablet); mobiel = altijd volle breedte.
+                {%- endcomment -%}
+                {%- assign gn = collection.products.size -%}
+                {%- assign r4 = gn | modulo: 4 -%}{%- assign e4 = 4 | minus: r4 | modulo: 4 -%}
+                {%- assign r3 = gn | modulo: 3 -%}{%- assign e3 = 3 | minus: r3 | modulo: 3 -%}
+                {%- if e4 >= 2 -%}{%- assign cta4 = 'span ' | append: e4 -%}{%- else -%}{%- assign cta4 = '1 / -1' -%}{%- endif -%}
+                {%- if e3 >= 2 -%}{%- assign cta3 = 'span ' | append: e3 -%}{%- else -%}{%- assign cta3 = '1 / -1' -%}{%- endif -%}
+                {%- if cta4 == '1 / -1' -%}{%- assign cta_wide = true -%}{%- else -%}{%- assign cta_wide = false -%}{%- endif -%}
+                <li class="kbcol__cta-cell{% if cta_wide %} kbcol__cta-cell--wide{% endif %}" style="--cta-4: {{ cta4 }}; --cta-3: {{ cta3 }};">
                   <div class="kbcol__cta">
                     <div class="kbcol__cta-body">
                       {%- if section.settings.cta_eyebrow != blank -%}<p class="kbcol__cta-eyebrow">{{ section.settings.cta_eyebrow }}</p>{%- endif -%}
@@ -277,10 +289,24 @@
                           <a href="{{ section.settings.cta_btn2_url | default: '/pages/hoe-werkt-het' }}" class="kbcol__cta-btn kbcol__cta-btn--ghost">{{ section.settings.cta_btn2_label }}</a>
                         {%- endif -%}
                       </div>
+                      {%- assign dl1 = section.settings.deeplink1_label -%}
+                      {%- assign dl2 = section.settings.deeplink2_label -%}
+                      {%- assign dl3 = section.settings.deeplink3_label -%}
+                      {%- if dl1 != blank or dl2 != blank or dl3 != blank -%}
+                        <div class="kbcol__cta-deeplinks">
+                          {%- if dl1 != blank and section.settings.deeplink1_url != blank -%}<a class="kbcol__deeplink" href="{{ section.settings.deeplink1_url }}"><span class="kbcol__deeplink-ic" aria-hidden="true">{%- render 'lucide', icon: section.settings.deeplink1_icon -%}</span>{{ dl1 }}</a>{%- endif -%}
+                          {%- if dl2 != blank and section.settings.deeplink2_url != blank -%}<a class="kbcol__deeplink" href="{{ section.settings.deeplink2_url }}"><span class="kbcol__deeplink-ic" aria-hidden="true">{%- render 'lucide', icon: section.settings.deeplink2_icon -%}</span>{{ dl2 }}</a>{%- endif -%}
+                          {%- if dl3 != blank and section.settings.deeplink3_url != blank -%}<a class="kbcol__deeplink" href="{{ section.settings.deeplink3_url }}"><span class="kbcol__deeplink-ic" aria-hidden="true">{%- render 'lucide', icon: section.settings.deeplink3_icon -%}</span>{{ dl3 }}</a>{%- endif -%}
+                        </div>
+                      {%- endif -%}
                     </div>
-                    {%- if section.settings.cta_image != blank -%}
-                      <div class="kbcol__cta-media">{{ section.settings.cta_image | image_url: width: 520 | image_tag: loading: 'lazy', widths: '260,360,520', sizes: '(max-width: 989px) 90vw, 320px', alt: section.settings.cta_image.alt | default: section.settings.cta_title, class: 'kbcol__cta-img' }}</div>
-                    {%- endif -%}
+                    <div class="kbcol__cta-media" aria-hidden="true">
+                      {%- if section.settings.cta_image != blank -%}
+                        {{ section.settings.cta_image | image_url: width: 520 | image_tag: loading: 'lazy', widths: '260,360,520', sizes: '(max-width: 989px) 90vw, 320px', alt: '', class: 'kbcol__cta-img' }}
+                      {%- else -%}
+                        <span class="kbcol__cta-fallback">{%- render 'lucide', icon: 'gift' -%}</span>
+                      {%- endif -%}
+                    </div>
                   </div>
                 </li>
               {%- endif -%}
@@ -415,7 +441,7 @@
 .kbcol__btn svg { width: 13px; height: 13px; }
 
 /* ── Guidance-CTA (vult de resterende gridruimte op desktop) ── */
-.kbcol__cta-cell { grid-column: 1 / -1; list-style: none; }
+.kbcol__cta-cell { grid-column: var(--cta-4, 1 / -1); list-style: none; }
 .kbcol__cta { height: 100%; display: flex; align-items: center; gap: clamp(16px, 3vw, 36px); background: linear-gradient(130deg, #fff0f5, #fff6ea); border: 1.5px solid var(--color-line); border-radius: var(--radius-lg); padding: clamp(22px, 3vw, 34px); box-shadow: var(--shadow-card); }
 .kbcol__cta-body { flex: 1 1 auto; min-width: 0; }
 .kbcol__cta-eyebrow { font-family: var(--font-body); font-weight: 800; text-transform: uppercase; letter-spacing: .08em; font-size: .78rem; color: var(--color-orange); margin: 0 0 8px; }
@@ -428,8 +454,18 @@
 .kbcol__cta-btn--ghost { background: #fff; color: var(--color-ink); border-color: var(--color-line); }
 .kbcol__cta-btn--ghost:hover { border-color: var(--color-green); color: var(--color-green); }
 .kbcol__cta-btn svg { width: 16px; height: 16px; }
-.kbcol__cta-media { flex: 0 0 clamp(160px, 24%, 300px); }
+.kbcol__cta-media { flex: 0 0 clamp(150px, 32%, 320px); min-width: 0; }
 .kbcol__cta-img { width: 100%; height: auto; display: block; border-radius: var(--radius-md); }
+.kbcol__cta-fallback { display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4 / 3; border-radius: var(--radius-md); background: radial-gradient(70% 70% at 60% 35%, #ffe0ee, #fff6ea 70%); color: var(--color-pink); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.6); }
+.kbcol__cta-fallback .lucide { width: 44%; height: 44%; opacity: .8; }
+.kbcol__cta-cell--wide .kbcol__cta-media { flex-basis: clamp(200px, 30%, 380px); }
+/* Deeplinks: nuttige interne navigatie (echte routes) */
+.kbcol__cta-deeplinks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.kbcol__deeplink { display: inline-flex; align-items: center; gap: 7px; min-height: 38px; padding: 7px 14px; border: 1.5px solid var(--color-line); border-radius: var(--radius-pill); background: #fff; color: var(--color-ink); font-family: var(--font-body); font-weight: 700; font-size: .85rem; text-decoration: none; white-space: nowrap; transition: border-color 140ms, color 140ms, background 140ms; }
+.kbcol__deeplink:hover { border-color: var(--color-green); color: var(--color-green); }
+.kbcol__deeplink-ic { display: inline-flex; color: var(--color-pink); }
+.kbcol__deeplink:hover .kbcol__deeplink-ic { color: var(--color-green); }
+.kbcol__deeplink-ic .lucide { width: 16px; height: 16px; }
 .kbcol__empty { text-align: center; font-family: var(--font-body); color: var(--color-body); padding: 40px 0; }
 .kbcol__empty a { color: var(--color-green); font-weight: 700; }
 .kbcol__pag { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 44px; font-family: var(--font-body); font-weight: 700; }
@@ -449,15 +485,13 @@
 .kbcol__seo ul, .kbcol__seo ol { margin: 0 0 1.1em; padding-left: 1.4em; }
 .kbcol__seo li { margin-bottom: .4em; }
 
-/* Desktop: CTA vult de resterende kolommen naast de laatste kaart (4-koloms grid) */
-@media (min-width: 990px) {
-  .kbcol__cta-cell { grid-column: span 3; }
-}
+/* CTA-breedte volgt de resterende gridruimte: --cta-4 (desktop 4-kol) is de basis. */
 
 /* ── Responsive: tablet/mobiel ─────────────────────────── */
 @media (max-width: 989px) {
   .kbcol__layout { grid-template-columns: 1fr; gap: 0; }
   .kbcol__grid { grid-template-columns: repeat(3, 1fr); }
+  .kbcol__cta-cell { grid-column: var(--cta-3, 1 / -1); }
   .kbcol__filter-toggle { display: inline-flex; }
 
   /* Filters worden een slide-in drawer */
@@ -486,9 +520,14 @@
   .kbcol__cardtext { font-size: .8rem; }
   .kbcol__meta { padding-top: 10px; }
   .kbcol__btn { padding: 9px 13px; }
-  .kbcol__cta { flex-direction: column; align-items: flex-start; gap: 18px; }
-  .kbcol__cta-media { order: -1; width: 100%; flex-basis: auto; max-width: 320px; }
+  .kbcol__cta-cell { grid-column: 1 / -1; }
+  .kbcol__cta { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .kbcol__cta-media { display: none; }
   .kbcol__cta-btn { width: 100%; justify-content: center; }
+  /* Deeplinks liever horizontaal scrollen dan krap wrappen */
+  .kbcol__cta-deeplinks { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-inline: calc(-1 * var(--page-margin)); padding: 2px var(--page-margin); }
+  .kbcol__cta-deeplinks::-webkit-scrollbar { display: none; }
+  .kbcol__deeplink { flex: 0 0 auto; }
   .kbcol__seo { margin-top: 40px; padding-top: 32px; }
 }
 {% endstylesheet %}
@@ -575,7 +614,17 @@
     { "type": "text", "id": "cta_btn1_label", "label": "Knop 1 tekst", "default": "Bekijk de momenten" },
     { "type": "url", "id": "cta_btn1_url", "label": "Knop 1 link" },
     { "type": "text", "id": "cta_btn2_label", "label": "Knop 2 tekst", "default": "Hulp bij kiezen" },
-    { "type": "url", "id": "cta_btn2_url", "label": "Knop 2 link" }
+    { "type": "url", "id": "cta_btn2_url", "label": "Knop 2 link" },
+    { "type": "paragraph", "content": "Compacte deeplinks onder de CTA — gebruik alleen echte interne routes." },
+    { "type": "text", "id": "deeplink1_icon", "label": "Deeplink 1 icoon (lucide)", "default": "cake" },
+    { "type": "text", "id": "deeplink1_label", "label": "Deeplink 1 tekst" },
+    { "type": "url", "id": "deeplink1_url", "label": "Deeplink 1 link" },
+    { "type": "text", "id": "deeplink2_icon", "label": "Deeplink 2 icoon (lucide)", "default": "tree" },
+    { "type": "text", "id": "deeplink2_label", "label": "Deeplink 2 tekst" },
+    { "type": "url", "id": "deeplink2_url", "label": "Deeplink 2 link" },
+    { "type": "text", "id": "deeplink3_icon", "label": "Deeplink 3 icoon (lucide)", "default": "paw" },
+    { "type": "text", "id": "deeplink3_label", "label": "Deeplink 3 tekst" },
+    { "type": "url", "id": "deeplink3_url", "label": "Deeplink 3 link" }
   ]
 }
 {% endschema %}

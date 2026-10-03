@@ -12,11 +12,20 @@
         "show_cta": true,
         "cta_eyebrow": "Hulp bij kiezen",
         "cta_title": "Niet zeker welke box bij jouw moment past?",
-        "cta_body": "Elke hond is uniek. Ontdek welk moment het beste past bij jouw viervoeter en bekijk al onze themaboxen.",
+        "cta_body": "Elke hond is uniek. Kies op gelegenheid of ontdek welke verrassing het beste bij jouw viervoeter past.",
         "cta_btn1_label": "Bekijk de momenten",
         "cta_btn1_url": "/collections/special-editions",
         "cta_btn2_label": "Hulp bij kiezen",
-        "cta_btn2_url": "/pages/hoe-werkt-het"
+        "cta_btn2_url": "/pages/hoe-werkt-het",
+        "deeplink1_icon": "cake",
+        "deeplink1_label": "Verjaardag",
+        "deeplink1_url": "/products/verjaardag-kwispelbox",
+        "deeplink2_icon": "tree",
+        "deeplink2_label": "Feestdagen",
+        "deeplink2_url": "/collections/special-editions",
+        "deeplink3_icon": "paw",
+        "deeplink3_label": "Nieuwe puppy",
+        "deeplink3_url": "/collections/puppy-favorieten"
       }
     }
   },
